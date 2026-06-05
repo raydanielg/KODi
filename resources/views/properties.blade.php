@@ -181,14 +181,18 @@
             gap: 0.5rem;
             min-width: 64px;
             cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
             transition: all 0.2s ease;
             border: 1px solid transparent;
+            background: #fff;
         }
 
         .category-item:hover {
+            background: #f7f7f7;
             border-color: #e5e7eb;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .category-item.active {
@@ -199,6 +203,7 @@
         .category-item.selected {
             background: #222222;
             color: #fff;
+            border-color: #222222;
         }
 
         .category-item.selected .category-icon {
@@ -213,6 +218,11 @@
             width: 24px;
             height: 24px;
             color: #222222;
+            transition: all 0.2s ease;
+        }
+
+        .category-item:hover .category-icon {
+            transform: scale(1.1);
         }
 
         .category-label {
