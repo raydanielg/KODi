@@ -15,12 +15,12 @@
                 <svg class="input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 <select id="role" name="role" class="form-control @error('role') is-invalid @enderror" required onchange="updateRoleDescription()">
                     <option value="">Select your role</option>
-                    <option value="tenant">👤 Tenant (Mpangaji)</option>
-                    <option value="landlord">🏘️ Landlord (Mmiliki wa Nyumba)</option>
-                    <option value="agent">🤝 Agent (Wakala wa Nyumba)</option>
-                    <option value="support">🎧 Support Agent</option>
-                    <option value="maintenance">🔧 Maintenance Staff</option>
-                    <option value="accountant">💰 Accountant</option>
+                    <option value="tenant">Tenant (Mpangaji)</option>
+                    <option value="landlord">Landlord (Mmiliki wa Nyumba)</option>
+                    <option value="agent">Agent (Wakala wa Nyumba)</option>
+                    <option value="support">Support Agent</option>
+                    <option value="maintenance">Maintenance Staff</option>
+                    <option value="accountant">Accountant</option>
                 </select>
             </div>
             @error('role')
@@ -102,12 +102,12 @@
 @push('scripts')
 <script>
     const roleDescriptions = {
-        tenant: '👤 Tenant: Looking for a long-term rental property',
-        landlord: '🏘️ Landlord: Own properties to rent out',
-        agent: '🤝 Agent: Manage properties on behalf of landlords',
-        support: '🎧 Support Agent: Help users with their questions',
-        maintenance: '🔧 Maintenance Staff: Handle property repairs',
-        accountant: '💰 Accountant: Manage financial records'
+        tenant: 'Tenant: Looking for a long-term rental property',
+        landlord: 'Landlord: Own properties to rent out',
+        agent: 'Agent: Manage properties on behalf of landlords',
+        support: 'Support Agent: Help users with their questions',
+        maintenance: 'Maintenance Staff: Handle property repairs',
+        accountant: 'Accountant: Manage financial records'
     };
 
     function updateRoleDescription() {
