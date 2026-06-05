@@ -5,5 +5,5 @@ class AppAssets {
   static const String appIcon = 'assets/icons/app_icon.png';
   
   // Images
-  // Add image paths here when needed
+  static const String onboardingBg = 'assets/images/onboarding_bg.jpg';
 }
