@@ -138,7 +138,28 @@
             line-height: 1.2;
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             animation: fadeInUp 1s ease-out 0.4s both;
+            min-height: 4.2rem;
         }
+
+        .hero-title-text {
+            display: inline-block;
+            transition: all 0.5s ease;
+        }
+
+        .hero-title-text.fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .hero-title-text.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-title-text.color-1 { color: #fff; }
+        .hero-title-text.color-2 { color: #10B981; }
+        .hero-title-text.color-3 { color: #fbbf24; }
+        .hero-title-text.color-4 { color: #60a5fa; }
 
         .hero-subtitle {
             font-size: 1.35rem;
