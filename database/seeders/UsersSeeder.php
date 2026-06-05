@@ -161,16 +161,16 @@ class UsersSeeder extends Seeder
             ],
         ];
 
-        $data = [];
         foreach ($users as $user) {
-            $data[] = array_merge($user, [
-                'password' => Hash::make('password'),
-                'remember_token' => null,
-            ]);
+            User::updateOrCreate(
+                ['email' => $user['email']],
+                array_merge($user, [
+                    'password' => Hash::make('password'),
+                    'remember_token' => null,
+                ])
+            );
         }
 
-        DB::table('users')->insert($data);
-
-        $this->command->info('Users seeded successfully: ' . count($users) . ' users created.');
+        $this->command->info('Users seeded successfully: ' . count($users) . ' users created/updated.');
     }
 }
