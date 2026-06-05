@@ -612,6 +612,57 @@
         </div>
     </nav>
 
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-header">
+                <h2 class="sidebar-title">Filters</h2>
+                <button class="sidebar-close" onclick="toggleSidebar()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="sidebar-categories">
+                <div class="sidebar-category-item" data-category="all" onclick="selectCategory('all')">
+                    <svg class="sidebar-category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    <span class="sidebar-category-label">All</span>
+                </div>
+                <div class="sidebar-category-item" data-category="apartment" onclick="selectCategory('apartment')">
+                    <svg class="sidebar-category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                    <span class="sidebar-category-label">Apartments</span>
+                </div>
+                <div class="sidebar-category-item" data-category="house" onclick="selectCategory('house')">
+                    <svg class="sidebar-category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    <span class="sidebar-category-label">Houses</span>
+                </div>
+                <div class="sidebar-category-item" data-category="studio" onclick="selectCategory('studio')">
+                    <svg class="sidebar-category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+                    </svg>
+                    <span class="sidebar-category-label">Studios</span>
+                </div>
+                <div class="sidebar-category-item" data-category="penthouse" onclick="selectCategory('penthouse')">
+                    <svg class="sidebar-category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                    </svg>
+                    <span class="sidebar-category-label">Penthouses</span>
+                </div>
+                <div class="sidebar-category-item" data-category="villa" onclick="selectCategory('villa')">
+                    <svg class="sidebar-category-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+                    </svg>
+                    <span class="sidebar-category-label">Villas</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="categories-bar" id="categories-bar">
         <div class="categories-container">
             <div class="category-item" data-category="all" onclick="selectCategory('all')">
@@ -866,10 +917,15 @@
     <script>
         let currentCategory = 'all';
 
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mobile-sidebar');
+            sidebar.classList.toggle('active');
+        }
+
         function selectCategory(category) {
             currentCategory = category;
             
-            // Update category UI
+            // Update desktop category UI
             document.querySelectorAll('.category-item').forEach(item => {
                 item.classList.remove('active', 'selected');
                 if (item.dataset.category === category) {
@@ -877,10 +933,18 @@
                 }
             });
 
-            // Hide categories bar on mobile
+            // Update mobile sidebar category UI
+            document.querySelectorAll('.sidebar-category-item').forEach(item => {
+                item.classList.remove('selected');
+                if (item.dataset.category === category) {
+                    item.classList.add('selected');
+                }
+            });
+
+            // Close sidebar on mobile after selection
             if (window.innerWidth <= 768) {
-                document.getElementById('categories-bar').classList.add('hidden');
-                document.getElementById('container').classList.add('categories-hidden');
+                const sidebar = document.getElementById('mobile-sidebar');
+                sidebar.classList.remove('active');
             }
 
             // Filter properties
