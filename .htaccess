@@ -9,6 +9,10 @@
     RewriteCond %{REQUEST_URI} ^/service-worker\.js$
     RewriteRule ^ - [L]
 
+    # Rewrite asset requests to public directory
+    RewriteCond %{REQUEST_URI} ^/(css|js|images|icons|build|fonts)/
+    RewriteRule ^(.*)$ public/$1 [L]
+
     # Redirect Trailing Slashes If Not A Folder
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
