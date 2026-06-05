@@ -91,20 +91,22 @@ class HomeScreen extends StatelessWidget {
                             width: 120,
                             height: 120,
                             decoration: BoxDecoration(
-                              color: AppColors.primary,
+                              color: Colors.white,
                               borderRadius: BorderRadius.circular(28),
                               boxShadow: [
                                 BoxShadow(
-                                  color: AppColors.primary.withOpacity(0.5),
+                                  color: Colors.black.withOpacity(0.3),
                                   blurRadius: 20,
                                   offset: const Offset(0, 8),
                                 ),
                               ],
                             ),
-                            child: const Icon(
-                              Icons.home_work_rounded,
-                              color: Colors.white,
-                              size: 64,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Image.asset(
+                                AppAssets.appIcon,
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 40),
