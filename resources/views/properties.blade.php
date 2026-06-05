@@ -839,9 +839,56 @@
         </div>
 
         <div class="filters-section">
-            <div class="filters-grid">
+            <div class="filters-header" onclick="toggleFilters()">
+                <div class="filters-title">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                    </svg>
+                    Filters
+                </div>
+                <div class="filters-toggle" id="filters-toggle">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="filters-content" id="filters-content">
+                <div class="filter-icons" id="filter-icons">
+                    <div class="filter-icon-btn" onclick="toggleFilterIcon(this, 'location')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        <span>Location</span>
+                    </div>
+                    <div class="filter-icon-btn" onclick="toggleFilterIcon(this, 'type')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        <span>Type</span>
+                    </div>
+                    <div class="filter-icon-btn" onclick="toggleFilterIcon(this, 'price')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>Price</span>
+                    </div>
+                    <div class="filter-icon-btn" onclick="toggleFilterIcon(this, 'bedrooms')">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        <span>Beds</span>
+                    </div>
+                </div>
+                <div class="filters-grid">
                 <div class="filter-group">
-                    <label class="filter-label">Location</label>
+                    <label class="filter-label">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Location
+                    </label>
                     <select class="filter-select" id="location-filter">
                         <option value="">All Locations</option>
                         <option value="nairobi">Nairobi</option>
@@ -851,7 +898,12 @@
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label class="filter-label">Property Type</label>
+                    <label class="filter-label">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        Property Type
+                    </label>
                     <select class="filter-select" id="type-filter">
                         <option value="">All Types</option>
                         <option value="apartment">Apartment</option>
@@ -861,7 +913,12 @@
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label class="filter-label">Price Range</label>
+                    <label class="filter-label">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Price Range
+                    </label>
                     <select class="filter-select" id="price-filter">
                         <option value="">Any Price</option>
                         <option value="0-1500">$0 - $1,500</option>
@@ -870,7 +927,12 @@
                     </select>
                 </div>
                 <div class="filter-group">
-                    <label class="filter-label">Bedrooms</label>
+                    <label class="filter-label">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        Bedrooms
+                    </label>
                     <select class="filter-select" id="bedrooms-filter">
                         <option value="">Any</option>
                         <option value="1">1 Bedroom</option>
@@ -881,7 +943,12 @@
                 </div>
                 <div class="filter-group">
                     <label class="filter-label">&nbsp;</label>
-                    <button class="filter-button" onclick="applyFilters()">Apply Filters</button>
+                    <button class="filter-button" onclick="applyFilters()">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; margin-right: 0.5rem;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                        </svg>
+                        Apply Filters
+                    </button>
                 </div>
             </div>
         </div>
