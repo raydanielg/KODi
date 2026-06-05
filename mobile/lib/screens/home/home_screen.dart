@@ -86,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen>
         child: SafeArea(
           child: Column(
             children: [
-              // Header
               Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Row(
@@ -108,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               const Divider(color: Colors.grey),
-              // Menu Items
               Expanded(
                 child: ListView(
                   padding: EdgeInsets.zero,
@@ -118,7 +116,6 @@ class _HomeScreenState extends State<HomeScreen>
                       title: 'About Us',
                       onTap: () {
                         Navigator.pop(context);
-                        // TODO: Navigate to About Us
                       },
                     ),
                     _buildMenuItem(
@@ -126,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen>
                       title: 'Privacy Policy',
                       onTap: () {
                         Navigator.pop(context);
-                        // TODO: Navigate to Privacy Policy
                       },
                     ),
                     _buildMenuItem(
@@ -134,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen>
                       title: 'Terms of Service',
                       onTap: () {
                         Navigator.pop(context);
-                        // TODO: Navigate to Terms of Service
                       },
                     ),
                     _buildMenuItem(
@@ -142,13 +137,11 @@ class _HomeScreenState extends State<HomeScreen>
                       title: 'FAQ',
                       onTap: () {
                         Navigator.pop(context);
-                        // TODO: Navigate to FAQ
                       },
                     ),
                   ],
                 ),
               ),
-              // Footer
               Padding(
                 padding: const EdgeInsets.all(24.0),
                 child: Text(
@@ -189,167 +182,157 @@ class _HomeScreenState extends State<HomeScreen>
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
-
-                /// HEADER
-                Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset(
-                        AppAssets.appIcon,
-                        width: 120,
-                      ),
-
-                      IconButton(
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                        icon: const Icon(Icons.menu),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(
+                          AppAssets.appIcon,
+                          width: 120,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Scaffold.of(context).openDrawer();
+                          },
+                          icon: const Icon(Icons.menu),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-
-                const SizedBox(height: 30),
-
-                /// CONTENT
-                Expanded(
-                  child: Stack(
-                    children: [
-                      /// PAGE VIEW
-                      PageView.builder(
-                        controller: _pageController,
-                        onPageChanged: (index) {
-                          setState(() {
-                            _currentPage = index;
-                          });
-                        },
-                        itemCount: _onboardingData.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: SizedBox(
-                              width: 230,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(height: 30),
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        PageView.builder(
+                          controller: _pageController,
+                          onPageChanged: (index) {
+                            setState(() {
+                              _currentPage = index;
+                            });
+                          },
+                          itemCount: _onboardingData.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: SizedBox(
+                                width: 230,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      _onboardingData[index]['title']!,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.black87,
+                                        height: 1.1,
+                                      ),
+                                    ),
+                                    Text(
+                                      _onboardingData[index]['subtitle']!,
+                                      style: GoogleFonts.inter(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.w800,
+                                        color: AppColors.primary,
+                                        height: 1.1,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      _onboardingData[index]['description']!,
+                                      style: GoogleFonts.inter(
+                                        color: Colors.black54,
+                                        fontSize: 15,
+                                        height: 1.5,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 25),
+                                    Row(
+                                      children: List.generate(
+                                        _onboardingData.length,
+                                        (dotIndex) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              _pageController.animateToPage(
+                                                dotIndex,
+                                                duration: const Duration(milliseconds: 300),
+                                                curve: Curves.easeInOut,
+                                              );
+                                            },
+                                            child: Container(
+                                              margin: const EdgeInsets.only(right: 6),
+                                              width: _currentPage == dotIndex ? 20 : 6,
+                                              height: 6,
+                                              decoration: BoxDecoration(
+                                                color: _currentPage == dotIndex
+                                                    ? AppColors.primary
+                                                    : Colors.grey.shade300,
+                                                borderRadius: _currentPage == dotIndex
+                                                    ? BorderRadius.circular(10)
+                                                    : null,
+                                                shape: _currentPage == dotIndex
+                                                    ? BoxShape.rectangle
+                                                    : BoxShape.circle,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          bottom: 25,
+                          child: Center(
+                            child: Container(
+                              width: 280,
+                              height: 65,
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    _onboardingData[index]['title']!,
+                                    "GET STARTED",
                                     style: GoogleFonts.inter(
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.w800,
-                                      color: Colors.black87,
-                                      height: 1.1,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black,
                                     ),
                                   ),
-                                  Text(
-                                    _onboardingData[index]['subtitle']!,
-                                    style: GoogleFonts.inter(
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.w800,
-                                      color: AppColors.primary,
-                                      height: 1.1,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Text(
-                                    _onboardingData[index]['description']!,
-                                    style: GoogleFonts.inter(
-                                      color: Colors.black54,
-                                      fontSize: 15,
-                                      height: 1.5,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 25),
-                                  /// DOTS
-                                  Row(
-                                    children: List.generate(
-                                      _onboardingData.length,
-                                      (dotIndex) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            _pageController.animateToPage(
-                                              dotIndex,
-                                              duration: const Duration(milliseconds: 300),
-                                              curve: Curves.easeInOut,
-                                            );
-                                          },
-                                          child: Container(
-                                            margin: const EdgeInsets.only(right: 6),
-                                            width: _currentPage == dotIndex ? 20 : 6,
-                                            height: 6,
-                                            decoration: BoxDecoration(
-                                              color: _currentPage == dotIndex
-                                                  ? AppColors.primary
-                                                  : Colors.grey.shade300,
-                                              borderRadius: _currentPage == dotIndex
-                                                  ? BorderRadius.circular(10)
-                                                  : null,
-                                              shape: _currentPage == dotIndex
-                                                  ? BoxShape.rectangle
-                                                  : BoxShape.circle,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
+                                  const SizedBox(width: 10),
+                                  AnimatedBuilder(
+                                    animation: _animation,
+                                    builder: (context, child) {
+                                      return Transform.translate(
+                                        offset: Offset(_animation.value, 0),
+                                        child: const Icon(
+                                          Icons.arrow_forward,
+                                          color: Colors.black,
+                                          size: 20,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
                             ),
-                          );
-                        },
-                      ),
-
-                      /// BUTTON
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 25,
-                        child: Center(
-                          child: Container(
-                            width: 280,
-                            height: 65,
-                            decoration: BoxDecoration(
-                              color: AppColors.primary,
-                              borderRadius:
-                                  BorderRadius.circular(40),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "GET STARTED",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                AnimatedBuilder(
-                                  animation: _animation,
-                                  builder: (context, child) {
-                                    return Transform.translate(
-                                      offset: Offset(_animation.value, 0),
-                                      child: const Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.black,
-                                        size: 20,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
