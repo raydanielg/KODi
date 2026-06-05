@@ -742,14 +742,15 @@
             });
             @else
             Swal.fire({
-                icon: 'info',
-                title: 'Login Required',
-                text: 'You need to login or register to book this property.',
+                icon: 'warning',
+                title: 'Authentication Required',
+                text: 'Please sign in or create an account to make a reservation.',
                 showCancelButton: true,
                 confirmButtonColor: '#222222',
                 cancelButtonColor: '#6b7280',
-                confirmButtonText: 'Login',
-                cancelButtonText: 'Register'
+                confirmButtonText: 'Sign In',
+                cancelButtonText: 'Create Account',
+                reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = '{{ route('login') }}?redirect={{ request()->fullUrl() }}';
