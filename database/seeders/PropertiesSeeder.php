@@ -347,9 +347,6 @@ class PropertiesSeeder extends Seeder
             'Dining Table' => 'table',
         ];
 
-        $propertyId = DB::table('properties')->insertGetId([]);
-        $firstId = null;
-
         foreach ($properties as $i => $property) {
             $slug = Str::slug($property['title']) . '-' . ($now->timestamp + $i);
             $property['slug'] = $slug;
