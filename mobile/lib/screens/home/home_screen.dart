@@ -376,7 +376,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     Text(
                                       _onboardingData[index]['description']!,
                                       style: GoogleFonts.inter(
-                                        color: Colors.black54,
+                                        color: Colors.white,
                                         fontSize: 15,
                                         height: 1.5,
                                       ),
