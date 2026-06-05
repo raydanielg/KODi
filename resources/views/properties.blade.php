@@ -270,7 +270,7 @@
         }
 
         .property-content {
-            padding: 1rem 0;
+            padding: 0.75rem 0;
         }
 
         .property-header {
@@ -278,6 +278,7 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 0.25rem;
+            gap: 0.5rem;
         }
 
         .property-title {
@@ -285,6 +286,7 @@
             font-weight: 600;
             color: #222222;
             margin-bottom: 0.25rem;
+            line-height: 1.3;
         }
 
         .property-rating {
@@ -293,6 +295,7 @@
             gap: 0.25rem;
             font-size: 0.875rem;
             color: #222222;
+            flex-shrink: 0;
         }
 
         .property-rating svg {
@@ -305,6 +308,15 @@
             font-size: 0.875rem;
             color: #717171;
             margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .property-location svg {
+            width: 14px;
+            height: 14px;
+            color: #717171;
         }
 
         .property-price {
@@ -339,11 +351,41 @@
             }
 
             .properties-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
             }
 
             .property-image {
-                height: 220px;
+                height: 180px;
+                font-size: 3rem;
+            }
+
+            .property-title {
+                font-size: 0.875rem;
+            }
+
+            .property-rating {
+                font-size: 0.75rem;
+            }
+
+            .property-location {
+                font-size: 0.75rem;
+            }
+
+            .property-price {
+                font-size: 0.875rem;
+            }
+
+            .property-favorite {
+                width: 28px;
+                height: 28px;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+
+            .property-favorite svg {
+                width: 16px;
+                height: 16px;
             }
         }
     </style>
@@ -473,7 +515,13 @@
                             4.95
                         </div>
                     </div>
-                    <div class="property-location">Nairobi, Kenya</div>
+                    <div class="property-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Nairobi, Kenya
+                    </div>
                     <div class="property-price">$1,200 <span>night</span></div>
                 </div>
             </div>
@@ -497,7 +545,13 @@
                             4.87
                         </div>
                     </div>
-                    <div class="property-location">Lagos, Nigeria</div>
+                    <div class="property-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Lagos, Nigeria
+                    </div>
                     <div class="property-price">$2,500 <span>night</span></div>
                 </div>
             </div>
@@ -521,7 +575,13 @@
                             4.92
                         </div>
                     </div>
-                    <div class="property-location">Accra, Ghana</div>
+                    <div class="property-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Accra, Ghana
+                    </div>
                     <div class="property-price">$1,800 <span>night</span></div>
                 </div>
             </div>
@@ -545,7 +605,13 @@
                             4.85
                         </div>
                     </div>
-                    <div class="property-location">Johannesburg, South Africa</div>
+                    <div class="property-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Johannesburg, South Africa
+                    </div>
                     <div class="property-price">$3,000 <span>night</span></div>
                 </div>
             </div>
