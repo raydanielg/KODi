@@ -100,3 +100,7 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
+
+Route::get('/properties/{id}', function ($id) {
+    return view('property-details', ['id' => $id]);
+})->name('property-details');
