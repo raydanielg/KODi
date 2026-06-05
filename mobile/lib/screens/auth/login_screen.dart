@@ -146,9 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 8),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[200]!),
+                              color: const Color(0xfff3f4f6),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xffd1d5db)),
                             ),
                             child: TextField(
                               controller: _passwordController,
@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               decoration: InputDecoration(
                                 hintText: '••••••••',
                                 hintStyle: GoogleFonts.inter(
-                                  color: Colors.grey[400],
+                                  color: const Color(0xff6b7280),
                                 ),
                                 prefixIcon: const Icon(
                                   Icons.lock_outlined,
@@ -180,6 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   horizontal: 16,
                                   vertical: 16,
                                 ),
+                                filled: false,
                               ),
                             ),
                           ),
