@@ -1,6 +1,6 @@
 @extends('layouts.landlord')
 
-@section('title', 'Maelezo ya Mkataba')
+@section('title', 'Historia ya Ukusanyaji')
 
 @section('content')
 <style>
@@ -12,8 +12,8 @@
 </style>
 
 <div class="page-header">
-    <h1>Maelezo ya Mkataba</h1>
-    <p>Angalia maelezo ya mkataba wa ukodishaji.</p>
+    <h1>Historia ya Ukusanyaji</h1>
+    <p>Angalia historia ya ukusanyaji wa kodi.</p>
 </div>
 
 <div class="card">
