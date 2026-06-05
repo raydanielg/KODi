@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
+import 'constants/app_theme.dart';
+import 'constants/app_routes.dart';
 
 void main() {
   runApp(const MannaApp());
@@ -16,19 +17,13 @@ class MannaApp extends StatelessWidget {
     return MaterialApp(
       title: 'Manna',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF10B981),
-          brightness: Brightness.light,
-        ),
-        useMaterial3: true,
-        textTheme: GoogleFonts.interTextTheme(),
-      ),
-      initialRoute: '/',
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      initialRoute: AppRoutes.home,
       routes: {
-        '/': (context) => const HomeScreen(),
-        '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegisterScreen(),
+        AppRoutes.home: (context) => const HomeScreen(),
+        AppRoutes.login: (context) => const LoginScreen(),
+        AppRoutes.register: (context) => const RegisterScreen(),
       },
     );
   }
