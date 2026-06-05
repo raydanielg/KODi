@@ -66,7 +66,8 @@
             .nav-menu-header { display: none; }
             .nav-menu ul { flex-direction: row; padding: 0; border: none; background: transparent; gap: 0.5rem; }
             .nav-menu ul li { margin-bottom: 0; }
-            .nav-menu ul li a { padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; }
+            .nav-menu ul li a { padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; }
+            .nav-menu ul li a svg { width: 18px; height: 18px; }
             .nav-menu ul li a:hover { background: #f0fdf4; transform: none; }
             .hamburger { display: none; }
         }
