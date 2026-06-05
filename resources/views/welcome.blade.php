@@ -801,6 +801,28 @@
                 });
             }
 
+            // Notification panel toggle
+            if (notificationBadge && notificationPanel && notificationOverlay && notificationClose) {
+                notificationBadge.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    notificationBadge.classList.toggle('active');
+                    notificationPanel.classList.toggle('active');
+                    notificationOverlay.classList.toggle('active');
+                });
+
+                notificationClose.addEventListener('click', function() {
+                    notificationBadge.classList.remove('active');
+                    notificationPanel.classList.remove('active');
+                    notificationOverlay.classList.remove('active');
+                });
+
+                notificationOverlay.addEventListener('click', function() {
+                    notificationBadge.classList.remove('active');
+                    notificationPanel.classList.remove('active');
+                    notificationOverlay.classList.remove('active');
+                });
+            }
+
             // Newsletter form AJAX submission
             if (newsletterForm) {
                 newsletterForm.addEventListener('submit', function(e) {
