@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Image.asset(
-                      "assets/logo.png",
+                      AppAssets.appIcon,
                       width: 120,
                     ),
 
@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
                         child: Image.asset(
-                          "assets/building.jpg",
+                          AppAssets.onboardingBg,
                           fit: BoxFit.cover,
                           height: 500,
                         ),
