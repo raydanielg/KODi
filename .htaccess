@@ -9,8 +9,10 @@
     RewriteCond %{REQUEST_URI} ^/service-worker\.js$
     RewriteRule ^ - [L]
 
-    # Rewrite asset requests to public directory
-    RewriteCond %{REQUEST_URI} ^/(css|js|images|icons|build|fonts)/
+    # Serve assets from public directory
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
     RewriteRule ^(.*)$ public/$1 [L]
 
     # Redirect Trailing Slashes If Not A Folder
@@ -19,7 +21,7 @@
     RewriteRule ^ %1 [L,R=301]
 
     # Send Requests To Front Controller
-    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^ index.php [L]
 </IfModule>
