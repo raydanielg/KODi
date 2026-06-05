@@ -793,7 +793,7 @@
                         </div>
                     </div>
                     <div class="property-actions">
-                        <a href="/properties/1" class="view-details-btn">View Details</a>
+                        <a href="/properties/2" class="view-details-btn">View Details</a>
                         <button class="book-btn" onclick="bookProperty(this)">Book Now</button>
                     </div>
                 </div>
