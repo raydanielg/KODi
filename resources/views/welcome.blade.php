@@ -27,13 +27,14 @@
             100% { background-position: 0% 50%; }
         }
 
-        .header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; border-bottom: 1px solid #e5e7eb; z-index: 20; transition: all 0.3s ease; }
-        .header:hover { box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
-        .nav-container { max-width: 1280px; margin: 0 auto; padding: 0.625rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
-        .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-        .nav-brand-icon { width: 36px; height: 36px; background: #10B981; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .nav-brand-icon svg { width: 20px; height: 20px; fill: #fff; }
-        .nav-brand-name { font-size: 1.25rem; font-weight: 600; color: #1f2937; white-space: nowrap; }
+        .header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; border-bottom: 1px solid #e5e7eb; z-index: 20; transition: all 0.3s ease; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+        .header:hover { box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
+        .nav-container { max-width: 1280px; margin: 0 auto; padding: 0.875rem 1.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+        .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; transition: all 0.2s ease; }
+        .nav-brand:hover { transform: translateY(-1px); }
+        .nav-brand-icon { width: 40px; height: 40px; background: #10B981; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
+        .nav-brand-icon svg { width: 22px; height: 22px; fill: #fff; }
+        .nav-brand-name { font-size: 1.375rem; font-weight: 700; color: #1f2937; white-space: nowrap; }
         .nav-buttons { display: flex; gap: 0.5rem; align-items: center; order: 3; }
         .nav-menu { display: none; width: 300px; max-width: 85vw; position: fixed; top: 0; right: -300px; height: 100vh; background: #ffffff; box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15); transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; overflow-y: auto; }
         .nav-menu.active { display: block; right: 0; }
@@ -60,18 +61,19 @@
         .hamburger.active svg { transform: rotate(90deg); }
         @media (min-width: 1024px) {
             .nav-container { flex-wrap: nowrap; }
-            .nav-buttons { order: 2; }
-            .nav-menu { display: flex; width: auto; order: 1; margin-top: 0; }
-            .nav-menu ul { flex-direction: row; padding: 0; border: none; background: transparent; gap: 2rem; }
-            .nav-menu ul li { border-bottom: none; }
-            .nav-menu ul li a:hover { background: transparent; }
+            .nav-buttons { order: 2; gap: 1rem; }
+            .nav-menu { display: flex; width: auto; order: 1; margin-top: 0; margin-right: auto; margin-left: 2rem; }
+            .nav-menu ul { flex-direction: row; padding: 0; border: none; background: transparent; gap: 0.5rem; }
+            .nav-menu ul li { border-bottom: none; margin-bottom: 0; }
+            .nav-menu ul li a { padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; }
+            .nav-menu ul li a:hover { background: #f0fdf4; }
             .hamburger { display: none; }
         }
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border: none; border-radius: 8px; font-size: 0.875rem; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s ease; text-decoration: none; }
-        .btn-primary { background: #10B981; color: #fff; }
-        .btn-primary:hover { background: #059669; }
-        .btn-secondary { background: transparent; color: #1f2937; border: 1px solid transparent; }
-        .btn-secondary:hover { background: #f9fafb; color: #10B981; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.625rem 1.25rem; border: none; border-radius: 10px; font-size: 0.875rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s ease; text-decoration: none; }
+        .btn-primary { background: #10B981; color: #fff; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
+        .btn-primary:hover { background: #059669; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
+        .btn-secondary { background: transparent; color: #1f2937; border: 1px solid #e5e7eb; }
+        .btn-secondary:hover { background: #f9fafb; color: #10B981; border-color: #10B981; }
         .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; background: linear-gradient(-45deg, #10B981, #059669, #047857, #065f46), url('{{ asset('serious-expert-expressing-support-colleague (1).jpg') }}'); background-size: cover; background-position: center; background-blend-mode: overlay; }
 
         .hero::before {
@@ -554,6 +556,7 @@
             .hero-subtitle { font-size: 1rem; line-height: 1.6; }
             .hero-buttons { flex-direction: row; flex-wrap: wrap; }
             .header { padding: 0.75rem 1rem; }
+            .nav-container { padding: 0.75rem 1rem; }
             .hero { padding: 7rem 1.5rem 3rem; }
             .newsletter-form { flex-direction: row; }
             .newsletter-btn { padding: 0.875rem 1.5rem; }
