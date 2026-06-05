@@ -116,9 +116,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(height: 8),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[200]!),
+                              color: const Color(0xfff3f4f6),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xffd1d5db)),
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
@@ -128,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hint: Text(
                                   'Select your role',
                                   style: GoogleFonts.inter(
-                                    color: Colors.grey[400],
+                                    color: const Color(0xff6b7280),
                                   ),
                                 ),
                                 icon: const Icon(
@@ -179,16 +179,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(height: 8),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[200]!),
+                              color: const Color(0xfff3f4f6),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xffd1d5db)),
                             ),
                             child: TextField(
                               controller: _nameController,
                               decoration: InputDecoration(
                                 hintText: 'John Doe',
                                 hintStyle: GoogleFonts.inter(
-                                  color: Colors.grey[400],
+                                  color: const Color(0xff6b7280),
                                 ),
                                 prefixIcon: const Icon(
                                   Icons.person_outline,
@@ -199,6 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   horizontal: 16,
                                   vertical: 16,
                                 ),
+                                filled: false,
                               ),
                             ),
                           ),
@@ -220,9 +221,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(height: 8),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[200]!),
+                              color: const Color(0xfff3f4f6),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xffd1d5db)),
                             ),
                             child: TextField(
                               controller: _emailController,
@@ -230,7 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               decoration: InputDecoration(
                                 hintText: 'name@company.com',
                                 hintStyle: GoogleFonts.inter(
-                                  color: Colors.grey[400],
+                                  color: const Color(0xff6b7280),
                                 ),
                                 prefixIcon: const Icon(
                                   Icons.email_outlined,
@@ -241,6 +242,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   horizontal: 16,
                                   vertical: 16,
                                 ),
+                                filled: false,
                               ),
                             ),
                           ),
@@ -262,9 +264,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(height: 8),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[200]!),
+                              color: const Color(0xfff3f4f6),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xffd1d5db)),
                             ),
                             child: TextField(
                               controller: _phoneController,
@@ -272,7 +274,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               decoration: InputDecoration(
                                 hintText: '+1 234 567 890',
                                 hintStyle: GoogleFonts.inter(
-                                  color: Colors.grey[400],
+                                  color: const Color(0xff6b7280),
                                 ),
                                 prefixIcon: const Icon(
                                   Icons.phone_outlined,
@@ -283,6 +285,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   horizontal: 16,
                                   vertical: 16,
                                 ),
+                                filled: false,
                               ),
                             ),
                           ),
@@ -304,9 +307,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(height: 8),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[200]!),
+                              color: const Color(0xfff3f4f6),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xffd1d5db)),
                             ),
                             child: TextField(
                               controller: _passwordController,
@@ -314,7 +317,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               decoration: InputDecoration(
                                 hintText: '••••••••',
                                 hintStyle: GoogleFonts.inter(
-                                  color: Colors.grey[400],
+                                  color: const Color(0xff6b7280),
                                 ),
                                 prefixIcon: const Icon(
                                   Icons.lock_outlined,
@@ -338,6 +341,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   horizontal: 16,
                                   vertical: 16,
                                 ),
+                                filled: false,
                               ),
                             ),
                           ),
@@ -359,9 +363,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(height: 8),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: Colors.grey[200]!),
+                              color: const Color(0xfff3f4f6),
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(color: const Color(0xffd1d5db)),
                             ),
                             child: TextField(
                               controller: _confirmPasswordController,
@@ -369,7 +373,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               decoration: InputDecoration(
                                 hintText: '••••••••',
                                 hintStyle: GoogleFonts.inter(
-                                  color: Colors.grey[400],
+                                  color: const Color(0xff6b7280),
                                 ),
                                 prefixIcon: const Icon(
                                   Icons.check_circle_outline,
@@ -393,6 +397,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   horizontal: 16,
                                   vertical: 16,
                                 ),
+                                filled: false,
                               ),
                             ),
                           ),
