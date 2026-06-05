@@ -108,89 +108,89 @@ class _HomeScreenState extends State<HomeScreen>
                 Expanded(
                   child: Stack(
                     children: [
-                      /// TEXT
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        child: SizedBox(
-                          width: 230,
-                          child: Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                            children: [
-
-                              Text(
-                                "WE BUILD\nYOUR VISION",
-                                style: GoogleFonts.inter(
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.w800,
-                                  color: Colors.black87,
-                                  height: 1.1,
-                                ),
-                              ),
-
-                              Text(
-                                "TO REALITY",
-                                style: GoogleFonts.inter(
-                                  fontSize: 40,
-                                  fontWeight: FontWeight.w800,
-                                  color: const Color(0xffF4B63E),
-                                  height: 1.1,
-                                ),
-                              ),
-
-                              const SizedBox(height: 20),
-
-                              Text(
-                                "Trusted construction services for residential, commercial & industrial projects.",
-                                style: GoogleFonts.inter(
-                                  color: Colors.black54,
-                                  fontSize: 15,
-                                  height: 1.5,
-                                ),
-                              ),
-
-                              const SizedBox(height: 25),
-
-                              /// DOTS
-                              Row(
+                      /// PAGE VIEW
+                      PageView.builder(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        },
+                        itemCount: _onboardingData.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: SizedBox(
+                              width: 230,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 20,
-                                    height: 6,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xffF4B63E),
-                                      borderRadius:
-                                          BorderRadius.circular(10),
+                                  Text(
+                                    _onboardingData[index]['title']!,
+                                    style: GoogleFonts.inter(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.black87,
+                                      height: 1.1,
                                     ),
                                   ),
-
-                                  const SizedBox(width: 6),
-
-                                  Container(
-                                    width: 6,
-                                    height: 6,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade300,
-                                      shape: BoxShape.circle,
+                                  Text(
+                                    _onboardingData[index]['subtitle']!,
+                                    style: GoogleFonts.inter(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w800,
+                                      color: const Color(0xffF4B63E),
+                                      height: 1.1,
                                     ),
                                   ),
-
-                                  const SizedBox(width: 6),
-
-                                  Container(
-                                    width: 6,
-                                    height: 6,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade300,
-                                      shape: BoxShape.circle,
+                                  const SizedBox(height: 20),
+                                  Text(
+                                    _onboardingData[index]['description']!,
+                                    style: GoogleFonts.inter(
+                                      color: Colors.black54,
+                                      fontSize: 15,
+                                      height: 1.5,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 25),
+                                  /// DOTS
+                                  Row(
+                                    children: List.generate(
+                                      _onboardingData.length,
+                                      (dotIndex) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            _pageController.animateToPage(
+                                              dotIndex,
+                                              duration: const Duration(milliseconds: 300),
+                                              curve: Curves.easeInOut,
+                                            );
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.only(right: 6),
+                                            width: _currentPage == dotIndex ? 20 : 6,
+                                            height: 6,
+                                            decoration: BoxDecoration(
+                                              color: _currentPage == dotIndex
+                                                  ? const Color(0xffF4B63E)
+                                                  : Colors.grey.shade300,
+                                              borderRadius: _currentPage == dotIndex
+                                                  ? BorderRadius.circular(10)
+                                                  : null,
+                                              shape: _currentPage == dotIndex
+                                                  ? BoxShape.rectangle
+                                                  : BoxShape.circle,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       ),
 
                       /// BUTTON
