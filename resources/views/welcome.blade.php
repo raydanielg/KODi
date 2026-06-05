@@ -71,6 +71,12 @@
             text-align: center;
             position: relative;
             z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-badge {
@@ -86,6 +92,12 @@
             margin-bottom: 2rem;
             text-decoration: none;
             transition: all 0.2s ease;
+            animation: fadeInDown 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-badge:hover {
@@ -328,6 +340,7 @@
             if (hamburgerBtn && navMenu) {
                 hamburgerBtn.addEventListener('click', function() {
                     navMenu.classList.toggle('active');
+                    hamburgerBtn.classList.toggle('active');
                 });
             }
 
