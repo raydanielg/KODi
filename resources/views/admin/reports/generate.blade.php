@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Ripoti Zote')
+@section('title', 'Tengeneza Ripoti')
 
 @section('content')
 <style>
@@ -12,8 +12,8 @@
 </style>
 
 <div class="page-header">
-    <h1>Ripoti Zote</h1>
-    <p>Orodha ya ripoti zote zinazopatikana.</p>
+    <h1>Tengeneza Ripoti</h1>
+    <p>Chagua vigezo na utengeneze ripoti mpya.</p>
 </div>
 
 <div class="card">
