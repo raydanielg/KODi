@@ -26,16 +26,19 @@
         .nav-brand-icon svg { width: 20px; height: 20px; fill: #fff; }
         .nav-brand-name { font-size: 1.25rem; font-weight: 600; color: #1f2937; white-space: nowrap; }
         .nav-buttons { display: flex; gap: 0.5rem; align-items: center; order: 3; }
-        .nav-menu { display: none; width: 100%; order: 2; margin-top: 1rem; }
-        .nav-menu.active { display: block; }
-        .nav-menu ul { display: flex; flex-direction: column; padding: 0; font-weight: 500; list-style: none; margin: 0; }
+        .nav-menu { display: none; width: 100%; order: 2; margin-top: 0; position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border-bottom: 1px solid #e5e7eb; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); transform: translateY(-10px); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; }
+        .nav-menu.active { display: block; transform: translateY(0); opacity: 1; visibility: visible; }
+        .nav-menu ul { display: flex; flex-direction: column; padding: 1rem; font-weight: 500; list-style: none; margin: 0; }
         .nav-menu ul li { border-bottom: 1px solid #f3f4f6; }
         .nav-menu ul li:last-child { border-bottom: none; }
-        .nav-menu ul li a { display: block; padding: 0.75rem 1rem; color: #374151; text-decoration: none; transition: all 0.2s ease; }
-        .nav-menu ul li a:hover { background: #f9fafb; color: #10B981; }
-        .nav-menu ul li a.active { color: #10B981; }
-        .hamburger { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; color: #6b7280; background: transparent; border: none; cursor: pointer; transition: all 0.2s ease; }
-        .hamburger:hover { background: #f3f4f6; }
+        .nav-menu ul li a { display: block; padding: 1rem; color: #374151; text-decoration: none; transition: all 0.2s ease; border-radius: 8px; }
+        .nav-menu ul li a:hover { background: #f9fafb; color: #10B981; transform: translateX(5px); }
+        .nav-menu ul li a.active { color: #10B981; background: #f0fdf4; }
+        .hamburger { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; color: #6b7280; background: transparent; border: none; cursor: pointer; transition: all 0.3s ease; position: relative; z-index: 101; }
+        .hamburger:hover { background: #f3f4f6; transform: rotate(180deg); }
+        .hamburger.active { background: #f3f4f6; }
+        .hamburger svg { transition: transform 0.3s ease; }
+        .hamburger.active svg { transform: rotate(90deg); }
         @media (min-width: 1024px) {
             .nav-container { flex-wrap: nowrap; }
             .nav-buttons { order: 2; }
@@ -225,7 +228,21 @@
             background: #f9fafb;
             color: #059669;
         }
-        @media (max-width: 768px) { .hero-title { font-size: 2.25rem; } .hero-subtitle { font-size: 1.1rem; } .hero-buttons { flex-direction: column; } .header { padding: 1rem; } .hero { padding: 6rem 1.5rem 3rem; } .newsletter-form { flex-direction: column; } .newsletter-btn { width: 100%; } }
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; font-weight: 700; }
+            .hero-subtitle { font-size: 1rem; line-height: 1.6; }
+            .hero-buttons { flex-direction: column; }
+            .header { padding: 0.75rem 1rem; }
+            .hero { padding: 7rem 1.5rem 3rem; }
+            .newsletter-form { flex-direction: column; }
+            .newsletter-btn { width: 100%; }
+            .hero-badge { font-size: 0.75rem; padding: 0.2rem 0.2rem 0.2rem 0.75rem; }
+            .hero-badge .badge-new { padding: 0.25rem 0.5rem; font-size: 0.65rem; }
+            .hero-badge svg { width: 16px; height: 16px; }
+            .nav-brand-name { font-size: 1.1rem; }
+            .nav-brand-icon { width: 32px; height: 32px; }
+            .nav-brand-icon svg { width: 16px; height: 16px; }
+        }
     </style>
 </head>
 <body>
