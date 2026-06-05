@@ -2,8 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_assets.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0, end: 10).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +42,20 @@ class HomeScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.white.withOpacity(0.7),
+                Colors.white.withOpacity(0.3),
+                Colors.transparent,
+              ],
+              stops: const [0.0, 0.3, 0.5],
+            ),
+          ),
+          child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
@@ -62,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                                 style: GoogleFonts.inter(
                                   fontSize: 40,
                                   fontWeight: FontWeight.w800,
-                                  color: Colors.black,
+                                  color: Colors.black87,
                                   height: 1.1,
                                 ),
                               ),
@@ -82,7 +122,7 @@ class HomeScreen extends StatelessWidget {
                               Text(
                                 "Trusted construction services for residential, commercial & industrial projects.",
                                 style: GoogleFonts.inter(
-                                  color: Colors.grey.shade600,
+                                  color: Colors.black54,
                                   fontSize: 15,
                                   height: 1.5,
                                 ),
