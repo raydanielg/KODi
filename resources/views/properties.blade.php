@@ -55,7 +55,7 @@
         }
 
         .search-bar {
-            display: flex;
+            display: none;
             align-items: center;
             background: #fff;
             border: 1px solid #e5e7eb;
