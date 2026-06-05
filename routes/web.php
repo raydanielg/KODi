@@ -98,3 +98,5 @@ Route::get('/faq', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'store'])->name('contact.store');
