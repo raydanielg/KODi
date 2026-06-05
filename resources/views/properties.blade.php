@@ -629,7 +629,7 @@
                 </div>
             </div>
 
-            <div class="property-card" onclick="window.location.href='/properties/4'">
+            <div class="property-card" data-category="commercial" onclick="window.location.href='/properties/4'">
                 <div class="property-image">
                     <span>🏗️</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
@@ -659,7 +659,7 @@
                 </div>
             </div>
 
-            <div class="property-card" onclick="window.location.href='/properties/1'">
+            <div class="property-card" data-category="beachfront" onclick="window.location.href='/properties/1'">
                 <div class="property-image">
                     <span>🏠</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
@@ -722,6 +722,43 @@
     </div>
 
     <script>
+        let currentCategory = 'all';
+
+        function selectCategory(category) {
+            currentCategory = category;
+            
+            // Update category UI
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active', 'selected');
+                if (item.dataset.category === category) {
+                    item.classList.add('selected');
+                }
+            });
+
+            // Hide categories bar on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('categories-bar').classList.add('hidden');
+                document.getElementById('container').classList.add('categories-hidden');
+            }
+
+            // Filter properties
+            filterProperties(category);
+        }
+
+        function filterProperties(category) {
+            const cards = document.querySelectorAll('.property-card');
+            
+            cards.forEach(card => {
+                const cardCategory = card.dataset.category;
+                
+                if (category === 'all' || cardCategory === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
         document.querySelectorAll('.category-item').forEach(item => {
             item.addEventListener('click', function() {
                 document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
