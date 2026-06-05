@@ -1,8 +1,8 @@
-# 🏠 KODI - Long-Term Rental Platform
+# 🏠 KODI Long-Term Rental Platform
 
 <div align="center">
 
-**KODI** is a comprehensive long-term rental platform for the African market, connecting tenants and landlords for monthly/yearly rentals.
+**KODI is a comprehensive long-term rental platform for the African market, connecting tenants and landlords for monthly/yearly rentals.
 
 [![Laravel](https://img.shields.io/badge/Laravel-8.x-red.svg)](https://laravel.com)
 [![PHP](https://img.shields.io/badge/PHP-7.4+-blue.svg)](https://php.net)
@@ -14,7 +14,7 @@
 
 ## 📌 About KODI
 
-**KODI** is an African name meaning "The System" - a platform designed specifically for long-term rentals (3 months to 1+ years), unlike short-term vacation rentals like Airbnb.
+**KODI is annn AfriAan nara m anrng "Th mSystam" - n "Th mSystam" - n "The System" - a platform designed specifically for long-term rentals (3 months to 1+ years), unlike short-term vacation rentals like Airbnb.
 
 ### Core Purpose
 - Connect **Tenants** (wapangaji) with **Landlords** (wamiliki) for long-term property rentals
@@ -34,103 +34,214 @@
 
 ---
 
-## 👥 User Panels
+## 👥 User Roles & Panels
 
-KODI provides dedicated panels for different user types:
+Manna provides dedicated panels for different user types with role-based access control.
 
-### 1. 🧑 Tenant Panel (Wapangaji)
-**Access:** `/tenant/dashboard`
+### 📊 ROLES ZOTE ZA MFUMO WA MANNA
 
-**Features:**
-- Search and browse properties
-- Submit rental applications
-- View application status
-- Pay monthly rent (M-Pesa/Card/Bank)
-- View payment history
-- Submit maintenance requests
-- Message landlords
-- Download lease agreements
-- Write reviews after move-out
-
-**Screens:** 15 screens including Homepage, Property Search, Application Form, My Rentals, Pay Rent, Maintenance, Messages, Profile
-
----
-
-### 2. 🏘️ Landlord Panel (Wamiliki)
-**Access:** `/landlord/dashboard`
-
-**Features:**
-- Manage property listings
-- Review tenant applications
-- Approve/reject applications
-- Generate lease agreements
-- Track rent collection
-- Send payment reminders
-- Handle maintenance requests
-- View tenant profiles
-- Access financial reports
-
-**Screens:** 17 screens including Dashboard, My Properties, Applications, Current Tenants, Rent Payments, Maintenance, Reports, Settings
+| # | Role | Kiwango | Kazi Kuu | Dashboard URL |
+|---|------|---------|----------|---------------|
+| 1 | **Super Admin** | Juu Kabisa | Kudhibiti mfumo mzima | `/super-admin/dashboard` |
+| 2 | **Admin** | Juu | Kusimamia operations za kila siku | `/admin/dashboard` |
+| 3 | **Landlord** | Wastani | Mmiliki wa nyumba / Property owner | `/landlord/dashboard` |
+| 4 | **Agent** | Wastani | Wakala wa nyumba | `/agent/dashboard` |
+| 5 | **Tenant** | Msingi | Mpangaji / Mtu anayekodisha nyumba | `/tenant/dashboard` |
+| 6 | **Guest** | Msingi | Mtembeleaji (hajajisajili) | `/` (public) |
+| 7 | **Support Agent** | Wastani | Kujibu maswali ya wateja | `/support/dashboard` |
+| 8 | **Maintenance Staff** | Msingi | Fundi wa kukarabati nyumba | `/maintenance/dashboard` |
+| 9 | **Accountant** | Wastani | Kushughulikia pesa | `/accountant/dashboard` |
+| 10 | **Investor** | Read-Only | Kuona utendaji wa kampuni | `/investor/dashboard` |
 
 ---
 
-### 3. 🏢 Agent Panel (Wakala) - Optional
-**Access:** `/agent/dashboard`
+### 👑 1. SUPER ADMIN
 
-**Features:**
-- Manage property listings for multiple landlords
-- Process tenant applications
-- Track commission earnings (5-10% of rent)
-- Request payouts
-- Generate reports for landlords
+**Maelezo:** Mwenyewe wa mfumo / Technical founder
 
-**Screens:** 6 screens including Dashboard, My Listings, Applications, Commission, Payouts, Reports
+**Majukumu:**
+- Kudhibiti admins wengine
+- Kuweka na kubadilisha system settings
+- Kuona logs zote za mfumo
+- Kufanya backups za database
+- Kuweka feature flags (kuwasha/kuzima features)
+- Kudhibiti maintenance mode
+- Kufanya migrations za database
+- Kuweka payment gateways (M-Pesa, Stripe)
+- Kuweka email/SMS settings
 
----
-
-### 4. 🛡️ Admin Panel (Wasimamizi)
-**Access:** `/admin/dashboard`
-
-**Features:**
-- Manage all users (tenants, landlords, agents)
-- Verify property listings
-- Handle disputes between parties
-- Send platform announcements
-- View platform analytics
-- Configure commission rates
-- Manage payment gateways
-
-**Screens:** 9 screens including Dashboard, Users, Properties, Payments, Disputes, Announcements, Reports, Settings
-
----
-
-### 5. 👑 Super Admin Panel
-**Access:** `/super-admin/dashboard`
-
-**Features:**
-- System health monitoring
-- Database management
-- Backup and restore
-- System logs and error tracking
-- Feature flags
-- Payment gateway configuration
-- Email/SMS settings
-- Roles and permissions
-- Maintenance mode
+**Access Level:** 🔴 **Full System Control**
 
 **Screens:** 9 screens including System Dashboard, Database, Backups, Logs, Features, Payment Gateways, Email/SMS, Roles, Maintenance
 
 ---
 
-### 6. 💰 Investor Panel (Wawekezaji)
-**Access:** `/investor/dashboard`
+### 🛡️ 2. ADMIN
 
-**Features:**
-- Financial dashboard
-- Key metrics (GMV, total rent collected)
-- User growth analytics
-- Financial reports (read-only)
-- Cap table and ownership
+**Maelezo:** Wasimamizi wa mfumo wa kila siku
+
+**Majukumu:**
+- Kusimamia landlords wote
+- Kusimamia tenants wote
+- Kusimamia agents wote
+- Kuidhinisha properties mpya
+- Kushughulikia disputes (migogoro)
+- Kuangalia reports za platform
+- Kutuma announcements kwa users
+- Kuweka commission rates
+- Kuona payment analytics
+- Kudhibiti property verifications
+
+**Access Level:** 🟠 **High Level Management**
+
+**Screens:** 9 screens including Dashboard, Users, Properties, Payments, Disputes, Announcements, Reports, Settings
+
+---
+
+### 🏘️ 3. LANDLORD (Mmiliki wa Nyumba)
+
+**Maelezo:** Mtu aliye na nyumba anayotaka kukodisha
+
+**Majukumu:**
+- Kuongeza properties zake
+- Kuedit properties zake
+- Kuona applications za tenants
+- Kukubali au kukataa tenants
+- Kuunda lease agreements
+- Kuona rent payments
+- Kutuma reminders za kodi kwa tenants
+- Kujibu maintenance requests
+- Kuona rent collection reports
+- Kuomba payout (pesa zikutumwe)
+- Kuwasiliana na tenants
+
+**Access Level:** 🟡 **Property Owner Access**
+
+**Screens:** 17 screens including Dashboard, My Properties, Applications, Current Tenants, Rent Payments, Maintenance, Reports, Settings
+
+---
+
+### 🤝 4. AGENT (Wakala wa Nyumba)
+
+**Maelezo:** Mtu anayesimamia properties kwa niaba ya landlords
+
+**Majukumu:**
+- Kusimamia properties za landlords wengi
+- Kupokea applications kwa niaba ya landlord
+- Kuwasaidia tenants kupata nyumba
+- Kuona commission yake
+- Kuomba payout ya commission
+- Kuripoti kwa landlords
+- Kuwasiliana na tenants na landlords
+
+**Access Level:** 🟢 **Agent Access**
+
+**Screens:** 6 screens including Dashboard, My Listings, Applications, Commission, Payouts, Reports
+
+---
+
+### � 5. TENANT (Mpangaji)
+
+**Maelezo:** Mtu anayetafuta au amekodisha nyumba
+
+**Majukumu:**
+- Kutafuta properties
+- Kutuma application kwa property
+- Kuangalia status ya application
+- Kusaini lease agreement (online)
+- Kulipa kodi kila mwezi (M-Pesa / Card)
+- Kuona payment history
+- Kutuma maintenance requests
+- Kuwasiliana na landlord / agent
+- Kuandika review baada ya kuhama
+- Kupakua receipts na documents
+
+**Access Level:** 🔵 **Basic User Access**
+
+**Screens:** 15 screens including Homepage, Property Search, Application Form, My Rentals, Pay Rent, Maintenance, Messages, Profile
+
+---
+
+### 🚶 6. GUEST (Mtembeleji)
+
+**Maelezo:** Mtu ambaye hajajisajili bado
+
+**Majukumu:**
+- Kuona properties (read-only)
+- Kutafuta properties
+- Kuona details za property (picha, bei, location)
+- Kuona reviews
+- Kuwasiliana na support
+
+**Access Level:** ⚪ **Public Read-Only**
+
+**Screens:** 4 screens including Homepage, Property Search, Property Details, Contact Support
+
+---
+
+### 🎧 7. SUPPORT AGENT
+
+**Maelezo:** Mtu anayejibu maswali ya wateja
+
+**Majukumu:**
+- Kujibu tickets za tenants
+- Kujibu tickets za landlords
+- Kutatua matatizo ya kiufundi
+- Kuwasiliana na Admin kwa issues kubwa
+- Kuona FAQ na knowledge base
+
+**Access Level:** 🟢 **Customer Support Access**
+
+**Screens:** 6 screens including Dashboard, Tickets, Knowledge Base, FAQ, User Messages, Reports
+
+---
+
+### 🔧 8. MAINTENANCE STAFF (Fundi)
+
+**Maelezo:** Mtu anayefanya ukarabati wa nyumba
+
+**Majukumu:**
+- Kuona maintenance requests zilizopangiwa
+- Kubadilisha status ya request (in-progress, completed)
+- Kuongeza notes za ukarabati uliofanywa
+- Kuwasiliana na landlord au tenant
+
+**Access Level:** 🔵 **Task-Based Access**
+
+**Screens:** 5 screens including Dashboard, Assigned Tasks, Task Details, History, Messages
+
+---
+
+### 💰 9. ACCOUNTANT (Mhasibu)
+
+**Maelezo:** Mtu anayeshughulikia pesa za mfumo
+
+**Majukumu:**
+- Kuona payments zote za tenants
+- Kuona payouts za landlords
+- Kuona platform revenue (commission)
+- Kuzalisha financial reports
+- Kuona tax calculations
+- Kuverify payouts kabla ya kuidhinishwa na Admin
+
+**Access Level:** 🟡 **Financial Read/Write**
+
+**Screens:** 8 screens including Dashboard, Payments, Payouts, Revenue, Tax Reports, Financial Reports, Settings, Audit Logs
+
+---
+
+### 📊 10. INVESTOR (Mwekezaji)
+
+**Maelezo:** Mtu aliyewekeza pesa kwenye kampuni
+
+**Majukumu:**
+- Kuona financial performance
+- Kuona Key Performance Indicators (KPIs)
+- Kuona growth metrics
+- Kuona user statistics
+- Kupakua reports (read-only)
+
+**Access Level:** 🟣 **Read-Only Financial Access**
 
 **Screens:** 5 screens including Financial Dashboard, Key Metrics, User Growth, Reports, Cap Table
 
@@ -148,8 +259,8 @@ KODI provides dedicated panels for different user types:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/kodi.git
-   cd kodi
+   git clone https://github.com/yourusername/manna.git
+   cd manna
    ```
 
 2. **Install dependencies**
@@ -169,7 +280,7 @@ KODI provides dedicated panels for different user types:
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
    DB_PORT=3306
-   DB_DATABASE=kodi
+   DB_DATABASE=manna
    DB_USERNAME=your_username
    DB_PASSWORD=your_password
    ```
@@ -292,7 +403,7 @@ Key tables:
 |--------------|--------|-------|----------|
 | Security Deposit | 2-3 months rent | Tenant | Landlord (held) |
 | Monthly Rent | Rent amount | Tenant | Landlord (minus fees) |
-| Platform Fee | 5-10% of rent | Landlord | Platform KODI |
+| Platform Fee | 5-10% of rent | Landlord | Platform Manna |
 | Agent Commission | 5-10% of rent | Landlord | Agent (optional) |
 | Late Fee | Percentage (e.g., 5%) | Tenant | Landlord |
 
@@ -315,7 +426,7 @@ Key tables:
 ## 📁 Project Structure
 
 ```
-kodi/
+manna_appartments/
 ├── app/Http/Controllers/
 │   ├── Tenant/
 │   ├── Landlord/
@@ -352,9 +463,9 @@ This project is proprietary software. All rights reserved.
 
 ## 📞 Support
 
-For support, email support@kodi.com or join our Slack channel.
+For support, email support@manna.com or join our Slack channel.
 
 ---
 
 **Built with ❤️ for Africa**
-**KODI - Long-Term Rental Platform**
+**Manna - Long-Term Rental Platform**

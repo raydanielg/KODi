@@ -52,7 +52,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', 'string', 'in:tenant,landlord,agent,support,maintenance,accountant'],
         ]);
     }
 
@@ -67,7 +69,46 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
+            'role' => $data['role'],
         ]);
+    }
+
+    /**
+     * Redirect users after registration based on their role.
+     *
+     * @return string
+     */
+    protected function redirectTo()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return RouteServiceProvider::HOME;
+        }
+
+        switch ($user->role) {
+            case 'super_admin':
+                return '/super-admin/dashboard';
+            case 'admin':
+                return '/admin/dashboard';
+            case 'landlord':
+                return '/landlord/dashboard';
+            case 'agent':
+                return '/agent/dashboard';
+            case 'tenant':
+                return '/tenant/dashboard';
+            case 'support':
+                return '/support/dashboard';
+            case 'maintenance':
+                return '/maintenance/dashboard';
+            case 'accountant':
+                return '/accountant/dashboard';
+            case 'investor':
+                return '/investor/dashboard';
+            default:
+                return RouteServiceProvider::HOME;
+        }
     }
 }
