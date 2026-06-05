@@ -5,6 +5,10 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+    # If the requested file exists in public/, serve it
+    RewriteCond %{REQUEST_URI} ^/(css|js|images|icons|build|fonts|logo\.png|hero-bg\.jpg|service-worker\.js|manifest\.json|robots\.txt|sitemap\.xml)
+    RewriteRule ^(.*)$ public/$1 [L]
+
     # Redirect Trailing Slashes If Not A Folder
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
