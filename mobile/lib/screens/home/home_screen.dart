@@ -3,6 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_assets.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
+import '../info/about_us_screen.dart';
+import '../info/privacy_policy_screen.dart';
+import '../info/terms_of_service_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
