@@ -734,6 +734,32 @@
             const newsletterForm = document.getElementById('newsletter-form');
             const newsletterEmail = document.getElementById('newsletter-email');
             const newsletterBtn = document.getElementById('newsletter-btn');
+            const notificationBadge = document.getElementById('notification-badge');
+            const notificationPanel = document.getElementById('notification-panel');
+            const notificationOverlay = document.getElementById('notification-overlay');
+            const notificationClose = document.getElementById('notification-close');
+
+            // Notification panel toggle
+            if (notificationBadge && notificationPanel && notificationOverlay && notificationClose) {
+                notificationBadge.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    notificationBadge.classList.toggle('active');
+                    notificationPanel.classList.toggle('active');
+                    notificationOverlay.classList.toggle('active');
+                });
+
+                notificationClose.addEventListener('click', function() {
+                    notificationBadge.classList.remove('active');
+                    notificationPanel.classList.remove('active');
+                    notificationOverlay.classList.remove('active');
+                });
+
+                notificationOverlay.addEventListener('click', function() {
+                    notificationBadge.classList.remove('active');
+                    notificationPanel.classList.remove('active');
+                    notificationOverlay.classList.remove('active');
+                });
+            }
 
             // Hamburger menu toggle
             if (hamburgerBtn && navMenu) {
