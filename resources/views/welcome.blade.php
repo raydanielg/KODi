@@ -450,37 +450,6 @@
             font-weight: 600;
         }
 
-        .coming-soon-section {
-            margin-top: 3rem;
-            text-align: center;
-            animation: fadeInUp 1s ease-out 1.4s both;
-        }
-
-        .coming-soon-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: #fff;
-            backdrop-filter: blur(10px);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
-        }
-
-        .coming-soon-badge svg {
-            width: 18px;
-            height: 18px;
-        }
-
         .newsletter-title {
             font-size: 1.25rem;
             font-weight: 600;
