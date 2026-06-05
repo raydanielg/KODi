@@ -482,6 +482,23 @@
         }
 
         @media (max-width: 768px) {
+            .nav-container {
+                padding: 0.75rem 1rem;
+            }
+
+            .nav-back {
+                padding: 0.625rem;
+            }
+
+            .nav-back-text {
+                display: none;
+            }
+
+            .nav-back svg {
+                width: 20px;
+                height: 20px;
+            }
+
             .container {
                 padding: 4rem 1rem 3rem;
             }
