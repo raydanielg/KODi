@@ -191,11 +191,13 @@ class _HomeScreenState extends State<HomeScreen>
                           AppAssets.appIcon,
                           width: 120,
                         ),
-                        IconButton(
-                          onPressed: () {
-                            Scaffold.of(context).openDrawer();
-                          },
-                          icon: const Icon(Icons.menu),
+                        Builder(
+                          builder: (context) => IconButton(
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                            icon: const Icon(Icons.menu),
+                          ),
                         ),
                       ],
                     ),
