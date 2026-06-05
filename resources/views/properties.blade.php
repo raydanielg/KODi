@@ -519,8 +519,23 @@
                 display: none;
             }
 
-            .mobile-filter-btn {
-                display: flex !important;
+            .mobile-sidebar {
+                align-items: flex-end;
+            }
+
+            .sidebar-content {
+                width: 100%;
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
+            }
+
+            @keyframes slideUp {
+                from {
+                    transform: translateY(100%);
+                }
+                to {
+                    transform: translateY(0);
+                }
             }
 
             .container {
@@ -945,11 +960,9 @@
                 }
             });
 
-            // Close sidebar on mobile after selection
-            if (window.innerWidth <= 768) {
-                const sidebar = document.getElementById('mobile-sidebar');
-                sidebar.classList.remove('active');
-            }
+            // Close sidebar after selection
+            const sidebar = document.getElementById('mobile-sidebar');
+            sidebar.classList.remove('active');
 
             // Filter properties
             filterProperties(category);
