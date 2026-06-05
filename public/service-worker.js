@@ -1,9 +1,10 @@
-const CACHE_NAME = 'manna-v1';
+const CACHE_NAME = 'manna-v2';
 const urlsToCache = [
     '/',
     '/manifest.json',
-    '/icon-192x192.png',
-    '/icon-512x512.png'
+    '/logo.png',
+    '/css/app.css',
+    '/js/app.js'
 ];
 
 self.addEventListener('install', event => {
