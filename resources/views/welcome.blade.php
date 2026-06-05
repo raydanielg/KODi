@@ -3,21 +3,107 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The modern long-term rental platform connecting tenants with landlords across Africa. Simple, secure, and transparent.">
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Manna - Find Your Perfect Home in Tanzania | Long-Term Rental Platform</title>
+    <meta name="description" content="Manna is the modern long-term rental platform connecting tenants with landlords across Tanzania and Africa. Find apartments, houses, and rental properties with ease. Simple, secure, and transparent.">
+    <meta name="keywords" content="rental properties, apartments for rent, houses for rent, Tanzania rentals, long-term rentals, Dar es Salaam rentals, affordable housing, property rental, tenant landlord platform, Manna">
+    <meta name="author" content="Manna">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <link rel="canonical" href="{{ url()->current() }}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="Manna - Find Your Perfect Home in Tanzania">
+    <meta property="og:description" content="The modern long-term rental platform connecting tenants with landlords across Africa. Simple, secure, and transparent.">
+    <meta property="og:image" content="{{ asset('hero-bg.jpg') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Manna - Modern Rental Platform">
+    <meta property="og:site_name" content="Manna">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="Manna - Find Your Perfect Home in Tanzania">
+    <meta name="twitter:description" content="The modern long-term rental platform connecting tenants with landlords across Africa. Simple, secure, and transparent.">
+    <meta name="twitter:image" content="{{ asset('hero-bg.jpg') }}">
+    <meta name="twitter:image:alt" content="Manna - Modern Rental Platform">
+    
+    <!-- Additional SEO -->
     <meta name="theme-color" content="#10B981">
+    <meta name="msapplication-TileColor" content="#10B981">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Manna">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- PWA Manifest -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('logo.png') }}">
     <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('logo.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
-    <title>{{ config('app.name', 'Manna') }} - Find Your Perfect Home</title>
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS & JS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Manna",
+        "url": "{{ url('/') }}",
+        "description": "The modern long-term rental platform connecting tenants with landlords across Africa",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "{{ url('/properties') }}?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Manna",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "{{ asset('logo.png') }}"
+            }
+        }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Manna",
+        "url": "{{ url('/') }}",
+        "logo": "{{ asset('logo.png') }}",
+        "description": "The modern long-term rental platform connecting tenants with landlords across Africa",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "TZ",
+            "addressLocality": "Dar es Salaam"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "email": "info@manna.co.tz"
+        },
+        "sameAs": [
+            "https://www.facebook.com/manna",
+            "https://www.twitter.com/manna",
+            "https://www.instagram.com/manna"
+        ]
+    }
+    </script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: linear-gradient(-45deg, #10B981, #059669, #047857, #065f46); background-size: 400% 400%; animation: gradientBG 15s ease infinite; min-height: 100vh; color: #1f2937; -webkit-font-smoothing: antialiased; }
