@@ -144,35 +144,75 @@
         }
 
         .role-btn {
-            padding: 0.875rem 2rem;
+            padding: 1rem 2rem;
             background: #fff;
             border: 2px solid #e5e7eb;
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 1rem;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             color: #374151;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            min-width: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .role-btn:hover::before {
+            left: 100%;
+        }
+
+        .role-btn svg {
+            width: 22px;
+            height: 22px;
+            transition: all 0.3s ease;
         }
 
         .role-btn:hover {
             border-color: #10B981;
             color: #10B981;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
+        }
+
+        .role-btn:hover svg {
+            transform: scale(1.1);
+            color: #10B981;
         }
 
         .role-btn.active {
             background: linear-gradient(135deg, #10B981, #059669);
             border-color: #10B981;
             color: #fff;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .role-btn.active svg {
+            color: #fff;
+        }
+
+        .role-btn.active:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(16, 185, 129, 0.5);
         }
 
         .steps-container {
@@ -411,6 +451,8 @@
             .role-btn {
                 width: 100%;
                 text-align: center;
+                min-width: auto;
+                padding: 1rem 1.5rem;
             }
 
             .nav-brand-name {
