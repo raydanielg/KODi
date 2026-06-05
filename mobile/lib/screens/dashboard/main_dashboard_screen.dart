@@ -101,7 +101,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                                 ),
                               ),
                               Text(
-                                user!.roleLabel,
+                                user.roleLabel,
                                 style: TextStyle(
                                   color: Colors.white.withOpacity(0.7),
                                   fontSize: 12,
