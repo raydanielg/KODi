@@ -73,10 +73,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: SingleChildScrollView(
                       padding: const EdgeInsets.all(24.0),
                       child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
                       // Back button
                       Align(
                         alignment: Alignment.centerLeft,
