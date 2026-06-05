@@ -9,9 +9,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Manna">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('icon-192x192.png') }}">
-    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('icon-512x512.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('icons8-logo-16.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('icons8-logo-50.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('icons8-logo-50.png') }}">
     <title>{{ config('app.name', 'Manna') }} - Find Your Perfect Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,8 +32,7 @@
         .nav-container { max-width: 1280px; margin: 0 auto; padding: 0.875rem 1.5rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
         .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; transition: all 0.2s ease; }
         .nav-brand:hover { transform: translateY(-1px); }
-        .nav-brand-icon { width: 40px; height: 40px; background: #10B981; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3); }
-        .nav-brand-icon svg { width: 22px; height: 22px; fill: #fff; }
+        .nav-brand-icon { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; }
         .nav-brand-name { font-size: 1.375rem; font-weight: 700; color: #1f2937; white-space: nowrap; }
         .nav-buttons { display: flex; gap: 0.5rem; align-items: center; order: 3; }
         .nav-menu { display: none; width: 300px; max-width: 85vw; position: fixed; top: 0; right: -300px; height: 100vh; background: #ffffff; box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15); transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; overflow-y: auto; }
@@ -565,7 +564,6 @@
             .hero-badge svg { width: 16px; height: 16px; }
             .nav-brand-name { font-size: 1.1rem; }
             .nav-brand-icon { width: 32px; height: 32px; }
-            .nav-brand-icon svg { width: 16px; height: 16px; }
         }
     </style>
 </head>
@@ -573,13 +571,7 @@
     <nav class="header">
         <div class="nav-container">
             <a href="#" class="nav-brand">
-                <div class="nav-brand-icon">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
-                        <path d="M2 17L12 22L22 17" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                        <path d="M2 12L12 17L22 12" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    </svg>
-                </div>
+                <img src="{{ asset('icons8-logo-50.png') }}" alt="Manna" class="nav-brand-icon">
                 <span class="nav-brand-name">{{ config('app.name', 'Manna') }}</span>
             </a>
 

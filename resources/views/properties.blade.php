@@ -48,18 +48,8 @@
         .nav-brand-icon {
             width: 36px;
             height: 36px;
-            background: #10B981;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            object-fit: contain;
             flex-shrink: 0;
-        }
-
-        .nav-brand-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: #fff;
         }
 
         .nav-brand-name {
@@ -699,12 +689,7 @@
             }
 
             .search-bar {
-                display: none;
-            }
-
-            .mobile-search-btn {
-                display: flex !important;
-                padding: 0.5rem 0.75rem;
+                display: 0.5rem 0.75rem;
             }
 
             .mobile-search-btn span {
