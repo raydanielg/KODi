@@ -451,7 +451,9 @@
                 <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
             </a>
 
-            <h1 class="hero-title">Find Your Perfect Home</h1>
+            <h1 class="hero-title">
+                <span class="hero-title-text" id="hero-title-text">Find Your Perfect Home</span>
+            </h1>
             <p class="hero-subtitle">The modern long-term rental platform connecting tenants with landlords across Africa. Simple, secure, and transparent.</p>
 
             <div class="hero-buttons">
@@ -578,6 +580,63 @@
                         });
                 });
             }
+
+            // Hero Title Carousel
+            const heroTitleText = document.getElementById('hero-title-text');
+            const titles = [
+                { text: 'Find Your Perfect Home', color: 'color-1' },
+                { text: 'Discover Your Dream Space', color: 'color-2' },
+                { text: 'Live Your Best Life', color: 'color-3' },
+                { text: 'Your Journey Starts Here', color: 'color-4' }
+            ];
+            let currentTitleIndex = 0;
+
+            function rotateTitle() {
+                if (!heroTitleText) return;
+
+                // Fade out
+                heroTitleText.classList.add('fade-out');
+                heroTitleText.classList.remove('fade-in');
+
+                setTimeout(() => {
+                    // Change text and color
+                    currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+                    heroTitleText.textContent = titles[currentTitleIndex].text;
+                    heroTitleText.className = 'hero-title-text ' + titles[currentTitleIndex].color;
+
+                    // Fade in
+                    heroTitleText.classList.remove('fade-out');
+                    heroTitleText.classList.add('fade-in');
+                }, 500);
+            }
+
+            // Start carousel after initial animation
+            setTimeout(() => {
+                setInterval(rotateTitle, 4000);
+            }, 2000);
+
+            // Scroll-based animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for scroll animations
+            document.querySelectorAll('.newsletter-section, .download-app-section, .coming-soon-section').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease-out';
+                observer.observe(el);
+            });
         });
     </script>
 
