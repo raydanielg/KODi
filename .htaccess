@@ -5,6 +5,10 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+    # Allow direct access to service-worker.js
+    RewriteCond %{REQUEST_URI} ^/service-worker\.js$
+    RewriteRule ^ - [L]
+
     # Redirect Trailing Slashes If Not A Folder
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
