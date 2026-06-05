@@ -1,6 +1,6 @@
 @extends('layouts.agent')
 
-@section('title', 'Maelezo ya Mpangaji')
+@section('title', 'Ongeza Majengo')
 
 @section('content')
 <style>
@@ -12,8 +12,8 @@
 </style>
 
 <div class="page-header">
-    <h1>Maelezo ya Mpangaji</h1>
-    <p>Angalia maelezo ya kina ya mpangaji.</p>
+    <h1>Ongeza Majengo</h1>
+    <p>Ongeza jengo jipya kwenye mfumo.</p>
 </div>
 
 <div class="card">
