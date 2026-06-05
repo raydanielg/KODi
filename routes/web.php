@@ -82,3 +82,19 @@ Route::get('/privacy', function () {
 Route::get('/terms', function () {
     return view('terms');
 })->name('terms');
+
+Route::get('/properties', function () {
+    return view('properties');
+})->name('properties');
+
+Route::get('/how-it-works', function () {
+    return view('how-it-works');
+})->name('how-it-works');
+
+Route::get('/faq', function () {
+    return view('faq');
+})->name('faq');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
