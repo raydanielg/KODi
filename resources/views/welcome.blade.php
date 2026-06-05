@@ -678,15 +678,12 @@
             </div>
 
             <div class="download-app-section">
-                <div class="coming-soon-header">
-                    <span class="coming-soon-label">Coming Soon</span>
-                </div>
                 <h3 class="download-app-title">Download App Now</h3>
                 <p class="download-app-subtitle">Get the full experience on your mobile device</p>
                 <div class="download-buttons">
                     <a href="#" class="download-btn">
                         <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 20.5v-17c0-.83.67-1.5 1.5-1.5h15c.83 0 1.5.67 1.5 1.5v17c0 .83-.67 1.5-1.5 1.5h-15c-.83 0-1.5-.67-1.5-1.5zm6-11.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5-1.5.67-1.5 1.5zm2.5 5c0-1.67-1.33-3-3-3s-3 1.33-3 3 1.33 3 3 3 3-1.33 3-3zm-5.5 5h11v-1h-11v1z"/>
+                            <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 010 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/>
                         </svg>
                         <div class="download-btn-text">
                             <span>GET IT ON</span>
