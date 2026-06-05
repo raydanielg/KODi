@@ -751,7 +751,7 @@
 
     <div class="container" id="container">
         <div class="properties-grid">
-            <div class="property-card" data-category="apartments" onclick="window.location.href='/properties/1'">
+            <div class="property-card" data-category="apartment" onclick="window.location.href='/properties/1'">
                 <div class="property-image">
                     <span>🏠</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
@@ -781,7 +781,7 @@
                 </div>
             </div>
 
-            <div class="property-card" data-category="penthouses" onclick="window.location.href='/properties/2'">
+            <div class="property-card" data-category="penthouse" onclick="window.location.href='/properties/2'">
                 <div class="property-image">
                     <span>🏢</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
@@ -811,7 +811,7 @@
                 </div>
             </div>
 
-            <div class="property-card" data-category="homes" onclick="window.location.href='/properties/3'">
+            <div class="property-card" data-category="house" onclick="window.location.href='/properties/3'">
                 <div class="property-image">
                     <span>🏡</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
