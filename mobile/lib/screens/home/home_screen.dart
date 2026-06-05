@@ -207,6 +207,12 @@ class _HomeScreenState extends State<HomeScreen>
                       title: 'About Us',
                       onTap: () {
                         Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const AboutUsScreen(),
+                          ),
+                        );
                       },
                     ),
                     _buildMenuItem(
@@ -214,6 +220,12 @@ class _HomeScreenState extends State<HomeScreen>
                       title: 'Privacy Policy',
                       onTap: () {
                         Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PrivacyPolicyScreen(),
+                          ),
+                        );
                       },
                     ),
                     _buildMenuItem(
@@ -221,6 +233,12 @@ class _HomeScreenState extends State<HomeScreen>
                       title: 'Terms of Service',
                       onTap: () {
                         Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TermsOfServiceScreen(),
+                          ),
+                        );
                       },
                     ),
                     _buildMenuItem(
