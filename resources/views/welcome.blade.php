@@ -9,8 +9,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Manna">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('logo.svg') }}">
-    <link rel="apple-touch-icon" href="{{ asset('logo.svg') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('logo.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
     <title>{{ config('app.name', 'Manna') }} - Find Your Perfect Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -584,7 +585,7 @@
     <nav class="header">
         <div class="nav-container">
             <a href="#" class="nav-brand">
-                <img src="{{ asset('logo.svg') }}" alt="Manna" class="nav-brand-icon">
+                <img src="{{ asset('logo.png') }}" alt="Manna" class="nav-brand-icon">
                 <span class="nav-brand-name">{{ config('app.name', 'Manna') }}</span>
             </a>
 

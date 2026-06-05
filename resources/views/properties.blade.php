@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('logo.svg') }}">
-    <link rel="apple-touch-icon" href="{{ asset('logo.svg') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('logo.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
     <title>Properties - {{ config('app.name', 'Manna') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -801,7 +802,7 @@
     <nav class="header">
         <div class="nav-container">
             <a href="{{ url('/') }}" class="nav-brand">
-                <img src="{{ asset('logo.svg') }}" alt="Manna" class="nav-brand-icon">
+                <img src="{{ asset('logo.png') }}" alt="Manna" class="nav-brand-icon">
                 <span class="nav-brand-name">Manna</span>
             </a>
             <div class="search-bar">
