@@ -109,6 +109,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: const Color(0xfff3f4f6),
                                     borderRadius: BorderRadius.circular(6),
                                     border: Border.all(color: const Color(0xffd1d5db)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.05),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 1),
+                                      ),
+                                    ],
                                   ),
                                   child: TextField(
                                     controller: _emailController,
@@ -121,6 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       prefixIcon: const Icon(
                                         Icons.email_outlined,
                                         color: Colors.grey,
+                                        size: 20,
                                       ),
                                       border: InputBorder.none,
                                       contentPadding: const EdgeInsets.symmetric(
@@ -152,6 +160,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: const Color(0xfff3f4f6),
                                     borderRadius: BorderRadius.circular(6),
                                     border: Border.all(color: const Color(0xffd1d5db)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.05),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 1),
+                                      ),
+                                    ],
                                   ),
                                   child: TextField(
                                     controller: _passwordController,
@@ -164,6 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       prefixIcon: const Icon(
                                         Icons.lock_outlined,
                                         color: Colors.grey,
+                                        size: 20,
                                       ),
                                       suffixIcon: IconButton(
                                         icon: Icon(
