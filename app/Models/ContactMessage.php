@@ -16,4 +16,14 @@ class ContactMessage extends Model
         'message',
         'is_read',
     ];
+
+    public function scopeUnread($query)
+    {
+        return $query->where('is_read', false);
+    }
+
+    public function scopeRead($query)
+    {
+        return $query->where('is_read', true);
+    }
 }
