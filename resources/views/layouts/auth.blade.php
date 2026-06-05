@@ -35,7 +35,7 @@
             padding: 0;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(240, 240, 240, 0.75) 100%), url('{{ asset('serious-expert-expressing-support-colleague (1).jpg') }}');
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.75) 0%, rgba(240, 240, 240, 0.75) 100%), url('{{ asset('hero-bg.jpg') }}');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
