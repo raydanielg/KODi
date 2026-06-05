@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../constants/app_colors.dart';
+import '../../constants/app_strings.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _rememberMe = false;
 
   @override
   void dispose() {
@@ -29,15 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'Sign In',
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.w600,
-            color: Colors.black,
-          ),
         ),
       ),
       body: SafeArea(
@@ -48,118 +44,142 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 24),
-                // Logo
-                Center(
-                  child: Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF10B981),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(
-                      Icons.home,
-                      color: Colors.white,
-                      size: 36,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
+                // Header
                 Text(
-                  'Welcome back',
+                  AppStrings.welcomeBack,
                   style: GoogleFonts.inter(
-                    fontSize: 28,
+                    fontSize: 32,
                     fontWeight: FontWeight.w700,
                     color: Colors.black,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Sign in to continue to your account',
+                  'Sign in to your account to continue your journey with us.',
                   style: GoogleFonts.inter(
                     fontSize: 14,
                     color: Colors.grey[600],
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
                 // Email Field
-                TextFormField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: 'Email address',
-                    prefixIcon: const Icon(Icons.email_outlined),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppStrings.emailAddress,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[700],
+                      ),
                     ),
-                    filled: true,
-                    fillColor: Colors.grey[50],
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!value.contains('@')) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
+                    const SizedBox(height: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[50],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey[200]!),
+                      ),
+                      child: TextField(
+                        controller: _emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          hintText: 'name@company.com',
+                          hintStyle: GoogleFonts.inter(
+                            color: Colors.grey[400],
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.email_outlined,
+                            color: Colors.grey,
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                // Password Field
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppStrings.password,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[50],
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.grey[200]!),
+                      ),
+                      child: TextField(
+                        controller: _passwordController,
+                        obscureText: _obscurePassword,
+                        decoration: InputDecoration(
+                          hintText: '••••••••',
+                          hintStyle: GoogleFonts.inter(
+                            color: Colors.grey[400],
+                          ),
+                          prefixIcon: const Icon(
+                            Icons.lock_outlined,
+                            color: Colors.grey,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
-                // Password Field
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: _obscurePassword,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outlined),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
-                      ),
-                      onPressed: () {
+                // Remember Me
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _rememberMe,
+                      onChanged: (value) {
                         setState(() {
-                          _obscurePassword = !_obscurePassword;
+                          _rememberMe = value!;
                         });
                       },
+                      activeColor: AppColors.primary,
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    filled: true,
-                    fillColor: Colors.grey[50],
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 8),
-                // Forgot Password
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      // TODO: Implement forgot password
-                    },
-                    child: Text(
-                      'Forgot password?',
+                    Text(
+                      'Remember me',
                       style: GoogleFonts.inter(
-                        color: const Color(0xFF10B981),
-                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: Colors.grey[700],
                       ),
                     ),
-                  ),
+                  ],
                 ),
                 const SizedBox(height: 24),
                 // Sign In Button
@@ -175,16 +195,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF10B981),
+                    backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 18),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
+                    elevation: 0,
                   ),
-                  child: const Text(
-                    'Sign In',
-                    style: TextStyle(
+                  child: Text(
+                    AppStrings.signIn,
+                    style: GoogleFonts.inter(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
                     ),
@@ -196,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Don't have an account? ",
+                      AppStrings.dontHaveAccount,
                       style: GoogleFonts.inter(
                         color: Colors.grey[600],
                       ),
@@ -206,9 +227,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushNamed(context, '/register');
                       },
                       child: Text(
-                        'Sign Up',
+                        'Create account',
                         style: GoogleFonts.inter(
-                          color: const Color(0xFF10B981),
+                          color: AppColors.primary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
