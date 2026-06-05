@@ -35,14 +35,24 @@
         .nav-brand-icon svg { width: 20px; height: 20px; fill: #fff; }
         .nav-brand-name { font-size: 1.25rem; font-weight: 600; color: #1f2937; white-space: nowrap; }
         .nav-buttons { display: flex; gap: 0.5rem; align-items: center; order: 3; }
-        .nav-menu { display: none; width: 100%; order: 2; margin-top: 0; position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border-bottom: 1px solid #e5e7eb; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); transform: translateY(-10px); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; }
-        .nav-menu.active { display: block; transform: translateY(0); opacity: 1; visibility: visible; }
+        .nav-menu { display: none; width: 300px; max-width: 85vw; position: fixed; top: 0; right: -300px; height: 100vh; background: #ffffff; box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15); transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; overflow-y: auto; }
+        .nav-menu.active { display: block; right: 0; }
+        .nav-menu-header { padding: 1.5rem; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: #ffffff; z-index: 10; }
+        .nav-menu-title { font-size: 1.25rem; font-weight: 700; color: #111827; }
+        .nav-menu-close { width: 40px; height: 40px; border-radius: 50%; border: none; background: #f3f4f6; color: #6b7280; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .nav-menu-close:hover { background: #e5e7eb; color: #111827; }
+        .nav-menu-close svg { width: 20px; height: 20px; }
         .nav-menu ul { display: flex; flex-direction: column; padding: 1rem; font-weight: 500; list-style: none; margin: 0; }
-        .nav-menu ul li { border-bottom: 1px solid #f3f4f6; }
-        .nav-menu ul li:last-child { border-bottom: none; }
-        .nav-menu ul li a { display: block; padding: 1rem; color: #374151; text-decoration: none; transition: all 0.2s ease; border-radius: 8px; }
-        .nav-menu ul li a:hover { background: #f9fafb; color: #10B981; transform: translateX(5px); }
+        .nav-menu ul li { margin-bottom: 0.5rem; }
+        .nav-menu ul li:last-child { margin-bottom: 0; }
+        .nav-menu ul li a { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; color: #374151; text-decoration: none; transition: all 0.3s ease; border-radius: 12px; font-size: 1rem; }
+        .nav-menu ul li a svg { width: 20px; height: 20px; color: #6b7280; transition: color 0.3s ease; }
+        .nav-menu ul li a:hover { background: #f0fdf4; color: #10B981; transform: translateX(-5px); }
+        .nav-menu ul li a:hover svg { color: #10B981; }
         .nav-menu ul li a.active { color: #10B981; background: #f0fdf4; }
+        .nav-menu ul li a.active svg { color: #10B981; }
+        .nav-menu-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; transition: opacity 0.3s ease; }
+        .nav-menu-overlay.active { display: block; opacity: 1; }
         .hamburger { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; color: #6b7280; background: transparent; border: none; cursor: pointer; transition: all 0.3s ease; position: relative; z-index: 101; }
         .hamburger:hover { background: #f3f4f6; transform: rotate(180deg); }
         .hamburger.active { background: #f3f4f6; }
