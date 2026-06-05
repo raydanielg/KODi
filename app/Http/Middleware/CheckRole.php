@@ -7,22 +7,16 @@ use Illuminate\Http\Request;
 
 class CheckRole
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string  $role
-     * @return mixed
-     */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         if (!auth()->check()) {
-            return redirect()->route('login');
+            return response()->json(['success' => false, 'message' => 'Unauthenticated.'], 401);
         }
 
-        if (auth()->user()->role !== $role) {
-            return redirect()->route('home')->with('error', 'You do not have permission to access this page.');
+        $allowedRoles = explode(',', implode(',', $roles));
+
+        if (!in_array(auth()->user()->role, $allowedRoles)) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized. Required role: ' . implode(', ', $allowedRoles)], 403);
         }
 
         return $next($request);
