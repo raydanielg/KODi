@@ -101,16 +101,14 @@
             margin-bottom: 2rem;
             text-decoration: none;
             transition: all 0.2s ease;
-            animation: fadeInDown 0.8s ease-out 0.2s both;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            cursor: pointer;
+            position: relative;
         }
 
         .hero-badge:hover {
             background: #e5e7eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .hero-badge .badge-new {
@@ -127,6 +125,153 @@
             width: 20px;
             height: 20px;
             margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .hero-badge.active svg {
+            transform: rotate(180deg);
+        }
+
+        .notification-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            max-width: 90vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+        }
+
+        .notification-panel.active {
+            right: 0;
+        }
+
+        .notification-panel-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10;
+        }
+
+        .notification-panel-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .notification-panel-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f3f4f6;
+            color: #6b7280;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .notification-panel-close:hover {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .notification-panel-close svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .notification-panel-content {
+            padding: 1.5rem;
+        }
+
+        .notification-item {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .notification-item:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-color: #10B981;
+        }
+
+        .notification-item-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-item-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #f0fdf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .notification-item-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #10B981;
+        }
+
+        .notification-item-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .notification-item-time {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-left: auto;
+        }
+
+        .notification-item-description {
+            font-size: 0.875rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .notification-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .notification-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .hero-title {
@@ -452,7 +597,7 @@
 
     <section class="hero">
         <div class="hero-content">
-            <a href="#" class="hero-badge">
+            <a href="#" class="hero-badge" id="notification-badge">
                 <span class="badge-new">New</span>
                 <span class="text-sm font-medium">Manna is out! See what's new</span>
                 <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
