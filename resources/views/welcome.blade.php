@@ -221,8 +221,8 @@
         }
 
         .hero-buttons .btn {
-            padding: 1rem 2.5rem;
-            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
             background: rgba(255, 255, 255, 0.95);
             color: #10B981;
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -249,7 +249,7 @@
         @media (max-width: 768px) {
             .hero-title { font-size: 2rem; font-weight: 700; }
             .hero-subtitle { font-size: 1rem; line-height: 1.6; }
-            .hero-buttons { flex-direction: column; }
+            .hero-buttons { flex-direction: row; flex-wrap: wrap; }
             .header { padding: 0.75rem 1rem; }
             .hero { padding: 7rem 1.5rem 3rem; }
             .newsletter-form { flex-direction: column; }
@@ -317,7 +317,7 @@
                     @auth
                         <a href="{{ url('/home') }}" class="btn btn-primary">Go to Dashboard</a>
                     @else
-                        <a href="{{ route('register') }}" class="btn btn-primary">Create Account</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary">Create Account <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; margin-left: 0.5rem;"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg></a>
                         <a href="{{ route('login') }}" class="btn btn-secondary">Sign In</a>
                     @endauth
                 @endif
