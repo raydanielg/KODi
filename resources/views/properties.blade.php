@@ -153,6 +153,11 @@
             border-bottom: 1px solid #e5e7eb;
             z-index: 90;
             padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .categories-bar.hidden {
+            display: none;
         }
 
         .categories-container {
@@ -191,6 +196,19 @@
             border-bottom: 2px solid #222222;
         }
 
+        .category-item.selected {
+            background: #222222;
+            color: #fff;
+        }
+
+        .category-item.selected .category-icon {
+            color: #fff;
+        }
+
+        .category-item.selected .category-label {
+            color: #fff;
+        }
+
         .category-icon {
             width: 24px;
             height: 24px;
@@ -208,6 +226,11 @@
             max-width: 1760px;
             margin: 0 auto;
             padding: 10rem 2rem 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .container.categories-hidden {
+            padding-top: 5rem;
         }
 
         .properties-grid {
