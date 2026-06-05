@@ -56,9 +56,9 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ),
           child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
               children: [
 
                 /// HEADER
@@ -197,10 +197,18 @@ class _HomeScreenState extends State<HomeScreen>
                                   ),
                                 ),
                                 const SizedBox(width: 10),
-                                const Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.black,
-                                  size: 20,
+                                AnimatedBuilder(
+                                  animation: _animation,
+                                  builder: (context, child) {
+                                    return Transform.translate(
+                                      offset: Offset(_animation.value, 0),
+                                      child: const Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.black,
+                                        size: 20,
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
