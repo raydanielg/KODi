@@ -577,7 +577,7 @@
 
         @media (max-width: 1024px) {
             .properties-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .modal-details {
@@ -602,8 +602,23 @@
                 padding: 7rem 1.5rem 3rem;
             }
 
+            .filters-section {
+                padding: 1.5rem;
+            }
+
             .filters-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .filter-group {
+                margin-bottom: 0;
+            }
+
+            .filter-button {
+                grid-column: span 2;
+                padding: 1rem;
+                font-size: 1rem;
             }
 
             .property-actions {
