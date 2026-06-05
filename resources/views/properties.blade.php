@@ -148,22 +148,19 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #E61E4D, #D70466);
+            padding: 0.625rem 1.25rem;
+            background: #10B981;
             color: #fff;
             border: none;
-            border-radius: 24px;
+            border-radius: 8px;
             font-size: 0.875rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(230, 30, 77, 0.3);
+            transition: all 0.2s ease;
         }
 
         .get-started-btn:hover {
-            background: linear-gradient(135deg, #D70466, #BD1E59);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(230, 30, 77, 0.4);
+            background: #059669;
         }
 
         .mobile-filter-btn {
@@ -655,7 +652,16 @@
 
         @media (max-width: 768px) {
             .nav-container {
-                padding: 0.75rem 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1rem;
+            }
+
+            .nav-brand svg {
+                width: 24px;
+                height: 24px;
             }
 
             .search-bar {
@@ -664,6 +670,24 @@
 
             .mobile-search-btn {
                 display: flex !important;
+                padding: 0.5rem 0.75rem;
+            }
+
+            .mobile-search-btn span {
+                display: none;
+            }
+
+            .mobile-filter-btn {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .mobile-filter-btn span {
+                display: none;
+            }
+
+            .get-started-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
             }
 
             .categories-bar {
@@ -780,6 +804,7 @@
                 </button>
             </div>
             <div class="user-menu">
+                <a href="{{ route('register') }}" class="get-started-btn">Get Started</a>
                 <button class="mobile-search-btn" onclick="toggleSearchSidebar()">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -792,7 +817,6 @@
                     </svg>
                     <span>Filters</span>
                 </button>
-                <a href="{{ route('register') }}" class="get-started-btn">Get Started</a>
             </div>
         </div>
     </nav>
