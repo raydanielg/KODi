@@ -664,6 +664,69 @@
             </div>
         </div>
     </section>
+
+    <!-- Notification Panel -->
+    <div class="notification-overlay" id="notification-overlay"></div>
+    <div class="notification-panel" id="notification-panel">
+        <div class="notification-panel-header">
+            <h3 class="notification-panel-title">Notifications</h3>
+            <button class="notification-panel-close" id="notification-close">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="notification-panel-content">
+            <div class="notification-item">
+                <div class="notification-item-header">
+                    <div class="notification-item-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <span class="notification-item-title">New Feature Available</span>
+                    <span class="notification-item-time">2 min ago</span>
+                </div>
+                <p class="notification-item-description">We've just launched our new advanced search feature to help you find your perfect home faster!</p>
+            </div>
+            <div class="notification-item">
+                <div class="notification-item-header">
+                    <div class="notification-item-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <span class="notification-item-title">Welcome to Manna</span>
+                    <span class="notification-item-time">1 hour ago</span>
+                </div>
+                <p class="notification-item-description">Thank you for joining Manna! Start exploring thousands of rental properties across Africa.</p>
+            </div>
+            <div class="notification-item">
+                <div class="notification-item-header">
+                    <div class="notification-item-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <span class="notification-item-title">Mobile App Coming Soon</span>
+                    <span class="notification-item-time">3 hours ago</span>
+                </div>
+                <p class="notification-item-description">Our mobile app is under development. Stay tuned for the official launch on iOS and Android!</p>
+            </div>
+            <div class="notification-item">
+                <div class="notification-item-header">
+                    <div class="notification-item-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <span class="notification-item-title">Community Growing</span>
+                    <span class="notification-item-time">1 day ago</span>
+                </div>
+                <p class="notification-item-description">We've reached 10,000 users! Join our growing community of renters and landlords.</p>
+            </div>
+        </div>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerBtn = document.getElementById('hamburger-btn');
