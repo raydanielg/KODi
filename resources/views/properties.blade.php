@@ -333,6 +333,7 @@
             background: linear-gradient(135deg, #059669, #047857);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            text-decoration: none;
         }
 
         .book-btn {
