@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
+            background: #fff;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
         }
@@ -24,21 +24,15 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
-            z-index: 20;
-            transition: all 0.3s ease;
-        }
-
-        .header:hover {
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            background: #fff;
+            border-bottom: 1px solid #e5e7eb;
+            z-index: 100;
         }
 
         .nav-container {
-            max-width: 1280px;
+            max-width: 1760px;
             margin: 0 auto;
-            padding: 0.75rem 1rem;
+            padding: 1rem 2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -52,28 +46,25 @@
         }
 
         .nav-brand-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #10B981, #059669);
-            border-radius: 10px;
+            width: 32px;
+            height: 32px;
+            background: #FF385C;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
 
         .nav-brand-icon svg {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             fill: #fff;
         }
 
         .nav-brand-name {
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
-            color: #1f2937;
+            color: #222222;
         }
 
         .nav-back {
@@ -81,256 +72,313 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.625rem 1.25rem;
-            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-            border-radius: 10px;
+            background: #fff;
+            border-radius: 8px;
             text-decoration: none;
-            color: #374151;
+            color: #222222;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             border: 1px solid #e5e7eb;
         }
 
         .nav-back:hover {
-            background: linear-gradient(135deg, #10B981, #059669);
-            color: #fff;
-            border-color: #10B981;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            background: #f7f7f7;
         }
 
         .nav-back svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 1760px;
             margin: 0 auto;
-            padding: 8rem 2rem 4rem;
+            padding: 5rem 2rem 4rem;
         }
 
-        .property-hero {
-            background: #fff;
-            border-radius: 20px;
+        .gallery-section {
+            margin-bottom: 3rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 8px;
+            height: 400px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.8s ease-out;
         }
 
-        .property-gallery {
+        .gallery-main {
+            grid-row: 1 / -1;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
             position: relative;
-            height: 500px;
-            background: linear-gradient(135deg, #10B981, #059669);
+            overflow: hidden;
+        }
+
+        .gallery-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-side {
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
-            font-size: 6rem;
-        }
-
-        .property-gallery::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.8), rgba(5, 150, 105, 0.8));
-        }
-
-        .property-gallery span {
-            position: relative;
-            z-index: 1;
-        }
-
-        .gallery-nav {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.5rem;
-            z-index: 10;
-        }
-
-        .gallery-dot {
-            width: 12px;
-            height: 12px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
             cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .gallery-dot.active {
-            background: #fff;
-            transform: scale(1.2);
+        .gallery-main:hover .gallery-overlay,
+        .gallery-side:hover .gallery-overlay {
+            opacity: 1;
         }
 
-        .property-info {
-            padding: 2.5rem;
+        .gallery-overlay span {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.25rem;
         }
 
         .property-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            margin-bottom: 2rem;
         }
 
         .property-title {
-            font-size: 2.25rem;
-            font-weight: 800;
-            color: #111827;
-            letter-spacing: -0.02em;
-            flex: 1;
-        }
-
-        .property-price {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #10B981;
-            letter-spacing: -0.02em;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #222222;
+            margin-bottom: 0.5rem;
         }
 
         .property-location {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: #6b7280;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
+            color: #222222;
+            font-size: 1rem;
+            margin-bottom: 1rem;
         }
 
         .property-location svg {
-            width: 20px;
-            height: 20px;
-            color: #10B981;
+            width: 18px;
+            height: 18px;
         }
 
-        .property-features {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
+        .property-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: #222222;
+        }
+
+        .property-rating svg {
+            width: 18px;
+            height: 18px;
+            fill: #222222;
+        }
+
+        .host-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 0;
+            border-top: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
             margin-bottom: 2rem;
         }
 
-        .feature-item {
-            background: #f9fafb;
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            transition: all 0.3s ease;
+        .host-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        .feature-item:hover {
-            background: #f0fdf4;
-            transform: translateY(-2px);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #10B981, #059669);
-            border-radius: 12px;
+        .host-avatar {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #FF385C, #E61E4D);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
-        }
-
-        .feature-icon svg {
-            width: 24px;
-            height: 24px;
             color: #fff;
+            font-weight: 700;
+            font-size: 1.25rem;
         }
 
-        .feature-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #111827;
+        .host-details h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #222222;
             margin-bottom: 0.25rem;
         }
 
-        .feature-label {
+        .host-details p {
             font-size: 0.875rem;
-            color: #6b7280;
-            font-weight: 500;
+            color: #6a6a6a;
+        }
+
+        .host-badge {
+            background: #222222;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
         }
 
         .content-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 5rem;
+            margin-bottom: 3rem;
         }
 
         .main-content {
-            background: #fff;
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
         }
 
         .section-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #111827;
+            color: #222222;
             margin-bottom: 1.5rem;
-            letter-spacing: -0.01em;
         }
 
         .description {
-            color: #6b7280;
-            line-height: 1.8;
-            margin-bottom: 2rem;
+            color: #222222;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .amenities-section {
+            padding: 2rem 0;
+            border-top: 1px solid #e5e7eb;
         }
 
         .amenities-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
+            gap: 1.5rem;
         }
 
         .amenity-item {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 1rem;
-            background: #f9fafb;
-            border-radius: 12px;
-            transition: all 0.3s ease;
+            gap: 1rem;
         }
 
-        .amenity-item:hover {
-            background: #f0fdf4;
-        }
-
-        .amenity-item svg {
+        .amenity-icon {
             width: 24px;
             height: 24px;
-            color: #10B981;
+            color: #222222;
         }
 
         .amenity-item span {
             font-size: 1rem;
-            color: #374151;
-            font-weight: 500;
+            color: #222222;
+        }
+
+        .rooms-section {
+            padding: 2rem 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .room-item {
+            margin-bottom: 2rem;
+        }
+
+        .room-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .room-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #222222;
+            margin-bottom: 1rem;
+        }
+
+        .room-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .room-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
+            position: sticky;
+            top: 5rem;
+            height: fit-content;
         }
 
         .booking-card {
             background: #fff;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            position: sticky;
-            top: 8rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 1.5rem;
+        }
+
+        .booking-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #222222;
+        }
+
+        .booking-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #6a6a6a;
+        }
+
+        .booking-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-weight: 600;
+        }
+
+        .booking-rating svg {
+            width: 14px;
+            height: 14px;
+            fill: #222222;
         }
 
         .booking-form {
@@ -339,188 +387,112 @@
             gap: 1rem;
         }
 
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
 
-        .form-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: #374151;
-        }
-
         .form-input {
-            padding: 0.875rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 0.95rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #b0b0b0;
+            border-radius: 8px;
+            font-size: 1rem;
             font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             outline: none;
         }
 
         .form-input:focus {
-            border-color: #10B981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+            border-color: #222222;
         }
 
-        .form-textarea {
-            padding: 0.875rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-            outline: none;
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .form-textarea:focus {
-            border-color: #10B981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        .form-input::placeholder {
+            color: #6a6a6a;
         }
 
         .submit-btn {
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #10B981, #059669);
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #E61E4D, #D70466);
             color: #fff;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             font-size: 1rem;
-            font-weight: 700;
+            font-weight: 600;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-            letter-spacing: 0.01em;
+            transition: all 0.2s ease;
         }
 
         .submit-btn:hover {
-            background: linear-gradient(135deg, #059669, #047857);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, #D70466, #BD1E59);
         }
 
-        .contact-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .contact-item {
+        .booking-total {
             display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: #f9fafb;
-            border-radius: 12px;
-            margin-bottom: 1rem;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 1rem;
         }
 
-        .contact-item:last-child {
-            margin-bottom: 0;
+        .booking-total-label {
+            font-weight: 700;
+            color: #222222;
         }
 
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #10B981, #059669);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .contact-icon svg {
-            width: 20px;
-            height: 20px;
-            color: #fff;
-        }
-
-        .contact-info {
-            flex: 1;
-        }
-
-        .contact-label {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 0.25rem;
-        }
-
-        .contact-value {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #111827;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .booking-total-value {
+            font-weight: 700;
+            color: #222222;
         }
 
         @media (max-width: 1024px) {
             .content-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .sidebar {
-                position: static;
-            }
-
-            .booking-card {
                 position: static;
             }
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 7rem 1.5rem 3rem;
+                padding: 4rem 1rem 3rem;
             }
 
-            .property-gallery {
-                height: 350px;
-                font-size: 4rem;
+            .gallery-grid {
+                height: 300px;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr;
             }
 
-            .property-info {
-                padding: 1.5rem;
-            }
-
-            .property-header {
-                flex-direction: column;
+            .gallery-side {
+                display: none;
             }
 
             .property-title {
-                font-size: 1.75rem;
-            }
-
-            .property-price {
                 font-size: 1.5rem;
             }
 
-            .property-features {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .main-content {
-                padding: 1.5rem;
-            }
-
-            .booking-card, .contact-card {
-                padding: 1.5rem;
+            .host-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
             }
 
             .amenities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
                 grid-template-columns: 1fr;
             }
         }
@@ -549,196 +521,169 @@
     </nav>
 
     <div class="container">
-        <div class="property-hero">
-            <div class="property-gallery">
-                <span>🏠</span>
-                <div class="gallery-nav">
-                    <div class="gallery-dot active"></div>
-                    <div class="gallery-dot"></div>
-                    <div class="gallery-dot"></div>
-                    <div class="gallery-dot"></div>
-                </div>
-            </div>
-            <div class="property-info">
-                <div class="property-header">
-                    <h1 class="property-title">Modern 2-Bedroom Apartment</h1>
-                    <div class="property-price">$1,200/month</div>
-                </div>
-                <div class="property-location">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    </svg>
-                    Nairobi, Kenya
-                </div>
-                <div class="property-features">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                            </svg>
-                        </div>
-                        <div class="feature-value">2</div>
-                        <div class="feature-label">Bedrooms</div>
+        <div class="gallery-section">
+            <div class="gallery-grid">
+                <div class="gallery-main">
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop" alt="Living Room">
+                    <div class="gallery-overlay">
+                        <span>Show all photos</span>
                     </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
-                            </svg>
-                        </div>
-                        <div class="feature-value">2</div>
-                        <div class="feature-label">Bathrooms</div>
+                </div>
+                <div class="gallery-side">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop" alt="Bedroom">
+                    <div class="gallery-overlay">
+                        <span>Show all photos</span>
                     </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
-                            </svg>
-                        </div>
-                        <div class="feature-value">1,200</div>
-                        <div class="feature-label">Sqft</div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
-                        <div class="feature-value">2024</div>
-                        <div class="feature-label">Built</div>
+                </div>
+                <div class="gallery-side">
+                    <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=400&h=300&fit=crop" alt="Kitchen">
+                    <div class="gallery-overlay">
+                        <span>Show all photos</span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="property-header">
+            <h1 class="property-title">Modern 2-Bedroom Apartment in Nairobi</h1>
+            <div class="property-location">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Nairobi, Kenya
+            </div>
+            <div class="property-rating">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                4.92 · 127 reviews
+            </div>
+        </div>
+
+        <div class="host-section">
+            <div class="host-info">
+                <div class="host-avatar">JD</div>
+                <div class="host-details">
+                    <h3>Hosted by John Doe</h3>
+                    <p>11 years hosting · Superhost</p>
+                </div>
+            </div>
+            <div class="host-badge">Superhost</div>
+        </div>
+
         <div class="content-grid">
             <div class="main-content">
-                <h2 class="section-title">Description</h2>
-                <p class="description">
-                    This beautiful modern apartment features spacious rooms, natural lighting, and stunning city views. Perfect for professionals and small families looking for comfort and convenience. The apartment is located in a prime area with easy access to shopping centers, restaurants, and public transportation.
-                </p>
-                <p class="description">
-                    The property has been recently renovated with high-quality finishes, modern appliances, and energy-efficient systems. Enjoy the open-concept living area, gourmet kitchen with granite countertops, and luxurious bathrooms with premium fixtures.
-                </p>
+                <div class="description-section">
+                    <h2 class="section-title">About this space</h2>
+                    <p class="description">
+                        This beautiful modern apartment features spacious rooms, natural lighting, and stunning city views. Perfect for professionals and small families looking for comfort and convenience. The apartment is located in a prime area with easy access to shopping centers, restaurants, and public transportation.
+                    </p>
+                    <p class="description">
+                        The property has been recently renovated with high-quality finishes, modern appliances, and energy-efficient systems. Enjoy the open-concept living area, gourmet kitchen with granite countertops, and luxurious bathrooms with premium fixtures.
+                    </p>
+                </div>
 
-                <h2 class="section-title">Amenities</h2>
-                <div class="amenities-grid">
-                    <div class="amenity-item">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Free WiFi</span>
+                <div class="amenities-section">
+                    <h2 class="section-title">What this place offers</h2>
+                    <div class="amenities-grid">
+                        <div class="amenity-item">
+                            <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                            </svg>
+                            <span>Mountain view</span>
+                        </div>
+                        <div class="amenity-item">
+                            <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/>
+                            </svg>
+                            <span>Kitchen</span>
+                        </div>
+                        <div class="amenity-item">
+                            <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+                            </svg>
+                            <span>Fast wifi – 143 Mbps</span>
+                        </div>
+                        <div class="amenity-item">
+                            <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span>Dedicated workspace</span>
+                        </div>
+                        <div class="amenity-item">
+                            <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                            </svg>
+                            <span>Free parking on premises</span>
+                        </div>
+                        <div class="amenity-item">
+                            <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <span>40 inch HDTV with Netflix</span>
+                        </div>
+                        <div class="amenity-item">
+                            <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01"/>
+                            </svg>
+                            <span>Elevator</span>
+                        </div>
+                        <div class="amenity-item">
+                            <svg class="amenity-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span>Free washer – In building</span>
+                        </div>
                     </div>
-                    <div class="amenity-item">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Parking</span>
+                </div>
+
+                <div class="rooms-section">
+                    <h2 class="section-title">Where you'll sleep</h2>
+                    <div class="room-item">
+                        <h3 class="room-title">Bedroom 1</h3>
+                        <div class="room-image">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop" alt="Bedroom 1">
+                        </div>
                     </div>
-                    <div class="amenity-item">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Security</span>
-                    </div>
-                    <div class="amenity-item">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Gym Access</span>
-                    </div>
-                    <div class="amenity-item">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Swimming Pool</span>
-                    </div>
-                    <div class="amenity-item">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>24/7 Support</span>
-                    </div>
-                    <div class="amenity-item">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Air Conditioning</span>
-                    </div>
-                    <div class="amenity-item">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                        <span>Balcony</span>
+                    <div class="room-item">
+                        <h3 class="room-title">Bedroom 2</h3>
+                        <div class="room-image">
+                            <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&h=400&fit=crop" alt="Bedroom 2">
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="sidebar">
                 <div class="booking-card">
-                    <h2 class="section-title">Book This Property</h2>
+                    <div class="booking-header">
+                        <div class="booking-price">$1,200 <span>/ night</span></div>
+                        <div class="booking-rating">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            4.92 · 127 reviews
+                        </div>
+                    </div>
                     <form class="booking-form" onsubmit="handleBooking(event)">
-                        <div class="form-group">
-                            <label class="form-label">Full Name</label>
-                            <input type="text" class="form-input" placeholder="Enter your name" required>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder="Check-in" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder="Check-out" required>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Email Address</label>
-                            <input type="email" class="form-input" placeholder="Enter your email" required>
+                            <input type="text" class="form-input" placeholder="Guests" required>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Phone Number</label>
-                            <input type="tel" class="form-input" placeholder="Enter your phone" required>
+                        <button type="submit" class="submit-btn">Reserve</button>
+                        <div class="booking-total">
+                            <span class="booking-total-label">Total</span>
+                            <span class="booking-total-value">$1,200</span>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Move-in Date</label>
-                            <input type="date" class="form-input" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Message</label>
-                            <textarea class="form-textarea" placeholder="Tell us about yourself and why you're interested"></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn">Submit Booking Request</button>
                     </form>
-                </div>
-
-                <div class="contact-card">
-                    <h2 class="section-title">Contact Information</h2>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                            </svg>
-                        </div>
-                        <div class="contact-info">
-                            <div class="contact-label">Phone</div>
-                            <div class="contact-value">+254 700 123 456</div>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
-                        <div class="contact-info">
-                            <div class="contact-label">Email</div>
-                            <div class="contact-value">info@mannaapartments.com</div>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                        </div>
-                        <div class="contact-info">
-                            <div class="contact-label">Address</div>
-                            <div class="contact-value">Nairobi, Kenya</div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -752,10 +697,9 @@
                 icon: 'success',
                 title: 'Booking Request Sent!',
                 text: 'Your booking request has been submitted successfully. We will contact you within 24 hours.',
-                confirmButtonColor: '#10B981',
+                confirmButtonColor: '#E61E4D',
                 confirmButtonText: 'Great!',
-                background: 'rgba(255, 255, 255, 0.95)',
-                backdrop: 'rgba(0, 0, 0, 0.5)',
+                background: '#fff',
                 customClass: {
                     popup: 'swal-custom-popup',
                     title: 'swal-custom-title',
@@ -769,8 +713,7 @@
 
     <style>
         .swal-custom-popup {
-            border-radius: 16px !important;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+            border-radius: 12px !important;
         }
         .swal-custom-title {
             font-family: 'Inter', sans-serif !important;
@@ -778,9 +721,8 @@
         }
         .swal-custom-button {
             font-family: 'Inter', sans-serif !important;
-            font-weight: 500 !important;
+            font-weight: 600 !important;
             border-radius: 8px !important;
-            padding: 0.75rem 1.5rem !important;
         }
     </style>
 </body>
