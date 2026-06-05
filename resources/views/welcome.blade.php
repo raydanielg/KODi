@@ -585,7 +585,7 @@
     <nav class="header">
         <div class="nav-container">
             <a href="#" class="nav-brand">
-                <img src="{{ asset('icons8-logo-50.png') }}" alt="Manna" class="nav-brand-icon">
+                <img src="{{ asset('logo.svg') }}" alt="Manna" class="nav-brand-icon">
                 <span class="nav-brand-name">{{ config('app.name', 'Manna') }}</span>
             </a>
 
