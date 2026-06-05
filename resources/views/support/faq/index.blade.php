@@ -1,6 +1,6 @@
-@extends('layouts.tenant')
+@extends('layouts.support')
 
-@section('title', 'Nyaraka Zangu')
+@section('title', 'Maswali ya Mara kwa Mara')
 
 @section('content')
 <style>
@@ -12,8 +12,8 @@
 </style>
 
 <div class="page-header">
-    <h1>Nyaraka Zangu</h1>
-    <p>Hifadhi na pata nyaraka zako zote kwa urahisi.</p>
+    <h1>Maswali ya Mara kwa Mara</h1>
+    <p>Majibu ya maswali yanayoulizwa sana</p>
 </div>
 
 <div class="card">
