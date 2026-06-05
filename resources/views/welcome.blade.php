@@ -361,6 +361,26 @@
             animation: fadeInUp 1s ease-out 1.2s both;
         }
 
+        .coming-soon-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .coming-soon-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: #fff;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
         .download-app-title {
             font-size: 1.25rem;
             font-weight: 600;
@@ -386,29 +406,30 @@
         .download-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.25rem;
-            background: #000;
+            gap: 0.75rem;
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #1f2937, #111827);
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 0.875rem;
             font-weight: 500;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .download-btn:hover {
-            background: #1f2937;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #374151, #1f2937);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .download-btn svg {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
         }
 
         .download-btn-text {
@@ -421,10 +442,11 @@
         .download-btn-text span:first-child {
             font-size: 0.65rem;
             opacity: 0.8;
+            letter-spacing: 0.05em;
         }
 
         .download-btn-text span:last-child {
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
         }
 
@@ -669,6 +691,9 @@
             </div>
 
             <div class="download-app-section">
+                <div class="coming-soon-header">
+                    <span class="coming-soon-label">Coming Soon</span>
+                </div>
                 <h3 class="download-app-title">Download App Now</h3>
                 <p class="download-app-subtitle">Get the full experience on your mobile device</p>
                 <div class="download-buttons">
@@ -690,15 +715,6 @@
                             <span>App Store</span>
                         </div>
                     </a>
-                </div>
-            </div>
-
-            <div class="coming-soon-section">
-                <div class="coming-soon-badge">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <span>Coming Soon</span>
                 </div>
             </div>
         </div>
@@ -957,7 +973,7 @@
             }, observerOptions);
 
             // Observe elements for scroll animations
-            document.querySelectorAll('.newsletter-section, .download-app-section, .coming-soon-section').forEach(el => {
+            document.querySelectorAll('.newsletter-section, .download-app-section').forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(30px)';
                 el.style.transition = 'all 0.6s ease-out';
