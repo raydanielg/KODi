@@ -155,33 +155,21 @@ class HomeScreen extends StatelessWidget {
                                 BorderRadius.circular(40),
                           ),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-
-                              const Expanded(
-                                child: Center(
-                                  child: Text(
-                                    "Get Started Now",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
+                              Text(
+                                "GET STARTED",
+                                style: GoogleFonts.inter(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
                                 ),
                               ),
-
-                              Container(
-                                width: 55,
-                                height: 55,
-                                margin: const EdgeInsets.all(5),
-                                decoration: const BoxDecoration(
-                                  color: Colors.black,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                ),
+                              const SizedBox(width: 10),
+                              const Icon(
+                                Icons.arrow_forward,
+                                color: Colors.black,
+                                size: 20,
                               ),
                             ],
                           ),
