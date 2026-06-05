@@ -1,6 +1,6 @@
 @extends('layouts.tenant')
 
-@section('title', 'Historia ya Malipo')
+@section('title', 'Fanya Malipo')
 
 @section('content')
 <style>
@@ -12,8 +12,8 @@
 </style>
 
 <div class="page-header">
-    <h1>Historia ya Malipo</h1>
-    <p>Angalia rekodi zako za malipo zilizopita.</p>
+    <h1>Fanya Malipo</h1>
+    <p>Lipia kodi yako kwa usalama na urahisi.</p>
 </div>
 
 <div class="card">
