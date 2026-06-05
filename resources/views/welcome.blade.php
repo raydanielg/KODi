@@ -85,7 +85,7 @@
         .btn-primary:hover { background: #059669; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
         .btn-secondary { background: transparent; color: #1f2937; border: 1px solid #e5e7eb; }
         .btn-secondary:hover { background: #f9fafb; color: #10B981; border-color: #10B981; }
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; background: linear-gradient(-45deg, #10B981, #059669, #047857, #065f46), url('{{ asset('serious-expert-expressing-support-colleague (1).jpg') }}'); background-size: cover; background-position: center; background-blend-mode: overlay; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; background: linear-gradient(-45deg, #10B981, #059669, #047857, #065f46), url('{{ asset('hero-bg.jpg') }}'); background-size: cover; background-position: center; background-blend-mode: overlay; }
 
         .hero::before {
             content: '';
