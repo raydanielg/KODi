@@ -361,26 +361,6 @@
             animation: fadeInUp 1s ease-out 1.2s both;
         }
 
-        .coming-soon-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .coming-soon-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.5rem;
-            background: linear-gradient(135deg, #10B981, #059669);
-            color: #fff;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-
         .download-app-title {
             font-size: 1.25rem;
             font-weight: 600;
@@ -419,17 +399,35 @@
             transition: all 0.3s ease;
             text-decoration: none;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
         }
 
         .download-btn:hover {
             background: linear-gradient(135deg, #374151, #1f2937);
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .download-btn svg {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
         }
 
         .download-btn-text {
