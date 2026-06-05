@@ -595,7 +595,6 @@
                 'Your Journey Starts Here'
             ];
             let currentTitleIndex = 0;
-            let currentWordIndex = 0;
             let isAnimating = false;
 
             function animateWordByWord() {
@@ -609,49 +608,52 @@
                 heroTitleText.innerHTML = '';
                 heroTitleText.style.opacity = '1';
 
-                // Animate words one by one
+                // Animate words one by one with proper spacing
                 words.forEach((word, index) => {
                     setTimeout(() => {
                         const wordSpan = document.createElement('span');
-                        wordSpan.textContent = word + (index < words.length - 1 ? ' ' : '');
+                        wordSpan.textContent = word;
                         wordSpan.style.opacity = '0';
-                        wordSpan.style.transform = 'translateY(20px)';
+                        wordSpan.style.transform = 'translateY(30px) scale(0.8)';
                         wordSpan.style.display = 'inline-block';
-                        wordSpan.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                        wordSpan.style.marginRight = '0.4em';
+                        wordSpan.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
                         heroTitleText.appendChild(wordSpan);
 
-                        // Trigger animation
-                        setTimeout(() => {
-                            wordSpan.style.opacity = '1';
-                            wordSpan.style.transform = 'translateY(0)';
-                        }, 50);
-                    }, index * 150);
+                        // Trigger animation with slight delay
+                        requestAnimationFrame(() => {
+                            setTimeout(() => {
+                                wordSpan.style.opacity = '1';
+                                wordSpan.style.transform = 'translateY(0) scale(1)';
+                            }, 50);
+                        });
+                    }, index * 200);
                 });
 
                 // After all words are animated, wait then move to next title
                 setTimeout(() => {
-                    // Fade out all words
+                    // Fade out all words in reverse order
                     const wordSpans = heroTitleText.querySelectorAll('span');
                     wordSpans.forEach((span, index) => {
                         setTimeout(() => {
                             span.style.opacity = '0';
-                            span.style.transform = 'translateY(-20px)';
-                        }, index * 50);
+                            span.style.transform = 'translateY(-30px) scale(0.8)';
+                        }, (wordSpans.length - 1 - index) * 100);
                     });
 
                     // Move to next title
                     setTimeout(() => {
                         currentTitleIndex = (currentTitleIndex + 1) % titles.length;
                         isAnimating = false;
-                    }, wordSpans.length * 50 + 300);
-                }, words.length * 150 + 2000);
+                    }, wordSpans.length * 100 + 400);
+                }, words.length * 200 + 2500);
             }
 
             // Start carousel after initial animation
             setTimeout(() => {
-                setInterval(animateWordByWord, 6000);
+                setInterval(animateWordByWord, 7000);
                 animateWordByWord();
-            }, 2000);
+            }, 2500);
 
             // Scroll-based animations
             const observerOptions = {
