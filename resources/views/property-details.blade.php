@@ -688,11 +688,12 @@
         function handleBooking(event) {
             event.preventDefault();
             
+            @auth
             Swal.fire({
                 icon: 'success',
                 title: 'Booking Request Sent!',
                 text: 'Your booking request has been submitted successfully. We will contact you within 24 hours.',
-                confirmButtonColor: '#E61E4D',
+                confirmButtonColor: '#222222',
                 confirmButtonText: 'Great!',
                 background: '#fff',
                 customClass: {
@@ -700,9 +701,29 @@
                     title: 'swal-custom-title',
                     confirmButton: 'swal-custom-button'
                 }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    event.target.reset();
+                }
             });
-
-            event.target.reset();
+            @else
+            Swal.fire({
+                icon: 'info',
+                title: 'Login Required',
+                text: 'You need to login or register to book this property.',
+                showCancelButton: true,
+                confirmButtonColor: '#222222',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Login',
+                cancelButtonText: 'Register'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{{ route('login') }}?redirect={{ request()->fullUrl() }}';
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = '{{ route('register') }}?redirect={{ request()->fullUrl() }}';
+                }
+            });
+            @endif
         }
     </script>
 
