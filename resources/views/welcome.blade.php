@@ -146,6 +146,16 @@
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .hero-title-text span {
+            display: inline-block;
+            margin-right: 0.3em;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-title-text span:last-child {
+            margin-right: 0;
+        }
+
         .hero-title-text.fade-out {
             opacity: 0;
             transform: translateY(-30px) scale(0.95);
