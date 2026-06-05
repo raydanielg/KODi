@@ -426,55 +426,59 @@ class _HomeScreenState extends State<HomeScreen>
                           right: 0,
                           bottom: 25,
                           child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginScreen(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                width: 280,
-                                height: 65,
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary,
-                                  borderRadius: BorderRadius.circular(40),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.primary.withOpacity(0.4),
-                                      blurRadius: 20,
-                                      offset: const Offset(0, 10),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginScreen(),
                                     ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "GET STARTED",
-                                      style: GoogleFonts.inter(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black,
+                                  );
+                                },
+                                borderRadius: BorderRadius.circular(40),
+                                child: Container(
+                                  width: 280,
+                                  height: 65,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primary,
+                                    borderRadius: BorderRadius.circular(40),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.primary.withOpacity(0.4),
+                                        blurRadius: 20,
+                                        offset: const Offset(0, 10),
                                       ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    AnimatedBuilder(
-                                      animation: _animation,
-                                      builder: (context, child) {
-                                        return Transform.translate(
-                                          offset: Offset(_animation.value, 0),
-                                          child: const Icon(
-                                            Icons.arrow_forward,
-                                            color: Colors.black,
-                                            size: 20,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "GET STARTED",
+                                        style: GoogleFonts.inter(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      AnimatedBuilder(
+                                        animation: _animation,
+                                        builder: (context, child) {
+                                          return Transform.translate(
+                                            offset: Offset(_animation.value, 0),
+                                            child: const Icon(
+                                              Icons.arrow_forward,
+                                              color: Colors.black,
+                                              size: 20,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
