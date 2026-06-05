@@ -194,7 +194,7 @@
         }
 
         .mobile-search-btn {
-            display: none;
+            display: flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.625rem 1rem;
