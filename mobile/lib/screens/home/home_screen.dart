@@ -13,6 +13,26 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  late PageController _pageController;
+  int _currentPage = 0;
+
+  final List<Map<String, String>> _onboardingData = [
+    {
+      'title': 'FIND YOUR\nPERFECT HOME',
+      'subtitle': 'ACROSS AFRICA',
+      'description': 'Discover long-term rental properties that match your lifestyle and budget.',
+    },
+    {
+      'title': 'CONNECT WITH\nLANDLORDS',
+      'subtitle': 'DIRECTLY',
+      'description': 'Skip the middleman and connect directly with property owners.',
+    },
+    {
+      'title': 'SECURE YOUR\nDREAM SPACE',
+      'subtitle': 'TODAY',
+      'description': 'Easy booking, secure payments, and hassle-free rentals.',
+    },
+  ];
 
   @override
   void initState() {
@@ -24,11 +44,13 @@ class _HomeScreenState extends State<HomeScreen>
     _animation = Tween<double>(begin: 0, end: 10).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
+    _pageController = PageController();
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
