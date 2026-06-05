@@ -1,6 +1,6 @@
-@extends('layouts.landlord')
+@extends('layouts.support')
 
-@section('title', 'Ripoti')
+@section('title', 'Tiketi za Msaada')
 
 @section('content')
 <style>
@@ -12,8 +12,8 @@
 </style>
 
 <div class="page-header">
-    <h1>Ripoti</h1>
-    <p>Muhtasari na ripoti za mapato, matumizi na utendaji wa majengo.</p>
+    <h1>Tiketi za Msaada</h1>
+    <p>Orodha ya tiketi zote za usaidizi kwa wateja</p>
 </div>
 
 <div class="card">
