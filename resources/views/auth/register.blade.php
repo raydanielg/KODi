@@ -1,12 +1,16 @@
 @extends('layouts.auth')
 
+@push('head')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@endpush
+
 @section('form-header')
     <h2 class="auth-form-title">Create your account</h2>
     <p class="auth-form-subtitle">Start your journey today by creating a new account. We're ready to help you achieve your dreams.</p>
 @endsection
 
 @section('form-content')
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" id="registerForm">
         @csrf
 
         <div class="form-group">
@@ -97,30 +101,89 @@
         <span>Already have an account?</span>
         <a href="{{ route('login') }}" class="auth-footer-link">Sign in</a>
     </div>
-@endsection
 
-@push('scripts')
-<script>
-    const roleDescriptions = {
-        tenant: 'Tenant: Looking for a long-term rental property',
-        landlord: 'Landlord: Own properties to rent out',
-        agent: 'Agent: Manage properties on behalf of landlords',
-        support: 'Support Agent: Help users with their questions',
-        maintenance: 'Maintenance Staff: Handle property repairs',
-        accountant: 'Accountant: Manage financial records'
-    };
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const registerForm = document.getElementById('registerForm');
 
-    function updateRoleDescription() {
-        const roleSelect = document.getElementById('role');
-        const descriptionDiv = document.getElementById('role-description');
-        const selectedRole = roleSelect.value;
-        
-        if (roleDescriptions[selectedRole]) {
-            descriptionDiv.textContent = roleDescriptions[selectedRole];
-            descriptionDiv.style.display = 'block';
-        } else {
-            descriptionDiv.style.display = 'none';
+            // Show error messages with SweetAlert
+            @if($errors->any())
+                @foreach($errors->all() as $error)
+                    Swal.fire({
+                        position: 'bottom-end',
+                        icon: 'error',
+                        title: '{{ $error }}',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        toast: true,
+                        background: '#fef2f2',
+                        color: '#991b1b',
+                        iconColor: '#ef4444',
+                        customClass: {
+                            popup: 'swal2-popup-custom',
+                            title: 'swal2-title-custom'
+                        }
+                    });
+                @endforeach
+            @endif
+
+            // Handle form submission with loading state
+            registerForm.addEventListener('submit', function(e) {
+                const btn = this.querySelector('.btn-primary');
+                const btnText = btn.querySelector('.btn-text');
+
+                btn.classList.add('loading');
+                btnText.textContent = 'Creating account...';
+            });
+        });
+
+        const roleDescriptions = {
+            tenant: 'Tenant: Looking for a long-term rental property',
+            landlord: 'Landlord: Own properties to rent out',
+            agent: 'Agent: Manage properties on behalf of landlords',
+            support: 'Support Agent: Help users with their questions',
+            maintenance: 'Maintenance Staff: Handle property repairs',
+            accountant: 'Accountant: Manage financial records'
+        };
+
+        function updateRoleDescription() {
+            const roleSelect = document.getElementById('role');
+            const descriptionDiv = document.getElementById('role-description');
+            const selectedRole = roleSelect.value;
+            
+            if (roleDescriptions[selectedRole]) {
+                descriptionDiv.textContent = roleDescriptions[selectedRole];
+                descriptionDiv.style.display = 'block';
+            } else {
+                descriptionDiv.style.display = 'none';
+            }
         }
-    }
-</script>
-@endpush
+    </script>
+
+    <style>
+        .swal2-popup-custom {
+            border-radius: 12px !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+
+        .swal2-title-custom {
+            font-size: 0.95rem !important;
+            font-weight: 600 !important;
+        }
+
+        .swal2-icon {
+            border: none !important;
+        }
+
+        .swal2-toast {
+            padding: 1rem 1.5rem !important;
+        }
+
+        .swal2-toast .swal2-icon {
+            width: 2.5em !important;
+            height: 2.5em !important;
+        }
+    </style>
+@endsection

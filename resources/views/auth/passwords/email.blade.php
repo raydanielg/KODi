@@ -1,5 +1,9 @@
 @extends('layouts.auth')
 
+@push('head')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@endpush
+
 @section('form-header')
     <h2 class="auth-form-title">Forgot your password?</h2>
     <p class="auth-form-subtitle">No worries. Enter your email and we'll send you reset instructions.</p>
@@ -10,7 +14,7 @@
         <div class="alert alert-success">{{ session('status') }}</div>
     @endif
 
-    <form method="POST" action="{{ route('password.email') }}">
+    <form method="POST" action="{{ route('password.email') }}" id="forgotPasswordForm">
         @csrf
 
         <div class="form-group">
@@ -39,4 +43,78 @@
         <div class="divider">Remember your password?</div>
         <a href="{{ route('login') }}" class="btn btn-link">Back to sign in</a>
     @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+
+            @if(session('status'))
+                Swal.fire({
+                    position: 'bottom-end',
+                    icon: 'success',
+                    title: '{{ session('status') }}',
+                    showConfirmButton: false,
+                    timer: 4000,
+                    toast: true,
+                    background: '#ecfdf5',
+                    color: '#065f46',
+                    iconColor: '#10B981',
+                    customClass: {
+                        popup: 'swal2-popup-custom',
+                        title: 'swal2-title-custom'
+                    }
+                });
+            @endif
+
+            @if($errors->any())
+                @foreach($errors->all() as $error)
+                    Swal.fire({
+                        position: 'bottom-end',
+                        icon: 'error',
+                        title: '{{ $error }}',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        toast: true,
+                        background: '#fef2f2',
+                        color: '#991b1b',
+                        iconColor: '#ef4444',
+                        customClass: {
+                            popup: 'swal2-popup-custom',
+                            title: 'swal2-title-custom'
+                        }
+                    });
+                @endforeach
+            @endif
+
+            forgotPasswordForm.addEventListener('submit', function(e) {
+                const btn = this.querySelector('.btn-primary');
+                const btnText = btn.querySelector('.btn-text');
+                btn.classList.add('loading');
+                btnText.textContent = 'Sending...';
+            });
+        });
+    </script>
+
+    <style>
+        .swal2-popup-custom {
+            border-radius: 12px !important;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+        .swal2-title-custom {
+            font-size: 0.95rem !important;
+            font-weight: 600 !important;
+        }
+        .swal2-icon {
+            border: none !important;
+        }
+        .swal2-toast {
+            padding: 1rem 1.5rem !important;
+        }
+        .swal2-toast .swal2-icon {
+            width: 2.5em !important;
+            height: 2.5em !important;
+        }
+    </style>
 @endsection
