@@ -230,13 +230,13 @@
 
         .category-item {
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
-            min-width: 64px;
+            min-width: 80px;
             cursor: pointer;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
             transition: all 0.2s ease;
             border: 1px solid transparent;
             background: #fff;
@@ -260,27 +260,12 @@
             border-color: #222222;
         }
 
-        .category-item.selected .category-icon {
-            color: #fff;
-        }
-
         .category-item.selected .category-label {
             color: #fff;
         }
 
-        .category-icon {
-            width: 24px;
-            height: 24px;
-            color: #222222;
-            transition: all 0.2s ease;
-        }
-
-        .category-item:hover .category-icon {
-            transform: scale(1.1);
-        }
-
         .category-label {
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             color: #222222;
             font-weight: 500;
             white-space: nowrap;
