@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
+import 'screens/dashboard/main_dashboard_screen.dart';
+import 'screens/properties/property_list_screen.dart';
+import 'screens/properties/property_detail_screen.dart';
+import 'screens/payments/payment_screen.dart';
+import 'screens/maintenance/maintenance_screen.dart';
+import 'screens/messages/message_screen.dart';
+import 'screens/profile/profile_screen.dart';
 import 'constants/app_theme.dart';
 import 'constants/app_routes.dart';
 
@@ -24,6 +31,13 @@ class MannaApp extends StatelessWidget {
         AppRoutes.home: (context) => const HomeScreen(),
         AppRoutes.login: (context) => const LoginScreen(),
         AppRoutes.register: (context) => const RegisterScreen(),
+        AppRoutes.dashboard: (context) => const MainDashboardScreen(),
+        AppRoutes.properties: (context) => const PropertyListScreen(),
+        AppRoutes.propertyDetails: (context) => const PropertyDetailScreen(),
+        AppRoutes.payments: (context) => const PaymentScreen(),
+        AppRoutes.maintenance: (context) => const MaintenanceScreen(),
+        AppRoutes.messages: (context) => const MessageScreen(),
+        AppRoutes.profile: (context) => const ProfileScreen(),
       },
     );
   }
