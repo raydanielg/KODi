@@ -1,6 +1,6 @@
 @extends('layouts.super-admin')
 
-@section('title', 'Nakala Rufu')
+@section('title', 'Mawakala')
 
 @section('content')
 <style>
@@ -12,8 +12,8 @@
 </style>
 
 <div class="page-header">
-    <h1>Nakala Rufu</h1>
-    <p>Nakala rufu za mfumo.</p>
+    <h1>Mawakala</h1>
+    <p>Mawakala wote wa mfumo.</p>
 </div>
 
 <div class="card">
