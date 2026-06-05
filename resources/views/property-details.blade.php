@@ -66,13 +66,24 @@
             color: #222222;
         }
 
+        @media (max-width: 768px) {
+            .nav-brand-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .nav-brand-name {
+                font-size: 1rem;
+            }
+        }
+
         .nav-back {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.625rem 1.25rem;
             background: #fff;
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
             color: #222222;
             font-weight: 600;
@@ -82,11 +93,17 @@
 
         .nav-back:hover {
             background: #f7f7f7;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .nav-back svg {
             width: 18px;
             height: 18px;
+        }
+
+        .nav-back-text {
+            display: block;
         }
 
         .container {
@@ -510,7 +527,7 @@
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-                Back to Properties
+                <span class="nav-back-text">Back to Properties</span>
             </a>
         </div>
     </nav>
