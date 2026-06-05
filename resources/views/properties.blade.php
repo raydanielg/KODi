@@ -145,7 +145,7 @@
         }
 
         .mobile-filter-btn {
-            display: none;
+            display: flex;
             align-items: center;
             gap: 0.5rem;
             padding: 0.625rem 1rem;
@@ -279,7 +279,8 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 200;
             display: none;
-            align-items: flex-end;
+            align-items: center;
+            justify-content: center;
         }
 
         .mobile-sidebar.active {
@@ -288,9 +289,10 @@
 
         .sidebar-content {
             background: #fff;
-            width: 100%;
+            width: 90%;
+            max-width: 500px;
             max-height: 80vh;
-            border-radius: 20px 20px 0 0;
+            border-radius: 20px;
             padding: 1.5rem;
             overflow-y: auto;
             animation: slideUp 0.3s ease;
@@ -298,10 +300,12 @@
 
         @keyframes slideUp {
             from {
-                transform: translateY(100%);
+                transform: translateY(20px);
+                opacity: 0;
             }
             to {
                 transform: translateY(0);
+                opacity: 1;
             }
         }
 
