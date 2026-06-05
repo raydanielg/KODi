@@ -337,94 +337,96 @@ class _HomeScreenState extends State<HomeScreen>
                   ),
                   const SizedBox(height: 30),
                   Expanded(
-                    child: Stack(
+                    child: Column(
                       children: [
-                        PageView.builder(
-                          controller: _pageController,
-                          onPageChanged: (index) {
-                            setState(() {
-                              _currentPage = index;
-                            });
-                          },
-                          itemCount: _onboardingData.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 20),
-                              child: SizedBox(
-                                width: 230,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      _onboardingData[index]['title']!,
-                                      style: GoogleFonts.inter(
-                                        fontSize: 40,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.black87,
-                                        height: 1.1,
+                        // Page View
+                        Expanded(
+                          child: PageView.builder(
+                            controller: _pageController,
+                            onPageChanged: (index) {
+                              setState(() {
+                                _currentPage = index;
+                              });
+                            },
+                            itemCount: _onboardingData.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 20),
+                                child: SizedBox(
+                                  width: 230,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _onboardingData[index]['title']!,
+                                        style: GoogleFonts.inter(
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.black87,
+                                          height: 1.1,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      _onboardingData[index]['subtitle']!,
-                                      style: GoogleFonts.inter(
-                                        fontSize: 40,
-                                        fontWeight: FontWeight.w800,
-                                        color: AppColors.primary,
-                                        height: 1.1,
+                                      Text(
+                                        _onboardingData[index]['subtitle']!,
+                                        style: GoogleFonts.inter(
+                                          fontSize: 40,
+                                          fontWeight: FontWeight.w800,
+                                          color: AppColors.primary,
+                                          height: 1.1,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 20),
-                                    Text(
-                                      _onboardingData[index]['description']!,
-                                      style: GoogleFonts.inter(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        height: 1.5,
+                                      const SizedBox(height: 20),
+                                      Text(
+                                        _onboardingData[index]['description']!,
+                                        style: GoogleFonts.inter(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          height: 1.5,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 25),
-                                    Row(
-                                      children: List.generate(
-                                        _onboardingData.length,
-                                        (dotIndex) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              _pageController.animateToPage(
-                                                dotIndex,
-                                                duration: const Duration(milliseconds: 300),
-                                                curve: Curves.easeInOut,
-                                              );
-                                            },
-                                            child: Container(
-                                              margin: const EdgeInsets.only(right: 6),
-                                              width: _currentPage == dotIndex ? 20 : 6,
-                                              height: 6,
-                                              decoration: BoxDecoration(
-                                                color: _currentPage == dotIndex
-                                                    ? AppColors.primary
-                                                    : Colors.grey.shade300,
-                                                borderRadius: _currentPage == dotIndex
-                                                    ? BorderRadius.circular(10)
-                                                    : null,
-                                                shape: _currentPage == dotIndex
-                                                    ? BoxShape.rectangle
-                                                    : BoxShape.circle,
+                                      const SizedBox(height: 25),
+                                      Row(
+                                        children: List.generate(
+                                          _onboardingData.length,
+                                          (dotIndex) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                _pageController.animateToPage(
+                                                  dotIndex,
+                                                  duration: const Duration(milliseconds: 300),
+                                                  curve: Curves.easeInOut,
+                                                );
+                                              },
+                                              child: Container(
+                                                margin: const EdgeInsets.only(right: 6),
+                                                width: _currentPage == dotIndex ? 20 : 6,
+                                                height: 6,
+                                                decoration: BoxDecoration(
+                                                  color: _currentPage == dotIndex
+                                                      ? AppColors.primary
+                                                      : Colors.grey.shade300,
+                                                  borderRadius: _currentPage == dotIndex
+                                                      ? BorderRadius.circular(10)
+                                                      : null,
+                                                  shape: _currentPage == dotIndex
+                                                      ? BoxShape.rectangle
+                                                      : BoxShape.circle,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        },
+                                            );
+                                          },
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
-                        Positioned(
-                          left: 0,
-                          right: 0,
-                          bottom: 25,
+                        // Button at bottom
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 25),
                           child: Center(
                             child: ElevatedButton(
                               onPressed: () {
