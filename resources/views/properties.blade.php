@@ -296,6 +296,25 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             border: 1px solid #e5e7eb;
+            position: relative;
+        }
+
+        .property-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            z-index: 5;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
         }
 
         .property-card:hover {
@@ -655,6 +674,12 @@
             }
         }
 
+        @media (min-width: 769px) {
+            .property-number {
+                display: none;
+            }
+        }
+
         @media (max-width: 1024px) {
             .properties-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -699,6 +724,10 @@
                 grid-column: span 2;
                 padding: 1rem;
                 font-size: 1rem;
+            }
+
+            .property-number {
+                display: flex;
             }
 
             .property-actions {
