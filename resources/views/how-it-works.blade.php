@@ -444,15 +444,24 @@
             }
 
             .role-selector {
-                flex-direction: column;
-                align-items: stretch;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
             }
 
             .role-btn {
-                width: 100%;
+                width: auto;
+                flex: 1;
                 text-align: center;
                 min-width: auto;
-                padding: 1rem 1.5rem;
+                padding: 0.875rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .role-btn svg {
+                width: 18px;
+                height: 18px;
             }
 
             .nav-brand-name {
