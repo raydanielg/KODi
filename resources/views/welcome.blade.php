@@ -144,12 +144,14 @@
         .hero-title-text {
             display: inline-block;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
         }
 
         .hero-title-text span {
             display: inline-block;
-            margin-right: 0.3em;
+            margin-right: 0.5em;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
         }
 
         .hero-title-text span:last-child {
