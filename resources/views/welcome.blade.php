@@ -595,13 +595,42 @@
             </div>
 
             <div class="nav-menu" id="nav-menu">
+                <div class="nav-menu-header">
+                    <span class="nav-menu-title">Menu</span>
+                    <button class="nav-menu-close" id="nav-menu-close">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
                 <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
-                    <li><a href="{{ route('terms') }}">Terms of Service</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#" class="active">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        Home
+                    </a></li>
+                    <li><a href="{{ route('privacy') }}">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                        Privacy Policy
+                    </a></li>
+                    <li><a href="{{ route('terms') }}">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Terms of Service
+                    </a></li>
+                    <li><a href="#">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        Contact
+                    </a></li>
                 </ul>
             </div>
+            <div class="nav-menu-overlay" id="nav-menu-overlay"></div>
         </div>
     </nav>
 
@@ -741,6 +770,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             const hamburgerBtn = document.getElementById('hamburger-btn');
             const navMenu = document.getElementById('nav-menu');
+            const navMenuClose = document.getElementById('nav-menu-close');
+            const navMenuOverlay = document.getElementById('nav-menu-overlay');
             const newsletterForm = document.getElementById('newsletter-form');
             const newsletterEmail = document.getElementById('newsletter-email');
             const newsletterBtn = document.getElementById('newsletter-btn');
@@ -749,33 +780,24 @@
             const notificationOverlay = document.getElementById('notification-overlay');
             const notificationClose = document.getElementById('notification-close');
 
-            // Notification panel toggle
-            if (notificationBadge && notificationPanel && notificationOverlay && notificationClose) {
-                notificationBadge.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    notificationBadge.classList.toggle('active');
-                    notificationPanel.classList.toggle('active');
-                    notificationOverlay.classList.toggle('active');
-                });
-
-                notificationClose.addEventListener('click', function() {
-                    notificationBadge.classList.remove('active');
-                    notificationPanel.classList.remove('active');
-                    notificationOverlay.classList.remove('active');
-                });
-
-                notificationOverlay.addEventListener('click', function() {
-                    notificationBadge.classList.remove('active');
-                    notificationPanel.classList.remove('active');
-                    notificationOverlay.classList.remove('active');
-                });
-            }
-
-            // Hamburger menu toggle
-            if (hamburgerBtn && navMenu) {
+            // Mobile menu toggle
+            if (hamburgerBtn && navMenu && navMenuClose && navMenuOverlay) {
                 hamburgerBtn.addEventListener('click', function() {
-                    navMenu.classList.toggle('active');
-                    hamburgerBtn.classList.toggle('active');
+                    navMenu.classList.add('active');
+                    navMenuOverlay.classList.add('active');
+                    hamburgerBtn.classList.add('active');
+                });
+
+                navMenuClose.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    navMenuOverlay.classList.remove('active');
+                    hamburgerBtn.classList.remove('active');
+                });
+
+                navMenuOverlay.addEventListener('click', function() {
+                    navMenu.classList.remove('active');
+                    navMenuOverlay.classList.remove('active');
+                    hamburgerBtn.classList.remove('active');
                 });
             }
 
