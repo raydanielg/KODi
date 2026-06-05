@@ -142,6 +142,7 @@
             margin-bottom: 3rem;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             animation: fadeInUp 0.8s ease-out 0.1s both;
+            border: none;
         }
 
         .filters-grid {
@@ -163,9 +164,9 @@
         }
 
         .filter-input, .filter-select {
-            padding: 0.75rem 1rem;
+            padding: 0.875rem 1rem;
             border: 2px solid #e5e7eb;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 0.95rem;
             font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
@@ -183,17 +184,18 @@
         }
 
         .filter-button {
-            padding: 0.75rem 2rem;
+            padding: 0.875rem 2rem;
             background: linear-gradient(135deg, #10B981, #059669);
             color: #fff;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 0.95rem;
-            font-weight: 600;
+            font-weight: 700;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            letter-spacing: 0.01em;
         }
 
         .filter-button:hover {
