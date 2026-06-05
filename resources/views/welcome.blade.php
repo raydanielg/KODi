@@ -18,39 +18,50 @@
             100% { background-position: 0% 50%; }
         }
 
-        .header { position: fixed; top: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.2); z-index: 20; transition: all 0.3s ease; }
-        .header:hover { background: rgba(255, 255, 255, 0.15); }
-        .nav-container { max-width: 1280px; margin: 0 auto; padding: 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+        .header { position: fixed; top: 0; left: 0; right: 0; background: #ffffff; border-bottom: 1px solid #e5e7eb; z-index: 20; transition: all 0.3s ease; }
+        .header:hover { box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+        .nav-container { max-width: 1280px; margin: 0 auto; padding: 0.625rem 1rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
         .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
-        .nav-brand-icon { width: 28px; height: 28px; background: #10B981; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .nav-brand-icon svg { width: 16px; height: 16px; fill: #fff; }
-        .nav-brand-name { font-size: 1.25rem; font-weight: 600; color: #fff; white-space: nowrap; }
-        .nav-buttons { display: flex; gap: 0.75rem; align-items: center; order: 3; }
+        .nav-brand-icon { width: 36px; height: 36px; background: #10B981; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .nav-brand-icon svg { width: 20px; height: 20px; fill: #fff; }
+        .nav-brand-name { font-size: 1.25rem; font-weight: 600; color: #1f2937; white-space: nowrap; }
+        .nav-buttons { display: flex; gap: 0.5rem; align-items: center; order: 3; }
         .nav-menu { display: none; width: 100%; order: 2; margin-top: 1rem; }
         .nav-menu.active { display: block; }
-        .nav-menu ul { display: flex; flex-direction: column; padding: 1rem; font-weight: 500; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; background: rgba(255, 255, 255, 0.1); list-style: none; margin: 0; }
-        .nav-menu ul li { margin-bottom: 0.25rem; }
-        .nav-menu ul li:last-child { margin-bottom: 0; }
-        .nav-menu ul li a { display: block; padding: 0.75rem 1rem; color: #fff; text-decoration: none; border-radius: 6px; transition: all 0.2s ease; }
-        .nav-menu ul li a:hover { background: rgba(255, 255, 255, 0.2); }
-        .nav-menu ul li a.active { background: #10B981; }
-        .hamburger { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 6px; color: rgba(255, 255, 255, 0.9); background: transparent; border: none; cursor: pointer; transition: all 0.2s ease; }
-        .hamburger:hover { background: rgba(255, 255, 255, 0.2); }
-        @media (min-width: 768px) {
+        .nav-menu ul { display: flex; flex-direction: column; padding: 0; font-weight: 500; list-style: none; margin: 0; }
+        .nav-menu ul li { border-bottom: 1px solid #f3f4f6; }
+        .nav-menu ul li:last-child { border-bottom: none; }
+        .nav-menu ul li a { display: block; padding: 0.75rem 1rem; color: #374151; text-decoration: none; transition: all 0.2s ease; }
+        .nav-menu ul li a:hover { background: #f9fafb; color: #10B981; }
+        .nav-menu ul li a.active { color: #10B981; }
+        .hamburger { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; color: #6b7280; background: transparent; border: none; cursor: pointer; transition: all 0.2s ease; }
+        .hamburger:hover { background: #f3f4f6; }
+        @media (min-width: 1024px) {
             .nav-container { flex-wrap: nowrap; }
             .nav-buttons { order: 2; }
-            .nav-menu { display: block; width: auto; order: 1; margin-top: 0; }
+            .nav-menu { display: flex; width: auto; order: 1; margin-top: 0; }
             .nav-menu ul { flex-direction: row; padding: 0; border: none; background: transparent; gap: 2rem; }
-            .nav-menu ul li { margin-bottom: 0; }
+            .nav-menu ul li { border-bottom: none; }
             .nav-menu ul li a:hover { background: transparent; }
             .hamburger { display: none; }
         }
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.75rem 1.75rem; border: none; border-radius: 6px; font-size: 0.95rem; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s ease; text-decoration: none; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border: none; border-radius: 8px; font-size: 0.875rem; font-weight: 500; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.2s ease; text-decoration: none; }
         .btn-primary { background: #10B981; color: #fff; }
-        .btn-primary:hover { background: #059669; transform: translateY(-1px); }
-        .btn-secondary { background: rgba(255, 255, 255, 0.2); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px); }
-        .btn-secondary:hover { background: rgba(255, 255, 255, 0.3); border-color: rgba(255, 255, 255, 0.5); transform: translateY(-1px); }
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; }
+        .btn-primary:hover { background: #059669; }
+        .btn-secondary { background: transparent; color: #1f2937; border: 1px solid transparent; }
+        .btn-secondary:hover { background: #f9fafb; color: #10B981; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; background: linear-gradient(-45deg, #10B981, #059669, #047857, #065f46), url('{{ asset('serious-expert-expressing-support-colleague (1).jpg') }}'); background-size: cover; background-position: center; background-blend-mode: overlay; }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(16, 185, 129, 0.85);
+            z-index: 0;
+        }
 
         .hero-content {
             max-width: 900px;
