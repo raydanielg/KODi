@@ -10,4 +10,4 @@ Disallow: /composer.json
 Disallow: /package.json
 Disallow: /webpack.mix.js
 
-Sitemap: {{ url('/sitemap.xml') }}
+Sitemap: https://manna.co.tz/sitemap.xml
