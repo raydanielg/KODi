@@ -122,6 +122,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: const Color(0xfff3f4f6),
                               borderRadius: BorderRadius.circular(6),
                               border: Border.all(color: const Color(0xffd1d5db)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
@@ -137,6 +144,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 icon: const Icon(
                                   Icons.keyboard_arrow_down,
                                   color: Colors.grey,
+                                  size: 20,
                                 ),
                                 items: _roles.map((String role) {
                                   return DropdownMenuItem<String>(
@@ -185,6 +193,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: const Color(0xfff3f4f6),
                               borderRadius: BorderRadius.circular(6),
                               border: Border.all(color: const Color(0xffd1d5db)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
                             ),
                             child: TextField(
                               controller: _nameController,
@@ -196,6 +211,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 prefixIcon: const Icon(
                                   Icons.person_outline,
                                   color: Colors.grey,
+                                  size: 20,
                                 ),
                                 border: InputBorder.none,
                                 contentPadding: const EdgeInsets.symmetric(
@@ -227,6 +243,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: const Color(0xfff3f4f6),
                               borderRadius: BorderRadius.circular(6),
                               border: Border.all(color: const Color(0xffd1d5db)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
                             ),
                             child: TextField(
                               controller: _emailController,
@@ -239,6 +262,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 prefixIcon: const Icon(
                                   Icons.email_outlined,
                                   color: Colors.grey,
+                                  size: 20,
                                 ),
                                 border: InputBorder.none,
                                 contentPadding: const EdgeInsets.symmetric(
@@ -270,6 +294,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: const Color(0xfff3f4f6),
                               borderRadius: BorderRadius.circular(6),
                               border: Border.all(color: const Color(0xffd1d5db)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
                             ),
                             child: TextField(
                               controller: _phoneController,
@@ -282,6 +313,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 prefixIcon: const Icon(
                                   Icons.phone_outlined,
                                   color: Colors.grey,
+                                  size: 20,
                                 ),
                                 border: InputBorder.none,
                                 contentPadding: const EdgeInsets.symmetric(
@@ -313,6 +345,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: const Color(0xfff3f4f6),
                               borderRadius: BorderRadius.circular(6),
                               border: Border.all(color: const Color(0xffd1d5db)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
                             ),
                             child: TextField(
                               controller: _passwordController,
@@ -325,6 +364,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 prefixIcon: const Icon(
                                   Icons.lock_outlined,
                                   color: Colors.grey,
+                                  size: 20,
                                 ),
                                 suffixIcon: IconButton(
                                   icon: Icon(
@@ -369,6 +409,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: const Color(0xfff3f4f6),
                               borderRadius: BorderRadius.circular(6),
                               border: Border.all(color: const Color(0xffd1d5db)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 1),
+                                ),
+                              ],
                             ),
                             child: TextField(
                               controller: _confirmPasswordController,
@@ -381,6 +428,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 prefixIcon: const Icon(
                                   Icons.check_circle_outline,
                                   color: Colors.grey,
+                                  size: 20,
                                 ),
                                 suffixIcon: IconButton(
                                   icon: Icon(
