@@ -80,74 +80,72 @@ class HomeScreen extends StatelessWidget {
 
                 // Main Content
                 Expanded(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // App Icon
-                          Container(
-                            width: 120,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(28),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 8),
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Image.asset(
-                                AppAssets.appIcon,
-                                fit: BoxFit.contain,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // App Icon
+                        Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(24),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                blurRadius: 20,
+                                offset: const Offset(0, 8),
                               ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Image.asset(
+                              AppAssets.appIcon,
+                              fit: BoxFit.contain,
                             ),
                           ),
-                          const SizedBox(height: 40),
-                          // App Name
-                          Text(
-                            AppStrings.appName,
-                            style: GoogleFonts.inter(
-                              fontSize: 52,
-                              fontWeight: FontWeight.w800,
-                              color: Colors.white,
-                              letterSpacing: 2,
-                              height: 1.1,
-                            ),
-                            textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 32),
+                        // App Name
+                        Text(
+                          AppStrings.appName,
+                          style: GoogleFonts.inter(
+                            fontSize: 48,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white,
+                            letterSpacing: 2,
+                            height: 1.1,
                           ),
-                          const SizedBox(height: 12),
-                          // Tagline
-                          Text(
-                            AppStrings.appTagline,
-                            style: GoogleFonts.inter(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white.withOpacity(0.9),
-                              letterSpacing: 0.5,
-                            ),
-                            textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 10),
+                        // Tagline
+                        Text(
+                          AppStrings.appTagline,
+                          style: GoogleFonts.inter(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white.withOpacity(0.9),
+                            letterSpacing: 0.5,
                           ),
-                          const SizedBox(height: 20),
-                          // Description
-                          Text(
-                            AppStrings.homeDescription,
-                            style: GoogleFonts.inter(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white.withOpacity(0.75),
-                              height: 1.5,
-                            ),
-                            textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                        // Description
+                        Text(
+                          AppStrings.homeDescription,
+                          style: GoogleFonts.inter(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white.withOpacity(0.75),
+                            height: 1.5,
                           ),
-                        ],
-                      ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                 ),
