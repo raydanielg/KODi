@@ -144,7 +144,7 @@
         }
 
         .role-btn {
-            padding: 1rem 2rem;
+            padding: 1.125rem 2.25rem;
             background: #fff;
             border: 2px solid #e5e7eb;
             border-radius: 16px;
@@ -159,9 +159,10 @@
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
-            min-width: 180px;
+            min-width: 200px;
             position: relative;
             overflow: hidden;
+            letter-spacing: 0.01em;
         }
 
         .role-btn::before {
@@ -171,7 +172,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.08), transparent);
             transition: left 0.5s ease;
         }
 
@@ -180,9 +181,10 @@
         }
 
         .role-btn svg {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .role-btn:hover {
@@ -193,7 +195,7 @@
         }
 
         .role-btn:hover svg {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(5deg);
             color: #10B981;
         }
 
@@ -213,6 +215,10 @@
             background: linear-gradient(135deg, #059669, #047857);
             transform: translateY(-4px);
             box-shadow: 0 12px 35px rgba(16, 185, 129, 0.5);
+        }
+
+        .role-btn.active:hover svg {
+            transform: scale(1.15) rotate(5deg);
         }
 
         .steps-container {
@@ -456,12 +462,13 @@
                 text-align: center;
                 min-width: auto;
                 padding: 0.875rem 1rem;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
+                letter-spacing: 0.005em;
             }
 
             .role-btn svg {
-                width: 18px;
-                height: 18px;
+                width: 20px;
+                height: 20px;
             }
 
             .nav-brand-name {
