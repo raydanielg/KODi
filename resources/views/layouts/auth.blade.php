@@ -134,22 +134,23 @@
 
         /* ===== RIGHT FORM PANEL ===== */
         .auth-form-side {
-            width: 520px;
-            min-width: 520px;
+            width: 540px;
+            min-width: 540px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 3rem;
+            padding: 3.5rem;
             background: #ffffff;
             border-left: 1px solid #e5e7eb;
             position: relative;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.03);
         }
 
 
         .auth-form-header {
             position: relative;
             z-index: 1;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .auth-form-header .mobile-logo {
@@ -177,17 +178,22 @@
         }
 
         .auth-form-title {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 800;
             letter-spacing: -0.03em;
-            margin-bottom: 0.4rem;
-            color: #000;
+            margin-bottom: 0.5rem;
+            color: #111827;
+            background: linear-gradient(135deg, #111827 0%, #374151 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .auth-form-subtitle {
             color: #6b7280;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 400;
         }
 
         .auth-form-body {
@@ -224,77 +230,135 @@
             display: none;
         }
 
-        .form-group { margin-bottom: 1.25rem; }
+        .form-group { margin-bottom: 1.5rem; }
 
         .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 0.625rem;
+        }
+
+        .input-wrapper {
+            position: relative;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.45rem;
         }
 
-        .form-label svg {
-            width: 14px; height: 14px;
-            opacity: 0.5;
+        .input-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1rem;
+            height: 1rem;
+            color: #6b7280;
+            pointer-events: none;
         }
 
-        .form-input {
+        .form-control {
             width: 100%;
-            padding: 0.7rem 1rem;
-            background: #f9fafb;
-            border: 1.5px solid #e5e7eb;
-            border-radius: 10px;
-            color: #000;
-            font-size: 0.9rem;
+            padding: 0.625rem 0.75rem 0.625rem 2.25rem;
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            color: #111827;
+            font-size: 0.875rem;
             font-family: 'Inter', sans-serif;
             transition: all 0.2s ease;
             outline: none;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
         }
 
-        .form-input::placeholder { color: #9ca3af; }
+        select.form-control {
+            padding-right: 2.5rem;
+        }
 
-        .form-input:focus {
+        .form-control::placeholder { color: #6b7280; }
+
+        .form-control:focus {
             border-color: #10B981;
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(16,185,129,0.12);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(16,185,129,0.1), 0 1px 2px rgba(0,0,0,0.05);
         }
 
-        .form-input.is-invalid {
+        .form-control.is-invalid {
             border-color: #ef4444;
-            background: rgba(239,68,68,0.06);
+            background: #fef2f2;
+            box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+        }
+
+        /* Input with prefix */
+        .input-group {
+            display: flex;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border-radius: 0.375rem;
+        }
+
+        .input-prefix {
+            display: inline-flex;
+            align-items: center;
+            padding: 0 0.75rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+            background: #e5e7eb;
+            border: 1px solid #d1d5db;
+            border-right: none;
+            border-radius: 0.375rem 0 0 0.375rem;
+        }
+
+        .input-group .form-control {
+            border-radius: 0 0.375rem 0.375rem 0;
+            padding-left: 0.75rem;
         }
 
         .invalid-feedback {
-            color: #ef4444;
-            font-size: 0.78rem;
-            margin-top: 0.35rem;
+            color: #dc2626;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
             display: flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.4rem;
+            font-weight: 500;
+            background: #fef2f2;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid #dc2626;
         }
 
-        .invalid-feedback svg { width: 12px; height: 12px; flex-shrink: 0; }
+        .invalid-feedback svg { width: 14px; height: 14px; flex-shrink: 0; }
 
         .form-check {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.25rem;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-check-input {
-            width: 15px; height: 15px;
+            width: 18px; height: 18px;
             accent-color: #10B981;
             cursor: pointer;
+            border: 2px solid #e5e7eb;
+            border-radius: 4px;
+        }
+
+        .form-check-input:checked {
+            background-color: #10B981;
+            border-color: #10B981;
         }
 
         .form-check-label {
-            font-size: 0.83rem;
-            color: #6b7280;
+            font-size: 0.9rem;
+            color: #4b5563;
             cursor: pointer;
+            font-weight: 500;
         }
 
         /* ===== GREEN BUTTON WITH LOADING ===== */
@@ -303,28 +367,30 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 0.78rem 1.5rem;
+            padding: 0.9rem 1.75rem;
             border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
             font-weight: 600;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.3s ease;
             text-decoration: none;
             position: relative;
-            gap: 0.5rem;
+            gap: 0.6rem;
+            letter-spacing: 0.01em;
         }
 
         .btn-primary {
-            background: #10B981;
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
             color: #fff;
-            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.45);
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
         }
 
         .btn-primary:active { transform: translateY(0); }
@@ -372,20 +438,29 @@
 
         .btn-link:hover { color: #10B981; }
 
-        .auth-footer-link {
+        .auth-footer {
             text-align: center;
-            margin-top: 1.25rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .auth-footer span {
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .auth-footer-link a {
-            color: #6b7280;
+            color: #10B981;
             text-decoration: none;
-            font-size: 0.83rem;
-            font-weight: 500;
+            font-size: 0.9rem;
+            font-weight: 600;
             transition: color 0.2s ease;
+            margin-left: 0.5rem;
         }
 
-        .auth-footer-link a:hover { color: #10B981; }
+        .auth-footer-link a:hover { color: #059669; text-decoration: underline; }
 
         .divider {
             display: flex;
@@ -404,23 +479,24 @@
         }
 
         .alert {
-            padding: 0.85rem 1rem;
-            border-radius: 10px;
-            font-size: 0.83rem;
-            margin-bottom: 1.25rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
             line-height: 1.5;
+            font-weight: 500;
         }
 
         .alert-success {
-            background: rgba(16,185,129,0.1);
-            border: 1px solid rgba(16,185,129,0.2);
-            color: #34D399;
+            background: linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(16,185,129,0.05) 100%);
+            border: 1.5px solid rgba(16,185,129,0.25);
+            color: #059669;
         }
 
         .alert-info {
-            background: rgba(59,130,246,0.1);
-            border: 1px solid rgba(59,130,246,0.2);
-            color: #60A5FA;
+            background: linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(59,130,246,0.05) 100%);
+            border: 1.5px solid rgba(59,130,246,0.25);
+            color: #2563eb;
         }
 
         .input-icon-wrap {
@@ -565,7 +641,7 @@
                             <path d="M2 12L12 17L22 12" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
                         </svg>
                     </div>
-                    <span>{{ config('app.name', 'KODI') }}</span>
+                    <span>{{ config('app.name', 'Manna') }}</span>
                 </div>
                 @yield('form-header')
             </div>
