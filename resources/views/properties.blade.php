@@ -213,6 +213,58 @@
             display: none;
         }
 
+        .filter-icons {
+            display: none;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .filter-icon-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-icon-btn:hover {
+            background: #f0fdf4;
+            border-color: #10B981;
+            transform: translateY(-2px);
+        }
+
+        .filter-icon-btn.active {
+            background: linear-gradient(135deg, #10B981, #059669);
+            border-color: #10B981;
+        }
+
+        .filter-icon-btn.active svg {
+            color: #fff;
+        }
+
+        .filter-icon-btn.active span {
+            color: #fff;
+        }
+
+        .filter-icon-btn svg {
+            width: 28px;
+            height: 28px;
+            color: #10B981;
+            transition: all 0.3s ease;
+        }
+
+        .filter-icon-btn span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #374151;
+            transition: all 0.3s ease;
+        }
+
         .filters-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -726,6 +778,14 @@
                 font-size: 1rem;
             }
 
+            .filter-icons {
+                display: grid;
+            }
+
+            .filters-grid {
+                display: none;
+            }
+
             .property-number {
                 display: flex;
             }
@@ -828,6 +888,7 @@
 
         <div class="properties-grid" id="properties-grid">
             <div class="property-card" data-location="nairobi" data-type="apartment" data-price="1200" data-bedrooms="2">
+                <div class="property-number">1</div>
                 <div class="property-image"><span>🏠</span></div>
                 <div class="property-content">
                     <div class="property-price">$1,200/month</div>
@@ -867,6 +928,7 @@
             </div>
 
             <div class="property-card" data-location="lagos" data-type="penthouse" data-price="2500" data-bedrooms="4">
+                <div class="property-number">2</div>
                 <div class="property-image"><span>🏢</span></div>
                 <div class="property-content">
                     <div class="property-price">$2,500/month</div>
@@ -906,6 +968,7 @@
             </div>
 
             <div class="property-card" data-location="accra" data-type="house" data-price="1800" data-bedrooms="3">
+                <div class="property-number">3</div>
                 <div class="property-image"><span>🏡</span></div>
                 <div class="property-content">
                     <div class="property-price">$1,800/month</div>
@@ -945,6 +1008,7 @@
             </div>
 
             <div class="property-card" data-location="johannesburg" data-type="commercial" data-price="3000" data-bedrooms="5">
+                <div class="property-number">4</div>
                 <div class="property-image"><span>🏗️</span></div>
                 <div class="property-content">
                     <div class="property-price">$3,000/month</div>
@@ -1083,6 +1147,10 @@
             
             content.classList.toggle('hidden');
             toggle.classList.toggle('active');
+        }
+
+        function toggleFilterIcon(btn, filterType) {
+            btn.classList.toggle('active');
         }
 
         function openModal(button) {
