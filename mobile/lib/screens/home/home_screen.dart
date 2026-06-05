@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen>
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
-              children: [
+                children: [
 
                 /// HEADER
                 Padding(
