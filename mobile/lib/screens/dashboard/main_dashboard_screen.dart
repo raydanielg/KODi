@@ -93,7 +93,7 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Karibu, ${user?.name?.split(' ').first ?? 'User'}',
+                                'Karibu, ${user!.name.split(' ').first ?? 'User'}',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
