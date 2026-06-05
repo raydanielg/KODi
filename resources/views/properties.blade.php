@@ -171,6 +171,33 @@
             color: #222222;
         }
 
+        .mobile-search-btn {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-search-btn:hover {
+            background: #f7f7f7;
+        }
+
+        .mobile-search-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .mobile-search-btn span {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #222222;
+        }
+
         .categories-bar {
             position: fixed;
             top: 73px;
@@ -841,7 +868,7 @@
                 </div>
             </div>
 
-            <div class="property-card" data-category="commercial" onclick="window.location.href='/properties/4'">
+            <div class="property-card" data-category="villa" onclick="window.location.href='/properties/4'">
                 <div class="property-image">
                     <span>🏗️</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
@@ -871,7 +898,7 @@
                 </div>
             </div>
 
-            <div class="property-card" data-category="beachfront" onclick="window.location.href='/properties/1'">
+            <div class="property-card" data-category="villa" onclick="window.location.href='/properties/5'">
                 <div class="property-image">
                     <span>🏠</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
@@ -901,7 +928,7 @@
                 </div>
             </div>
 
-            <div class="property-card" data-category="apartments" onclick="window.location.href='/properties/2'">
+            <div class="property-card" data-category="apartment" onclick="window.location.href='/properties/6'">
                 <div class="property-image">
                     <span>🏢</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
