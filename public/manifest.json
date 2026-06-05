@@ -1,0 +1,42 @@
+{
+  "name": "Manna - Find Your Perfect Home",
+  "short_name": "Manna",
+  "description": "The modern long-term rental platform connecting tenants with landlords across Africa. Simple, secure, and transparent.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#10B981",
+  "theme_color": "#10B981",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["real estate", "rental", "housing"],
+  "shortcuts": [
+    {
+      "name": "Search Homes",
+      "short_name": "Search",
+      "description": "Find your perfect home",
+      "url": "/search",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Dashboard",
+      "short_name": "Dashboard",
+      "description": "Access your dashboard",
+      "url": "/home",
+      "icons": [{ "src": "/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}
