@@ -264,7 +264,7 @@ class DottedPatternPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white.withOpacity(0.3)
+      ..color = AppColors.primary.withOpacity(0.15)
       ..style = PaintingStyle.fill;
 
     final dotRadius = 2.0;
