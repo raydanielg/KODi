@@ -143,23 +143,18 @@
 
         .hero-title-text {
             display: inline-block;
-            transition: all 0.5s ease;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .hero-title-text.fade-out {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(-30px) scale(0.95);
         }
 
         .hero-title-text.fade-in {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
-
-        .hero-title-text.color-1 { color: #fff; }
-        .hero-title-text.color-2 { color: #10B981; }
-        .hero-title-text.color-3 { color: #fbbf24; }
-        .hero-title-text.color-4 { color: #60a5fa; }
 
         .hero-subtitle {
             font-size: 1.35rem;
@@ -581,38 +576,71 @@
                 });
             }
 
-            // Hero Title Carousel
+            // Hero Title Carousel - Word by Word Animation
             const heroTitleText = document.getElementById('hero-title-text');
             const titles = [
-                { text: 'Find Your Perfect Home', color: 'color-1' },
-                { text: 'Discover Your Dream Space', color: 'color-2' },
-                { text: 'Live Your Best Life', color: 'color-3' },
-                { text: 'Your Journey Starts Here', color: 'color-4' }
+                'Find Your Perfect Home',
+                'Discover Your Dream Space',
+                'Live Your Best Life',
+                'Your Journey Starts Here'
             ];
             let currentTitleIndex = 0;
+            let currentWordIndex = 0;
+            let isAnimating = false;
 
-            function rotateTitle() {
-                if (!heroTitleText) return;
+            function animateWordByWord() {
+                if (!heroTitleText || isAnimating) return;
+                isAnimating = true;
 
-                // Fade out
-                heroTitleText.classList.add('fade-out');
-                heroTitleText.classList.remove('fade-in');
+                const currentTitle = titles[currentTitleIndex];
+                const words = currentTitle.split(' ');
 
+                // Clear current text
+                heroTitleText.innerHTML = '';
+                heroTitleText.style.opacity = '1';
+
+                // Animate words one by one
+                words.forEach((word, index) => {
+                    setTimeout(() => {
+                        const wordSpan = document.createElement('span');
+                        wordSpan.textContent = word + (index < words.length - 1 ? ' ' : '');
+                        wordSpan.style.opacity = '0';
+                        wordSpan.style.transform = 'translateY(20px)';
+                        wordSpan.style.display = 'inline-block';
+                        wordSpan.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                        heroTitleText.appendChild(wordSpan);
+
+                        // Trigger animation
+                        setTimeout(() => {
+                            wordSpan.style.opacity = '1';
+                            wordSpan.style.transform = 'translateY(0)';
+                        }, 50);
+                    }, index * 150);
+                });
+
+                // After all words are animated, wait then move to next title
                 setTimeout(() => {
-                    // Change text and color
-                    currentTitleIndex = (currentTitleIndex + 1) % titles.length;
-                    heroTitleText.textContent = titles[currentTitleIndex].text;
-                    heroTitleText.className = 'hero-title-text ' + titles[currentTitleIndex].color;
+                    // Fade out all words
+                    const wordSpans = heroTitleText.querySelectorAll('span');
+                    wordSpans.forEach((span, index) => {
+                        setTimeout(() => {
+                            span.style.opacity = '0';
+                            span.style.transform = 'translateY(-20px)';
+                        }, index * 50);
+                    });
 
-                    // Fade in
-                    heroTitleText.classList.remove('fade-out');
-                    heroTitleText.classList.add('fade-in');
-                }, 500);
+                    // Move to next title
+                    setTimeout(() => {
+                        currentTitleIndex = (currentTitleIndex + 1) % titles.length;
+                        isAnimating = false;
+                    }, wordSpans.length * 50 + 300);
+                }, words.length * 150 + 2000);
             }
 
             // Start carousel after initial animation
             setTimeout(() => {
-                setInterval(rotateTitle, 4000);
+                setInterval(animateWordByWord, 6000);
+                animateWordByWord();
             }, 2000);
 
             // Scroll-based animations
