@@ -363,14 +363,34 @@
 
             .categories-bar {
                 top: 60px;
+                padding: 0.75rem 0;
             }
 
             .categories-container {
                 padding: 0 1rem;
+                gap: 1rem;
+            }
+
+            .category-item {
+                min-width: 56px;
+                padding: 0.5rem 0.75rem;
+            }
+
+            .category-icon {
+                width: 20px;
+                height: 20px;
+            }
+
+            .category-label {
+                font-size: 0.6875rem;
             }
 
             .container {
-                padding: 8rem 1rem 3rem;
+                padding: 9rem 1rem 3rem;
+            }
+
+            .container.categories-hidden {
+                padding-top: 4rem;
             }
 
             .properties-grid {
@@ -517,9 +537,9 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="container">
         <div class="properties-grid">
-            <div class="property-card" onclick="window.location.href='/properties/1'">
+            <div class="property-card" data-category="apartments" onclick="window.location.href='/properties/1'">
                 <div class="property-image">
                     <span>🏠</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
@@ -579,7 +599,7 @@
                 </div>
             </div>
 
-            <div class="property-card" onclick="window.location.href='/properties/3'">
+            <div class="property-card" data-category="homes" onclick="window.location.href='/properties/3'">
                 <div class="property-image">
                     <span>🏡</span>
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
