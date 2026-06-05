@@ -616,46 +616,42 @@
                         const wordSpan = document.createElement('span');
                         wordSpan.textContent = word;
                         wordSpan.style.opacity = '0';
-                        wordSpan.style.transform = 'translateY(30px) scale(0.8)';
+                        wordSpan.style.transform = 'translateY(20px)';
                         wordSpan.style.display = 'inline-block';
-                        wordSpan.style.marginRight = '0.4em';
-                        wordSpan.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        wordSpan.style.marginRight = '0.5em';
+                        wordSpan.style.transition = 'all 0.4s ease-out';
                         heroTitleText.appendChild(wordSpan);
 
-                        // Trigger animation with slight delay
-                        requestAnimationFrame(() => {
-                            setTimeout(() => {
-                                wordSpan.style.opacity = '1';
-                                wordSpan.style.transform = 'translateY(0) scale(1)';
-                            }, 50);
-                        });
-                    }, index * 200);
+                        // Trigger animation
+                        setTimeout(() => {
+                            wordSpan.style.opacity = '1';
+                            wordSpan.style.transform = 'translateY(0)';
+                        }, 50);
+                    }, index * 150);
                 });
 
                 // After all words are animated, wait then move to next title
                 setTimeout(() => {
-                    // Fade out all words in reverse order
+                    // Fade out all words together
                     const wordSpans = heroTitleText.querySelectorAll('span');
-                    wordSpans.forEach((span, index) => {
-                        setTimeout(() => {
-                            span.style.opacity = '0';
-                            span.style.transform = 'translateY(-30px) scale(0.8)';
-                        }, (wordSpans.length - 1 - index) * 100);
+                    wordSpans.forEach(span => {
+                        span.style.opacity = '0';
+                        span.style.transform = 'translateY(-20px)';
                     });
 
                     // Move to next title
                     setTimeout(() => {
                         currentTitleIndex = (currentTitleIndex + 1) % titles.length;
                         isAnimating = false;
-                    }, wordSpans.length * 100 + 400);
-                }, words.length * 200 + 2500);
+                    }, 400);
+                }, words.length * 150 + 2000);
             }
 
             // Start carousel after initial animation
             setTimeout(() => {
-                setInterval(animateWordByWord, 7000);
+                setInterval(animateWordByWord, 6000);
                 animateWordByWord();
-            }, 2500);
+            }, 2000);
 
             // Scroll-based animations
             const observerOptions = {
