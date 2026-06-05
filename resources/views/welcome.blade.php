@@ -128,6 +128,7 @@
             color: #fff;
             line-height: 1.2;
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
         .hero-subtitle {
@@ -139,6 +140,7 @@
             margin-left: auto;
             margin-right: auto;
             text-shadow: 0 1px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-out 0.6s both;
         }
 
         .newsletter-section {
@@ -215,6 +217,7 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
+            animation: fadeInUp 1s ease-out 0.8s both;
         }
 
         .hero-buttons .btn {
@@ -223,12 +226,15 @@
             background: rgba(255, 255, 255, 0.95);
             color: #10B981;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
         }
 
         .hero-buttons .btn:hover {
             background: #fff;
             color: #059669;
             border-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .hero-buttons .btn-primary {
