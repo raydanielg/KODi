@@ -144,6 +144,28 @@
             background: #f7f7f7;
         }
 
+        .get-started-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #E61E4D, #D70466);
+            color: #fff;
+            border: none;
+            border-radius: 24px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 30, 77, 0.3);
+        }
+
+        .get-started-btn:hover {
+            background: linear-gradient(135deg, #D70466, #BD1E59);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 30, 77, 0.4);
+        }
+
         .mobile-filter-btn {
             display: flex;
             align-items: center;
@@ -770,8 +792,7 @@
                     </svg>
                     <span>Filters</span>
                 </button>
-                <a href="{{ route('login') }}" class="user-link">Log in</a>
-                <a href="{{ route('register') }}" class="user-link" style="background: #222222; color: #fff;">Sign up</a>
+                <a href="{{ route('register') }}" class="get-started-btn">Get Started</a>
             </div>
         </div>
     </nav>
