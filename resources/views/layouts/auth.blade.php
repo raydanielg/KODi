@@ -321,19 +321,27 @@
 
         .invalid-feedback {
             color: #dc2626;
-            font-size: 0.8rem;
-            margin-top: 0.5rem;
+            font-size: 0.82rem;
+            margin-top: 0.6rem;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            font-weight: 500;
-            background: #fef2f2;
-            padding: 0.5rem 0.75rem;
-            border-radius: 8px;
-            border-left: 3px solid #dc2626;
+            gap: 0.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            padding: 0.65rem 0.9rem;
+            border-radius: 10px;
+            border: 1px solid rgba(239,68,68,0.2);
+            border-left: 4px solid #ef4444;
+            animation: slideIn 0.3s ease-out;
+            box-shadow: 0 2px 8px rgba(239,68,68,0.1);
         }
 
-        .invalid-feedback svg { width: 14px; height: 14px; flex-shrink: 0; }
+        .invalid-feedback svg { width: 16px; height: 16px; flex-shrink: 0; color: #ef4444; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .form-check {
             display: flex;
@@ -492,12 +500,21 @@
             background: linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(16,185,129,0.05) 100%);
             border: 1.5px solid rgba(16,185,129,0.25);
             color: #059669;
+            animation: slideIn 0.3s ease-out;
         }
 
         .alert-info {
             background: linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(59,130,246,0.05) 100%);
             border: 1.5px solid rgba(59,130,246,0.25);
             color: #2563eb;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, rgba(239,68,68,0.1) 0%, rgba(239,68,68,0.05) 100%);
+            border: 1.5px solid rgba(239,68,68,0.25);
+            color: #dc2626;
+            animation: slideIn 0.3s ease-out;
         }
 
         .input-icon-wrap {
