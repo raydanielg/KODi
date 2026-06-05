@@ -86,31 +86,110 @@ class _HomeScreenState extends State<HomeScreen>
         child: SafeArea(
           child: Column(
             children: [
-              Padding(
+              // Header with gradient
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      AppColors.primary,
+                      AppColors.primary.withOpacity(0.8),
+                    ],
+                  ),
+                ),
                 padding: const EdgeInsets.all(24.0),
                 child: Row(
                   children: [
-                    Image.asset(
-                      AppAssets.appIcon,
-                      width: 50,
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Image.asset(
+                          AppAssets.appIcon,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 16),
-                    Text(
-                      AppStrings.appName,
-                      style: GoogleFonts.inter(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            AppStrings.appName,
+                            style: GoogleFonts.inter(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Find your perfect home',
+                            style: GoogleFonts.inter(
+                              fontSize: 12,
+                              color: Colors.white.withOpacity(0.8),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-              const Divider(color: Colors.grey),
+              const Divider(color: Colors.grey, height: 1),
+              // Menu Items
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.zero,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   children: [
+                    _buildMenuItem(
+                      icon: Icons.home_outlined,
+                      title: 'Home',
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.search_outlined,
+                      title: 'Search Properties',
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.favorite_outline,
+                      title: 'Saved Properties',
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                      child: Text(
+                        'INFORMATION',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
                     _buildMenuItem(
                       icon: Icons.info_outline,
                       title: 'About Us',
@@ -142,15 +221,38 @@ class _HomeScreenState extends State<HomeScreen>
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Text(
-                  '© 2024 ${AppStrings.appName}',
-                  style: GoogleFonts.inter(
-                    color: Colors.grey,
-                    fontSize: 12,
+              // Footer with gradient
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.grey.shade900,
+                      Colors.black,
+                    ],
                   ),
-                  textAlign: TextAlign.center,
+                ),
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    Text(
+                      '© 2024 ${AppStrings.appName}',
+                      style: GoogleFonts.inter(
+                        color: Colors.grey,
+                        fontSize: 12,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Version 1.0.0',
+                      style: GoogleFonts.inter(
+                        color: Colors.grey.shade600,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
