@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Property Details - {{ config('app.name', 'Manna') }}</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('icons8-logo-16.png') }}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('icons8-logo-50.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('icons8-logo-50.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -27,12 +29,13 @@
             background: #fff;
             border-bottom: 1px solid #e5e7eb;
             z-index: 100;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .nav-container {
             max-width: 1760px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0.875rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -43,27 +46,23 @@
             align-items: center;
             gap: 0.75rem;
             text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-brand:hover {
+            transform: translateY(-1px);
         }
 
         .nav-brand-icon {
-            width: 32px;
-            height: 32px;
-            background: #FF385C;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-brand-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: #fff;
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            flex-shrink: 0;
         }
 
         .nav-brand-name {
             font-size: 1.25rem;
-            font-weight: 700;
+            font-weight: 600;
             color: #222222;
         }
 
@@ -419,7 +418,7 @@
 
         .submit-btn {
             padding: 0.875rem 1.5rem;
-            background: linear-gradient(135deg, #E61E4D, #D70466);
+            background: #222222;
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -431,7 +430,9 @@
         }
 
         .submit-btn:hover {
-            background: linear-gradient(135deg, #D70466, #BD1E59);
+            background: #000000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .booking-total {
