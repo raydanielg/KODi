@@ -171,7 +171,7 @@
         .btn-primary:hover { background: #059669; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
         .btn-secondary { background: transparent; color: #1f2937; border: 1px solid #e5e7eb; }
         .btn-secondary:hover { background: #f9fafb; color: #10B981; border-color: #10B981; }
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; background: linear-gradient(-45deg, #10B981, #059669, #047857, #065f46), url('{{ asset('hero-bg.jpg') }}'); background-size: cover; background-position: center; background-blend-mode: overlay; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden; background: url('{{ asset('hero-bg.jpg') }}'); background-size: cover; background-position: center; background-attachment: fixed; }
 
         .hero::before {
             content: '';
@@ -180,15 +180,26 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(16, 185, 129, 0.85);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.75) 0%, rgba(5, 150, 105, 0.65) 50%, rgba(4, 120, 87, 0.7) 100%);
             z-index: 0;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+            z-index: 1;
         }
 
         .hero-content {
             max-width: 900px;
             text-align: center;
             position: relative;
-            z-index: 1;
+            z-index: 2;
             animation: fadeInUp 1s ease-out;
         }
 
