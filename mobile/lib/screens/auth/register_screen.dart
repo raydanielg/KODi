@@ -459,22 +459,67 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Checkbox(
-                            value: _agreeToTerms,
-                            onChanged: (value) {
-                              setState(() {
-                                _agreeToTerms = value!;
-                              });
-                            },
-                            activeColor: AppColors.primary,
+                          Transform.scale(
+                            scale: 1.2,
+                            child: Checkbox(
+                              value: _agreeToTerms,
+                              onChanged: (value) {
+                                setState(() {
+                                  _agreeToTerms = value!;
+                                });
+                              },
+                              activeColor: AppColors.primary,
+                              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              visualDensity: VisualDensity.compact,
+                            ),
                           ),
+                          const SizedBox(width: 8),
                           Expanded(
-                            child: Text(
-                              'I agree to the Terms of Service and Privacy Policy',
-                              style: GoogleFonts.inter(
-                                fontSize: 13,
-                                color: Colors.grey[700],
-                              ),
+                            child: Wrap(
+                              children: [
+                                Text(
+                                  'I agree to the ',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 13,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    // Navigate to Terms of Service
+                                  },
+                                  child: Text(
+                                    'Terms of Service',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 13,
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  ' and ',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 13,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    // Navigate to Privacy Policy
+                                  },
+                                  child: Text(
+                                    'Privacy Policy',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 13,
+                                      color: AppColors.primary,
+                                      fontWeight: FontWeight.w600,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
