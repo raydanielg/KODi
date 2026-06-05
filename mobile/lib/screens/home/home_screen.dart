@@ -55,9 +55,114 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
   }
 
+  Widget _buildMenuItem({
+    required IconData icon,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: Colors.white,
+      ),
+      title: Text(
+        title,
+        style: GoogleFonts.inter(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      onTap: onTap,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: Colors.black,
+        child: SafeArea(
+          child: Column(
+            children: [
+              // Header
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      AppAssets.appIcon,
+                      width: 50,
+                    ),
+                    const SizedBox(width: 16),
+                    Text(
+                      AppStrings.appName,
+                      style: GoogleFonts.inter(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(color: Colors.grey),
+              // Menu Items
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    _buildMenuItem(
+                      icon: Icons.info_outline,
+                      title: 'About Us',
+                      onTap: () {
+                        Navigator.pop(context);
+                        // TODO: Navigate to About Us
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.lock_outline,
+                      title: 'Privacy Policy',
+                      onTap: () {
+                        Navigator.pop(context);
+                        // TODO: Navigate to Privacy Policy
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.description_outlined,
+                      title: 'Terms of Service',
+                      onTap: () {
+                        Navigator.pop(context);
+                        // TODO: Navigate to Terms of Service
+                      },
+                    ),
+                    _buildMenuItem(
+                      icon: Icons.help_outline,
+                      title: 'FAQ',
+                      onTap: () {
+                        Navigator.pop(context);
+                        // TODO: Navigate to FAQ
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              // Footer
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Text(
+                  '© 2024 ${AppStrings.appName}',
+                  style: GoogleFonts.inter(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -96,7 +201,9 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
 
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
                         icon: const Icon(Icons.menu),
                       ),
                     ],
