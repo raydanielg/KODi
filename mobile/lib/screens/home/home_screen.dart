@@ -42,20 +42,22 @@ class HomeScreen extends StatelessWidget {
                         width: 48,
                         height: 48,
                         decoration: BoxDecoration(
-                          color: AppColors.primary,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
-                              color: AppColors.primary.withOpacity(0.4),
+                              color: Colors.black.withOpacity(0.2),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
                           ],
                         ),
-                        child: const Icon(
-                          Icons.home_rounded,
-                          color: Colors.white,
-                          size: 26,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset(
+                            AppAssets.appIcon,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                       TextButton(
