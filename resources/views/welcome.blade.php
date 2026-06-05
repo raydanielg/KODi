@@ -453,6 +453,7 @@
             font-weight: 600;
             color: #111827;
             margin-bottom: 0.5rem;
+            text-align: center;
         }
 
         .newsletter-subtitle {
