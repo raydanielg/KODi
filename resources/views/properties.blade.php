@@ -973,7 +973,7 @@
         <div class="properties-grid">
             <div class="property-card" data-category="apartments" onclick="window.location.href='/properties/1'">
                 <div class="property-image">
-                    <span>🏠</span>
+                    <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop" alt="Modern 2-Bedroom Apartment">
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -1001,9 +1001,9 @@
                 </div>
             </div>
 
-            <div class="property-card" data-category="penthouse" onclick="window.location.href='/properties/2'">
+            <div class="property-card" data-category="penthouses" onclick="window.location.href='/properties/2'">
                 <div class="property-image">
-                    <span>🏢</span>
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop" alt="Luxury Penthouse Suite">
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -1033,7 +1033,7 @@
 
             <div class="property-card" data-category="homes" onclick="window.location.href='/properties/3'">
                 <div class="property-image">
-                    <span>🏡</span>
+                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=600&fit=crop" alt="Cozy Family Home">
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
@@ -1093,7 +1093,7 @@
 
             <div class="property-card" data-category="beachfront" onclick="window.location.href='/properties/5'">
                 <div class="property-image">
-                    <span>🏠</span>
+                    <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&h=600&fit=crop" alt="Beachfront Villa">
                     <div class="property-favorite" onclick="event.stopPropagation(); this.classList.toggle('active')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
