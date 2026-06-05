@@ -61,11 +61,13 @@
         @media (min-width: 1024px) {
             .nav-container { flex-wrap: nowrap; }
             .nav-buttons { order: 2; gap: 1rem; }
-            .nav-menu { display: flex; width: auto; order: 1; margin-top: 0; margin-right: auto; margin-left: 2rem; }
+            .nav-menu { display: flex; width: auto; position: static; order: 1; margin-top: 0; margin-right: auto; margin-left: 2rem; height: auto; box-shadow: none; }
+            .nav-menu.active { right: auto; }
+            .nav-menu-header { display: none; }
             .nav-menu ul { flex-direction: row; padding: 0; border: none; background: transparent; gap: 0.5rem; }
-            .nav-menu ul li { border-bottom: none; margin-bottom: 0; }
+            .nav-menu ul li { margin-bottom: 0; }
             .nav-menu ul li a { padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.875rem; }
-            .nav-menu ul li a:hover { background: #f0fdf4; }
+            .nav-menu ul li a:hover { background: #f0fdf4; transform: none; }
             .hamburger { display: none; }
         }
 
