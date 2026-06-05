@@ -1,6 +1,6 @@
 @extends('layouts.super-admin')
 
-@section('title', 'Watumiaji')
+@section('title', 'Unda Mtumiaji')
 
 @section('content')
 <style>
@@ -12,8 +12,8 @@
 </style>
 
 <div class="page-header">
-    <h1>Watumiaji</h1>
-    <p>Orodha ya watumiaji wote wa mfumo.</p>
+    <h1>Unda Mtumiaji</h1>
+    <p>Unda mtumiaji mpya katika mfumo.</p>
 </div>
 
 <div class="card">
