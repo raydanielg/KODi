@@ -143,6 +143,74 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             animation: fadeInUp 0.8s ease-out 0.1s both;
             border: none;
+            position: relative;
+        }
+
+        .filters-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .filters-header:hover {
+            background: #f9fafb;
+        }
+
+        .filters-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .filters-title svg {
+            width: 24px;
+            height: 24px;
+            color: #10B981;
+        }
+
+        .filters-toggle {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .filters-toggle svg {
+            width: 20px;
+            height: 20px;
+            color: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .filters-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .filters-toggle.active svg {
+            transform: rotate(180deg);
+        }
+
+        .filters-content {
+            display: block;
+            transition: all 0.3s ease;
+        }
+
+        .filters-content.hidden {
+            display: none;
         }
 
         .filters-grid {
@@ -161,6 +229,15 @@
             font-size: 0.875rem;
             font-weight: 600;
             color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-label svg {
+            width: 16px;
+            height: 16px;
+            color: #10B981;
         }
 
         .filter-input, .filter-select {
