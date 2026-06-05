@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     style: GoogleFonts.inter(
                                       fontSize: 40,
                                       fontWeight: FontWeight.w800,
-                                      color: const Color(0xffF4B63E),
+                                      color: AppColors.primary,
                                       height: 1.1,
                                     ),
                                   ),
@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen>
                                             height: 6,
                                             decoration: BoxDecoration(
                                               color: _currentPage == dotIndex
-                                                  ? const Color(0xffF4B63E)
+                                                  ? AppColors.primary
                                                   : Colors.grey.shade300,
                                               borderRadius: _currentPage == dotIndex
                                                   ? BorderRadius.circular(10)
@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen>
                             width: 280,
                             height: 65,
                             decoration: BoxDecoration(
-                              color: const Color(0xffF4B63E),
+                              color: AppColors.primary,
                               borderRadius:
                                   BorderRadius.circular(40),
                             ),
