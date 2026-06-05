@@ -162,6 +162,118 @@
             max-width: 500px;
             margin-left: auto;
             margin-right: auto;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+
+        .download-app-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s ease-out 1.2s both;
+        }
+
+        .download-app-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .download-app-subtitle {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background: #1f2937;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .download-btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.2;
+        }
+
+        .download-btn-text span:first-child {
+            font-size: 0.65rem;
+            opacity: 0.8;
+        }
+
+        .download-btn-text span:last-child {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .coming-soon-section {
+            margin-top: 3rem;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 1.4s both;
+        }
+
+        .coming-soon-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #fff;
+            backdrop-filter: blur(10px);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+        }
+
+        .coming-soon-badge svg {
+            width: 18px;
+            height: 18px;
         }
 
         .newsletter-title {
