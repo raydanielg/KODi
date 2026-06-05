@@ -556,8 +556,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
             position: relative;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover .property-image img {
+            transform: scale(1.05);
         }
 
         .property-favorite {
