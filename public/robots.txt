@@ -1,2 +1,13 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin/
+Disallow: /super-admin/
+Disallow: /api/
+Disallow: /storage/
+Disallow: /vendor/
+Disallow: /.env
+Disallow: /composer.json
+Disallow: /package.json
+Disallow: /webpack.mix.js
+
+Sitemap: {{ url('/sitemap.xml') }}
