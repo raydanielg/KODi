@@ -29,8 +29,6 @@
   .order-items {
     align-items: flex-start !important;
   }
-}
-@media screen and (max-width: 567px) {
   .order-items .col-2 {
     flex: auto;
     max-width: 28%;

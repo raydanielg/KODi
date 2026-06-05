@@ -13,6 +13,9 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
+    .postCss('resources/css/app.css', 'public/css', [
+        require('tailwindcss'),
+    ])
     .sourceMaps()
     .sass('resources/scss/erpnext/erpnext.scss', 'public/css/erpnext.css')
     .sass('resources/scss/erpnext/point-of-sale.scss', 'public/css/pos.css')
