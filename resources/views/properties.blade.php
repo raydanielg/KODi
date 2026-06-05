@@ -144,6 +144,33 @@
             background: #f7f7f7;
         }
 
+        .mobile-filter-btn {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1rem;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-filter-btn:hover {
+            background: #f7f7f7;
+        }
+
+        .mobile-filter-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .mobile-filter-btn span {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #222222;
+        }
+
         .categories-bar {
             position: fixed;
             top: 73px;
@@ -241,6 +268,119 @@
 
         .container.categories-hidden {
             padding-top: 5rem;
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            display: none;
+            align-items: flex-end;
+        }
+
+        .mobile-sidebar.active {
+            display: flex;
+        }
+
+        .sidebar-content {
+            background: #fff;
+            width: 100%;
+            max-height: 80vh;
+            border-radius: 20px 20px 0 0;
+            padding: 1.5rem;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sidebar-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #222222;
+        }
+
+        .sidebar-close {
+            width: 32px;
+            height: 32px;
+            background: #f7f7f7;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .sidebar-close svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .sidebar-categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .sidebar-category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #f7f7f7;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .sidebar-category-item:hover {
+            background: #f0f0f0;
+        }
+
+        .sidebar-category-item.selected {
+            background: #222222;
+            border-color: #222222;
+        }
+
+        .sidebar-category-item.selected .sidebar-category-icon,
+        .sidebar-category-item.selected .sidebar-category-label {
+            color: #fff;
+        }
+
+        .sidebar-category-icon {
+            width: 24px;
+            height: 24px;
+            color: #222222;
+        }
+
+        .sidebar-category-label {
+            font-size: 0.75rem;
+            color: #222222;
+            font-weight: 500;
+            text-align: center;
         }
 
         .properties-grid {
@@ -372,35 +512,19 @@
             }
 
             .categories-bar {
-                top: 60px;
-                padding: 0.75rem 0;
+                display: none;
             }
 
-            .categories-container {
-                padding: 0 1rem;
-                gap: 1rem;
-            }
-
-            .category-item {
-                min-width: 56px;
-                padding: 0.5rem 0.75rem;
-            }
-
-            .category-icon {
-                width: 20px;
-                height: 20px;
-            }
-
-            .category-label {
-                font-size: 0.6875rem;
+            .mobile-filter-btn {
+                display: flex !important;
             }
 
             .container {
-                padding: 9rem 1rem 3rem;
+                padding: 5rem 1rem 3rem;
             }
 
             .container.categories-hidden {
-                padding-top: 4rem;
+                padding-top: 5rem;
             }
 
             .properties-grid {
@@ -476,6 +600,12 @@
                 </button>
             </div>
             <div class="user-menu">
+                <button class="mobile-filter-btn" onclick="toggleSidebar()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                    </svg>
+                    <span>Filters</span>
+                </button>
                 <a href="{{ route('login') }}" class="user-link">Log in</a>
                 <a href="{{ route('register') }}" class="user-link" style="background: #222222; color: #fff;">Sign up</a>
             </div>
