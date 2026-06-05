@@ -542,6 +542,10 @@
                 display: none;
             }
 
+            .mobile-search-btn {
+                display: flex !important;
+            }
+
             .categories-bar {
                 display: none;
             }
@@ -563,6 +567,16 @@
                 to {
                     transform: translateY(0);
                 }
+            }
+
+            .search-sidebar {
+                align-items: flex-end;
+            }
+
+            .search-sidebar-content {
+                width: 100%;
+                max-width: 100%;
+                border-radius: 20px 20px 0 0;
             }
 
             .container {
@@ -646,6 +660,12 @@
                 </button>
             </div>
             <div class="user-menu">
+                <button class="mobile-search-btn" onclick="toggleSearchSidebar()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                    <span>Search</span>
+                </button>
                 <button class="mobile-filter-btn" onclick="toggleSidebar()">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
@@ -657,6 +677,38 @@
             </div>
         </div>
     </nav>
+
+    <div class="search-sidebar" id="search-sidebar">
+        <div class="search-sidebar-content">
+            <div class="search-sidebar-header">
+                <h2 class="search-sidebar-title">Search Properties</h2>
+                <button class="search-sidebar-close" onclick="toggleSearchSidebar()">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form class="search-form" onsubmit="handleSearch(event)">
+                <div class="search-form-group">
+                    <label class="search-form-label">Where</label>
+                    <input type="text" class="search-form-input" placeholder="Search destinations" id="search-where">
+                </div>
+                <div class="search-form-group">
+                    <label class="search-form-label">Check in</label>
+                    <input type="date" class="search-form-input" placeholder="Add dates" id="search-checkin">
+                </div>
+                <div class="search-form-group">
+                    <label class="search-form-label">Check out</label>
+                    <input type="date" class="search-form-input" placeholder="Add dates" id="search-checkout">
+                </div>
+                <div class="search-form-group">
+                    <label class="search-form-label">Who</label>
+                    <input type="number" class="search-form-input" placeholder="Add guests" id="search-guests" min="1">
+                </div>
+                <button type="submit" class="search-submit-btn">Search</button>
+            </form>
+        </div>
+    </div>
 
     <div class="mobile-sidebar" id="mobile-sidebar">
         <div class="sidebar-content">
@@ -966,6 +1018,31 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('mobile-sidebar');
             sidebar.classList.toggle('active');
+        }
+
+        function toggleSearchSidebar() {
+            const sidebar = document.getElementById('search-sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function handleSearch(event) {
+            event.preventDefault();
+            
+            const where = document.getElementById('search-where').value.toLowerCase();
+            const cards = document.querySelectorAll('.property-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.property-title').textContent.toLowerCase();
+                const location = card.querySelector('.property-location').textContent.toLowerCase();
+                
+                if (where === '' || title.includes(where) || location.includes(where)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            toggleSearchSidebar();
         }
 
         function selectCategory(category) {
