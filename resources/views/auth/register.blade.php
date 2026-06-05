@@ -84,7 +84,7 @@
         <div class="form-group">
             <label class="form-check">
                 <input type="checkbox" class="form-check-input" name="terms" required>
-                <span class="form-check-label">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                <span class="form-check-label">I agree to the <a href="{{ route('terms') }}" target="_blank">Terms of Service</a> and <a href="{{ route('privacy') }}" target="_blank">Privacy Policy</a></span>
             </label>
         </div>
 
