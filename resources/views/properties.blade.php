@@ -1048,6 +1048,14 @@
     </div>
 
     <script>
+        function toggleFilters() {
+            const content = document.getElementById('filters-content');
+            const toggle = document.getElementById('filters-toggle');
+            
+            content.classList.toggle('hidden');
+            toggle.classList.toggle('active');
+        }
+
         function openModal(button) {
             const card = button.closest('.property-card');
             const title = card.querySelector('.property-title').textContent;
