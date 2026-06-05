@@ -297,6 +297,119 @@
             padding-top: 5rem;
         }
 
+        .search-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-sidebar.active {
+            display: flex;
+        }
+
+        .search-sidebar-content {
+            background: #fff;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            border-radius: 20px;
+            padding: 1.5rem;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        .search-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search-sidebar-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #222222;
+        }
+
+        .search-sidebar-close {
+            width: 32px;
+            height: 32px;
+            background: #f7f7f7;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .search-sidebar-close svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .search-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .search-form-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #222222;
+        }
+
+        .search-form-input {
+            padding: 0.875rem 1rem;
+            border: 1px solid #b0b0b0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .search-form-input:focus {
+            border-color: #222222;
+        }
+
+        .search-form-input::placeholder {
+            color: #6a6a6a;
+        }
+
+        .search-submit-btn {
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #E61E4D, #D70466);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .search-submit-btn:hover {
+            background: linear-gradient(135deg, #D70466, #BD1E59);
+        }
+
         .mobile-sidebar {
             position: fixed;
             top: 0;
