@@ -754,7 +754,7 @@
                         </div>
                     </div>
                     <div class="property-actions">
-                        <button class="view-details-btn" onclick="openModal(this)">View Details</button>
+                        <a href="/properties/1" class="view-details-btn">View Details</a>
                         <button class="book-btn" onclick="bookProperty(this)">Book Now</button>
                     </div>
                 </div>
@@ -793,7 +793,7 @@
                         </div>
                     </div>
                     <div class="property-actions">
-                        <button class="view-details-btn" onclick="openModal(this)">View Details</button>
+                        <a href="/properties/1" class="view-details-btn">View Details</a>
                         <button class="book-btn" onclick="bookProperty(this)">Book Now</button>
                     </div>
                 </div>
@@ -832,7 +832,7 @@
                         </div>
                     </div>
                     <div class="property-actions">
-                        <button class="view-details-btn" onclick="openModal(this)">View Details</button>
+                        <a href="/properties/1" class="view-details-btn">View Details</a>
                         <button class="book-btn" onclick="bookProperty(this)">Book Now</button>
                     </div>
                 </div>
@@ -871,7 +871,7 @@
                         </div>
                     </div>
                     <div class="property-actions">
-                        <button class="view-details-btn" onclick="openModal(this)">View Details</button>
+                        <a href="/properties/1" class="view-details-btn">View Details</a>
                         <button class="book-btn" onclick="bookProperty(this)">Book Now</button>
                     </div>
                 </div>
