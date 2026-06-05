@@ -41,17 +41,31 @@
         .nav-brand {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: #FF385C;
-            font-size: 1.25rem;
-            font-weight: 700;
+            gap: 0.75rem;
             text-decoration: none;
         }
 
-        .nav-brand svg {
-            width: 32px;
-            height: 32px;
-            fill: #FF385C;
+        .nav-brand-icon {
+            width: 36px;
+            height: 36px;
+            background: #10B981;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .nav-brand-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        .nav-brand-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #222222;
         }
 
         .search-bar {
@@ -670,9 +684,18 @@
                 font-size: 1rem;
             }
 
-            .nav-brand svg {
-                width: 24px;
-                height: 24px;
+            .nav-brand-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .nav-brand-icon svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .nav-brand-name {
+                font-size: 1rem;
             }
 
             .search-bar {
