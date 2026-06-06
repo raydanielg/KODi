@@ -5,12 +5,6 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Rewrite asset requests to public directory
-    RewriteCond %{REQUEST_URI} ^/(css|js|images|icons|build|fonts|service-worker\.js|manifest\.json|logo\.png|hero-bg\.jpg|sitemap\.xml|robots\.txt)
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ public/$1 [L]
-
     # Redirect Trailing Slashes If Not A Folder
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} (.+)/$
@@ -23,7 +17,7 @@
 </IfModule>
 
 # Deny access to sensitive files
-<FilesMatch "\.(env|git|svn|htaccess|htpasswd|ini|log|sh|json|xml)$">
+<FilesMatch "\.(env|git|svn|htaccess|htpasswd|ini|log|sh)$">
     Order Allow,Deny
     Deny from all
 </FilesMatch>
