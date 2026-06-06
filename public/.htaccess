@@ -17,7 +17,7 @@
 </IfModule>
 
 # Deny access to sensitive files
-<FilesMatch "\.(env|git|svn|htaccess|htpasswd|ini|log|sh|json|xml)$">
+<FilesMatch "\.(env|git|svn|htaccess|htpasswd|ini|log|sh)$">
     Order Allow,Deny
     Deny from all
 </FilesMatch>
