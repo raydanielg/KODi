@@ -7,7 +7,7 @@ class ApiService {
   factory ApiService() => _instance;
   ApiService._internal();
 
-  String _baseUrl = 'http://localhost:8000/api';
+  String _baseUrl = 'https://manna.co.tz/api';
   String? _token;
   UserModel? _currentUser;
 
