@@ -298,10 +298,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
           ),
           const SizedBox(width: 12),
           
-          // Action 3: Menu Grid Icon
+          // Action 3: Menu Grid Icon (Huduma Zaidi Sliding Panel)
           IconButton(
             onPressed: () {
-              Helpers.showSnackBar(context, 'Huduma zaidi zinafunguka...');
+              _showMoreServicesPanel(context);
             },
             icon: const Icon(Icons.grid_view_rounded, color: Color(0xFF1E293B), size: 20),
             style: IconButton.styleFrom(
