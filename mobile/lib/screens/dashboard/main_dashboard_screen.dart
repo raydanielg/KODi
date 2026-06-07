@@ -26,17 +26,6 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
   bool _isLoading = true;
   String? _error;
 
-  String _getGreeting() {
-    final hour = DateTime.now().hour;
-    if (hour < 12) {
-      return 'Habari ya Asubuhi ☀️';
-    } else if (hour < 16) {
-      return 'Habari ya Mchana 🌤️';
-    } else {
-      return 'Habari ya Jioni 🌙';
-    }
-  }
-
   @override
   void initState() {
     super.initState();
