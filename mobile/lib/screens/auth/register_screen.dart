@@ -696,7 +696,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         style: GoogleFonts.inter(fontSize: 13, color: Colors.grey[700]),
                                       ),
                                       GestureDetector(
-                                        onTap: () => Navigator.pushNamed(context, '/terms-of-service'),
+                                        onTap: () {
+                                          _showContentBottomSheet(
+                                            context: context,
+                                            title: 'Terms of Service',
+                                            lastUpdated: 'January 1, 2025',
+                                            effectiveDate: 'January 1, 2025',
+                                            sections: _termsOfServiceContent,
+                                          );
+                                        },
                                         child: Text(
                                           'Terms of Service',
                                           style: GoogleFonts.inter(
@@ -712,7 +720,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         style: GoogleFonts.inter(fontSize: 13, color: Colors.grey[700]),
                                       ),
                                       GestureDetector(
-                                        onTap: () => Navigator.pushNamed(context, '/privacy-policy'),
+                                        onTap: () {
+                                          _showContentBottomSheet(
+                                            context: context,
+                                            title: 'Privacy Policy',
+                                            lastUpdated: 'January 1, 2025',
+                                            effectiveDate: 'January 1, 2025',
+                                            sections: _privacyPolicyContent,
+                                          );
+                                        },
                                         child: Text(
                                           'Privacy Policy',
                                           style: GoogleFonts.inter(
