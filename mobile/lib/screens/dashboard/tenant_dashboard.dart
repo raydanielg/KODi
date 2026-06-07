@@ -22,6 +22,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
   DashboardStatsModel? _stats;
   bool _isLoading = true;
+  int _currentTab = 0;
 
   @override
   void initState() {
