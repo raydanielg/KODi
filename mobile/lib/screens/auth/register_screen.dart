@@ -330,7 +330,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           children: [
             Positioned.fill(
               child: CustomPaint(
-                painter: DottedPatternPainter(),
+                painter: PremiumAuthBackgroundPainter(),
               ),
             ),
             SafeArea(
@@ -803,19 +803,55 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 }
 
-class DottedPatternPainter extends CustomPainter {
+class PremiumAuthBackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = AppColors.primary.withOpacity(0.15)
+    // 1. Draw a soft premium gradient background
+    final rect = Offset.zero & size;
+    final gradient = LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [
+        Colors.white,
+        const Color(0xfff0fdf4), // Extremely light emerald/teal
+        const Color(0xffecfdf5), // Slightly darker soft emerald/teal
+      ],
+      stops: const [0.0, 0.7, 1.0],
+    );
+    final bgPaint = Paint()..shader = gradient.createShader(rect);
+    canvas.drawRect(rect, bgPaint);
+
+    // 2. Draw beautiful faint abstract circular rings/waves
+    final wavePaint = Paint()
+      ..color = const Color(0xff10b981).withOpacity(0.04) // Faint AppColors.primary
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5;
+
+    // Top Right Ring
+    canvas.drawCircle(Offset(size.width * 0.9, size.height * 0.05), 120, wavePaint);
+    canvas.drawCircle(Offset(size.width * 0.9, size.height * 0.05), 180, wavePaint);
+    canvas.drawCircle(Offset(size.width * 0.9, size.height * 0.05), 240, wavePaint);
+
+    // Bottom Left Ring
+    canvas.drawCircle(Offset(size.width * 0.1, size.height * 0.85), 150, wavePaint);
+    canvas.drawCircle(Offset(size.width * 0.1, size.height * 0.85), 220, wavePaint);
+    canvas.drawCircle(Offset(size.width * 0.1, size.height * 0.85), 290, wavePaint);
+
+    // 3. Draw very faint, elegant dots
+    final dotPaint = Paint()
+      ..color = const Color(0xff10b981).withOpacity(0.035)
       ..style = PaintingStyle.fill;
 
-    final dotRadius = 2.0;
-    final spacing = 20.0;
+    const dotRadius = 1.5;
+    const spacing = 24.0;
 
-    for (double x = 0; x < size.width; x += spacing) {
-      for (double y = 0; y < size.height; y += spacing) {
-        canvas.drawCircle(Offset(x, y), dotRadius, paint);
+    for (double x = 12; x < size.width; x += spacing) {
+      for (double y = 12; y < size.height; y += spacing) {
+        // Skip dots near the middle-top where main text headers are to keep it clean
+        if (y > size.height * 0.15 && y < size.height * 0.45) {
+          continue;
+        }
+        canvas.drawCircle(Offset(x, y), dotRadius, dotPaint);
       }
     }
   }
