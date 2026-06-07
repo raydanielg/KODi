@@ -664,7 +664,6 @@ class _TenantDashboardState extends State<TenantDashboard> {
   }
 
   Widget _buildHomeTabContent() {
-    final user = _authService.currentUser!;
     return RefreshIndicator(
       onRefresh: _loadDashboard,
       color: const Color(0xFFFE5D37),
@@ -672,15 +671,8 @@ class _TenantDashboardState extends State<TenantDashboard> {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(vertical: 24),
         children: [
-          // Credentials Card
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: _buildCredentialsCard(user),
-          ),
-          const SizedBox(height: 24),
-
-          // Active Rental Highlight Card
-          _buildRentStatusCard(context),
+          // Your Balance / Rent Due
+          _buildHeroBalanceSection(),
           const SizedBox(height: 24),
 
           // Quick Actions
