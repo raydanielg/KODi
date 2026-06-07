@@ -341,13 +341,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  Widget _buildQuickSendSection(BuildContext context) {
-    final contacts = [
-      {'name': 'Mama Ken', 'role': 'Landlord', 'avatar': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop'},
-      {'name': 'Salim', 'role': 'Wakala', 'avatar': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop'},
-      {'name': 'Fundi Juma', 'role': 'Plumber', 'avatar': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop'},
-      {'name': 'Sarah', 'role': 'Mhasibu', 'avatar': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop'},
-      {'name': 'Hamis', 'role': 'Ulinzi', 'avatar': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop'},
+  Widget _buildQuickServicesSection(BuildContext context) {
+    final services = [
+      {'name': 'Umeme', 'icon': Icons.bolt_rounded, 'color': const Color(0xFFF59E0B), 'bg': const Color(0xFFFEF3C7)},
+      {'name': 'Maji', 'icon': Icons.water_drop_rounded, 'color': const Color(0xFF3B82F6), 'bg': const Color(0xFFDBEAFE)},
+      {'name': 'Usafi', 'icon': Icons.delete_outline_rounded, 'color': const Color(0xFF10B981), 'bg': const Color(0xFFD1FAE5)},
+      {'name': 'Ulinzi', 'icon': Icons.shield_outlined, 'color': const Color(0xFFEF4444), 'bg': const Color(0xFFFEE2E2)},
+      {'name': 'Stakabadhi', 'icon': Icons.receipt_long_rounded, 'color': const Color(0xFF6366F1), 'bg': const Color(0xFFE0E7FF)},
     ];
 
     return Column(
@@ -359,14 +359,21 @@ class _TenantDashboardState extends State<TenantDashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Wasiliana Haraka (Quick Chat)',
+                'Huduma za Haraka (Tenant Services)',
                 style: GoogleFonts.inter(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: const Color(0xFF1E293B),
                 ),
               ),
-              const Icon(Icons.search, color: Color(0xFF64748B), size: 20),
+              Text(
+                'Angalia Zote',
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFFFE5D37),
+                ),
+              ),
             ],
           ),
         ),
@@ -377,24 +384,37 @@ class _TenantDashboardState extends State<TenantDashboard> {
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: contacts.length,
+            itemCount: services.length,
             itemBuilder: (context, index) {
-              final item = contacts[index];
+              final item = services[index];
               return Container(
-                margin: const EdgeInsets.only(right: 18),
+                margin: const EdgeInsets.only(right: 20),
                 child: Column(
                   children: [
-                    CircleAvatar(
-                      radius: 26,
-                      backgroundImage: NetworkImage(item['avatar']!),
+                    InkWell(
+                      onTap: () {
+                        Helpers.showSnackBar(context, 'Malipo ya huduma ya ${item['name']} yanashughulikiwa...');
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: item['bg'] as Color,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          item['icon'] as IconData,
+                          color: item['color'] as Color,
+                          size: 24,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      item['name']!,
+                      item['name'] as String,
                       style: GoogleFonts.inter(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF64748B),
+                        color: const Color(0xFF4B5563),
                       ),
                     ),
                   ],
