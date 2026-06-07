@@ -579,4 +579,470 @@ class _TenantDashboardState extends State<TenantDashboard> {
     }
     return value.toString();
   }
+
+  Widget _buildBodyContent(UserModel user) {
+    switch (_currentTab) {
+      case 0:
+        return _buildHomeTabContent();
+      case 1:
+        return _buildSearchTabContent();
+      case 2:
+        return _buildPaymentsTabContent();
+      case 3:
+        return _buildProfileTabContent(user);
+      default:
+        return _buildHomeTabContent();
+    }
+  }
+
+  Widget _buildBottomNavigationBar() {
+    final items = [
+      {'icon': Icons.home_rounded, 'label': 'Nyumbani'},
+      {'icon': Icons.explore_rounded, 'label': 'Tafuta'},
+      {'icon': Icons.receipt_long_rounded, 'label': 'Malipo'},
+      {'icon': Icons.person_rounded, 'label': 'Mimi'},
+    ];
+
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF0D0F12), // Sleek Dark Floating Bar from Mockup
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.18),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(items.length, (index) {
+          final isSelected = _currentTab == index;
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                _currentTab = index;
+              });
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeInOut,
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              decoration: BoxDecoration(
+                color: isSelected ? const Color(0xFFFE5D37) : Colors.transparent, // sliding capsule
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    items[index]['icon'] as IconData,
+                    color: isSelected ? Colors.white : const Color(0xFF8E929B),
+                    size: 20,
+                  ),
+                  if (isSelected) ...[
+                    const SizedBox(width: 8),
+                    Text(
+                      items[index]['label'] as String,
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildHomeTabContent() {
+    final user = _authService.currentUser!;
+    return RefreshIndicator(
+      onRefresh: _loadDashboard,
+      color: const Color(0xFFFE5D37),
+      child: ListView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        children: [
+          // Credentials Card
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: _buildCredentialsCard(user),
+          ),
+          const SizedBox(height: 24),
+
+          // Active Rental Highlight Card
+          _buildRentStatusCard(context),
+          const SizedBox(height: 24),
+
+          // Quick Actions
+          _buildQuickActionsRow(context),
+          const SizedBox(height: 32),
+
+          // Scrollable Services
+          _buildQuickServicesSection(context),
+          const SizedBox(height: 32),
+
+          // Recent Activity Sheet
+          _buildWhiteBottomSheet(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchTabContent() {
+    final properties = [
+      {'title': 'Palm Heights Apartment', 'price': 'TSh 450,000/mo', 'location': 'Mikocheni, Dar es Salaam', 'beds': 2, 'baths': 2, 'image': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300&fit=crop'},
+      {'title': 'Bahari Beach Villa', 'price': 'TSh 1,200,000/mo', 'location': 'Tegeta, Dar es Salaam', 'beds': 4, 'baths': 3, 'image': 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&fit=crop'},
+      {'title': 'Oysterbay Executive Studio', 'price': 'TSh 800,000/mo', 'location': 'Oysterbay, Dar es Salaam', 'beds': 1, 'baths': 1, 'image': 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=300&fit=crop'},
+    ];
+
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(20),
+      children: [
+        Text(
+          'Tafuta Nyumba za Kukodisha',
+          style: GoogleFonts.inter(
+            fontSize: 22,
+            fontWeight: FontWeight.w800,
+            color: const Color(0xFF1E293B),
+          ),
+        ),
+        const SizedBox(height: 16),
+        // Premium Search Bar
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: const Color(0xFFE2E8F0)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.02),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.search_rounded, color: Color(0xFF64748B)),
+              const SizedBox(width: 12),
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Tafuta kwa eneo au jina...',
+                    hintStyle: GoogleFonts.inter(color: const Color(0xFF94A3B8), fontSize: 13),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.tune_rounded, color: Color(0xFFFE5D37)),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          'Inayopendekezwa (Recommended)',
+          style: GoogleFonts.inter(
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFF1E293B),
+          ),
+        ),
+        const SizedBox(height: 12),
+        ...properties.map((prop) {
+          return Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: const Color(0xFFE2E8F0)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.02),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                  child: Image.network(
+                    prop['image'] as String,
+                    height: 160,
+                    width: double.infinity,
+                    fit: BoxTheme.fitWidth ?? BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            prop['price'] as String,
+                            style: GoogleFonts.spaceGrotesk(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFFFE5D37),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              const Icon(Icons.star_rounded, color: Color(0xFFF59E0B), size: 16),
+                              const SizedBox(width: 4),
+                              Text('4.8', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        prop['title'] as String,
+                        style: GoogleFonts.inter(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w800,
+                          color: const Color(0xFF1E293B),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          const Icon(Icons.location_on_rounded, color: Color(0xFF64748B), size: 12),
+                          const SizedBox(width: 4),
+                          Expanded(
+                            child: Text(
+                              prop['location'] as String,
+                              style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ],
+    );
+  }
+
+  Widget _buildPaymentsTabContent() {
+    final invoices = [
+      {'title': 'Kodi ya Pango - June 2026', 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '05 Jun 2026'},
+      {'title': 'Kodi ya Pango - May 2026', 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '02 May 2026'},
+      {'title': 'Kodi ya Pango - April 2026', 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '01 Apr 2026'},
+    ];
+
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(20),
+      children: [
+        Text(
+          'Historia ya Malipo (Invoices)',
+          style: GoogleFonts.inter(
+            fontSize: 22,
+            fontWeight: FontWeight.w800,
+            color: const Color(0xFF1E293B),
+          ),
+        ),
+        const SizedBox(height: 20),
+        ...invoices.map((inv) {
+          return Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFFE2E8F0)),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFE6F4EA),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Icon(Icons.receipt_long_rounded, color: Color(0xFF137333), size: 20),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        inv['title']!,
+                        style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: const Color(0xFF1E293B)),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${inv['date']} • ${inv['desc']}',
+                        style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      inv['amount']!,
+                      style: GoogleFonts.spaceGrotesk(fontSize: 14, fontWeight: FontWeight.bold, color: const Color(0xFF1E293B)),
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE6F4EA),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'PAID',
+                        style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.bold, color: const Color(0xFF137333)),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ],
+    );
+  }
+
+  Widget _buildProfileTabContent(UserModel user) {
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(20),
+      children: [
+        // Profile Info Card
+        Center(
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: const Color(0xFFFE5D37), width: 2),
+                ),
+                child: const CircleAvatar(
+                  radius: 40,
+                  backgroundImage: NetworkImage(
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=100&fit=crop',
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                user.name,
+                style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                user.email,
+                style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF1F5F9),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  user.roleLabel,
+                  style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 28),
+        // Settings Menu
+        _buildProfileMenuItem(icon: Icons.person_outline_rounded, label: 'Taarifa Binafsi (My Info)', color: const Color(0xFF1E293B)),
+        _buildProfileMenuItem(icon: Icons.credit_card_rounded, label: 'Kadi za Malipo (Payment Methods)', color: const Color(0xFF1E293B)),
+        _buildProfileMenuItem(icon: Icons.history_edu_rounded, label: 'Mkataba Wangu (My Lease Contract)', color: const Color(0xFF1E293B)),
+        _buildProfileMenuItem(icon: Icons.help_outline_rounded, label: 'Msaada na Maswali (Support)', color: const Color(0xFF1E293B)),
+        const SizedBox(height: 20),
+        // Logout Button
+        ListTile(
+          onTap: () async {
+            final confirm = await Helpers.showConfirmationDialog(
+              context,
+              title: 'Kutoka Kwenye App',
+              message: 'Je, una uhakika unataka kutoka kwenye akaunti yako?',
+              confirmText: 'Kutoka',
+              cancelText: 'Baki hapa',
+            );
+            if (confirm) {
+              await _authService.logout();
+              if (mounted) {
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              }
+            }
+          },
+          leading: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: const BoxDecoration(
+              color: Color(0xFFFEE2E2),
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.logout_rounded, color: Color(0xFFEF4444), size: 20),
+          ),
+          title: Text(
+            'Kutoka Kwenye Akaunti (Logout)',
+            style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: const Color(0xFFEF4444)),
+          ),
+          trailing: const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProfileMenuItem({required IconData icon, required String label, required Color color}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: ListTile(
+        onTap: () {
+          Helpers.showSnackBar(context, 'Kazi ya "$label" inakuja hivi karibuni!');
+        },
+        leading: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: const BoxDecoration(
+            color: Color(0xFFF1F5F9),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, color: const Color(0xFF64748B), size: 20),
+        ),
+        title: Text(
+          label,
+          style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: color),
+        ),
+        trailing: const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)),
+      ),
+    );
+  }
 }
