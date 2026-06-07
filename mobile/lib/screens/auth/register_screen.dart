@@ -473,6 +473,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: TextFormField(
                                     controller: _nameController,
                                     validator: Validators.validateName,
+                                    style: GoogleFonts.inter(
+                                      color: const Color(0xff1f2937),
+                                      fontSize: 15,
+                                    ),
                                     decoration: const InputDecoration(
                                       hintText: 'John Doe',
                                       prefixIcon: Icon(Icons.person_outline, size: 20, color: Colors.grey),
@@ -517,6 +521,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _emailController,
                                     keyboardType: TextInputType.emailAddress,
                                     validator: Validators.validateEmail,
+                                    style: GoogleFonts.inter(
+                                      color: const Color(0xff1f2937),
+                                      fontSize: 15,
+                                    ),
                                     decoration: const InputDecoration(
                                       hintText: 'name@company.com',
                                       prefixIcon: Icon(Icons.email_outlined, size: 20, color: Colors.grey),
@@ -561,6 +569,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _phoneController,
                                     keyboardType: TextInputType.phone,
                                     validator: Validators.validatePhone,
+                                    style: GoogleFonts.inter(
+                                      color: const Color(0xff1f2937),
+                                      fontSize: 15,
+                                    ),
                                     decoration: const InputDecoration(
                                       hintText: '+255 700 000 000',
                                       prefixIcon: Icon(Icons.phone_outlined, size: 20, color: Colors.grey),
@@ -605,6 +617,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _passwordController,
                                     obscureText: _obscurePassword,
                                     validator: Validators.validatePassword,
+                                    style: GoogleFonts.inter(
+                                      color: const Color(0xff1f2937),
+                                      fontSize: 15,
+                                    ),
                                     decoration: InputDecoration(
                                       hintText: '••••••••',
                                       prefixIcon: const Icon(Icons.lock_outlined, size: 20, color: Colors.grey),
@@ -658,6 +674,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _confirmPasswordController,
                                     obscureText: _obscureConfirmPassword,
                                     validator: (value) => Validators.validateConfirmPassword(value, _passwordController.text),
+                                    style: GoogleFonts.inter(
+                                      color: const Color(0xff1f2937),
+                                      fontSize: 15,
+                                    ),
                                     decoration: InputDecoration(
                                       hintText: '••••••••',
                                       prefixIcon: const Icon(Icons.check_circle_outline, size: 20, color: Colors.grey),
