@@ -543,7 +543,6 @@ class _TenantDashboardState extends State<TenantDashboard> {
       ),
     );
   }
-}
 
   String _statLabel(String key) {
     switch (key) {
