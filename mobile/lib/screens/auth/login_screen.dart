@@ -384,6 +384,86 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  Widget _buildDemoButton({
+    required String role,
+    required String label,
+    required String icon,
+    required String email,
+  }) {
+    return InkWell(
+      onTap: () async {
+        setState(() => _isLoading = true);
+        try {
+          // 1. Try actual login through AuthService (to make it fully real if API is up)
+          final result = await _authService.login(email, 'password123');
+          final user = result['user'] as UserModel;
+          if (mounted) {
+            Helpers.showSnackBar(
+              context,
+              'Demo: Karibu tena, ${user.name}! Umeingia kama ${user.roleLabel}.',
+              isError: false,
+            );
+            Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
+          }
+        } catch (_) {
+          // 2. Local Fallback - instant login with beautiful mock model
+          final fallbackUser = UserModel(
+            id: role == 'tenant' ? 101 : (role == 'landlord' ? 102 : 103),
+            name: role == 'tenant' ? 'Daniel Juma (Mpangaji Demo)' : (role == 'landlord' ? 'Mama Ken (Mwenye Nyumba Demo)' : 'Rashid Salim (Wakala Demo)'),
+            email: email,
+            phone: '+255 712 345 678',
+            role: role,
+            createdAt: DateTime.now().toIso8601String(),
+          );
+          
+          final apiService = ApiService();
+          apiService.setAuth('demo_token_123', fallbackUser);
+          
+          if (mounted) {
+            Helpers.showSnackBar(
+              context,
+              'Demo Mode: Umeingia kama ${fallbackUser.roleLabel}!',
+              isError: false,
+            );
+            Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
+          }
+        } finally {
+          if (mounted) setState(() => _isLoading = false);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: const Color(0xffe5e7eb)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Text(icon, style: const TextStyle(fontSize: 20)),
+            const SizedBox(height: 6),
+            Text(
+              label,
+              style: GoogleFonts.inter(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xff374151),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class PremiumAuthBackgroundPainter extends CustomPainter {
