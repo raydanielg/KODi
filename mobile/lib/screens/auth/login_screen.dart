@@ -147,6 +147,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     controller: _emailController,
                                     keyboardType: TextInputType.emailAddress,
                                     validator: Validators.validateEmail,
+                                    style: GoogleFonts.inter(
+                                      color: const Color(0xff1f2937),
+                                      fontSize: 15,
+                                    ),
                                     decoration: InputDecoration(
                                       hintText: 'name@company.com',
                                       hintStyle: GoogleFonts.inter(
@@ -198,6 +202,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     controller: _passwordController,
                                     obscureText: _obscurePassword,
                                     validator: Validators.validatePassword,
+                                    style: GoogleFonts.inter(
+                                      color: const Color(0xff1f2937),
+                                      fontSize: 15,
+                                    ),
                                     decoration: InputDecoration(
                                       hintText: '••••••••',
                                       hintStyle: GoogleFonts.inter(
