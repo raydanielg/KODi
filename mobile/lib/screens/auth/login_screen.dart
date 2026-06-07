@@ -111,35 +111,116 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             const SizedBox(height: 32),
-                            TextFormField(
-                              controller: _emailController,
-                              keyboardType: TextInputType.emailAddress,
-                              validator: Validators.validateEmail,
-                              decoration: InputDecoration(
-                                labelText: AppStrings.emailAddress,
-                                hintText: 'name@company.com',
-                                prefixIcon: const Icon(Icons.email_outlined, size: 20),
-                              ),
+                            // Email Field
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  AppStrings.emailAddress,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xfff3f4f6),
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(color: const Color(0xffd1d5db)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.05),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 1),
+                                      ),
+                                    ],
+                                  ),
+                                  child: TextFormField(
+                                    controller: _emailController,
+                                    keyboardType: TextInputType.emailAddress,
+                                    validator: Validators.validateEmail,
+                                    decoration: InputDecoration(
+                                      hintText: 'name@company.com',
+                                      hintStyle: GoogleFonts.inter(
+                                        color: const Color(0xff6b7280),
+                                      ),
+                                      prefixIcon: const Icon(
+                                        Icons.email_outlined,
+                                        color: Colors.grey,
+                                        size: 20,
+                                      ),
+                                      border: InputBorder.none,
+                                      contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 20),
-                            TextFormField(
-                              controller: _passwordController,
-                              obscureText: _obscurePassword,
-                              validator: Validators.validatePassword,
-                              decoration: InputDecoration(
-                                labelText: AppStrings.password,
-                                hintText: '\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}\u{2022}',
-                                prefixIcon: const Icon(Icons.lock_outlined, size: 20),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    _obscurePassword
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
-                                    color: Colors.grey,
+                            // Password Field
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  AppStrings.password,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey[700],
                                   ),
-                                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                                 ),
-                              ),
+                                const SizedBox(height: 8),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xfff3f4f6),
+                                    borderRadius: BorderRadius.circular(6),
+                                    border: Border.all(color: const Color(0xffd1d5db)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.05),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 1),
+                                      ),
+                                    ],
+                                  ),
+                                  child: TextFormField(
+                                    controller: _passwordController,
+                                    obscureText: _obscurePassword,
+                                    validator: Validators.validatePassword,
+                                    decoration: InputDecoration(
+                                      hintText: '••••••••',
+                                      hintStyle: GoogleFonts.inter(
+                                        color: const Color(0xff6b7280),
+                                      ),
+                                      prefixIcon: const Icon(
+                                        Icons.lock_outlined,
+                                        color: Colors.grey,
+                                        size: 20,
+                                      ),
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          _obscurePassword
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off_outlined,
+                                          color: Colors.grey,
+                                          size: 20,
+                                        ),
+                                        onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                                      ),
+                                      border: InputBorder.none,
+                                      contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 16),
                             Row(
