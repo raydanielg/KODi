@@ -36,11 +36,17 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      await _authService.login(
+      final result = await _authService.login(
         _emailController.text.trim(),
         _passwordController.text,
       );
       if (mounted) {
+        final user = result['user'] as UserModel;
+        Helpers.showSnackBar(
+          context,
+          'Karibu tena, ${user.name}! Umefanikiwa kuingia kama ${user.roleLabel}.',
+          isError: false,
+        );
         Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
       }
     } catch (e) {

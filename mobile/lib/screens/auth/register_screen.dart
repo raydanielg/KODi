@@ -301,15 +301,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() => _isLoading = true);
 
     try {
-      await _authService.register(
+      final mappedRole = _mapRoleValue(_selectedRole);
+      final result = await _authService.register(
         name: _nameController.text.trim(),
         email: _emailController.text.trim(),
         phone: _phoneController.text.trim(),
         password: _passwordController.text,
         passwordConfirmation: _confirmPasswordController.text,
-        role: _mapRoleValue(_selectedRole),
+        role: mappedRole,
       );
       if (mounted) {
+        final user = result['user'] as UserModel;
+        Helpers.showSnackBar(
+          context,
+          'Hongera, ${user.name}! Akaunti yako ya ${user.roleLabel} imefunguliwa kikamilifu.',
+          isError: false,
+        );
         Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
       }
     } catch (e) {
