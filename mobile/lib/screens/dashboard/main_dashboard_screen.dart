@@ -7,6 +7,9 @@ import '../../services/dashboard_service.dart';
 import '../../widgets/dashboard_card.dart';
 import '../../widgets/role_drawer.dart';
 import '../../utils/helpers.dart';
+import 'tenant_dashboard.dart';
+import 'landlord_dashboard.dart';
+import 'agent_dashboard.dart';
 
 class MainDashboardScreen extends StatefulWidget {
   const MainDashboardScreen({super.key});
