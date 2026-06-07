@@ -4,6 +4,7 @@ import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
 import '../../models/user_model.dart';
 import '../../services/auth_service.dart';
+import '../../services/api_service.dart';
 import '../../utils/validators.dart';
 import '../../utils/helpers.dart';
 import 'forgot_password_screen.dart';
