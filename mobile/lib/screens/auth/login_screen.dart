@@ -319,6 +319,57 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ],
                             ),
+                            const SizedBox(height: 24),
+                            // Divider with "Or Demo Login"
+                            Row(
+                              children: [
+                                const Expanded(child: Divider(color: Color(0xffe5e7eb))),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                                  child: Text(
+                                    'Or Login as Demo',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.grey[500],
+                                    ),
+                                  ),
+                                ),
+                                const Expanded(child: Divider(color: Color(0xffe5e7eb))),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            // Demo Login buttons
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _buildDemoButton(
+                                    role: 'tenant',
+                                    label: 'Mpangaji',
+                                    icon: '🔑',
+                                    email: 'mpangaji@manna.co.tz',
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _buildDemoButton(
+                                    role: 'landlord',
+                                    label: 'Mwenye Nyumba',
+                                    icon: '🏠',
+                                    email: 'landlord@manna.co.tz',
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: _buildDemoButton(
+                                    role: 'agent',
+                                    label: 'Wakala',
+                                    icon: '💼',
+                                    email: 'wakala@manna.co.tz',
+                                  ),
+                                ),
+                              ],
+                            ),
                             const SizedBox(height: 32),
                           ],
                         ),
