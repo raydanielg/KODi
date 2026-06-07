@@ -406,6 +406,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: DropdownButtonFormField<String>(
                                     value: _selectedRole.isEmpty ? null : _selectedRole,
                                     isExpanded: true,
+                                    style: GoogleFonts.inter(
+                                      color: const Color(0xff1f2937),
+                                      fontSize: 14,
+                                    ),
+                                    dropdownColor: Colors.white,
                                     decoration: const InputDecoration(
                                       prefixIcon: Icon(Icons.person_outline, size: 20, color: Colors.grey),
                                       border: InputBorder.none,
@@ -422,7 +427,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     items: _roles.map((String role) {
                                       return DropdownMenuItem<String>(
                                         value: role,
-                                        child: Text(role, style: const TextStyle(fontSize: 14)),
+                                        child: Text(
+                                          role,
+                                          style: GoogleFonts.inter(
+                                            color: const Color(0xff1f2937),
+                                            fontSize: 14,
+                                          ),
+                                        ),
                                       );
                                     }).toList(),
                                     onChanged: (String? newValue) {
