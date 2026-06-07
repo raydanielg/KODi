@@ -237,6 +237,8 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
 
     final stats = _stats!.stats;
     final recentItems = _stats!.recentItems;
+    final user = _authService.currentUser;
+    final role = user?.role ?? 'tenant';
 
     return RefreshIndicator(
       onRefresh: _loadDashboard,
@@ -244,15 +246,117 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
       child: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          // Stats cards
+          // 1. Credentials display card
+          Container(
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xff10b981), Color(0xff059669)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xff10b981).withOpacity(0.25),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'LOGGED IN CREDENTIALS',
+                      style: GoogleFonts.inter(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white.withOpacity(0.85),
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        role.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  user?.name ?? 'Daniel Juma',
+                  style: GoogleFonts.inter(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(Icons.email_outlined, color: Colors.white70, size: 14),
+                    const SizedBox(width: 8),
+                    Text(
+                      user?.email ?? 'mpangaji@manna.co.tz',
+                      style: GoogleFonts.inter(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    const Icon(Icons.phone_outlined, color: Colors.white70, size: 14),
+                    const SizedBox(width: 8),
+                    Text(
+                      user?.phone ?? '+255 712 345 678',
+                      style: GoogleFonts.inter(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+
+          // 2. Quick Actions Section
+          _buildQuickActions(role),
+          const SizedBox(height: 24),
+
+          // 3. Stats section title
+          const Text(
+            'Takwimu Zako (My Statistics)',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF0F172A),
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // 4. Stats cards grid
           _buildStatsGrid(stats),
           const SizedBox(height: 24),
-          // Recent activity
+
+          // 5. Recent activity
           if (recentItems != null && recentItems.isNotEmpty) ...[
             const Text(
               'Shughuli za Hivi Karibuni',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: Color(0xFF0F172A),
               ),
@@ -262,6 +366,85 @@ class _MainDashboardScreenState extends State<MainDashboardScreen> {
           ],
         ],
       ),
+    );
+  }
+
+  Widget _buildQuickActions(String role) {
+    List<Map<String, dynamic>> actions = [];
+    if (role == 'tenant') {
+      actions = [
+        {'label': 'Lipa Kodi', 'icon': Icons.payment, 'color': const Color(0xff10b981)},
+        {'label': 'Omba Fundi', 'icon': Icons.build, 'color': const Color(0xff6366f1)},
+        {'label': 'Wasiliana', 'icon': Icons.message, 'color': const Color(0xfff59e0b)},
+      ];
+    } else if (role == 'landlord') {
+      actions = [
+        {'label': 'Weka Nyumba', 'icon': Icons.add_business, 'color': const Color(0xff10b981)},
+        {'label': 'Wapangaji', 'icon': Icons.people, 'color': const Color(0xff6366f1)},
+        {'label': 'Mapato', 'icon': Icons.account_balance_wallet, 'color': const Color(0xfff59e0b)},
+      ];
+    } else {
+      actions = [
+        {'label': 'Sajili Nyumba', 'icon': Icons.playlist_add, 'color': const Color(0xff10b981)},
+        {'label': 'Wenye Nyumba', 'icon': Icons.supervisor_account, 'color': const Color(0xff6366f1)},
+        {'label': 'Ratiba ya Kazi', 'icon': Icons.calendar_month, 'color': const Color(0xfff59e0b)},
+      ];
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Njia za Mkato (Quick Actions)',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF0F172A),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: actions.map((act) {
+            return InkWell(
+              onTap: () {
+                Helpers.showSnackBar(context, 'Kazi ya "${act['label']}" inakuja hivi karibuni!');
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.27,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xffe5e7eb)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.02),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Icon(act['icon'] as IconData, color: act['color'] as Color, size: 24),
+                    const SizedBox(height: 6),
+                    Text(
+                      act['label'] as String,
+                      style: GoogleFonts.inter(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xff374151),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 
