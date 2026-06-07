@@ -1045,4 +1045,198 @@ class _TenantDashboardState extends State<TenantDashboard> {
       ),
     );
   }
+
+  void _showMoreServicesPanel(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return DraggableScrollableSheet(
+          initialChildSize: 0.75,
+          minChildSize: 0.5,
+          maxChildSize: 0.9,
+          builder: (context, scrollController) {
+            return Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+              ),
+              child: Column(
+                children: [
+                  // Drag Handle
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 12, bottom: 8),
+                      width: 40,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(2.5),
+                      ),
+                    ),
+                  ),
+                  // Header
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Huduma Zaidi (More Services)',
+                          style: GoogleFonts.inter(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                            color: const Color(0xff1e293b),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(Icons.close, color: Colors.grey),
+                          style: IconButton.styleFrom(
+                            backgroundColor: const Color(0xfff1f5f9),
+                            padding: const EdgeInsets.all(8),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(color: Color(0xfff1f5f9)),
+                  // Content
+                  Expanded(
+                    child: ListView(
+                      controller: scrollController,
+                      padding: const EdgeInsets.all(24),
+                      children: [
+                        // Section 1: Kuomba (Requests)
+                        _buildPanelSectionHeader('MAOMBI YA HUDUMA (REQUESTS)'),
+                        const SizedBox(height: 12),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.plumbing_rounded,
+                          color: const Color(0xff3b82f6),
+                          title: 'Omba Mafundi (Maintenance Request)',
+                          subtitle: 'Fungua tiketi ya kurekebisha maji, umeme, nk.',
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.person_add_alt_1_rounded,
+                          color: const Color(0xff10b981),
+                          title: 'Sajili Mpangaji Mwenza',
+                          subtitle: 'Ongeza ndugu au rafiki anayeishi nawe',
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.logout_rounded,
+                          color: const Color(0xffef4444),
+                          title: 'Omba Kibali cha Kuhama',
+                          subtitle: 'Tuma taarifa ya kusitisha mkataba',
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.discount_rounded,
+                          color: const Color(0xfff59e0b),
+                          title: 'Omba Punguzo la Kodi',
+                          subtitle: 'Tuma ombi la majadiliano ya bei na Landlord',
+                        ),
+                        const SizedBox(height: 24),
+                        
+                        // Section 2: Kuangalia (Views)
+                        _buildPanelSectionHeader('TAARIFA NA NYARAKA (VIEW INFO)'),
+                        const SizedBox(height: 12),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.gavel_rounded,
+                          color: const Color(0xff6366f1),
+                          title: 'Sheria za Nyumba (House Rules)',
+                          subtitle: 'Angalia kanuni na taratibu za mpangaji',
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.receipt_long_rounded,
+                          color: const Color(0xff06b6d4),
+                          title: 'Nyaraka za Mikataba',
+                          subtitle: 'Pakua na kusoma mikataba yako yote',
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.contact_emergency_rounded,
+                          color: const Color(0xffec4899),
+                          title: 'Namba za Dharura',
+                          subtitle: 'Namba za ulinzi, zima moto, dharura za daktari',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildPanelSectionHeader(String title) {
+    return Text(
+      title,
+      style: GoogleFonts.inter(
+        fontSize: 11,
+        fontWeight: FontWeight.w800,
+        color: const Color(0xff64748b),
+        letterSpacing: 1.2,
+      ),
+    );
+  }
+
+  Widget _buildPanelItem(
+    BuildContext context, {
+    required IconData icon,
+    required Color color,
+    required String title,
+    required String subtitle,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xfff1f5f9)),
+      ),
+      child: ListTile(
+        onTap: () {
+          Navigator.pop(context);
+          Helpers.showSnackBar(context, 'Ombi la "$title" limeshirikishwa kikamilifu!');
+        },
+        leading: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(icon, color: color, size: 20),
+        ),
+        title: Text(
+          title,
+          style: GoogleFonts.inter(
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xff1e293b),
+          ),
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Text(
+            subtitle,
+            style: GoogleFonts.inter(
+              fontSize: 10,
+              color: const Color(0xff64748b),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Color(0xffcbd5e1), size: 12),
+      ),
+    );
+  }
 }
