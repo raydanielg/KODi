@@ -80,67 +80,93 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
     return Scaffold(
       drawer: RoleDrawer(authService: _authService),
-      backgroundColor: const Color(0xfff9fafb),
-      body: Column(
-        children: [
-          // 1. Beautiful Custom Header
-          _buildTopHeader(user),
-          
-          // 2. Dashboard Body Content
-          Expanded(
-            child: _isLoading
-                ? const Center(
-                    child: CircularProgressIndicator(color: AppColors.primary),
-                  )
-                : RefreshIndicator(
-                    onRefresh: _loadDashboard,
-                    color: AppColors.primary,
-                    child: ListView(
-                      padding: const EdgeInsets.all(20),
-                      children: [
-                        // Highlight Credentials Display Card
-                        _buildCredentialsCard(user),
-                        const SizedBox(height: 24),
-
-                        // Active Rental Highlight Card
-                        _buildRentStatusCard(context),
-                        const SizedBox(height: 24),
-
-                        // Quick Actions
-                        _buildQuickActions(context),
-                        const SizedBox(height: 24),
-
-                        // Statistics Grid
-                        const Text(
-                          'Takwimu za Mpangaji (My Statistics)',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF0F172A),
+      backgroundColor: Colors.white,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.white,
+              Color(0xfff0fdf4), // Soft emerald background overlay
+              Color(0xfff8fafc), // Soft slate bottom transition
+            ],
+            stops: [0.0, 0.4, 1.0],
+          ),
+        ),
+        child: Column(
+          children: [
+            // 1. Beautiful Custom Header
+            _buildTopHeader(user),
+            
+            // 2. Dashboard Body Content
+            Expanded(
+              child: _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(color: AppColors.primary),
+                    )
+                  : RefreshIndicator(
+                      onRefresh: _loadDashboard,
+                      color: AppColors.primary,
+                      child: ListView(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        children: [
+                          // Highlight Credentials Display Card
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: _buildCredentialsCard(user),
                           ),
-                        ),
-                        const SizedBox(height: 12),
-                        _buildStatsGrid(_stats!.stats),
-                        const SizedBox(height: 24),
+                          const SizedBox(height: 24),
 
-                        // Recent Activities
-                        if (_stats!.recentItems != null && _stats!.recentItems!.isNotEmpty) ...[
-                          const Text(
-                            'Shughuli za Hivi Karibuni',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF0F172A),
+                          // Active Rental Highlight Card (Kodi na Mikataba)
+                          _buildRentStatusCard(context),
+                          const SizedBox(height: 24),
+
+                          // Quick Actions (Scrollable horizontally)
+                          _buildQuickActions(context),
+                          const SizedBox(height: 28),
+
+                          // Statistics Grid
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              'Takwimu za Mpangaji (My Statistics)',
+                              style: GoogleFonts.inter(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: const Color(0xFF1F2937),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 12),
-                          ..._stats!.recentItems!.map((item) => _buildRecentItem(item)),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: _buildStatsGrid(_stats!.stats),
+                          ),
+                          const SizedBox(height: 28),
+
+                          // Recent Activities (History)
+                          if (_stats!.recentItems != null && _stats!.recentItems!.isNotEmpty) ...[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: Text(
+                                'Shughuli za Hivi Karibuni (History)',
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: const Color(0xFF1F2937),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            ..._stats!.recentItems!.map((item) => _buildRecentItem(item)),
+                          ],
                         ],
-                      ],
+                      ),
                     ),
-                  ),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
