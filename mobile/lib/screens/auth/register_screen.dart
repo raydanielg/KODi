@@ -30,20 +30,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final List<String> _roles = [
     'Tenant (Mpangaji)',
-    'Landlord (Mmiliki wa Nyumba)',
+    'Landlord (Mwenye Nyumba)',
     'Agent (Wakala wa Nyumba)',
-    'Support Agent',
-    'Maintenance Staff',
-    'Accountant',
   ];
 
   final Map<String, String> _roleDescriptions = {
     'Tenant (Mpangaji)': 'Tenant: Looking for a long-term rental property',
-    'Landlord (Mmiliki wa Nyumba)': 'Landlord: Own properties to rent out',
+    'Landlord (Mwenye Nyumba)': 'Landlord: Own properties to rent out',
     'Agent (Wakala wa Nyumba)': 'Agent: Manage properties on behalf of landlords',
-    'Support Agent': 'Support Agent: Help users with their questions',
-    'Maintenance Staff': 'Maintenance Staff: Handle property repairs',
-    'Accountant': 'Accountant: Manage financial records',
   };
 
   String _mapRoleValue(String label) {
