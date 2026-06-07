@@ -78,7 +78,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
     return Scaffold(
       drawer: RoleDrawer(authService: _authService),
-      backgroundColor: const Color(0xFF0D0F12), // Premium Deep Dark Slate
+      backgroundColor: const Color(0xFFF8FAFC), // Premium Light Slate (Off-white)
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(color: Color(0xFFFE5D37)),
@@ -90,10 +90,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 color: const Color(0xFFFE5D37),
                 child: Column(
                   children: [
-                    // 1. Beautiful Premium Header (Fintech Style)
+                    // 1. Beautiful Premium White Header
                     _buildTopHeader(user),
                     
-                    // 2. Main scrollable area (Top Dark / Bottom White Sheet)
+                    // 2. Main scrollable area (Light Theme)
                     Expanded(
                       child: ListView(
                         physics: const BouncingScrollPhysics(),
@@ -113,7 +113,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           _buildQuickSendSection(context),
                           const SizedBox(height: 32),
                           
-                          // White Rounded Bottom Sheet transition
+                          // White Bottom Card Area (Recent Transactions / Shughuli za Karibuni)
                           _buildWhiteBottomSheet(context),
                         ],
                       ),
@@ -126,8 +126,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
   }
 
   Widget _buildTopHeader(UserModel user) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+    return Container(
+      color: Colors.white,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       child: Row(
         children: [
           // 1. Premium Avatar with Unsplash photo and gold border
@@ -163,7 +164,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   _getGreeting(),
                   style: GoogleFonts.inter(
                     fontSize: 12,
-                    color: const Color(0xFF8E929B),
+                    color: const Color(0xFF64748B),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -173,7 +174,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   style: GoogleFonts.inter(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
-                    color: Colors.white,
+                    color: const Color(0xFF1E293B),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -189,9 +190,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 onPressed: () {
                   Helpers.showSnackBar(context, 'Arifa (Notifications) zitafunguka hapa!');
                 },
-                icon: const Icon(Icons.notifications_none_rounded, color: Colors.white, size: 26),
+                icon: const Icon(Icons.notifications_none_rounded, color: Color(0xFF1E293B), size: 26),
                 style: IconButton.styleFrom(
-                  backgroundColor: const Color(0xFF181A1F),
+                  backgroundColor: const Color(0xFFF1F5F9),
                   padding: const EdgeInsets.all(10),
                   shape: const CircleBorder(),
                 ),
@@ -232,7 +233,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             'Kodi ya Mwezi Huu (Monthly Rent)',
             style: GoogleFonts.inter(
               fontSize: 13,
-              color: const Color(0xFF8E929B),
+              color: const Color(0xFF64748B),
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -246,7 +247,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 style: GoogleFonts.spaceGrotesk(
                   fontSize: 34,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: const Color(0xFF1E293B),
                   letterSpacing: -1,
                 ),
               ),
@@ -295,7 +296,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           ),
           const SizedBox(width: 12),
           
-          // Action 2: Omba Fundi (Request / Dark Background)
+          // Action 2: Omba Fundi (Request / Light Background)
           Expanded(
             child: ElevatedButton.icon(
               onPressed: () {
@@ -307,12 +308,12 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 14),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF181A1F),
-                foregroundColor: Colors.white,
+                backgroundColor: Colors.white,
+                foregroundColor: const Color(0xFF1E293B),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
-                  side: const BorderSide(color: Color(0xFF262930), width: 1),
+                  side: const BorderSide(color: Color(0xFFE2E8F0), width: 1),
                 ),
                 elevation: 0,
               ),
@@ -325,13 +326,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
             onPressed: () {
               Helpers.showSnackBar(context, 'Huduma zaidi zinafunguka...');
             },
-            icon: const Icon(Icons.grid_view_rounded, color: Colors.white, size: 20),
+            icon: const Icon(Icons.grid_view_rounded, color: Color(0xFF1E293B), size: 20),
             style: IconButton.styleFrom(
-              backgroundColor: const Color(0xFF181A1F),
+              backgroundColor: Colors.white,
               padding: const EdgeInsets.all(16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
-                side: const BorderSide(color: Color(0xFF262930), width: 1),
+                side: const BorderSide(color: Color(0xFFE2E8F0), width: 1),
               ),
             ),
           ),
@@ -362,10 +363,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 style: GoogleFonts.inter(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: const Color(0xFF1E293B),
                 ),
               ),
-              const Icon(Icons.search, color: Color(0xFF8E929B), size: 20),
+              const Icon(Icons.search, color: Color(0xFF64748B), size: 20),
             ],
           ),
         ),
@@ -393,7 +394,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       style: GoogleFonts.inter(
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF8E929B),
+                        color: const Color(0xFF64748B),
                       ),
                     ),
                   ],
@@ -411,9 +412,16 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 16,
+            offset: const Offset(0, -6),
+          ),
+        ],
       ),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
       child: Column(
@@ -428,7 +436,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 style: GoogleFonts.inter(
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
-                  color: const Color(0xFF0D0F12),
+                  color: const Color(0xFF1E293B),
                 ),
               ),
               TextButton(
