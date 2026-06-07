@@ -779,7 +779,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     prop['image'] as String,
                     height: 160,
                     width: double.infinity,
-                    fit: BoxTheme.fitWidth ?? BoxFit.cover,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Padding(
