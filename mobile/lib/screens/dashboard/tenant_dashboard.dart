@@ -22,7 +22,6 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
   DashboardStatsModel? _stats;
   bool _isLoading = true;
-  String? _error;
 
   @override
   void initState() {
@@ -33,7 +32,6 @@ class _TenantDashboardState extends State<TenantDashboard> {
   Future<void> _loadDashboard() async {
     setState(() {
       _isLoading = true;
-      _error = null;
     });
     try {
       final stats = await _dashboardService.fetchDashboardStats();
@@ -53,9 +51,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
             'maintenance_requests': 1,
           },
           recentItems: [
-            {'title': 'Malipo ya kodi yamefanikiwa (TSh 450,000)', 'time': 'Masaa 2 yaliyopita'},
-            {'title': 'Maombi ya matengenezo ya bomba la jikoni yamepokewa', 'time': 'Jana'},
-            {'title': 'Mkataba mpya umesainiwa na Mwenye Nyumba', 'time': 'Siku 3 zilizopita'},
+            {'title': 'Malipo ya kodi ya pango (Palm Heights)', 'time': '12:33 PM • Kodi', 'amount': '-TSh 450,000', 'isCredit': false, 'category': 'rent'},
+            {'title': 'Mrejesho wa Dhamana (Deposit Refund)', 'time': '08:56 AM • Mrejesho', 'amount': '+TSh 150,000', 'isCredit': true, 'category': 'refund'},
+            {'title': 'Malipo ya Usafi na Ulinzi (Service Charge)', 'time': 'Jana • Huduma', 'amount': '-TSh 20,000', 'isCredit': false, 'category': 'service'},
           ],
         );
         _isLoading = false;
@@ -66,11 +64,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
   String _getGreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) {
-      return 'Good Morning ☀️';
+      return 'Good Morning,';
     } else if (hour < 17) {
-      return 'Good Afternoon 🌤️';
+      return 'Good Afternoon,';
     } else {
-      return 'Good Evening 🌙';
+      return 'Good Evening,';
     }
   }
 
@@ -80,130 +78,82 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
     return Scaffold(
       drawer: RoleDrawer(authService: _authService),
-      backgroundColor: Colors.white,
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.white,
-              Color(0xfff0fdf4), // Soft emerald background overlay
-              Color(0xfff8fafc), // Soft slate bottom transition
-            ],
-            stops: [0.0, 0.4, 1.0],
-          ),
-        ),
-        child: Column(
-          children: [
-            // 1. Beautiful Custom Header
-            _buildTopHeader(user),
-            
-            // 2. Dashboard Body Content
-            Expanded(
-              child: _isLoading
-                  ? const Center(
-                      child: CircularProgressIndicator(color: AppColors.primary),
-                    )
-                  : RefreshIndicator(
-                      onRefresh: _loadDashboard,
-                      color: AppColors.primary,
+      backgroundColor: const Color(0xFF0D0F12), // Premium Deep Dark Slate
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(color: Color(0xFFFE5D37)),
+            )
+          : SafeArea(
+              bottom: false,
+              child: RefreshIndicator(
+                onRefresh: _loadDashboard,
+                color: const Color(0xFFFE5D37),
+                child: Column(
+                  children: [
+                    // 1. Beautiful Premium Header (Fintech Style)
+                    _buildTopHeader(user),
+                    
+                    // 2. Main scrollable area (Top Dark / Bottom White Sheet)
+                    Expanded(
                       child: ListView(
-                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        physics: const BouncingScrollPhysics(),
+                        padding: EdgeInsets.zero,
                         children: [
-                          // Highlight Credentials Display Card
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: _buildCredentialsCard(user),
-                          ),
                           const SizedBox(height: 24),
-
-                          // Active Rental Highlight Card (Kodi na Mikataba)
-                          _buildRentStatusCard(context),
+                          
+                          // Your Balance / Rent Due
+                          _buildHeroBalanceSection(),
                           const SizedBox(height: 24),
-
-                          // Quick Actions (Scrollable horizontally)
-                          _buildQuickActions(context),
-                          const SizedBox(height: 28),
-
-                          // Statistics Grid
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              'Takwimu za Mpangaji (My Statistics)',
-                              style: GoogleFonts.inter(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xFF1F2937),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: _buildStatsGrid(_stats!.stats),
-                          ),
-                          const SizedBox(height: 28),
-
-                          // Recent Activities (History)
-                          if (_stats!.recentItems != null && _stats!.recentItems!.isNotEmpty) ...[
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(
-                                'Shughuli za Hivi Karibuni (History)',
-                                style: GoogleFonts.inter(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFF1F2937),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            ..._stats!.recentItems!.map((item) => _buildRecentItem(item)),
-                          ],
+                          
+                          // Quick Actions Row (Send / Request / Menu)
+                          _buildQuickActionsRow(context),
+                          const SizedBox(height: 32),
+                          
+                          // Scrollable Contacts (Quick Send / Contacts)
+                          _buildQuickSendSection(context),
+                          const SizedBox(height: 32),
+                          
+                          // White Rounded Bottom Sheet transition
+                          _buildWhiteBottomSheet(context),
                         ],
                       ),
                     ),
+                  ],
+                ),
+              ),
             ),
-          ],
-        ),
-      ),
     );
   }
 
   Widget _buildTopHeader(UserModel user) {
-    return Container(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 48, bottom: 16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(color: Color(0xffe5e7eb), width: 1),
-        ),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(
         children: [
-          // 1. Avatar with drawer trigger or popup profile
+          // 1. Premium Avatar with Unsplash photo and gold border
           Builder(
             builder: (context) => GestureDetector(
               onTap: () {
                 Scaffold.of(context).openDrawer();
               },
-              child: CircleAvatar(
-                radius: 22,
-                backgroundColor: AppColors.primary.withOpacity(0.15),
-                child: Text(
-                  user.initials,
-                  style: GoogleFonts.inter(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: const Color(0xFFFE5D37), width: 1.5),
+                ),
+                child: const CircleAvatar(
+                  radius: 20,
+                  backgroundImage: NetworkImage(
+                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop',
                   ),
                 ),
               ),
             ),
           ),
           const SizedBox(width: 12),
-          // 2. Greeting and Name Column
+          
+          // 2. Greeting Column
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -212,18 +162,18 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 Text(
                   _getGreeting(),
                   style: GoogleFonts.inter(
-                    fontSize: 11,
-                    color: Colors.grey[500],
-                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    color: const Color(0xFF8E929B),
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   user.name,
                   style: GoogleFonts.inter(
-                    fontSize: 15,
+                    fontSize: 16,
                     fontWeight: FontWeight.w800,
-                    color: const Color(0xff111827),
+                    color: Colors.white,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -231,45 +181,38 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ],
             ),
           ),
-          // 3. Right Icons (Notification with badge, Settings icon)
-          Row(
-            mainAxisSize: MainAxisSize.min,
+          
+          // 3. Right Notification Icon with custom Badge
+          Stack(
             children: [
-              Stack(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Helpers.showSnackBar(context, 'Arifa (Notifications) zitafunguka hapa!');
-                    },
-                    icon: const Icon(Icons.notifications_none_rounded, color: Color(0xff4b5563), size: 24),
-                    style: IconButton.styleFrom(
-                      backgroundColor: const Color(0xfff3f4f6),
-                      padding: const EdgeInsets.all(8),
-                    ),
-                  ),
-                  Positioned(
-                    top: 6,
-                    right: 6,
-                    child: Container(
-                      width: 8,
-                      height: 8,
-                      decoration: const BoxDecoration(
-                        color: Color(0xffef4444),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 8),
               IconButton(
                 onPressed: () {
-                  Helpers.showSnackBar(context, 'Mipangilio (Settings) itafunguka hapa!');
+                  Helpers.showSnackBar(context, 'Arifa (Notifications) zitafunguka hapa!');
                 },
-                icon: const Icon(Icons.settings_outlined, color: Color(0xff4b5563), size: 24),
+                icon: const Icon(Icons.notifications_none_rounded, color: Colors.white, size: 26),
                 style: IconButton.styleFrom(
-                  backgroundColor: const Color(0xfff3f4f6),
-                  padding: const EdgeInsets.all(8),
+                  backgroundColor: const Color(0xFF181A1F),
+                  padding: const EdgeInsets.all(10),
+                  shape: const CircleBorder(),
+                ),
+              ),
+              Positioned(
+                top: 4,
+                right: 4,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFE5D37),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    '3',
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -279,84 +222,42 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  Widget _buildCredentialsCard(UserModel user) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xff10b981), Color(0xff059669)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xff10b981).withOpacity(0.25),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+  Widget _buildHeroBalanceSection() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'MPANGAJI CREDENTIALS',
-                style: GoogleFonts.inter(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white.withOpacity(0.85),
-                  letterSpacing: 1.2,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  user.roleLabel.toUpperCase(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
           Text(
-            user.name,
+            'Kodi ya Mwezi Huu (Monthly Rent)',
             style: GoogleFonts.inter(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: Colors.white,
+              fontSize: 13,
+              color: const Color(0xFF8E929B),
+              fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 8),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
             children: [
-              const Icon(Icons.email_outlined, color: Colors.white70, size: 14),
-              const SizedBox(width: 8),
               Text(
-                user.email,
-                style: GoogleFonts.inter(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500),
+                'TSh 450,000',
+                style: GoogleFonts.spaceGrotesk(
+                  fontSize: 34,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  letterSpacing: -1,
+                ),
               ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              const Icon(Icons.phone_outlined, color: Colors.white70, size: 14),
               const SizedBox(width: 8),
               Text(
-                user.phone,
-                style: GoogleFonts.inter(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500),
+                'Apt A4',
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                  color: const Color(0xFFFE5D37),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
@@ -365,121 +266,73 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  Widget _buildRentStatusCard(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xffe2e8f0)),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xff10b981).withOpacity(0.04),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildQuickActionsRow(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xff10b981).withOpacity(0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(Icons.gite_rounded, color: Color(0xff10b981), size: 22),
-                  ),
-                  const SizedBox(width: 12),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Palm Heights - Apt A4',
-                        style: GoogleFonts.inter(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w800,
-                          color: const Color(0xff1f2937),
-                        ),
-                      ),
-                      Text(
-                        'Mkataba ulio hai (Active Lease)',
-                        style: GoogleFonts.inter(
-                          fontSize: 10,
-                          color: Colors.grey[500],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+          // Action 1: Lipa Sasa (Send/Coral Background)
+          Expanded(
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Helpers.showSnackBar(context, 'Malipo ya kodi yanashughulikiwa...');
+              },
+              icon: const Icon(Icons.arrow_outward_rounded, size: 18),
+              label: Text(
+                'Lipa Kodi',
+                style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 14),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color(0xffecfdf5),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: const Color(0xffa7f3d0)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFFE5D37),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
                 ),
-                child: const Text(
-                  'KODI IMELIPWA',
-                  style: TextStyle(
-                    color: Color(0xff047857),
-                    fontSize: 9,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.5,
-                  ),
-                ),
+                elevation: 0,
               ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          const Divider(height: 1, color: Color(0xfff1f5f9)),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildLeaseDetailItem(
-                label: 'Kodi ya Mwezi huu',
-                value: 'TSh 450,000',
-                valueColor: const Color(0xff1f2937),
-              ),
-              _buildLeaseDetailItem(
-                label: 'Siku Zilizobaki',
-                value: 'Siku 23 zimebaki',
-                valueColor: const Color(0xffef4444),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            decoration: BoxDecoration(
-              color: const Color(0xfff8fafc),
-              borderRadius: BorderRadius.circular(12),
             ),
-            child: Row(
-              children: [
-                const Icon(Icons.info_outline_rounded, color: Color(0xff64748b), size: 16),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'Kodi inayofuata inapaswa kulipwa kabla ya tarehe 30 June 2026.',
-                    style: GoogleFonts.inter(
-                      fontSize: 10,
-                      color: const Color(0xff64748b),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+          ),
+          const SizedBox(width: 12),
+          
+          // Action 2: Omba Fundi (Request / Dark Background)
+          Expanded(
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Helpers.showSnackBar(context, 'Fungua tiketi ya mafundi...');
+              },
+              icon: const Icon(Icons.build_rounded, size: 18),
+              label: Text(
+                'Omba Fundi',
+                style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 14),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF181A1F),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  side: const BorderSide(color: Color(0xFF262930), width: 1),
                 ),
-              ],
+                elevation: 0,
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          
+          // Action 3: Menu Grid Icon
+          IconButton(
+            onPressed: () {
+              Helpers.showSnackBar(context, 'Huduma zaidi zinafunguka...');
+            },
+            icon: const Icon(Icons.grid_view_rounded, color: Colors.white, size: 20),
+            style: IconButton.styleFrom(
+              backgroundColor: const Color(0xFF181A1F),
+              padding: const EdgeInsets.all(16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+                side: const BorderSide(color: Color(0xFF262930), width: 1),
+              ),
             ),
           ),
         ],
@@ -487,33 +340,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  Widget _buildLeaseDetailItem({required String label, required String value, required Color valueColor}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: GoogleFonts.inter(fontSize: 11, color: Colors.grey[500], fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: GoogleFonts.inter(
-            fontSize: 15,
-            fontWeight: FontWeight.w800,
-            color: valueColor,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildQuickActions(BuildContext context) {
-    final actions = [
-      {'label': 'Lipa Kodi', 'icon': Icons.payment, 'color': const Color(0xff10b981), 'subtitle': 'Malipo ya haraka'},
-      {'label': 'Omba Fundi', 'icon': Icons.build_rounded, 'color': const Color(0xff6366f1), 'subtitle': 'Matengenezo'},
-      {'label': 'Wasiliana', 'icon': Icons.chat_bubble_rounded, 'color': const Color(0xfff59e0b), 'subtitle': 'Chat na Landlord'},
-      {'label': 'Mikataba', 'icon': Icons.description_rounded, 'color': const Color(0xff3b82f6), 'subtitle': 'Nyaraka zangu'},
+  Widget _buildQuickSendSection(BuildContext context) {
+    final contacts = [
+      {'name': 'Mama Ken', 'role': 'Landlord', 'avatar': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop'},
+      {'name': 'Salim', 'role': 'Wakala', 'avatar': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop'},
+      {'name': 'Fundi Juma', 'role': 'Plumber', 'avatar': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop'},
+      {'name': 'Sarah', 'role': 'Mhasibu', 'avatar': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop'},
+      {'name': 'Hamis', 'role': 'Ulinzi', 'avatar': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop'},
     ];
 
     return Column(
@@ -521,73 +354,49 @@ class _TenantDashboardState extends State<TenantDashboard> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            'Njia za Mkato (Quick Actions)',
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF1F2937),
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Wasiliana Haraka (Quick Chat)',
+                style: GoogleFonts.inter(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+              const Icon(Icons.search, color: Color(0xFF8E929B), size: 20),
+            ],
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 14),
         SizedBox(
-          height: 100,
+          height: 90,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: actions.length,
+            itemCount: contacts.length,
             itemBuilder: (context, index) {
-              final act = actions[index];
+              final item = contacts[index];
               return Container(
-                width: 140,
-                margin: const EdgeInsets.only(right: 12),
-                child: InkWell(
-                  onTap: () {
-                    Helpers.showSnackBar(context, 'Kazi ya "${act['label']}" inakuja hivi karibuni!');
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: const Color(0xffe2e8f0)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.02),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
+                margin: const EdgeInsets.only(right: 18),
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 26,
+                      backgroundImage: NetworkImage(item['avatar']!),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(act['icon'] as IconData, color: act['color'] as Color, size: 24),
-                        const Spacer(),
-                        Text(
-                          act['label'] as String,
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xff1f2937),
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          act['subtitle'] as String,
-                          style: GoogleFonts.inter(
-                            fontSize: 9,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey[500],
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                    const SizedBox(height: 6),
+                    Text(
+                      item['name']!,
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xFF8E929B),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               );
             },
@@ -597,112 +406,144 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  Widget _buildStatsGrid(Map<String, dynamic> stats) {
-    final cards = <DashboardCard>[];
-    final keys = ['total_properties', 'active_rentals', 'total_revenue', 'maintenance_requests'];
-    final colorPalette = [
-      AppColors.primary,
-      const Color(0xFF6366F1),
-      const Color(0xFFF59E0B),
-      const Color(0xFFEF4444),
-    ];
+  Widget _buildWhiteBottomSheet(BuildContext context) {
+    final recentItems = _stats!.recentItems ?? [];
 
-    var index = 0;
-    for (var key in keys) {
-      if (stats.containsKey(key)) {
-        final color = colorPalette[index % colorPalette.length];
-        cards.add(DashboardCard(
-          title: _statLabel(key),
-          value: _formatStatValue(stats[key]),
-          icon: _statIcon(key),
-          color: color,
-        ));
-        index++;
-      }
-    }
-
-    return Column(
-      children: [
-        for (var i = 0; i < cards.length; i += 2)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Row(
-              children: [
-                Expanded(child: cards[i]),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: i + 1 < cards.length ? cards[i + 1] : const SizedBox(),
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header of Sheet
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Shughuli za Hivi Karibuni',
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: const Color(0xFF0D0F12),
                 ),
-              ],
-            ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Helpers.showSnackBar(context, 'Ripoti nzima ya malipo inafunguka...');
+                },
+                child: Row(
+                  children: [
+                    Text(
+                      'View All',
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFFFE5D37),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(Icons.arrow_outward_rounded, size: 14, color: Color(0xFFFE5D37)),
+                  ],
+                ),
+              ),
+            ],
           ),
-      ],
+          const SizedBox(height: 16),
+          
+          // Transaction List Items
+          ...recentItems.map((item) => _buildRecentItemWidget(item)),
+          
+          const SizedBox(height: 24),
+        ],
+      ),
     );
   }
 
-  Widget _buildRecentItem(dynamic item) {
+  Widget _buildRecentItemWidget(dynamic item) {
     final map = item is Map<String, dynamic> ? item : <String, dynamic>{};
-    final isSuccess = map['title']?.toString().toLowerCase().contains('fanikiwa') ?? false;
+    final bool isCredit = map['isCredit'] ?? false;
+    final String amount = map['amount'] ?? '-TSh 0';
+    final String category = map['category'] ?? 'rent';
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xfff1f5f9)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.015),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+    // Premium Category Icon mapping matching Unsplash mockup look
+    IconData icon;
+    Color iconColor;
+    Color iconBg;
+    if (category == 'rent') {
+      icon = Icons.home_rounded;
+      iconBg = const Color(0xFFFFF1F0);
+      iconColor = const Color(0xFFFE5D37);
+    } else if (category == 'refund') {
+      icon = Icons.account_balance_wallet_rounded;
+      iconBg = const Color(0xFFE6F4EA);
+      iconColor = const Color(0xFF137333);
+    } else {
+      icon = Icons.electrical_services_rounded;
+      iconBg = const Color(0xFFE8F0FE);
+      iconColor = const Color(0xFF1A73E8);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         children: [
+          // Clean Square icon with subtle color accents (Premium style)
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: isSuccess ? const Color(0xffecfdf5) : const Color(0xffeff6ff),
-              borderRadius: BorderRadius.circular(12),
+              color: iconBg,
+              borderRadius: BorderRadius.circular(16),
             ),
-            child: Icon(
-              isSuccess ? Icons.check_circle_outline_rounded : Icons.build_circle_outlined,
-              color: isSuccess ? const Color(0xff10b981) : const Color(0xff3b82f6),
-              size: 20,
-            ),
+            child: Icon(icon, color: iconColor, size: 24),
           ),
           const SizedBox(width: 14),
+          
+          // Title & Time Column
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  map['title'] ?? 'Activity',
+                  map['title'] ?? 'Transaction',
                   style: GoogleFonts.inter(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF1F2937),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xFF0D0F12),
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  map['time'] ?? 'Hivi sasa',
+                  map['time'] ?? 'Today',
                   style: GoogleFonts.inter(
-                    fontSize: 10,
-                    color: Colors.grey[400],
+                    fontSize: 11,
+                    color: const Color(0xFF8E929B),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.arrow_forward_ios_rounded, color: Color(0xffcbd5e1), size: 12),
+          
+          // Amount in premium colors
+          Text(
+            amount,
+            style: GoogleFonts.spaceGrotesk(
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+              color: isCredit ? const Color(0xFF137333) : const Color(0xFF0D0F12),
+            ),
+          ),
         ],
       ),
     );
   }
+}
 
   String _statLabel(String key) {
     switch (key) {
