@@ -205,7 +205,7 @@ class LandlordDashboard extends StatelessWidget {
           const SizedBox(height: 16),
           // Progress Bar
           Row(
-            mainAxisAlignment: MainAxisAlignment.between,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Ukusanyaji wa Mwezi huu',
