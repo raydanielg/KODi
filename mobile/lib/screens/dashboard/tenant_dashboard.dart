@@ -86,43 +86,19 @@ class _TenantDashboardState extends State<TenantDashboard> {
             )
           : SafeArea(
               bottom: false,
-              child: RefreshIndicator(
-                onRefresh: _loadDashboard,
-                color: const Color(0xFFFE5D37),
-                child: Column(
-                  children: [
-                    // 1. Beautiful Premium White Header
-                    _buildTopHeader(user),
-                    
-                    // 2. Main scrollable area (Light Theme)
-                    Expanded(
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        children: [
-                          const SizedBox(height: 24),
-                          
-                          // Your Balance / Rent Due
-                          _buildHeroBalanceSection(),
-                          const SizedBox(height: 24),
-                          
-                          // Quick Actions Row (Send / Request / Menu)
-                          _buildQuickActionsRow(context),
-                          const SizedBox(height: 32),
-                          
-                          // Scrollable Contacts (Quick Send / Contacts)
-                          _buildQuickServicesSection(context),
-                          const SizedBox(height: 32),
-                          
-                          // White Bottom Card Area (Recent Transactions / Shughuli za Karibuni)
-                          _buildWhiteBottomSheet(context),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  // 1. Beautiful Premium White Header
+                  _buildTopHeader(user),
+                  
+                  // 2. Dynamic body content based on selected tab
+                  Expanded(
+                    child: _buildBodyContent(user),
+                  ),
+                ],
               ),
             ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
