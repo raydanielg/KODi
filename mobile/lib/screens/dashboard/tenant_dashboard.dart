@@ -110,7 +110,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           const SizedBox(height: 32),
                           
                           // Scrollable Contacts (Quick Send / Contacts)
-                          _buildQuickSendSection(context),
+                          _buildQuickServicesSection(context),
                           const SizedBox(height: 32),
                           
                           // White Bottom Card Area (Recent Transactions / Shughuli za Karibuni)
