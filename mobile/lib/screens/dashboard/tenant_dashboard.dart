@@ -1147,6 +1147,168 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
+  void _showInvoiceDetailsBottomSheet(BuildContext context, Map<String, String> inv) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 42,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2.5),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              
+              // Stamp Logo Mock
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'MANNA REAL ESTATE',
+                        style: GoogleFonts.spaceGrotesk(fontSize: 13, fontWeight: FontWeight.w900, color: const Color(0xFFFE5D37), letterSpacing: 1.0),
+                      ),
+                      Text(
+                        'Palm Heights • Apt A4',
+                        style: GoogleFonts.inter(fontSize: 10, color: const Color(0xFF64748B), fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE6F4EA),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: const Color(0xFF137333).withOpacity(0.2)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.verified_rounded, color: Color(0xFF137333), size: 12),
+                        const SizedBox(width: 4),
+                        Text(
+                          _t('IMELIPWA', 'PAID'),
+                          style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900, color: const Color(0xFF137333)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              
+              const SizedBox(height: 20),
+              const Divider(color: Color(0xFFF1F5F9), thickness: 1.5),
+              const SizedBox(height: 16),
+              
+              // Receipt Title
+              Text(
+                _t('STAKABADHI YA MALIPO', 'PAYMENT RECEIPT'),
+                style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.w900, color: const Color(0xFF94A3B8), letterSpacing: 0.8),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                inv['title'] ?? '',
+                style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+              ),
+              const SizedBox(height: 24),
+              
+              // Receipt Metadata Details Table
+              _buildReceiptRow(_t('Namba ya Risiti', 'Receipt No.'), inv['invNo'] ?? 'INV-2026-XXXX'),
+              _buildReceiptRow(_t('Tarehe ya Malipo', 'Payment Date'), inv['date'] ?? 'Today'),
+              _buildReceiptRow(_t('Njia ya Malipo', 'Payment Method'), inv['method'] ?? 'Transfer'),
+              _buildReceiptRow(_t('Kiwango Kilicholipwa', 'Amount Paid'), inv['amount'] ?? 'TSh 0'),
+              _buildReceiptRow(_t('Mwenye Nyumba', 'Landlord'), 'Mama Ken'),
+              
+              const SizedBox(height: 24),
+              const Divider(color: Color(0xFFF1F5F9), thickness: 1.5),
+              const SizedBox(height: 24),
+              
+              // Download PDF Button
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pop(context);
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) {
+                      Future.delayed(const Duration(seconds: 2), () {
+                        Navigator.pop(context); // Close loader
+                        Helpers.showSnackBar(
+                          context,
+                          _t('Risiti imepakuliwa na kuhifadhiwa kwenye faili za simu yako!', 'Receipt PDF downloaded and saved to your device files!'),
+                        );
+                      });
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        content: Row(
+                          children: [
+                            const CircularProgressIndicator(color: Color(0xFFFE5D37)),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: Text(
+                                _t('Inatengeneza risiti ya PDF...', 'Generating PDF receipt...'),
+                                style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                icon: const Icon(Icons.download_rounded, size: 18),
+                label: Text(_t('Pakua Risiti (PDF)', 'Download PDF Receipt'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFE5D37),
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  elevation: 0,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildReceiptRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w600),
+          ),
+          Text(
+            value,
+            style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF1E293B), fontWeight: FontWeight.w800),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildBodyContent(UserModel user) {
     switch (_currentTab) {
       case 0:
