@@ -476,7 +476,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
@@ -576,7 +576,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: const Color(0xFFF8FAFC), // Off-white modern card background
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFF1F5F9), width: 1),
       ),
       child: Row(
@@ -586,7 +586,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: iconBg,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(icon, color: iconColor, size: 22),
           ),
