@@ -25,10 +25,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
   bool _isLoading = true;
   int _currentTab = 0;
   bool _isEnglish = false; // Language Toggler State (Default Swahili)
-  
+
   // Lease Connection Flow States
-  bool _isLeaseConnected = false; 
-  bool _hasIncomingRequest = true; 
+  bool _isLeaseConnected = false;
+  bool _hasIncomingRequest = true;
   bool _hasPendingSentRequest = false;
   String _sentRequestPhone = '';
 
@@ -81,9 +81,27 @@ class _TenantDashboardState extends State<TenantDashboard> {
             'maintenance_requests': 1,
           },
           recentItems: [
-            {'title': 'Malipo ya kodi ya pango (Palm Heights)', 'time': '12:33 PM • Kodi', 'amount': '-TSh 450,000', 'isCredit': false, 'category': 'rent'},
-            {'title': 'Mrejesho wa Dhamana (Deposit Refund)', 'time': '08:56 AM • Mrejesho', 'amount': '+TSh 150,000', 'isCredit': true, 'category': 'refund'},
-            {'title': 'Malipo ya Usafi na Ulinzi (Service Charge)', 'time': 'Jana • Huduma', 'amount': '-TSh 20,000', 'isCredit': false, 'category': 'service'},
+            {
+              'title': 'Malipo ya kodi ya pango (Palm Heights)',
+              'time': '12:33 PM • Kodi',
+              'amount': '-TSh 450,000',
+              'isCredit': false,
+              'category': 'rent',
+            },
+            {
+              'title': 'Mrejesho wa Dhamana (Deposit Refund)',
+              'time': '08:56 AM • Mrejesho',
+              'amount': '+TSh 150,000',
+              'isCredit': true,
+              'category': 'refund',
+            },
+            {
+              'title': 'Malipo ya Usafi na Ulinzi (Service Charge)',
+              'time': 'Jana • Huduma',
+              'amount': '-TSh 20,000',
+              'isCredit': false,
+              'category': 'service',
+            },
           ],
         );
         _isLoading = false;
@@ -108,7 +126,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
     return Scaffold(
       drawer: RoleDrawer(authService: _authService),
-      backgroundColor: const Color(0xFFF8FAFC), // Premium Light Slate (Off-white)
+      backgroundColor: const Color(
+        0xFFF8FAFC,
+      ), // Premium Light Slate (Off-white)
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(color: Color(0xFFFE5D37)),
@@ -119,11 +139,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 children: [
                   // 1. Beautiful Premium White Header (Hidden in Profile tab)
                   if (_currentTab != 3) _buildTopHeader(user),
-                  
+
                   // 2. Dynamic body content based on selected tab
-                  Expanded(
-                    child: _buildBodyContent(user),
-                  ),
+                  Expanded(child: _buildBodyContent(user)),
                 ],
               ),
             ),
@@ -159,7 +177,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             ),
           ),
           const SizedBox(width: 12),
-          
+
           // 2. Greeting Column
           Expanded(
             child: Column(
@@ -188,15 +206,25 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ],
             ),
           ),
-          
+
           // 3. Right Notification Icon with custom Badge
           Stack(
             children: [
               IconButton(
                 onPressed: () {
-                  Helpers.showSnackBar(context, _t('Arifa zitafunguka hapa!', 'Notifications will open here!'));
+                  Helpers.showSnackBar(
+                    context,
+                    _t(
+                      'Arifa zitafunguka hapa!',
+                      'Notifications will open here!',
+                    ),
+                  );
                 },
-                icon: const Icon(Icons.notifications_none_rounded, color: Color(0xFF1E293B), size: 26),
+                icon: const Icon(
+                  Icons.notifications_none_rounded,
+                  color: Color(0xFF1E293B),
+                  size: 26,
+                ),
                 style: IconButton.styleFrom(
                   backgroundColor: const Color(0xFFF1F5F9),
                   padding: const EdgeInsets.all(10),
@@ -287,7 +315,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
               icon: const Icon(Icons.arrow_outward_rounded, size: 18),
               label: Text(
                 _t('Lipa Kodi', 'Pay Rent'),
-                style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 14),
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFFE5D37),
@@ -301,17 +332,26 @@ class _TenantDashboardState extends State<TenantDashboard> {
             ),
           ),
           const SizedBox(width: 12),
-          
+
           // Action 2: Omba Fundi (Request / Light Background)
           Expanded(
             child: ElevatedButton.icon(
               onPressed: () {
-                Helpers.showSnackBar(context, _t('Fungua tiketi ya mafundi...', 'Opening maintenance ticket...'));
+                Helpers.showSnackBar(
+                  context,
+                  _t(
+                    'Fungua tiketi ya mafundi...',
+                    'Opening maintenance ticket...',
+                  ),
+                );
               },
               icon: const Icon(Icons.build_rounded, size: 18),
               label: Text(
                 _t('Omba Fundi', 'Request Fix'),
-                style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 14),
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
@@ -326,13 +366,17 @@ class _TenantDashboardState extends State<TenantDashboard> {
             ),
           ),
           const SizedBox(width: 12),
-          
+
           // Action 3: Menu Grid Icon (Huduma Zaidi Sliding Panel)
           IconButton(
             onPressed: () {
               _showMoreServicesPanel(context);
             },
-            icon: const Icon(Icons.grid_view_rounded, color: Color(0xFF1E293B), size: 20),
+            icon: const Icon(
+              Icons.grid_view_rounded,
+              color: Color(0xFF1E293B),
+              size: 20,
+            ),
             style: IconButton.styleFrom(
               backgroundColor: Colors.white,
               padding: const EdgeInsets.all(16),
@@ -425,7 +469,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 margin: const EdgeInsets.only(right: 12),
                 child: InkWell(
                   onTap: () {
-                    Helpers.showSnackBar(context, _t('Malipo ya huduma ya ${item['name']} yanashughulikiwa...', 'Processing payment for ${item['name']}...'));
+                    Helpers.showSnackBar(
+                      context,
+                      _t(
+                        'Malipo ya huduma ya ${item['name']} yanashughulikiwa...',
+                        'Processing payment for ${item['name']}...',
+                      ),
+                    );
                   },
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
@@ -434,7 +484,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: const Color(0xFFE2E8F0), // Crisp, high-contrast subtle border
+                        color: const Color(
+                          0xFFE2E8F0,
+                        ), // Crisp, high-contrast subtle border
                         width: 1,
                       ),
                       boxShadow: [
@@ -452,8 +504,12 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: brandColor.withOpacity(0.08), // Pastel accent background
-                            borderRadius: BorderRadius.circular(12), // Squircle shape
+                            color: brandColor.withOpacity(
+                              0.08,
+                            ), // Pastel accent background
+                            borderRadius: BorderRadius.circular(
+                              12,
+                            ), // Squircle shape
                             border: Border.all(
                               color: brandColor.withOpacity(0.16),
                               width: 1,
@@ -532,7 +588,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ),
               TextButton(
                 onPressed: () {
-                  Helpers.showSnackBar(context, _t('Ripoti nzima ya malipo inafunguka...', 'Opening full payment report...'));
+                  Helpers.showSnackBar(
+                    context,
+                    _t(
+                      'Ripoti nzima ya malipo inafunguka...',
+                      'Opening full payment report...',
+                    ),
+                  );
                 },
                 child: Row(
                   children: [
@@ -545,14 +607,18 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       ),
                     ),
                     const SizedBox(width: 4),
-                    const Icon(Icons.arrow_outward_rounded, size: 14, color: Color(0xFFFE5D37)),
+                    const Icon(
+                      Icons.arrow_outward_rounded,
+                      size: 14,
+                      color: Color(0xFFFE5D37),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
           const SizedBox(height: 12),
-          
+
           // Transaction List Items (Extremely Premium Look)
           if (recentItems.isEmpty)
             Padding(
@@ -560,13 +626,16 @@ class _TenantDashboardState extends State<TenantDashboard> {
               child: Center(
                 child: Text(
                   _t('Hakuna malipo ya karibuni.', 'No recent payments.'),
-                  style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B)),
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    color: const Color(0xFF64748B),
+                  ),
                 ),
               ),
             )
           else
             ...recentItems.map((item) => _buildRecentItemWidget(item)),
-          
+
           const SizedBox(height: 32),
 
           // 📢 Landlord Alerts & Notifications Section (NEW!)
@@ -620,7 +689,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             child: Icon(icon, color: iconColor, size: 22),
           ),
           const SizedBox(width: 14),
-          
+
           // Title & Time Column
           Expanded(
             child: Column(
@@ -629,22 +698,51 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 Builder(
                   builder: (context) {
                     String titleText = map['title'] ?? 'Transaction';
-                    if (titleText.contains('kodi') || titleText.contains('Rent') || titleText.contains('Kodi')) {
-                      if (titleText.contains('1') || titleText.contains('Mwezi 1')) {
-                        titleText = _t('Kodi ya Pango (Mwezi 1)', 'Rent Payment (1 Month)');
-                      } else if (titleText.contains('3') || titleText.contains('Miezi 3')) {
-                        titleText = _t('Kodi ya Pango (Miezi 3)', 'Rent Payment (3 Months)');
-                      } else if (titleText.contains('6') || titleText.contains('Miezi 6')) {
-                        titleText = _t('Kodi ya Pango (Miezi 6)', 'Rent Payment (6 Months)');
-                      } else if (titleText.contains('12') || titleText.contains('Miezi 12')) {
-                        titleText = _t('Kodi ya Pango (Miezi 12)', 'Rent Payment (12 Months)');
+                    if (titleText.contains('kodi') ||
+                        titleText.contains('Rent') ||
+                        titleText.contains('Kodi')) {
+                      if (titleText.contains('1') ||
+                          titleText.contains('Mwezi 1')) {
+                        titleText = _t(
+                          'Kodi ya Pango (Mwezi 1)',
+                          'Rent Payment (1 Month)',
+                        );
+                      } else if (titleText.contains('3') ||
+                          titleText.contains('Miezi 3')) {
+                        titleText = _t(
+                          'Kodi ya Pango (Miezi 3)',
+                          'Rent Payment (3 Months)',
+                        );
+                      } else if (titleText.contains('6') ||
+                          titleText.contains('Miezi 6')) {
+                        titleText = _t(
+                          'Kodi ya Pango (Miezi 6)',
+                          'Rent Payment (6 Months)',
+                        );
+                      } else if (titleText.contains('12') ||
+                          titleText.contains('Miezi 12')) {
+                        titleText = _t(
+                          'Kodi ya Pango (Miezi 12)',
+                          'Rent Payment (12 Months)',
+                        );
                       } else {
-                        titleText = _t('Malipo ya kodi ya pango (Palm Heights)', 'Rent payment (Palm Heights)');
+                        titleText = _t(
+                          'Malipo ya kodi ya pango (Palm Heights)',
+                          'Rent payment (Palm Heights)',
+                        );
                       }
-                    } else if (titleText.contains('Dhamana') || titleText.contains('Refund')) {
-                      titleText = _t('Mrejesho wa Dhamana (Deposit Refund)', 'Security Deposit Refund');
-                    } else if (titleText.contains('Usafi') || titleText.contains('Service Charge')) {
-                      titleText = _t('Malipo ya Usafi na Ulinzi (Service Charge)', 'Security & Waste Service Charge');
+                    } else if (titleText.contains('Dhamana') ||
+                        titleText.contains('Refund')) {
+                      titleText = _t(
+                        'Mrejesho wa Dhamana (Deposit Refund)',
+                        'Security Deposit Refund',
+                      );
+                    } else if (titleText.contains('Usafi') ||
+                        titleText.contains('Service Charge')) {
+                      titleText = _t(
+                        'Malipo ya Usafi na Ulinzi (Service Charge)',
+                        'Security & Waste Service Charge',
+                      );
                     }
                     return Text(
                       titleText,
@@ -656,7 +754,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     );
-                  }
+                  },
                 ),
                 const SizedBox(height: 3),
                 Row(
@@ -666,7 +764,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       width: 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: isCredit ? const Color(0xFF10B981) : const Color(0xFF64748B),
+                        color: isCredit
+                            ? const Color(0xFF10B981)
+                            : const Color(0xFF64748B),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -677,8 +777,12 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         if (timeText.contains('12:33')) {
                           timeText = _t('12:33 PM • Kodi', '12:33 PM • Rent');
                         } else if (timeText.contains('08:56')) {
-                          timeText = _t('08:56 AM • Mrejesho', '08:56 AM • Refund');
-                        } else if (timeText.contains('Jana') || timeText.toLowerCase().contains('yesterday')) {
+                          timeText = _t(
+                            '08:56 AM • Mrejesho',
+                            '08:56 AM • Refund',
+                          );
+                        } else if (timeText.contains('Jana') ||
+                            timeText.toLowerCase().contains('yesterday')) {
                           timeText = _t('Jana • Huduma', 'Yesterday • Service');
                         } else if (timeText == 'Leo' || timeText == 'Today') {
                           timeText = _t('Leo', 'Today');
@@ -691,14 +795,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
                             fontWeight: FontWeight.w600,
                           ),
                         );
-                      }
+                      },
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          
+
           // Amount in premium bold formats
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -708,14 +812,18 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 style: GoogleFonts.spaceGrotesk(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: isCredit ? const Color(0xFF137333) : const Color(0xFF1E293B),
+                  color: isCredit
+                      ? const Color(0xFF137333)
+                      : const Color(0xFF1E293B),
                 ),
               ),
               const SizedBox(height: 3),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: isCredit ? const Color(0xFFE6F4EA) : const Color(0xFFF1F5F9),
+                  color: isCredit
+                      ? const Color(0xFFE6F4EA)
+                      : const Color(0xFFF1F5F9),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
@@ -723,7 +831,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   style: GoogleFonts.inter(
                     fontSize: 8,
                     fontWeight: FontWeight.w800,
-                    color: isCredit ? const Color(0xFF137333) : const Color(0xFF64748B),
+                    color: isCredit
+                        ? const Color(0xFF137333)
+                        : const Color(0xFF64748B),
                   ),
                 ),
               ),
@@ -740,7 +850,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         'title': _t('Ukarabati wa Pampu ya Maji', 'Water Pump Repair'),
         'desc': _t(
           'Pampu kuu ya maji itafungwa kesho kuanzia saa 3 asubuhi hadi saa 6 mchana kwa matengenezo.',
-          'The main water pump will be shut down tomorrow from 9 AM to 12 PM for maintenance.'
+          'The main water pump will be shut down tomorrow from 9 AM to 12 PM for maintenance.',
         ),
         'time': _t('Leo, 11:30 AM', 'Today, 11:30 AM'),
         'priority': _t('HARAKA', 'URGENT'),
@@ -749,10 +859,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
         'icon': Icons.water_damage_rounded,
       },
       {
-        'title': _t('Kupulizia Dawa ya Wadudu (Fumigation)', 'Pest Fumigation Service'),
+        'title': _t(
+          'Kupulizia Dawa ya Wadudu (Fumigation)',
+          'Pest Fumigation Service',
+        ),
         'desc': _t(
           'Zoezi la kupulizia dawa litafanyika Jumamosi asubuhi. Tafadhali funga madirisha na kutoa mifugo.',
-          'Fumigation exercise will take place on Saturday morning. Please close windows and keep pets safe.'
+          'Fumigation exercise will take place on Saturday morning. Please close windows and keep pets safe.',
         ),
         'time': _t('Juzi, 2:15 PM', 'Two days ago, 2:15 PM'),
         'priority': _t('TAARIFA', 'INFO'),
@@ -785,7 +898,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.campaign_rounded, color: Color(0xFFEF4444), size: 12),
+                  const Icon(
+                    Icons.campaign_rounded,
+                    color: Color(0xFFEF4444),
+                    size: 12,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     _t('2 MPYA', '2 NEW'),
@@ -832,7 +949,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   children: [
                     // Indicator tag
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: bg,
                         borderRadius: BorderRadius.circular(8),
@@ -868,7 +988,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         color: color.withOpacity(0.08),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(alert['icon'] as IconData, color: color, size: 18),
+                      child: Icon(
+                        alert['icon'] as IconData,
+                        color: color,
+                        size: 18,
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -908,21 +1032,31 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
   String _statLabel(String key) {
     switch (key) {
-      case 'total_properties': return 'Mkataba Wangu';
-      case 'active_rentals': return 'Kodi Inaendelea';
-      case 'total_revenue': return 'Kodi ya Mwezi';
-      case 'maintenance_requests': return 'Matengenezo';
-      default: return key.replaceAll('_', ' ');
+      case 'total_properties':
+        return 'Mkataba Wangu';
+      case 'active_rentals':
+        return 'Kodi Inaendelea';
+      case 'total_revenue':
+        return 'Kodi ya Mwezi';
+      case 'maintenance_requests':
+        return 'Matengenezo';
+      default:
+        return key.replaceAll('_', ' ');
     }
   }
 
   IconData _statIcon(String key) {
     switch (key) {
-      case 'total_properties': return Icons.assignment_turned_in_rounded;
-      case 'active_rentals': return Icons.key;
-      case 'total_revenue': return Icons.account_balance_wallet_rounded;
-      case 'maintenance_requests': return Icons.build;
-      default: return Icons.info;
+      case 'total_properties':
+        return Icons.assignment_turned_in_rounded;
+      case 'active_rentals':
+        return Icons.key;
+      case 'total_revenue':
+        return Icons.account_balance_wallet_rounded;
+      case 'maintenance_requests':
+        return Icons.build;
+      default:
+        return Icons.info;
     }
   }
 
@@ -943,7 +1077,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
     if (amount == 1350000) return 'TSh 1,350,000';
     if (amount == 2700000) return 'TSh 2,700,000';
     if (amount == 5400000) return 'TSh 5,400,000';
-    
+
     return 'TSh ${months * 450000}';
   }
 
@@ -1004,23 +1138,47 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   const SizedBox(height: 16),
                   Text(
                     _t('Lipa Kodi ya Pango', 'Pay Rent Payment'),
-                    style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                      color: const Color(0xFF1E293B),
+                    ),
                   ),
                   const SizedBox(height: 20),
 
                   // 1. Select Duration
                   Text(
                     _t('Muda Unaolipia (Miezi):', 'Payment Duration (Months):'),
-                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
+                    style: GoogleFonts.inter(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF64748B),
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildPayDurationChip(setModalState, 1, '1 ' + _t('Mwezi', 'Month')),
-                      _buildPayDurationChip(setModalState, 3, '3 ' + _t('Miezi', 'Months')),
-                      _buildPayDurationChip(setModalState, 6, '6 ' + _t('Miezi', 'Months')),
-                      _buildPayDurationChip(setModalState, 12, '12 ' + _t('Miezi', 'Months')),
+                      _buildPayDurationChip(
+                        setModalState,
+                        1,
+                        '1 ' + _t('Mwezi', 'Month'),
+                      ),
+                      _buildPayDurationChip(
+                        setModalState,
+                        3,
+                        '3 ' + _t('Miezi', 'Months'),
+                      ),
+                      _buildPayDurationChip(
+                        setModalState,
+                        6,
+                        '6 ' + _t('Miezi', 'Months'),
+                      ),
+                      _buildPayDurationChip(
+                        setModalState,
+                        12,
+                        '12 ' + _t('Miezi', 'Months'),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 18),
@@ -1028,7 +1186,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   // 2. Select Payment Method (Cash or Bank Transfer)
                   Text(
                     _t('Njia ya Malipo:', 'Payment Method:'),
-                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
+                    style: GoogleFonts.inter(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF64748B),
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Container(
@@ -1044,10 +1206,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           groupValue: _payRentMethod,
                           activeColor: const Color(0xFFFE5D37),
                           title: Text(
-                            _t('Benki / M-Pesa / TigoPesa', 'Bank / Mobile Money Transfer'), 
+                            _t(
+                              'Benki / M-Pesa / TigoPesa',
+                              'Bank / Mobile Money Transfer',
+                            ),
                             style: GoogleFonts.inter(
-                              fontSize: 12, 
-                              fontWeight: FontWeight.w600, 
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: const Color(0xFF1E293B),
                             ),
                           ),
@@ -1065,10 +1230,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           groupValue: _payRentMethod,
                           activeColor: const Color(0xFFFE5D37),
                           title: Text(
-                            _t('Pesa Taslimu (Cash)', 'Cash Payment'), 
+                            _t('Pesa Taslimu (Cash)', 'Cash Payment'),
                             style: GoogleFonts.inter(
-                              fontSize: 12, 
-                              fontWeight: FontWeight.w600, 
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                               color: const Color(0xFF1E293B),
                             ),
                           ),
@@ -1091,11 +1256,19 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     children: [
                       Text(
                         _t('Jumla ya Malipo:', 'Total Amount Due:'),
-                        style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B), fontWeight: FontWeight.w600),
+                        style: GoogleFonts.inter(
+                          fontSize: 13,
+                          color: const Color(0xFF64748B),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       Text(
                         _formatFullRentAmount(_payRentMonths),
-                        style: GoogleFonts.spaceGrotesk(fontSize: 18, color: const Color(0xFF1E293B), fontWeight: FontWeight.w800),
+                        style: GoogleFonts.spaceGrotesk(
+                          fontSize: 18,
+                          color: const Color(0xFF1E293B),
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ],
                   ),
@@ -1111,10 +1284,15 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       backgroundColor: const Color(0xFFFE5D37),
                       foregroundColor: Colors.white,
                       minimumSize: const Size(double.infinity, 48),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       elevation: 0,
                     ),
-                    child: Text(_t('Kamilisha Malipo', 'Complete Payment'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                    child: Text(
+                      _t('Kamilisha Malipo', 'Complete Payment'),
+                      style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ],
               ),
@@ -1125,7 +1303,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  Widget _buildPayDurationChip(StateSetter setModalState, int months, String label) {
+  Widget _buildPayDurationChip(
+    StateSetter setModalState,
+    int months,
+    String label,
+  ) {
     final isSelected = _payRentMonths == months;
     return GestureDetector(
       onTap: () {
@@ -1162,38 +1344,54 @@ class _TenantDashboardState extends State<TenantDashboard> {
           // Successfully add to local history in real time!
           if (_stats != null && _stats!.recentItems != null) {
             _stats!.recentItems!.insert(0, {
-              'title': _payRentMonths == 1 
+              'title': _payRentMonths == 1
                   ? _t('Kodi ya Pango (Mwezi 1)', 'Rent Payment (1 Month)')
-                  : _t('Kodi ya Pango (${_payRentMonths} Miezi)', 'Rent Payment (${_payRentMonths} Months)'),
+                  : _t(
+                      'Kodi ya Pango (${_payRentMonths} Miezi)',
+                      'Rent Payment (${_payRentMonths} Months)',
+                    ),
               'time': _t('Leo', 'Today'),
-              'amount': '-TSh ${_formatFullRentAmount(_payRentMonths).replaceAll('TSh ', '')}',
+              'amount':
+                  '-TSh ${_formatFullRentAmount(_payRentMonths).replaceAll('TSh ', '')}',
               'category': 'rent',
               'isCredit': false,
             });
           }
-          
+
           setState(() {}); // trigger full UI reload
           Navigator.pop(context); // close loader
-          
+
           Helpers.showSnackBar(
             context,
             _t(
-              'Malipo ya ${_formatFullRentAmount(_payRentMonths)} kupitia ' + (_payRentMethod == 'Cash' ? 'Pesa Taslimu (Cash)' : 'Benki') + ' yamekamilika na kuhifadhiwa kikamilifu!',
-              'Payment of ${_formatFullRentAmount(_payRentMonths)} via ' + (_payRentMethod == 'Cash' ? 'Cash' : 'Bank Transfer') + ' completed and successfully recorded!'
+              'Malipo ya ${_formatFullRentAmount(_payRentMonths)} kupitia ' +
+                  (_payRentMethod == 'Cash' ? 'Pesa Taslimu (Cash)' : 'Benki') +
+                  ' yamekamilika na kuhifadhiwa kikamilifu!',
+              'Payment of ${_formatFullRentAmount(_payRentMonths)} via ' +
+                  (_payRentMethod == 'Cash' ? 'Cash' : 'Bank Transfer') +
+                  ' completed and successfully recorded!',
             ),
           );
         });
-        
+
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           content: Row(
             children: [
               const CircularProgressIndicator(color: Color(0xFFFE5D37)),
               const SizedBox(width: 20),
               Expanded(
                 child: Text(
-                  _t('Inachakata malipo ya kodi...', 'Processing rent payment...'),
-                  style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600),
+                  _t(
+                    'Inachakata malipo ya kodi...',
+                    'Processing rent payment...',
+                  ),
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],
@@ -1203,7 +1401,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  void _showInvoiceDetailsBottomSheet(BuildContext context, Map<String, String> inv) {
+  void _showInvoiceDetailsBottomSheet(
+    BuildContext context,
+    Map<String, String> inv,
+  ) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -1230,7 +1431,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 ),
               ),
               const SizedBox(height: 24),
-              
+
               // Stamp Logo Mock
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1240,62 +1441,105 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     children: [
                       Text(
                         'MANNA REAL ESTATE',
-                        style: GoogleFonts.spaceGrotesk(fontSize: 13, fontWeight: FontWeight.w900, color: const Color(0xFFFE5D37), letterSpacing: 1.0),
+                        style: GoogleFonts.spaceGrotesk(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w900,
+                          color: const Color(0xFFFE5D37),
+                          letterSpacing: 1.0,
+                        ),
                       ),
                       Text(
                         'Palm Heights • Apt A4',
-                        style: GoogleFonts.inter(fontSize: 10, color: const Color(0xFF64748B), fontWeight: FontWeight.w600),
+                        style: GoogleFonts.inter(
+                          fontSize: 10,
+                          color: const Color(0xFF64748B),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ],
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFFE6F4EA),
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: const Color(0xFF137333).withOpacity(0.2)),
+                      border: Border.all(
+                        color: const Color(0xFF137333).withOpacity(0.2),
+                      ),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.verified_rounded, color: Color(0xFF137333), size: 12),
+                        const Icon(
+                          Icons.verified_rounded,
+                          color: Color(0xFF137333),
+                          size: 12,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           _t('IMELIPWA', 'PAID'),
-                          style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900, color: const Color(0xFF137333)),
+                          style: GoogleFonts.inter(
+                            fontSize: 9,
+                            fontWeight: FontWeight.w900,
+                            color: const Color(0xFF137333),
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 20),
               const Divider(color: Color(0xFFF1F5F9), thickness: 1.5),
               const SizedBox(height: 16),
-              
+
               // Receipt Title
               Text(
                 _t('STAKABADHI YA MALIPO', 'PAYMENT RECEIPT'),
-                style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.w900, color: const Color(0xFF94A3B8), letterSpacing: 0.8),
+                style: GoogleFonts.inter(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w900,
+                  color: const Color(0xFF94A3B8),
+                  letterSpacing: 0.8,
+                ),
               ),
               const SizedBox(height: 6),
               Text(
                 inv['title'] ?? '',
-                style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: const Color(0xFF1E293B),
+                ),
               ),
               const SizedBox(height: 24),
-              
+
               // Receipt Metadata Details Table
-              _buildReceiptRow(_t('Namba ya Risiti', 'Receipt No.'), inv['invNo'] ?? 'INV-2026-XXXX'),
-              _buildReceiptRow(_t('Tarehe ya Malipo', 'Payment Date'), inv['date'] ?? 'Today'),
-              _buildReceiptRow(_t('Njia ya Malipo', 'Payment Method'), inv['method'] ?? 'Transfer'),
-              _buildReceiptRow(_t('Kiwango Kilicholipwa', 'Amount Paid'), inv['amount'] ?? 'TSh 0'),
+              _buildReceiptRow(
+                _t('Namba ya Risiti', 'Receipt No.'),
+                inv['invNo'] ?? 'INV-2026-XXXX',
+              ),
+              _buildReceiptRow(
+                _t('Tarehe ya Malipo', 'Payment Date'),
+                inv['date'] ?? 'Today',
+              ),
+              _buildReceiptRow(
+                _t('Njia ya Malipo', 'Payment Method'),
+                inv['method'] ?? 'Transfer',
+              ),
+              _buildReceiptRow(
+                _t('Kiwango Kilicholipwa', 'Amount Paid'),
+                inv['amount'] ?? 'TSh 0',
+              ),
               _buildReceiptRow(_t('Mwenye Nyumba', 'Landlord'), 'Mama Ken'),
-              
+
               const SizedBox(height: 24),
               const Divider(color: Color(0xFFF1F5F9), thickness: 1.5),
               const SizedBox(height: 24),
-              
+
               // Download PDF Button
               ElevatedButton.icon(
                 onPressed: () {
@@ -1308,19 +1552,32 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         Navigator.pop(context); // Close loader
                         Helpers.showSnackBar(
                           context,
-                          _t('Risiti imepakuliwa na kuhifadhiwa kwenye faili za simu yako!', 'Receipt PDF downloaded and saved to your device files!'),
+                          _t(
+                            'Risiti imepakuliwa na kuhifadhiwa kwenye faili za simu yako!',
+                            'Receipt PDF downloaded and saved to your device files!',
+                          ),
                         );
                       });
                       return AlertDialog(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                         content: Row(
                           children: [
-                            const CircularProgressIndicator(color: Color(0xFFFE5D37)),
+                            const CircularProgressIndicator(
+                              color: Color(0xFFFE5D37),
+                            ),
                             const SizedBox(width: 20),
                             Expanded(
                               child: Text(
-                                _t('Inatengeneza risiti ya PDF...', 'Generating PDF receipt...'),
-                                style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600),
+                                _t(
+                                  'Inatengeneza risiti ya PDF...',
+                                  'Generating PDF receipt...',
+                                ),
+                                style: GoogleFonts.inter(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ],
@@ -1330,12 +1587,17 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   );
                 },
                 icon: const Icon(Icons.download_rounded, size: 18),
-                label: Text(_t('Pakua Risiti (PDF)', 'Download PDF Receipt'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                label: Text(
+                  _t('Pakua Risiti (PDF)', 'Download PDF Receipt'),
+                  style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFE5D37),
                   foregroundColor: Colors.white,
                   minimumSize: const Size(double.infinity, 48),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   elevation: 0,
                 ),
               ),
@@ -1354,11 +1616,19 @@ class _TenantDashboardState extends State<TenantDashboard> {
         children: [
           Text(
             label,
-            style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w600),
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              color: const Color(0xFF64748B),
+              fontWeight: FontWeight.w600,
+            ),
           ),
           Text(
             value,
-            style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF1E293B), fontWeight: FontWeight.w800),
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              color: const Color(0xFF1E293B),
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ],
       ),
@@ -1417,7 +1687,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
               curve: Curves.easeInOut,
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFFFE5D37) : Colors.transparent, // sliding capsule
+                color: isSelected
+                    ? const Color(0xFFFE5D37)
+                    : Colors.transparent, // sliding capsule
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -1527,7 +1799,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               Text(
                 _t(
                   'Ili kuona taarifa za kodi na kulipa, tafadhali unganisha akaunti yako na Mwenye Nyumba wako kwanza.',
-                  'To view rent information and pay bills, please connect your account with your Landlord first.'
+                  'To view rent information and pay bills, please connect your account with your Landlord first.',
                 ),
                 style: GoogleFonts.inter(
                   fontSize: 12,
@@ -1582,7 +1854,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
         const SizedBox(height: 18),
 
         // Section 1: Incoming Landlord Requests
-        _buildRequestsSectionHeader(_t('MAOMBI MAPYA YA KUINGIA', 'INCOMING REQUESTS')),
+        _buildRequestsSectionHeader(
+          _t('MAOMBI MAPYA YA KUINGIA', 'INCOMING REQUESTS'),
+        ),
         const SizedBox(height: 10),
         if (_hasIncomingRequest)
           Container(
@@ -1600,17 +1874,28 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   children: [
                     Text(
                       'Mama Ken (Mwenye Nyumba)',
-                      style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w800,
+                        color: const Color(0xFF1E293B),
+                      ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFF1F0),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         _t('Apt A4 • Palm Heights', 'Apt A4 • Palm Heights'),
-                        style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w800, color: const Color(0xFFFE5D37)),
+                        style: GoogleFonts.inter(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w800,
+                          color: const Color(0xFFFE5D37),
+                        ),
                       ),
                     ),
                   ],
@@ -1619,16 +1904,37 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(_t('Kodi ya Mwezi:', 'Monthly Rent:'), style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500)),
-                    Text('TSh 450,000', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B))),
+                    Text(
+                      _t('Kodi ya Mwezi:', 'Monthly Rent:'),
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        color: const Color(0xFF64748B),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      'TSh 450,000',
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w800,
+                        color: const Color(0xFF1E293B),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
-                
+
                 // Simple inline plan chips (Normal, clean, minimalist)
                 Row(
                   children: [
-                    Text(_t('Muda:', 'Duration:'), style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500)),
+                    Text(
+                      _t('Muda:', 'Duration:'),
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        color: const Color(0xFF64748B),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Row(
@@ -1646,16 +1952,30 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 const SizedBox(height: 12),
                 const Divider(color: Color(0xFFF1F5F9), height: 1),
                 const SizedBox(height: 12),
-                
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(_t('Jumla ya Malipo:', 'Total Amount:'), style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w700)),
-                    Text(_formatFullRentAmount(_selectedLeasePlanMonths), style: GoogleFonts.spaceGrotesk(fontSize: 13, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B))),
+                    Text(
+                      _t('Jumla ya Malipo:', 'Total Amount:'),
+                      style: GoogleFonts.inter(
+                        fontSize: 11,
+                        color: const Color(0xFF64748B),
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      _formatFullRentAmount(_selectedLeasePlanMonths),
+                      style: GoogleFonts.spaceGrotesk(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w800,
+                        color: const Color(0xFF1E293B),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 14),
-                
+
                 Row(
                   children: [
                     Expanded(
@@ -1664,13 +1984,22 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           setState(() {
                             _hasIncomingRequest = false;
                           });
-                          Helpers.showSnackBar(context, _t('Ombi limekataliwa.', 'Request declined.'));
+                          Helpers.showSnackBar(
+                            context,
+                            _t('Ombi limekataliwa.', 'Request declined.'),
+                          );
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: const Color(0xFFEF4444),
                           padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
-                        child: Text(_t('Kataa', 'Decline'), style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 12)),
+                        child: Text(
+                          _t('Kataa', 'Decline'),
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -1683,7 +2012,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           });
                           Helpers.showSnackBar(
                             context,
-                            _t('Hongera! Mkataba umeunganishwa kikamilifu.', 'Success! Lease connected successfully.'),
+                            _t(
+                              'Hongera! Mkataba umeunganishwa kikamilifu.',
+                              'Success! Lease connected successfully.',
+                            ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -1691,9 +2023,17 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           foregroundColor: Colors.white,
                           elevation: 0,
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
-                        child: Text(_t('Kubali', 'Accept'), style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 12)),
+                        child: Text(
+                          _t('Kubali', 'Accept'),
+                          style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -1705,15 +2045,24 @@ class _TenantDashboardState extends State<TenantDashboard> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Text(
-              _t('Hakuna maombi mapya ya kuingia.', 'No new incoming requests.'),
-              style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+              _t(
+                'Hakuna maombi mapya ya kuingia.',
+                'No new incoming requests.',
+              ),
+              style: GoogleFonts.inter(
+                fontSize: 11,
+                color: const Color(0xFF64748B),
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
-        
+
         const SizedBox(height: 24),
 
         // Section 2: Send request form
-        _buildRequestsSectionHeader(_t('TUMA OMBI JIPYA LA UNGANISHO', 'SEND NEW CONNECTION REQUEST')),
+        _buildRequestsSectionHeader(
+          _t('TUMA OMBI JIPYA LA UNGANISHO', 'SEND NEW CONNECTION REQUEST'),
+        ),
         const SizedBox(height: 10),
         Container(
           padding: const EdgeInsets.all(14),
@@ -1728,11 +2077,24 @@ class _TenantDashboardState extends State<TenantDashboard> {
               TextField(
                 controller: _phoneInputController,
                 keyboardType: TextInputType.phone,
-                style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: const Color(0xFF1E293B)),
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: const Color(0xFF1E293B),
+                ),
                 decoration: InputDecoration(
-                  hintText: _t('Namba ya simu ya Mwenye Nyumba...', 'Landlord Phone Number...'),
-                  hintStyle: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF94A3B8)),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  hintText: _t(
+                    'Namba ya simu ya Mwenye Nyumba...',
+                    'Landlord Phone Number...',
+                  ),
+                  hintStyle: GoogleFonts.inter(
+                    fontSize: 12,
+                    color: const Color(0xFF94A3B8),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
                   filled: true,
                   fillColor: const Color(0xFFF8FAFC),
                   border: OutlineInputBorder(
@@ -1754,7 +2116,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 onPressed: () {
                   final phone = _phoneInputController.text.trim();
                   if (phone.isEmpty) {
-                    Helpers.showSnackBar(context, _t('Tafadhali weka namba ya simu', 'Please enter a phone number'));
+                    Helpers.showSnackBar(
+                      context,
+                      _t(
+                        'Tafadhali weka namba ya simu',
+                        'Please enter a phone number',
+                      ),
+                    );
                     return;
                   }
                   setState(() {
@@ -1762,16 +2130,30 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     _sentRequestPhone = phone;
                     _phoneInputController.clear();
                   });
-                  Helpers.showSnackBar(context, _t('Ombi limetumwa kwa ' + phone, 'Request sent to ' + phone));
+                  Helpers.showSnackBar(
+                    context,
+                    _t(
+                      'Ombi limetumwa kwa ' + phone,
+                      'Request sent to ' + phone,
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFE5D37),
                   foregroundColor: Colors.white,
                   minimumSize: const Size(double.infinity, 40),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   elevation: 0,
                 ),
-                child: Text(_t('Tuma Ombi', 'Send Request'), style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 12)),
+                child: Text(
+                  _t('Tuma Ombi', 'Send Request'),
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 12,
+                  ),
+                ),
               ),
             ],
           ),
@@ -1780,9 +2162,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
         const SizedBox(height: 24),
 
         // Section 3: Pending & Historical Sent Requests
-        _buildRequestsSectionHeader(_t('HISTORIA YA MAOMBI YAKO', 'YOUR REQUESTS HISTORY')),
+        _buildRequestsSectionHeader(
+          _t('HISTORIA YA MAOMBI YAKO', 'YOUR REQUESTS HISTORY'),
+        ),
         const SizedBox(height: 10),
-        
+
         // Dynamic Active Pending Request
         if (_hasPendingSentRequest)
           _buildMinimalRequestRow(
@@ -1795,10 +2179,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
               setState(() {
                 _hasPendingSentRequest = false;
               });
-              Helpers.showSnackBar(context, _t('Ombi limefutwa.', 'Request canceled.'));
+              Helpers.showSnackBar(
+                context,
+                _t('Ombi limefutwa.', 'Request canceled.'),
+              );
             },
           ),
-          
+
         // Historical Record 1: Connected (Beautiful static normal row)
         _buildMinimalRequestRow(
           phone: '+255 765 890 123',
@@ -1870,12 +2257,20 @@ class _TenantDashboardState extends State<TenantDashboard> {
             children: [
               Text(
                 phone,
-                style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w800,
+                  color: const Color(0xFF1E293B),
+                ),
               ),
               const SizedBox(height: 2),
               Text(
                 date,
-                style: GoogleFonts.inter(fontSize: 9, color: const Color(0xFF94A3B8), fontWeight: FontWeight.w600),
+                style: GoogleFonts.inter(
+                  fontSize: 9,
+                  color: const Color(0xFF94A3B8),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
@@ -1892,12 +2287,19 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     Container(
                       width: 5,
                       height: 5,
-                      decoration: BoxDecoration(color: statusColor, shape: BoxShape.circle),
+                      decoration: BoxDecoration(
+                        color: statusColor,
+                        shape: BoxShape.circle,
+                      ),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       statusText,
-                      style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900, color: statusColor),
+                      style: GoogleFonts.inter(
+                        fontSize: 9,
+                        fontWeight: FontWeight.w900,
+                        color: statusColor,
+                      ),
                     ),
                   ],
                 ),
@@ -1906,7 +2308,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 const SizedBox(width: 8),
                 GestureDetector(
                   onTap: onCancel,
-                  child: const Icon(Icons.cancel_rounded, color: Color(0xFF94A3B8), size: 16),
+                  child: const Icon(
+                    Icons.cancel_rounded,
+                    color: Color(0xFF94A3B8),
+                    size: 16,
+                  ),
                 ),
               ],
             ],
@@ -1934,8 +2340,22 @@ class _TenantDashboardState extends State<TenantDashboard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w600)),
-          Text(val, style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF1E293B), fontWeight: FontWeight.w800)),
+          Text(
+            label,
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              color: const Color(0xFF64748B),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Text(
+            val,
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              color: const Color(0xFF1E293B),
+              fontWeight: FontWeight.w800,
+            ),
+          ),
         ],
       ),
     );
@@ -1982,9 +2402,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
       for (var item in _stats!.recentItems!) {
         if (item['category'] == 'rent') {
           final String title = item['title'] ?? '';
-          final String date = item['time'] == 'Leo' || item['time'] == 'Today' ? _t('Leo', 'Today') : (item['time'] ?? '');
+          final String date = item['time'] == 'Leo' || item['time'] == 'Today'
+              ? _t('Leo', 'Today')
+              : (item['time'] ?? '');
           final String amount = (item['amount'] ?? '').replaceAll('-', '');
-          
+
           invoices.insert(0, {
             'title': title,
             'desc': 'Palm Heights • Apt A4',
@@ -1992,7 +2414,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
             'status': 'Paid',
             'date': date,
             'invNo': 'INV-2026-01${12 + _stats!.recentItems!.indexOf(item)}',
-            'method': _payRentMethod == 'Cash' ? _t('Pesa Taslimu (Cash)', 'Cash Payment') : _t('Benki / M-Pesa', 'Bank Transfer'),
+            'method': _payRentMethod == 'Cash'
+                ? _t('Pesa Taslimu (Cash)', 'Cash Payment')
+                : _t('Benki / M-Pesa', 'Bank Transfer'),
           });
         }
       }
@@ -2030,7 +2454,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       color: const Color(0xFFE6F4EA),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(Icons.receipt_long_rounded, color: Color(0xFF137333), size: 20),
+                    child: const Icon(
+                      Icons.receipt_long_rounded,
+                      color: Color(0xFF137333),
+                      size: 20,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -2039,12 +2467,20 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       children: [
                         Text(
                           inv['title']!,
-                          style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: const Color(0xFF1E293B)),
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xFF1E293B),
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           '${inv['date']} • ${inv['desc']}',
-                          style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+                          style: GoogleFonts.inter(
+                            fontSize: 11,
+                            color: const Color(0xFF64748B),
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
@@ -2054,18 +2490,29 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     children: [
                       Text(
                         inv['amount']!,
-                        style: GoogleFonts.spaceGrotesk(fontSize: 14, fontWeight: FontWeight.bold, color: const Color(0xFF1E293B)),
+                        style: GoogleFonts.spaceGrotesk(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF1E293B),
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFE6F4EA),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           _t('IMELIPWA', 'PAID'),
-                          style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.bold, color: const Color(0xFF137333)),
+                          style: GoogleFonts.inter(
+                            fontSize: 9,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xFF137333),
+                          ),
                         ),
                       ),
                     ],
@@ -2094,7 +2541,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     padding: const EdgeInsets.all(3),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0xFFFE5D37), width: 1.5),
+                      border: Border.all(
+                        color: const Color(0xFFFE5D37),
+                        width: 1.5,
+                      ),
                     ),
                     child: const CircleAvatar(
                       radius: 44,
@@ -2110,7 +2560,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       onTap: () {
                         Helpers.showSnackBar(
                           context,
-                          _t('Tafadhali chagua picha kutoka kwenye maktaba...', 'Please select a photo from your gallery...'),
+                          _t(
+                            'Tafadhali chagua picha kutoka kwenye maktaba...',
+                            'Please select a photo from your gallery...',
+                          ),
                         );
                       },
                       child: Container(
@@ -2152,18 +2605,29 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   ),
                   const SizedBox(width: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 6,
+                      vertical: 2,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFFE6F4EA),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.verified_rounded, color: Color(0xFF137333), size: 10),
+                        const Icon(
+                          Icons.verified_rounded,
+                          color: Color(0xFF137333),
+                          size: 10,
+                        ),
                         const SizedBox(width: 2),
                         Text(
                           _t('Kuthibitishwa', 'Verified'),
-                          style: GoogleFonts.inter(fontSize: 8, fontWeight: FontWeight.w800, color: const Color(0xFF137333)),
+                          style: GoogleFonts.inter(
+                            fontSize: 8,
+                            fontWeight: FontWeight.w800,
+                            color: const Color(0xFF137333),
+                          ),
                         ),
                       ],
                     ),
@@ -2176,18 +2640,26 @@ class _TenantDashboardState extends State<TenantDashboard> {
         const SizedBox(height: 28),
 
         // 2. ACCOUNT & SECURITY SECTION
-        _buildSettingsSectionTitle(_t('AKAUTI NA USALAMA', 'ACCOUNT & SECURITY')),
+        _buildSettingsSectionTitle(
+          _t('AKAUTI NA USALAMA', 'ACCOUNT & SECURITY'),
+        ),
         const SizedBox(height: 8),
         _buildInteractiveSettingTile(
           icon: Icons.lock_outline_rounded,
           title: _t('Badilisha Nenosiri', 'Change Password'),
-          subtitle: _t('Sasisha nenosiri lako la sasa', 'Update your current login password'),
+          subtitle: _t(
+            'Sasisha nenosiri lako la sasa',
+            'Update your current login password',
+          ),
           onTap: () => _showChangePasswordDialog(),
         ),
         _buildInteractiveSettingTile(
           icon: Icons.fingerprint_rounded,
           title: _t('Ulinzi wa Alama ya Kidole', 'Biometric Login'),
-          subtitle: _t('Fungua app kwa alama ya kidole', 'Unlock app with fingerprint/face ID'),
+          subtitle: _t(
+            'Fungua app kwa alama ya kidole',
+            'Unlock app with fingerprint/face ID',
+          ),
           trailing: Switch(
             value: _biometricEnabled,
             activeColor: const Color(0xFFFE5D37),
@@ -2198,8 +2670,12 @@ class _TenantDashboardState extends State<TenantDashboard> {
               Helpers.showSnackBar(
                 context,
                 _t(
-                  _biometricEnabled ? 'Biometrisia imewezeshwa.' : 'Biometrisia imezimwa.',
-                  _biometricEnabled ? 'Biometrics enabled.' : 'Biometrics disabled.'
+                  _biometricEnabled
+                      ? 'Biometrisia imewezeshwa.'
+                      : 'Biometrisia imezimwa.',
+                  _biometricEnabled
+                      ? 'Biometrics enabled.'
+                      : 'Biometrics disabled.',
                 ),
               );
             },
@@ -2211,10 +2687,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
           subtitle: '19950312-XXXXX-XXXXX-XX',
           trailing: Text(
             _t('IMETHIBITISHWA', 'VERIFIED'),
-            style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900, color: const Color(0xFF137333)),
+            style: GoogleFonts.inter(
+              fontSize: 9,
+              fontWeight: FontWeight.w900,
+              color: const Color(0xFF137333),
+            ),
           ),
         ),
-        
+
         const SizedBox(height: 20),
 
         // 3. PAYMENTS & BILLING SECTION
@@ -2223,13 +2703,19 @@ class _TenantDashboardState extends State<TenantDashboard> {
         _buildInteractiveSettingTile(
           icon: Icons.credit_card_rounded,
           title: _t('Kadi za Malipo', 'Payment Methods'),
-          subtitle: _t('Visa, Mastercard au namba za simu', 'Saved cards & mobile money accounts'),
+          subtitle: _t(
+            'Visa, Mastercard au namba za simu',
+            'Saved cards & mobile money accounts',
+          ),
           onTap: () => _showSavedCardsDialog(),
         ),
         _buildInteractiveSettingTile(
           icon: Icons.receipt_rounded,
           title: _t('Risiti za Kodi Kiotomatiki', 'Auto Tax Receipting'),
-          subtitle: _t('Tuma risiti kwenye barua pepe yako', 'Send digital receipts to your email'),
+          subtitle: _t(
+            'Tuma risiti kwenye barua pepe yako',
+            'Send digital receipts to your email',
+          ),
           trailing: Switch(
             value: _autoTaxReceipts,
             activeColor: const Color(0xFFFE5D37),
@@ -2244,7 +2730,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
         const SizedBox(height: 20),
 
         // 4. APP PREFERENCES SECTION
-        _buildSettingsSectionTitle(_t('MAPENDELEO YA PROGRAMU', 'APP PREFERENCES')),
+        _buildSettingsSectionTitle(
+          _t('MAPENDELEO YA PROGRAMU', 'APP PREFERENCES'),
+        ),
         const SizedBox(height: 8),
         _buildInteractiveSettingTile(
           icon: Icons.g_translate_rounded,
@@ -2259,7 +2747,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
               });
               Helpers.showSnackBar(
                 context,
-                _t('Lugha imebadilishwa kuwa Kiswahili', 'Language switched to English'),
+                _t(
+                  'Lugha imebadilishwa kuwa Kiswahili',
+                  'Language switched to English',
+                ),
               );
             },
           ),
@@ -2267,7 +2758,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
         _buildInteractiveSettingTile(
           icon: Icons.dark_mode_outlined,
           title: _t('Hali ya Giza (Dark Mode)', 'Dark Theme'),
-          subtitle: _t('Badilisha mwonekano wa giza', 'Switch screen colors to dark theme'),
+          subtitle: _t(
+            'Badilisha mwonekano wa giza',
+            'Switch screen colors to dark theme',
+          ),
           trailing: Switch(
             value: _isDarkMode,
             activeColor: const Color(0xFFFE5D37),
@@ -2285,7 +2779,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
         _buildInteractiveSettingTile(
           icon: Icons.notifications_active_outlined,
           title: _t('Arifa za Kusukuma (Push)', 'Push Notifications'),
-          subtitle: _t('Pokea arifa za kodi na matengenezo', 'Receive alerts for rent due & repairs'),
+          subtitle: _t(
+            'Pokea arifa za kodi na matengenezo',
+            'Receive alerts for rent due & repairs',
+          ),
           trailing: Switch(
             value: _pushNotificationsEnabled,
             activeColor: const Color(0xFFFE5D37),
@@ -2305,15 +2802,24 @@ class _TenantDashboardState extends State<TenantDashboard> {
         _buildInteractiveSettingTile(
           icon: Icons.gavel_rounded,
           title: _t('Vigezo na Masharti', 'Terms of Service'),
-          subtitle: _t('Soma vigezo vya matumizi ya app', 'Read our terms of usage'),
+          subtitle: _t(
+            'Soma vigezo vya matumizi ya app',
+            'Read our terms of usage',
+          ),
           onTap: () {
-            Helpers.showSnackBar(context, _t('Inapakia vigezo...', 'Loading terms...'));
+            Helpers.showSnackBar(
+              context,
+              _t('Inapakia vigezo...', 'Loading terms...'),
+            );
           },
         ),
         _buildInteractiveSettingTile(
           icon: Icons.info_outline_rounded,
           title: _t('Kuhusu Programu', 'About Manna'),
-          subtitle: _t('Manna App v2.1.0 • Made with Love', 'Manna App v2.1.0 • Made with Love'),
+          subtitle: _t(
+            'Manna App v2.1.0 • Made with Love',
+            'Manna App v2.1.0 • Made with Love',
+          ),
         ),
 
         const SizedBox(height: 28),
@@ -2329,18 +2835,29 @@ class _TenantDashboardState extends State<TenantDashboard> {
               final confirm = await Helpers.showConfirmationDialog(
                 context,
                 title: _t('Kutoka Kwenye App', 'Logout'),
-                message: _t('Je, una uhakika unataka kutoka kwenye akaunti yako?', 'Are you sure you want to log out of your account?'),
+                message: _t(
+                  'Je, una uhakika unataka kutoka kwenye akaunti yako?',
+                  'Are you sure you want to log out of your account?',
+                ),
                 confirmText: _t('Kutoka', 'Logout'),
                 cancelText: _t('Baki hapa', 'Cancel'),
               );
               if (confirm) {
                 await _authService.logout();
                 if (mounted) {
-                  Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/login',
+                    (route) => false,
+                  );
                 }
               }
             },
-            leading: const Icon(Icons.logout_rounded, color: Color(0xFFEF4444), size: 20),
+            leading: const Icon(
+              Icons.logout_rounded,
+              color: Color(0xFFEF4444),
+              size: 20,
+            ),
             title: Text(
               _t('Kutoka Kwenye Akaunti', 'Logout Account'),
               style: GoogleFonts.inter(
@@ -2349,7 +2866,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 color: const Color(0xFFEF4444),
               ),
             ),
-            trailing: const Icon(Icons.chevron_right_rounded, color: Color(0xFFEF4444)),
+            trailing: const Icon(
+              Icons.chevron_right_rounded,
+              color: Color(0xFFEF4444),
+            ),
           ),
         ),
       ],
@@ -2411,7 +2931,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
             color: const Color(0xFF64748B),
           ),
         ),
-        trailing: trailing ?? (onTap != null ? const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)) : null),
+        trailing:
+            trailing ??
+            (onTap != null
+                ? const Icon(
+                    Icons.chevron_right_rounded,
+                    color: Color(0xFF94A3B8),
+                  )
+                : null),
       ),
     );
   }
@@ -2421,8 +2948,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          title: Text(_t('Badilisha Nenosiri', 'Change Password'), style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: Text(
+            _t('Badilisha Nenosiri', 'Change Password'),
+            style: GoogleFonts.inter(fontWeight: FontWeight.bold),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -2448,18 +2980,36 @@ class _TenantDashboardState extends State<TenantDashboard> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(_t('Ghairi', 'Cancel'), style: GoogleFonts.inter(color: Colors.grey, fontWeight: FontWeight.bold)),
+              child: Text(
+                _t('Ghairi', 'Cancel'),
+                style: GoogleFonts.inter(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-                Helpers.showSnackBar(context, _t('Nenosiri limesasishwa kikamilifu!', 'Password updated successfully!'));
+                Helpers.showSnackBar(
+                  context,
+                  _t(
+                    'Nenosiri limesasishwa kikamilifu!',
+                    'Password updated successfully!',
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFFE5D37),
                 elevation: 0,
               ),
-              child: Text(_t('Hifadhi', 'Save'), style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold)),
+              child: Text(
+                _t('Hifadhi', 'Save'),
+                style: GoogleFonts.inter(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         );
@@ -2472,29 +3022,65 @@ class _TenantDashboardState extends State<TenantDashboard> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          title: Text(_t('Njia Zilizohifadhiwa', 'Saved Payment Methods'), style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: Text(
+            _t('Njia Zilizohifadhiwa', 'Saved Payment Methods'),
+            style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(Icons.credit_card, color: Color(0xFFFE5D37)),
-                title: const Text('Visa Card', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-                subtitle: const Text('**** **** **** 4242', style: TextStyle(fontSize: 11)),
-                trailing: Text(_t('Kuu', 'Primary'), style: const TextStyle(color: Color(0xFF137333), fontSize: 9, fontWeight: FontWeight.bold)),
+                leading: const Icon(
+                  Icons.credit_card,
+                  color: Color(0xFFFE5D37),
+                ),
+                title: const Text(
+                  'Visa Card',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                ),
+                subtitle: const Text(
+                  '**** **** **** 4242',
+                  style: TextStyle(fontSize: 11),
+                ),
+                trailing: Text(
+                  _t('Kuu', 'Primary'),
+                  style: const TextStyle(
+                    color: Color(0xFF137333),
+                    fontSize: 9,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               const Divider(),
               ListTile(
-                leading: const Icon(Icons.phone_android_rounded, color: Color(0xFF10B981)),
-                title: const Text('M-Pesa / Vodacom', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
-                subtitle: const Text('+255 754 *** 321', style: TextStyle(fontSize: 11)),
+                leading: const Icon(
+                  Icons.phone_android_rounded,
+                  color: Color(0xFF10B981),
+                ),
+                title: const Text(
+                  'M-Pesa / Vodacom',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                ),
+                subtitle: const Text(
+                  '+255 754 *** 321',
+                  style: TextStyle(fontSize: 11),
+                ),
               ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(_t('Funga', 'Close'), style: GoogleFonts.inter(color: const Color(0xFFFE5D37), fontWeight: FontWeight.bold)),
+              child: Text(
+                _t('Funga', 'Close'),
+                style: GoogleFonts.inter(
+                  color: const Color(0xFFFE5D37),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         );
@@ -2531,29 +3117,56 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 const SizedBox(height: 16),
                 Text(
                   _t('Taarifa Binafsi', 'My Personal Info'),
-                  style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: const Color(0xFF1E293B),
+                  ),
                 ),
                 const SizedBox(height: 20),
-                
+
                 // Section 1: My Details
                 _buildInfoSectionHeader(_t('TAARIFA ZANGU', 'MY DETAILS')),
                 const SizedBox(height: 8),
                 _buildInfoRow(_t('Jina Kamili', 'Full Name'), user.name),
                 _buildInfoRow(_t('Barua Pepe', 'Email Address'), user.email),
-                _buildInfoRow(_t('Namba ya Simu', 'Phone Number'), user.phone.isNotEmpty ? user.phone : '+255 712 345 678'),
-                _buildInfoRow(_t('Namba ya NIDA', 'National ID (NIDA)'), '19950312-XXXXX-XXXXX-XX'),
-                _buildInfoRow(_t('Mwanzo wa Pango', 'Tenant Since'), '01 Jan 2025'),
-                
+                _buildInfoRow(
+                  _t('Namba ya Simu', 'Phone Number'),
+                  user.phone.isNotEmpty ? user.phone : '+255 712 345 678',
+                ),
+                _buildInfoRow(
+                  _t('Namba ya NIDA', 'National ID (NIDA)'),
+                  '19950312-XXXXX-XXXXX-XX',
+                ),
+                _buildInfoRow(
+                  _t('Mwanzo wa Pango', 'Tenant Since'),
+                  '01 Jan 2025',
+                ),
+
                 const SizedBox(height: 24),
-                
+
                 // Section 2: Landlord Details
-                _buildInfoSectionHeader(_t('TAARIFA ZA MWENYE NYUMBA', 'LANDLORD DETAILS')),
+                _buildInfoSectionHeader(
+                  _t('TAARIFA ZA MWENYE NYUMBA', 'LANDLORD DETAILS'),
+                ),
                 const SizedBox(height: 8),
-                _buildInfoRow(_t('Jina la Landlord', 'Landlord Name'), 'Mama Ken'),
-                _buildInfoRow(_t('Namba ya Simu', 'Phone Number'), '+255 765 432 109'),
-                _buildInfoRow(_t('Nyumba / Ghorofa', 'Apartment Unit'), 'Palm Heights - Apt A4'),
-                _buildInfoRow(_t('Eneo', 'Location'), 'Mikochem, Dar es Salaam'),
-                
+                _buildInfoRow(
+                  _t('Jina la Landlord', 'Landlord Name'),
+                  'Mama Ken',
+                ),
+                _buildInfoRow(
+                  _t('Namba ya Simu', 'Phone Number'),
+                  '+255 765 432 109',
+                ),
+                _buildInfoRow(
+                  _t('Nyumba / Ghorofa', 'Apartment Unit'),
+                  'Palm Heights - Apt A4',
+                ),
+                _buildInfoRow(
+                  _t('Eneo', 'Location'),
+                  'Mikochem, Dar es Salaam',
+                ),
+
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
@@ -2561,10 +3174,15 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     backgroundColor: const Color(0xFFFE5D37),
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 48),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     elevation: 0,
                   ),
-                  child: Text(_t('Funga', 'Close'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                  child: Text(
+                    _t('Funga', 'Close'),
+                    style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                  ),
                 ),
               ],
             ),
@@ -2603,16 +3221,29 @@ class _TenantDashboardState extends State<TenantDashboard> {
               const SizedBox(height: 16),
               Text(
                 _t('Mkataba Wangu', 'My Lease Contract'),
-                style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: const Color(0xFF1E293B),
+                ),
               ),
               const SizedBox(height: 20),
-              
-              _buildInfoRow(_t('Namba ya Mkataba', 'Contract ID'), 'MNA-2025-A4'),
-              _buildInfoRow(_t('Muda wa Mkataba', 'Lease Period'), '12 ' + _t('Miezi', 'Months') + ' (01 Jan 2025 - 31 Dec 2026)'),
+
+              _buildInfoRow(
+                _t('Namba ya Mkataba', 'Contract ID'),
+                'MNA-2025-A4',
+              ),
+              _buildInfoRow(
+                _t('Muda wa Mkataba', 'Lease Period'),
+                '12 ' + _t('Miezi', 'Months') + ' (01 Jan 2025 - 31 Dec 2026)',
+              ),
               _buildInfoRow(_t('Kodi ya Mwezi', 'Monthly Rent'), 'TSh 450,000'),
-              _buildInfoRow(_t('Dhamana ya Nyumba', 'Security Deposit'), 'TSh 900,000'),
+              _buildInfoRow(
+                _t('Dhamana ya Nyumba', 'Security Deposit'),
+                'TSh 900,000',
+              ),
               _buildInfoRow(_t('Hali ya Mkataba', 'Contract Status'), 'ACTIVE'),
-              
+
               const SizedBox(height: 24),
               Row(
                 children: [
@@ -2628,7 +3259,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         foregroundColor: const Color(0xFFFE5D37),
                         side: const BorderSide(color: Color(0xFFFE5D37)),
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
                     ),
                   ),
@@ -2645,7 +3278,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         backgroundColor: const Color(0xFFFE5D37),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                         elevation: 0,
                       ),
                     ),
@@ -2664,10 +3299,8 @@ class _TenantDashboardState extends State<TenantDashboard> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => FullscreenPdfViewerPage(
-          isEnglish: _isEnglish,
-          user: user,
-        ),
+        builder: (context) =>
+            FullscreenPdfViewerPage(isEnglish: _isEnglish, user: user),
       ),
     );
   }
@@ -2681,19 +3314,30 @@ class _TenantDashboardState extends State<TenantDashboard> {
           Navigator.pop(context);
           Helpers.showSnackBar(
             context,
-            _t('Mkataba umepakuliwa kikamilifu: MNA-2025-A4.pdf', 'Contract downloaded successfully: MNA-2025-A4.pdf'),
+            _t(
+              'Mkataba umepakuliwa kikamilifu: MNA-2025-A4.pdf',
+              'Contract downloaded successfully: MNA-2025-A4.pdf',
+            ),
           );
         });
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           content: Row(
             children: [
               const CircularProgressIndicator(color: Color(0xFFFE5D37)),
               const SizedBox(width: 20),
               Expanded(
                 child: Text(
-                  _t('Inapakua mkataba kama PDF...', 'Downloading contract as PDF...'),
-                  style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600),
+                  _t(
+                    'Inapakua mkataba kama PDF...',
+                    'Downloading contract as PDF...',
+                  ),
+                  style: GoogleFonts.inter(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],
@@ -2732,39 +3376,101 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 const SizedBox(height: 16),
                 Text(
                   _t('Msaada na Maswali', 'Help & Support FAQs'),
-                  style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                    color: const Color(0xFF1E293B),
+                  ),
                 ),
                 const SizedBox(height: 20),
-                
+
                 // FAQs
-                _buildInfoSectionHeader(_t('MASWALI YA MARA KWA MARA', 'FREQUENTLY ASKED QUESTIONS')),
+                _buildInfoSectionHeader(
+                  _t('MASWALI YA MARA KWA MARA', 'FREQUENTLY ASKED QUESTIONS'),
+                ),
                 const SizedBox(height: 10),
-                _buildFaqItem(_t('Nalipaje kodi ya mwezi?', 'How do I pay monthly rent?'), _t('Bonyeza kitufe cha "Lipa Kodi" kwenye skrini kuu ili kufanya malipo ya kodi kupitia mitandao ya simu au benki.', 'Tap the "Lipa Kodi" button on the home screen to pay your rent via mobile money or bank transfer.')),
-                _buildFaqItem(_t('Nikitaka mafundi inakuwaje?', 'How do I request repairs?'), _t('Tuma ombi kupitia kitufe cha "Omba Fundi" au nenda kwenye huduma zaidi kupata fundi husika wa maji, umeme nk.', 'Send a request via the "Omba Fundi" button or go to More Services to request a specific plumber, electrician, etc.')),
-                _buildFaqItem(_t('Nitapakua wapi risiti yangu?', 'Where can I download my receipt?'), _t('Nenda kwenye ukurasa wa "Malipo" kupata list ya risiti zako zote na kuzipakua kama PDF.', 'Go to the "Payments" tab to see all your invoices and download them as PDF.')),
-                
+                _buildFaqItem(
+                  _t('Nalipaje kodi ya mwezi?', 'How do I pay monthly rent?'),
+                  _t(
+                    'Bonyeza kitufe cha "Lipa Kodi" kwenye skrini kuu ili kufanya malipo ya kodi kupitia mitandao ya simu au benki.',
+                    'Tap the "Lipa Kodi" button on the home screen to pay your rent via mobile money or bank transfer.',
+                  ),
+                ),
+                _buildFaqItem(
+                  _t(
+                    'Nikitaka mafundi inakuwaje?',
+                    'How do I request repairs?',
+                  ),
+                  _t(
+                    'Tuma ombi kupitia kitufe cha "Omba Fundi" au nenda kwenye huduma zaidi kupata fundi husika wa maji, umeme nk.',
+                    'Send a request via the "Omba Fundi" button or go to More Services to request a specific plumber, electrician, etc.',
+                  ),
+                ),
+                _buildFaqItem(
+                  _t(
+                    'Nitapakua wapi risiti yangu?',
+                    'Where can I download my receipt?',
+                  ),
+                  _t(
+                    'Nenda kwenye ukurasa wa "Malipo" kupata list ya risiti zako zote na kuzipakua kama PDF.',
+                    'Go to the "Payments" tab to see all your invoices and download them as PDF.',
+                  ),
+                ),
+
                 const SizedBox(height: 24),
-                
+
                 // Emergency Actions
-                _buildInfoSectionHeader(_t('MAWASILIANO YA DHARURA', 'EMERGENCY CONTACTS')),
+                _buildInfoSectionHeader(
+                  _t('MAWASILIANO YA DHARURA', 'EMERGENCY CONTACTS'),
+                ),
                 const SizedBox(height: 10),
                 ListTile(
                   onTap: () {
-                    Helpers.showSnackBar(context, _t('Inapiga simu kwa Mwenye Nyumba: +255 765 432 109', 'Calling Landlord: +255 765 432 109'));
+                    Helpers.showSnackBar(
+                      context,
+                      _t(
+                        'Inapiga simu kwa Mwenye Nyumba: +255 765 432 109',
+                        'Calling Landlord: +255 765 432 109',
+                      ),
+                    );
                   },
-                  leading: const Icon(Icons.phone_in_talk_rounded, color: Color(0xFF10B981)),
-                  title: Text(_t('Piga simu kwa Landlord', 'Call Landlord'), style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.bold)),
+                  leading: const Icon(
+                    Icons.phone_in_talk_rounded,
+                    color: Color(0xFF10B981),
+                  ),
+                  title: Text(
+                    _t('Piga simu kwa Landlord', 'Call Landlord'),
+                    style: GoogleFonts.inter(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   trailing: const Icon(Icons.chevron_right_rounded),
                 ),
                 ListTile(
                   onTap: () {
-                    Helpers.showSnackBar(context, _t('Inafungua soga ya WhatsApp na Wakala...', 'Opening WhatsApp chat with Agent...'));
+                    Helpers.showSnackBar(
+                      context,
+                      _t(
+                        'Inafungua soga ya WhatsApp na Wakala...',
+                        'Opening WhatsApp chat with Agent...',
+                      ),
+                    );
                   },
-                  leading: const Icon(Icons.chat_bubble_outline_rounded, color: Color(0xFF3B82F6)),
-                  title: Text(_t('Tuma ujumbe kwa Wakala', 'Chat with Agent'), style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.bold)),
+                  leading: const Icon(
+                    Icons.chat_bubble_outline_rounded,
+                    color: Color(0xFF3B82F6),
+                  ),
+                  title: Text(
+                    _t('Tuma ujumbe kwa Wakala', 'Chat with Agent'),
+                    style: GoogleFonts.inter(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   trailing: const Icon(Icons.chevron_right_rounded),
                 ),
-                
+
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
@@ -2772,10 +3478,15 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     backgroundColor: const Color(0xFFFE5D37),
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 48),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     elevation: 0,
                   ),
-                  child: Text(_t('Funga', 'Close'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                  child: Text(
+                    _t('Funga', 'Close'),
+                    style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                  ),
                 ),
               ],
             ),
@@ -2788,7 +3499,12 @@ class _TenantDashboardState extends State<TenantDashboard> {
   Widget _buildInfoSectionHeader(String title) {
     return Text(
       title,
-      style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w900, color: const Color(0xFF94A3B8), letterSpacing: 1),
+      style: GoogleFonts.inter(
+        fontSize: 11,
+        fontWeight: FontWeight.w900,
+        color: const Color(0xFF94A3B8),
+        letterSpacing: 1,
+      ),
     );
   }
 
@@ -2798,8 +3514,22 @@ class _TenantDashboardState extends State<TenantDashboard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w600)),
-          Text(value, style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF1E293B), fontWeight: FontWeight.w800)),
+          Text(
+            label,
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              color: const Color(0xFF64748B),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Text(
+            value,
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              color: const Color(0xFF1E293B),
+              fontWeight: FontWeight.w800,
+            ),
+          ),
         ],
       ),
     );
@@ -2817,9 +3547,24 @@ class _TenantDashboardState extends State<TenantDashboard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(question, style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFF1E293B))),
+          Text(
+            question,
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xFF1E293B),
+            ),
+          ),
           const SizedBox(height: 6),
-          Text(answer, style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), height: 1.4, fontWeight: FontWeight.w500)),
+          Text(
+            answer,
+            style: GoogleFonts.inter(
+              fontSize: 11,
+              color: const Color(0xFF64748B),
+              height: 1.4,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ],
       ),
     );
@@ -2857,7 +3602,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   ),
                   // Header
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 8,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -2895,7 +3643,8 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           icon: Icons.plumbing_rounded,
                           color: const Color(0xff3b82f6),
                           title: 'Omba Mafundi (Maintenance Request)',
-                          subtitle: 'Fungua tiketi ya kurekebisha maji, umeme, nk.',
+                          subtitle:
+                              'Fungua tiketi ya kurekebisha maji, umeme, nk.',
                         ),
                         _buildPanelItem(
                           context,
@@ -2916,12 +3665,15 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           icon: Icons.discount_rounded,
                           color: const Color(0xfff59e0b),
                           title: 'Omba Punguzo la Kodi',
-                          subtitle: 'Tuma ombi la majadiliano ya bei na Landlord',
+                          subtitle:
+                              'Tuma ombi la majadiliano ya bei na Landlord',
                         ),
                         const SizedBox(height: 24),
-                        
+
                         // Section 2: Kuangalia (Views)
-                        _buildPanelSectionHeader('TAARIFA NA NYARAKA (VIEW INFO)'),
+                        _buildPanelSectionHeader(
+                          'TAARIFA NA NYARAKA (VIEW INFO)',
+                        ),
                         const SizedBox(height: 12),
                         _buildPanelItem(
                           context,
@@ -2942,7 +3694,8 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           icon: Icons.contact_emergency_rounded,
                           color: const Color(0xffec4899),
                           title: 'Namba za Dharura',
-                          subtitle: 'Namba za ulinzi, zima moto, dharura za daktari',
+                          subtitle:
+                              'Namba za ulinzi, zima moto, dharura za daktari',
                         ),
                       ],
                     ),
@@ -2985,7 +3738,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
       child: ListTile(
         onTap: () {
           Navigator.pop(context);
-          Helpers.showSnackBar(context, 'Ombi la "$title" limeshirikishwa kikamilifu!');
+          Helpers.showSnackBar(
+            context,
+            'Ombi la "$title" limeshirikishwa kikamilifu!',
+          );
         },
         leading: Container(
           padding: const EdgeInsets.all(10),
@@ -3014,7 +3770,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
             ),
           ),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios_rounded, color: Color(0xffcbd5e1), size: 12),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_rounded,
+          color: Color(0xffcbd5e1),
+          size: 12,
+        ),
       ),
     );
   }
@@ -3024,7 +3784,11 @@ class FullscreenPdfViewerPage extends StatelessWidget {
   final bool isEnglish;
   final UserModel user;
 
-  const FullscreenPdfViewerPage({Key? key, required this.isEnglish, required this.user}) : super(key: key);
+  const FullscreenPdfViewerPage({
+    Key? key,
+    required this.isEnglish,
+    required this.user,
+  }) : super(key: key);
 
   String _t(String sw, String en) {
     return isEnglish ? en : sw;
@@ -3033,7 +3797,9 @@ class FullscreenPdfViewerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF525659), // Realistic dark grey PDF viewer background
+      backgroundColor: const Color(
+        0xFF525659,
+      ), // Realistic dark grey PDF viewer background
       appBar: AppBar(
         backgroundColor: const Color(0xFF323639), // Dark chrome bar
         foregroundColor: Colors.white,
@@ -3043,12 +3809,22 @@ class FullscreenPdfViewerPage extends StatelessWidget {
           children: [
             Text(
               'mkataba_pango_MNA4.pdf',
-              style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 2),
             Text(
-              _t('Uhakiki wa Mkataba • Kurasa 1 ya 1', 'Contract Preview • Page 1 of 1'),
-              style: GoogleFonts.inter(fontSize: 10, color: const Color(0xFFCBD5E1)),
+              _t(
+                'Uhakiki wa Mkataba • Kurasa 1 ya 1',
+                'Contract Preview • Page 1 of 1',
+              ),
+              style: GoogleFonts.inter(
+                fontSize: 10,
+                color: const Color(0xFFCBD5E1),
+              ),
             ),
           ],
         ),
@@ -3069,12 +3845,18 @@ class FullscreenPdfViewerPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
           child: Center(
             child: AspectRatio(
-              aspectRatio: 0.707, // Standard A4 Aspect Ratio (highly realistic!)
+              aspectRatio:
+                  0.707, // Standard A4 Aspect Ratio (highly realistic!)
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 32,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(4), // Realistic paper sharp corners
+                  borderRadius: BorderRadius.circular(
+                    4,
+                  ), // Realistic paper sharp corners
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.3),
@@ -3103,8 +3885,15 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              _t('Mikocheni, Dar es Salaam, Tanzania', 'Mikocheni, Dar es Salaam, Tanzania'),
-                              style: GoogleFonts.inter(fontSize: 8, fontWeight: FontWeight.w500, color: Colors.grey[500]),
+                              _t(
+                                'Mikocheni, Dar es Salaam, Tanzania',
+                                'Mikocheni, Dar es Salaam, Tanzania',
+                              ),
+                              style: GoogleFonts.inter(
+                                fontSize: 8,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey[500],
+                              ),
                             ),
                           ],
                         ),
@@ -3113,20 +3902,30 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: const Color(0xFFFE5D37).withOpacity(0.25), width: 1.5),
+                            border: Border.all(
+                              color: const Color(0xFFFE5D37).withOpacity(0.25),
+                              width: 1.5,
+                            ),
                           ),
-                          child: const Icon(Icons.verified_user_rounded, color: Color(0xFFFE5D37), size: 18),
+                          child: const Icon(
+                            Icons.verified_user_rounded,
+                            color: Color(0xFFFE5D37),
+                            size: 18,
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 14),
                     const Divider(color: Colors.black87, thickness: 1.2),
                     const SizedBox(height: 14),
-                    
+
                     // Main Title
                     Center(
                       child: Text(
-                        _t('MKATABA WA KUKODISHA NYUMBA YA MAKAZI', 'RESIDENTIAL LEASE AGREEMENT'),
+                        _t(
+                          'MKATABA WA KUKODISHA NYUMBA YA MAKAZI',
+                          'RESIDENTIAL LEASE AGREEMENT',
+                        ),
                         style: GoogleFonts.inter(
                           fontSize: 12,
                           fontWeight: FontWeight.w900,
@@ -3137,37 +3936,67 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    
+
                     // Section 1: Parties Involved
-                    _buildDocSectionHeader(_t('1. PANDE HUSIKA (PARTIES)', '1. CONTRACT PARTIES')),
+                    _buildDocSectionHeader(
+                      _t('1. PANDE HUSIKA (PARTIES)', '1. CONTRACT PARTIES'),
+                    ),
                     const SizedBox(height: 6),
                     _buildDocParagraph(
                       _t(
                         'Mkataba huu umeingia leo tarehe 01 Jan 2025 kati ya Mwenye Nyumba: MAMA KEN (Miliki) na Mpangaji: ${user.name.toUpperCase()} (Mteja).',
-                        'This Lease Agreement is made on 01 Jan 2025 between Landlord: MAMA KEN (Owner) and Tenant: ${user.name.toUpperCase()} (Client).'
+                        'This Lease Agreement is made on 01 Jan 2025 between Landlord: MAMA KEN (Owner) and Tenant: ${user.name.toUpperCase()} (Client).',
                       ),
                     ),
                     const SizedBox(height: 14),
-                    
+
                     // Section 2: Property Description
-                    _buildDocSectionHeader(_t('2. NYUMBA NA KODI (PROPERTY & RENT)', '2. PROPERTY & RENT DETAILS')),
+                    _buildDocSectionHeader(
+                      _t(
+                        '2. NYUMBA NA KODI (PROPERTY & RENT)',
+                        '2. PROPERTY & RENT DETAILS',
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     _buildDocParagraph(
                       _t(
                         'Mpangaji amekodishiwa nyumba ya makazi (Palm Heights - Apt A4) iliyopo Mikocheni, kwa kodi ya TSh 450,000 kwa mwezi inayolipwa kila tarehe 5 ya kila mwezi.',
-                        'The Landlord leases to the Tenant residential unit (Palm Heights - Apt A4) situated in Mikocheni, for a monthly rent of TSh 450,000 payable on the 5th of each month.'
+                        'The Landlord leases to the Tenant residential unit (Palm Heights - Apt A4) situated in Mikocheni, for a monthly rent of TSh 450,000 payable on the 5th of each month.',
                       ),
                     ),
                     const SizedBox(height: 14),
-                    
+
                     // Section 3: Terms and conditions table
-                    _buildDocSectionHeader(_t('3. MASHARTI MAALUM (TERMS & CONDITIONS)', '3. TERMS & CONDITIONS')),
+                    _buildDocSectionHeader(
+                      _t(
+                        '3. MASHARTI MAALUM (TERMS & CONDITIONS)',
+                        '3. TERMS & CONDITIONS',
+                      ),
+                    ),
                     const SizedBox(height: 6),
-                    _buildDocTermRow('1.', _t('Kodi ilipwe kwa wakati kila mwezi.', 'Rent must be paid strictly on time.')),
-                    _buildDocTermRow('2.', _t('Hakuna ruhusa ya kufuga wanyama yoyote.', 'No pets are allowed inside the premises.')),
-                    _buildDocTermRow('3.', _t('Mteja atalipia bili ya umeme na maji ya matumizi yake.', 'Tenant is fully responsible for electricity & water utility bills.')),
+                    _buildDocTermRow(
+                      '1.',
+                      _t(
+                        'Kodi ilipwe kwa wakati kila mwezi.',
+                        'Rent must be paid strictly on time.',
+                      ),
+                    ),
+                    _buildDocTermRow(
+                      '2.',
+                      _t(
+                        'Hakuna ruhusa ya kufuga wanyama yoyote.',
+                        'No pets are allowed inside the premises.',
+                      ),
+                    ),
+                    _buildDocTermRow(
+                      '3.',
+                      _t(
+                        'Mteja atalipia bili ya umeme na maji ya matumizi yake.',
+                        'Tenant is fully responsible for electricity & water utility bills.',
+                      ),
+                    ),
                     const Spacer(),
-                    
+
                     // Signatures & Official Stamp
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -3176,28 +4005,56 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _t('Sahihi ya Mwenye Nyumba:', 'Landlord Signature:'),
-                              style: GoogleFonts.inter(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                              _t(
+                                'Sahihi ya Mwenye Nyumba:',
+                                'Landlord Signature:',
+                              ),
+                              style: GoogleFonts.inter(
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[700],
+                              ),
                             ),
                             const SizedBox(height: 12),
                             // Simulated handwriting signature
                             Text(
                               'Mama Ken',
-                              style: GoogleFonts.dancingScript(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue[900]),
+                              style: GoogleFonts.dancingScript(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[900],
+                              ),
                             ),
-                            Container(width: 80, height: 1, color: Colors.black45),
+                            Container(
+                              width: 80,
+                              height: 1,
+                              color: Colors.black45,
+                            ),
                           ],
                         ),
                         // Official Stamp Seal image representation
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 6,
+                          ),
                           decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xFFFE5D37).withOpacity(0.6), width: 1.5),
+                            border: Border.all(
+                              color: const Color(0xFFFE5D37).withOpacity(0.6),
+                              width: 1.5,
+                            ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            _t('IMETHIBITISHWA\nMANNA ESTATE', 'APPROVED\nMANNA ESTATE'),
-                            style: GoogleFonts.inter(fontSize: 7, fontWeight: FontWeight.w900, color: const Color(0xFFFE5D37)),
+                            _t(
+                              'IMETHIBITISHWA\nMANNA ESTATE',
+                              'APPROVED\nMANNA ESTATE',
+                            ),
+                            style: GoogleFonts.inter(
+                              fontSize: 7,
+                              fontWeight: FontWeight.w900,
+                              color: const Color(0xFFFE5D37),
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -3206,14 +4063,26 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                           children: [
                             Text(
                               _t('Sahihi ya Mpangaji:', 'Tenant Signature:'),
-                              style: GoogleFonts.inter(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                              style: GoogleFonts.inter(
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[700],
+                              ),
                             ),
                             const SizedBox(height: 12),
                             Text(
                               user.name.split(' ').first,
-                              style: GoogleFonts.dancingScript(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue[900]),
+                              style: GoogleFonts.dancingScript(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue[900],
+                              ),
                             ),
-                            Container(width: 80, height: 1, color: Colors.black45),
+                            Container(
+                              width: 80,
+                              height: 1,
+                              color: Colors.black45,
+                            ),
                           ],
                         ),
                       ],
@@ -3231,14 +4100,24 @@ class FullscreenPdfViewerPage extends StatelessWidget {
   Widget _buildDocSectionHeader(String title) {
     return Text(
       title,
-      style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900, color: Colors.black87, letterSpacing: 0.5),
+      style: GoogleFonts.inter(
+        fontSize: 9,
+        fontWeight: FontWeight.w900,
+        color: Colors.black87,
+        letterSpacing: 0.5,
+      ),
     );
   }
 
   Widget _buildDocParagraph(String text) {
     return Text(
       text,
-      style: GoogleFonts.inter(fontSize: 8.5, color: Colors.black54, height: 1.4, fontWeight: FontWeight.w500),
+      style: GoogleFonts.inter(
+        fontSize: 8.5,
+        color: Colors.black54,
+        height: 1.4,
+        fontWeight: FontWeight.w500,
+      ),
       textAlign: TextAlign.justify,
     );
   }
@@ -3249,12 +4128,24 @@ class FullscreenPdfViewerPage extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('$index ', style: GoogleFonts.inter(fontSize: 8.5, fontWeight: FontWeight.bold, color: Colors.black87)),
+          Text(
+            '$index ',
+            style: GoogleFonts.inter(
+              fontSize: 8.5,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
           const SizedBox(width: 4),
           Expanded(
             child: Text(
               term,
-              style: GoogleFonts.inter(fontSize: 8.5, color: Colors.black54, height: 1.3, fontWeight: FontWeight.w500),
+              style: GoogleFonts.inter(
+                fontSize: 8.5,
+                color: Colors.black54,
+                height: 1.3,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],
