@@ -94,11 +94,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
   String _getGreeting() {
     final hour = DateTime.now().hour;
     if (hour < 12) {
-      return 'Good Morning,';
+      return _t('Habari za Asubuhi,', 'Good Morning,');
     } else if (hour < 17) {
-      return 'Good Afternoon,';
+      return _t('Habari za Mchana,', 'Good Afternoon,');
     } else {
-      return 'Good Evening,';
+      return _t('Habari za Jioni,', 'Good Evening,');
     }
   }
 
@@ -194,7 +194,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             children: [
               IconButton(
                 onPressed: () {
-                  Helpers.showSnackBar(context, 'Arifa (Notifications) zitafunguka hapa!');
+                  Helpers.showSnackBar(context, _t('Arifa zitafunguka hapa!', 'Notifications will open here!'));
                 },
                 icon: const Icon(Icons.notifications_none_rounded, color: Color(0xFF1E293B), size: 26),
                 style: IconButton.styleFrom(
@@ -236,7 +236,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Kodi ya Mwezi Huu (Monthly Rent)',
+            _t('Kodi ya Mwezi Huu', 'Monthly Rent'),
             style: GoogleFonts.inter(
               fontSize: 13,
               color: const Color(0xFF64748B),
@@ -306,11 +306,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
           Expanded(
             child: ElevatedButton.icon(
               onPressed: () {
-                Helpers.showSnackBar(context, 'Fungua tiketi ya mafundi...');
+                Helpers.showSnackBar(context, _t('Fungua tiketi ya mafundi...', 'Opening maintenance ticket...'));
               },
               icon: const Icon(Icons.build_rounded, size: 18),
               label: Text(
-                'Omba Fundi',
+                _t('Omba Fundi', 'Request Fix'),
                 style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 14),
               ),
               style: ElevatedButton.styleFrom(
@@ -350,32 +350,32 @@ class _TenantDashboardState extends State<TenantDashboard> {
   Widget _buildQuickServicesSection(BuildContext context) {
     final services = [
       {
-        'name': 'Umeme',
-        'desc': 'Lipa Token',
+        'name': _t('Umeme', 'Electricity'),
+        'desc': _t('Lipa Token', 'Pay Token'),
         'icon': Icons.bolt_rounded,
         'color': const Color(0xFFF59E0B),
       },
       {
-        'name': 'Maji',
-        'desc': 'Bili ya Maji',
+        'name': _t('Maji', 'Water'),
+        'desc': _t('Bili ya Maji', 'Water Bill'),
         'icon': Icons.water_drop_rounded,
         'color': const Color(0xFF3B82F6),
       },
       {
-        'name': 'Usafi',
-        'desc': 'Garbage',
+        'name': _t('Usafi', 'Garbage'),
+        'desc': _t('Bili ya Usafi', 'Garbage Bill'),
         'icon': Icons.delete_outline_rounded,
         'color': const Color(0xFF10B981),
       },
       {
-        'name': 'Ulinzi',
-        'desc': 'Ulinzi Gate',
+        'name': _t('Ulinzi', 'Security'),
+        'desc': _t('Lipa Ulinzi', 'Security Gate'),
         'icon': Icons.shield_outlined,
         'color': const Color(0xFFEF4444),
       },
       {
-        'name': 'Stakabadhi',
-        'desc': 'Risiti Zote',
+        'name': _t('Stakabadhi', 'Receipts'),
+        'desc': _t('Risiti Zote', 'All Receipts'),
         'icon': Icons.receipt_long_rounded,
         'color': const Color(0xFF6366F1),
       },
@@ -390,7 +390,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Huduma za Haraka (Tenant Services)',
+                _t('Huduma za Haraka', 'Quick Services'),
                 style: GoogleFonts.inter(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
@@ -398,7 +398,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 ),
               ),
               Text(
-                'Angalia Zote',
+                _t('Angalia Zote', 'View All'),
                 style: GoogleFonts.inter(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
@@ -425,7 +425,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 margin: const EdgeInsets.only(right: 12),
                 child: InkWell(
                   onTap: () {
-                    Helpers.showSnackBar(context, 'Malipo ya huduma ya ${item['name']} yanashughulikiwa...');
+                    Helpers.showSnackBar(context, _t('Malipo ya huduma ya ${item['name']} yanashughulikiwa...', 'Processing payment for ${item['name']}...'));
                   },
                   borderRadius: BorderRadius.circular(16),
                   child: Container(
@@ -523,7 +523,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Shughuli za Karibuni',
+                _t('Shughuli za Karibuni', 'Recent Activity'),
                 style: GoogleFonts.inter(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
@@ -532,12 +532,12 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ),
               TextButton(
                 onPressed: () {
-                  Helpers.showSnackBar(context, 'Ripoti nzima ya malipo inafunguka...');
+                  Helpers.showSnackBar(context, _t('Ripoti nzima ya malipo inafunguka...', 'Opening full payment report...'));
                 },
                 child: Row(
                   children: [
                     Text(
-                      'Ona Zote',
+                      _t('Ona Zote', 'See All'),
                       style: GoogleFonts.inter(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
@@ -559,7 +559,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Center(
                 child: Text(
-                  'Hakuna malipo ya karibuni.',
+                  _t('Hakuna malipo ya karibuni.', 'No recent payments.'),
                   style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B)),
                 ),
               ),
@@ -626,15 +626,37 @@ class _TenantDashboardState extends State<TenantDashboard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  map['title'] ?? 'Transaction',
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w800,
-                    color: const Color(0xFF1E293B),
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                Builder(
+                  builder: (context) {
+                    String titleText = map['title'] ?? 'Transaction';
+                    if (titleText.contains('kodi') || titleText.contains('Rent') || titleText.contains('Kodi')) {
+                      if (titleText.contains('1') || titleText.contains('Mwezi 1')) {
+                        titleText = _t('Kodi ya Pango (Mwezi 1)', 'Rent Payment (1 Month)');
+                      } else if (titleText.contains('3') || titleText.contains('Miezi 3')) {
+                        titleText = _t('Kodi ya Pango (Miezi 3)', 'Rent Payment (3 Months)');
+                      } else if (titleText.contains('6') || titleText.contains('Miezi 6')) {
+                        titleText = _t('Kodi ya Pango (Miezi 6)', 'Rent Payment (6 Months)');
+                      } else if (titleText.contains('12') || titleText.contains('Miezi 12')) {
+                        titleText = _t('Kodi ya Pango (Miezi 12)', 'Rent Payment (12 Months)');
+                      } else {
+                        titleText = _t('Malipo ya kodi ya pango (Palm Heights)', 'Rent payment (Palm Heights)');
+                      }
+                    } else if (titleText.contains('Dhamana') || titleText.contains('Refund')) {
+                      titleText = _t('Mrejesho wa Dhamana (Deposit Refund)', 'Security Deposit Refund');
+                    } else if (titleText.contains('Usafi') || titleText.contains('Service Charge')) {
+                      titleText = _t('Malipo ya Usafi na Ulinzi (Service Charge)', 'Security & Waste Service Charge');
+                    }
+                    return Text(
+                      titleText,
+                      style: GoogleFonts.inter(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w800,
+                        color: const Color(0xFF1E293B),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    );
+                  }
                 ),
                 const SizedBox(height: 3),
                 Row(
@@ -649,13 +671,27 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       ),
                     ),
                     const SizedBox(width: 6),
-                    Text(
-                      map['time'] ?? 'Today',
-                      style: GoogleFonts.inter(
-                        fontSize: 10,
-                        color: const Color(0xFF64748B),
-                        fontWeight: FontWeight.w600,
-                      ),
+                    Builder(
+                      builder: (context) {
+                        String timeText = map['time'] ?? 'Today';
+                        if (timeText.contains('12:33')) {
+                          timeText = _t('12:33 PM • Kodi', '12:33 PM • Rent');
+                        } else if (timeText.contains('08:56')) {
+                          timeText = _t('08:56 AM • Mrejesho', '08:56 AM • Refund');
+                        } else if (timeText.contains('Jana') || timeText.toLowerCase().contains('yesterday')) {
+                          timeText = _t('Jana • Huduma', 'Yesterday • Service');
+                        } else if (timeText == 'Leo' || timeText == 'Today') {
+                          timeText = _t('Leo', 'Today');
+                        }
+                        return Text(
+                          timeText,
+                          style: GoogleFonts.inter(
+                            fontSize: 10,
+                            color: const Color(0xFF64748B),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        );
+                      }
                     ),
                   ],
                 ),
@@ -701,19 +737,25 @@ class _TenantDashboardState extends State<TenantDashboard> {
   Widget _buildLandlordAlertsSection() {
     final alerts = [
       {
-        'title': 'Ukarabati wa Pampu ya Maji',
-        'desc': 'Pampu kuu ya maji itafungwa kesho kuanzia saa 3 asubuhi hadi saa 6 mchana kwa matengenezo.',
-        'time': 'Leo, 11:30 AM',
-        'priority': 'URGENT',
+        'title': _t('Ukarabati wa Pampu ya Maji', 'Water Pump Repair'),
+        'desc': _t(
+          'Pampu kuu ya maji itafungwa kesho kuanzia saa 3 asubuhi hadi saa 6 mchana kwa matengenezo.',
+          'The main water pump will be shut down tomorrow from 9 AM to 12 PM for maintenance.'
+        ),
+        'time': _t('Leo, 11:30 AM', 'Today, 11:30 AM'),
+        'priority': _t('HARAKA', 'URGENT'),
         'color': const Color(0xFFEF4444),
         'bg': const Color(0xFFFEE2E2),
         'icon': Icons.water_damage_rounded,
       },
       {
-        'title': 'Kupulizia Dawa ya Wadudu (Fumigation)',
-        'desc': 'Zoezi la kupulizia dawa litafanyika Jumamosi asubuhi. Tafadhali funga madirisha na kutoa mifugo.',
-        'time': 'Juzi, 2:15 PM',
-        'priority': 'TAARIFA',
+        'title': _t('Kupulizia Dawa ya Wadudu (Fumigation)', 'Pest Fumigation Service'),
+        'desc': _t(
+          'Zoezi la kupulizia dawa litafanyika Jumamosi asubuhi. Tafadhali funga madirisha na kutoa mifugo.',
+          'Fumigation exercise will take place on Saturday morning. Please close windows and keep pets safe.'
+        ),
+        'time': _t('Juzi, 2:15 PM', 'Two days ago, 2:15 PM'),
+        'priority': _t('TAARIFA', 'INFO'),
         'color': const Color(0xFF3B82F6),
         'bg': const Color(0xFFDBEAFE),
         'icon': Icons.bug_report_rounded,
@@ -728,7 +770,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Arifa za Mwenye Nyumba (Landlord Alerts)',
+              _t('Arifa za Mwenye Nyumba', 'Landlord Alerts'),
               style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
@@ -746,7 +788,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   const Icon(Icons.campaign_rounded, color: Color(0xFFEF4444), size: 12),
                   const SizedBox(width: 4),
                   Text(
-                    '2 NEW',
+                    _t('2 MPYA', '2 NEW'),
                     style: GoogleFonts.inter(
                       fontSize: 8,
                       fontWeight: FontWeight.w900,
@@ -1001,7 +1043,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           value: 'Transfer',
                           groupValue: _payRentMethod,
                           activeColor: const Color(0xFFFE5D37),
-                          title: Text(_t('Benki / M-Pesa / TigoPesa', 'Bank / Mobile Money Transfer'), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600)),
+                          title: Text(
+                            _t('Benki / M-Pesa / TigoPesa', 'Bank / Mobile Money Transfer'), 
+                            style: GoogleFonts.inter(
+                              fontSize: 12, 
+                              fontWeight: FontWeight.w600, 
+                              color: const Color(0xFF1E293B),
+                            ),
+                          ),
                           onChanged: (val) {
                             setModalState(() {
                               setState(() {
@@ -1015,7 +1064,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           value: 'Cash',
                           groupValue: _payRentMethod,
                           activeColor: const Color(0xFFFE5D37),
-                          title: Text(_t('Pesa Taslimu (Cash)', 'Cash Payment'), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600)),
+                          title: Text(
+                            _t('Pesa Taslimu (Cash)', 'Cash Payment'), 
+                            style: GoogleFonts.inter(
+                              fontSize: 12, 
+                              fontWeight: FontWeight.w600, 
+                              color: const Color(0xFF1E293B),
+                            ),
+                          ),
                           onChanged: (val) {
                             setModalState(() {
                               setState(() {
