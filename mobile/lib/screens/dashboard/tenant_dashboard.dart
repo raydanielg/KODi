@@ -37,6 +37,12 @@ class _TenantDashboardState extends State<TenantDashboard> {
   int _payRentMonths = 1; // Lipa kodi duration selection months
   String _payRentMethod = 'Transfer'; // 'Transfer' or 'Cash'
 
+  // Settings Dashboard States
+  bool _isDarkMode = false;
+  bool _biometricEnabled = true;
+  bool _pushNotificationsEnabled = true;
+  bool _autoTaxReceipts = false;
+
   String _t(String sw, String en) {
     return _isEnglish ? en : sw;
   }
