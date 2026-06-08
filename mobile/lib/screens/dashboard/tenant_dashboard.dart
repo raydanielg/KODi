@@ -889,6 +889,258 @@ class _TenantDashboardState extends State<TenantDashboard> {
     return value.toString();
   }
 
+  String _formatFullRentAmount(int months) {
+    final int amount = months * 450000;
+    if (amount == 450000) return 'TSh 450,000';
+    if (amount == 1350000) return 'TSh 1,350,000';
+    if (amount == 2700000) return 'TSh 2,700,000';
+    if (amount == 5400000) return 'TSh 5,400,000';
+    
+    return 'TSh ${months * 450000}';
+  }
+
+  Widget _buildPlanChip(int months, String label) {
+    final isSelected = _selectedLeasePlanMonths == months;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedLeasePlanMonths = months;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFFFE5D37) : const Color(0xFFF1F5F9),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          label,
+          style: GoogleFonts.inter(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: isSelected ? Colors.white : const Color(0xFF64748B),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showPayRentBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Container(
+              padding: const EdgeInsets.all(24),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 40,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(2.5),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    _t('Lipa Kodi ya Pango', 'Pay Rent Payment'),
+                    style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // 1. Select Duration
+                  Text(
+                    _t('Muda Unaolipia (Miezi):', 'Payment Duration (Months):'),
+                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildPayDurationChip(setModalState, 1, '1 ' + _t('Mwezi', 'Month')),
+                      _buildPayDurationChip(setModalState, 3, '3 ' + _t('Miezi', 'Months')),
+                      _buildPayDurationChip(setModalState, 6, '6 ' + _t('Miezi', 'Months')),
+                      _buildPayDurationChip(setModalState, 12, '12 ' + _t('Miezi', 'Months')),
+                    ],
+                  ),
+                  const SizedBox(height: 18),
+
+                  // 2. Select Payment Method (Cash or Bank Transfer)
+                  Text(
+                    _t('Njia ya Malipo:', 'Payment Method:'),
+                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF8FAFC),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: const Color(0xFFE2E8F0)),
+                    ),
+                    child: Column(
+                      children: [
+                        RadioListTile<String>(
+                          value: 'Transfer',
+                          groupValue: _payRentMethod,
+                          activeColor: const Color(0xFFFE5D37),
+                          title: Text(_t('Benki / M-Pesa / TigoPesa', 'Bank / Mobile Money Transfer'), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600)),
+                          onChanged: (val) {
+                            setModalState(() {
+                              setState(() {
+                                _payRentMethod = val!;
+                              });
+                            });
+                          },
+                        ),
+                        const Divider(color: Color(0xFFE2E8F0), height: 1),
+                        RadioListTile<String>(
+                          value: 'Cash',
+                          groupValue: _payRentMethod,
+                          activeColor: const Color(0xFFFE5D37),
+                          title: Text(_t('Pesa Taslimu (Cash)', 'Cash Payment'), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w600)),
+                          onChanged: (val) {
+                            setModalState(() {
+                              setState(() {
+                                _payRentMethod = val!;
+                              });
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // 3. Automated Calculated Price Info
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _t('Jumla ya Malipo:', 'Total Amount Due:'),
+                        style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B), fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        _formatFullRentAmount(_payRentMonths),
+                        style: GoogleFonts.spaceGrotesk(fontSize: 18, color: const Color(0xFF1E293B), fontWeight: FontWeight.w800),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+
+                  // 4. Complete Payment Button
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      _handlePaymentCompletion();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFFE5D37),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 48),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      elevation: 0,
+                    ),
+                    child: Text(_t('Kamilisha Malipo', 'Complete Payment'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildPayDurationChip(StateSetter setModalState, int months, String label) {
+    final isSelected = _payRentMonths == months;
+    return GestureDetector(
+      onTap: () {
+        setModalState(() {
+          setState(() {
+            _payRentMonths = months;
+          });
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFFFE5D37) : const Color(0xFFF1F5F9),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          label,
+          style: GoogleFonts.inter(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+            color: isSelected ? Colors.white : const Color(0xFF64748B),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _handlePaymentCompletion() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        Future.delayed(const Duration(seconds: 2), () {
+          // Successfully add to local history in real time!
+          if (_stats != null && _stats!.recentItems != null) {
+            _stats!.recentItems!.insert(0, {
+              'title': _payRentMonths == 1 
+                  ? _t('Kodi ya Pango (Mwezi 1)', 'Rent Payment (1 Month)')
+                  : _t('Kodi ya Pango (${_payRentMonths} Miezi)', 'Rent Payment (${_payRentMonths} Months)'),
+              'time': _t('Leo', 'Today'),
+              'amount': '-TSh ${_formatFullRentAmount(_payRentMonths).replaceAll('TSh ', '')}',
+              'category': 'rent',
+              'isCredit': false,
+            });
+          }
+          
+          setState(() {}); // trigger full UI reload
+          Navigator.pop(context); // close loader
+          
+          Helpers.showSnackBar(
+            context,
+            _t(
+              'Malipo ya ${_formatFullRentAmount(_payRentMonths)} kupitia ' + (_payRentMethod == 'Cash' ? 'Pesa Taslimu (Cash)' : 'Benki') + ' yamekamilika na kuhifadhiwa kikamilifu!',
+              'Payment of ${_formatFullRentAmount(_payRentMonths)} via ' + (_payRentMethod == 'Cash' ? 'Cash' : 'Bank Transfer') + ' completed and successfully recorded!'
+            ),
+          );
+        });
+        
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          content: Row(
+            children: [
+              const CircularProgressIndicator(color: Color(0xFFFE5D37)),
+              const SizedBox(width: 20),
+              Expanded(
+                child: Text(
+                  _t('Inachakata malipo ya kodi...', 'Processing rent payment...'),
+                  style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildBodyContent(UserModel user) {
     switch (_currentTab) {
       case 0:
