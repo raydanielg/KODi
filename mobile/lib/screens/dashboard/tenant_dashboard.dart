@@ -1156,7 +1156,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       case 2:
         return _buildPaymentsTabContent();
       case 3:
-        return _buildProfileTabContent(user);
+        return _buildSettingsTabContent(user); // Redesigned settings dashboard!
       default:
         return _buildHomeTabContent();
     }
@@ -1167,7 +1167,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       {'icon': Icons.home_rounded, 'label': _t('Nyumbani', 'Home')},
       {'icon': Icons.swap_horiz_rounded, 'label': _t('Maombi', 'Requests')},
       {'icon': Icons.receipt_long_rounded, 'label': _t('Malipo', 'Payments')},
-      {'icon': Icons.person_rounded, 'label': _t('Wasifu', 'Profile')},
+      {'icon': Icons.settings_rounded, 'label': _t('Mipangilio', 'Settings')},
     ];
 
     return Container(
