@@ -32,6 +32,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
   bool _hasPendingSentRequest = false;
   String _sentRequestPhone = '';
 
+  // Interactivity Billing & Payment States
+  int _selectedLeasePlanMonths = 1; // Connection request selection months
+  int _payRentMonths = 1; // Lipa kodi duration selection months
+  String _payRentMethod = 'Transfer'; // 'Transfer' or 'Cash'
+
   String _t(String sw, String en) {
     return _isEnglish ? en : sw;
   }
