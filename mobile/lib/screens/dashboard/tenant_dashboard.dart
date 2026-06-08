@@ -494,9 +494,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Shughuli za Hivi Karibuni',
+                'Shughuli za Karibuni',
                 style: GoogleFonts.inter(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
                 ),
@@ -508,9 +508,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 child: Row(
                   children: [
                     Text(
-                      'View All',
+                      'Ona Zote',
                       style: GoogleFonts.inter(
-                        fontSize: 13,
+                        fontSize: 12,
                         fontWeight: FontWeight.w700,
                         color: const Color(0xFFFE5D37),
                       ),
@@ -522,12 +522,26 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           
-          // Transaction List Items
-          ...recentItems.map((item) => _buildRecentItemWidget(item)),
+          // Transaction List Items (Extremely Premium Look)
+          if (recentItems.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Center(
+                child: Text(
+                  'Hakuna malipo ya karibuni.',
+                  style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B)),
+                ),
+              ),
+            )
+          else
+            ...recentItems.map((item) => _buildRecentItemWidget(item)),
           
-          const SizedBox(height: 24),
+          const SizedBox(height: 32),
+
+          // 📢 Landlord Alerts & Notifications Section (NEW!)
+          _buildLandlordAlertsSection(),
         ],
       ),
     );
@@ -539,7 +553,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
     final String amount = map['amount'] ?? '-TSh 0';
     final String category = map['category'] ?? 'rent';
 
-    // Premium Category Icon mapping matching Unsplash mockup look
+    // Premium Category Icon mapping with high contrast
     IconData icon;
     Color iconColor;
     Color iconBg;
@@ -557,18 +571,24 @@ class _TenantDashboardState extends State<TenantDashboard> {
       iconColor = const Color(0xFF1A73E8);
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC), // Off-white modern card background
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0xFFF1F5F9), width: 1),
+      ),
       child: Row(
         children: [
-          // Clean Square icon with subtle color accents (Premium style)
+          // Elegant Squircle Icon Background
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: iconBg,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(14),
             ),
-            child: Icon(icon, color: iconColor, size: 24),
+            child: Icon(icon, color: iconColor, size: 22),
           ),
           const SizedBox(width: 14),
           
@@ -580,37 +600,238 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 Text(
                   map['title'] ?? 'Transaction',
                   style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xFF0D0F12),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                    color: const Color(0xFF1E293B),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  map['time'] ?? 'Today',
-                  style: GoogleFonts.inter(
-                    fontSize: 11,
-                    color: const Color(0xFF8E929B),
-                    fontWeight: FontWeight.w500,
-                  ),
+                const SizedBox(height: 3),
+                Row(
+                  children: [
+                    // Faint active success dot indicator
+                    Container(
+                      width: 6,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: isCredit ? const Color(0xFF10B981) : const Color(0xFF64748B),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      map['time'] ?? 'Today',
+                      style: GoogleFonts.inter(
+                        fontSize: 10,
+                        color: const Color(0xFF64748B),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
           
-          // Amount in premium colors
-          Text(
-            amount,
-            style: GoogleFonts.spaceGrotesk(
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-              color: isCredit ? const Color(0xFF137333) : const Color(0xFF0D0F12),
-            ),
+          // Amount in premium bold formats
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                amount,
+                style: GoogleFonts.spaceGrotesk(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: isCredit ? const Color(0xFF137333) : const Color(0xFF1E293B),
+                ),
+              ),
+              const SizedBox(height: 3),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: isCredit ? const Color(0xFFE6F4EA) : const Color(0xFFF1F5F9),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  isCredit ? 'IMEFANIKIWA' : 'KUTOKA',
+                  style: GoogleFonts.inter(
+                    fontSize: 8,
+                    fontWeight: FontWeight.w800,
+                    color: isCredit ? const Color(0xFF137333) : const Color(0xFF64748B),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildLandlordAlertsSection() {
+    final alerts = [
+      {
+        'title': 'Ukarabati wa Pampu ya Maji',
+        'desc': 'Pampu kuu ya maji itafungwa kesho kuanzia saa 3 asubuhi hadi saa 6 mchana kwa matengenezo.',
+        'time': 'Leo, 11:30 AM',
+        'priority': 'URGENT',
+        'color': const Color(0xFFEF4444),
+        'bg': const Color(0xFFFEE2E2),
+        'icon': Icons.water_damage_rounded,
+      },
+      {
+        'title': 'Kupulizia Dawa ya Wadudu (Fumigation)',
+        'desc': 'Zoezi la kupulizia dawa litafanyika Jumamosi asubuhi. Tafadhali funga madirisha na kutoa mifugo.',
+        'time': 'Juzi, 2:15 PM',
+        'priority': 'TAARIFA',
+        'color': const Color(0xFF3B82F6),
+        'bg': const Color(0xFFDBEAFE),
+        'icon': Icons.bug_report_rounded,
+      },
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Section Header
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Arifa za Mwenye Nyumba (Landlord Alerts)',
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+                color: const Color(0xFF1E293B),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFEE2E2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.campaign_rounded, color: Color(0xFFEF4444), size: 12),
+                  const SizedBox(width: 4),
+                  Text(
+                    '2 NEW',
+                    style: GoogleFonts.inter(
+                      fontSize: 8,
+                      fontWeight: FontWeight.w900,
+                      color: const Color(0xFFEF4444),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+
+        // List of Landlord Alert Cards
+        ...alerts.map((alert) {
+          final color = alert['color'] as Color;
+          final bg = alert['bg'] as Color;
+
+          return Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: color.withOpacity(0.12),
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: color.withOpacity(0.02),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    // Indicator tag
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: bg,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        alert['priority'] as String,
+                        style: GoogleFonts.inter(
+                          fontSize: 8,
+                          fontWeight: FontWeight.w900,
+                          color: color,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      alert['time'] as String,
+                      style: GoogleFonts.inter(
+                        fontSize: 10,
+                        color: const Color(0xFF94A3B8),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: color.withOpacity(0.08),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(alert['icon'] as IconData, color: color, size: 18),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            alert['title'] as String,
+                            style: GoogleFonts.inter(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w800,
+                              color: const Color(0xFF1E293B),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            alert['desc'] as String,
+                            style: GoogleFonts.inter(
+                              fontSize: 11,
+                              color: const Color(0xFF64748B),
+                              fontWeight: FontWeight.w500,
+                              height: 1.4,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ],
     );
   }
 
