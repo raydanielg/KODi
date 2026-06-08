@@ -1516,116 +1516,108 @@ class _TenantDashboardState extends State<TenantDashboard> {
       padding: const EdgeInsets.all(20),
       children: [
         Text(
-          _t('Maombi ya Mkataba', 'Lease Connection Requests'),
+          _t('Maombi ya Mkataba', 'Lease Requests'),
           style: GoogleFonts.inter(
             fontSize: 20,
             fontWeight: FontWeight.w800,
             color: const Color(0xFF1E293B),
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 18),
 
         // Section 1: Incoming Landlord Requests
-        _buildRequestsSectionHeader(_t('MAOMBI MAPYA YA KUINGIA', 'INCOMING LEASE REQUESTS')),
-        const SizedBox(height: 12),
+        _buildRequestsSectionHeader(_t('MAOMBI MAPYA YA KUINGIA', 'INCOMING REQUESTS')),
+        const SizedBox(height: 10),
         if (_hasIncomingRequest)
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
               border: Border.all(color: const Color(0xFFE2E8F0)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.01),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFFFF1F0),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(Icons.gite_rounded, color: Color(0xFFFE5D37), size: 20),
+                    Text(
+                      'Mama Ken (Mwenye Nyumba)',
+                      style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
                     ),
-                    const SizedBox(width: 12),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFFF1F0),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        _t('Apt A4 • Palm Heights', 'Apt A4 • Palm Heights'),
+                        style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w800, color: const Color(0xFFFE5D37)),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(_t('Kodi ya Mwezi:', 'Monthly Rent:'), style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500)),
+                    Text('TSh 450,000', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B))),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                
+                // Simple inline plan chips (Normal, clean, minimalist)
+                Row(
+                  children: [
+                    Text(_t('Muda:', 'Duration:'), style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500)),
+                    const SizedBox(width: 8),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            _t('Ombi la Mkataba Kutoka kwa Landlord', 'Lease Connection from Landlord'),
-                            style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            'Mama Ken',
-                            style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
-                          ),
+                          _buildSimplePlanChip(1, '1M'),
+                          _buildSimplePlanChip(3, '3M'),
+                          _buildSimplePlanChip(6, '6M'),
+                          _buildSimplePlanChip(12, '12M'),
                         ],
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 12),
                 const Divider(color: Color(0xFFF1F5F9), height: 1),
-                const SizedBox(height: 14),
-                _buildRequestInfoRow(_t('Nyumba aliyopo', 'Lease Property'), 'Palm Heights - Apt A4'),
-                _buildRequestInfoRow(_t('Kodi ya Mwezi', 'Monthly Rent'), 'TSh 450,000'),
-                const SizedBox(height: 14),
-                Text(
-                  _t('Chagua Mpango wa Malipo (Miezi):', 'Select Rent Plan (Months):'),
-                  style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
-                ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildPlanChip(1, '1 ' + _t('Mwezi', 'Month')),
-                    _buildPlanChip(3, '3 ' + _t('Miezi', 'Months')),
-                    _buildPlanChip(6, '6 ' + _t('Miezi', 'Months')),
-                    _buildPlanChip(12, '12 ' + _t('Miezi', 'Months')),
+                    Text(_t('Jumla ya Malipo:', 'Total Amount:'), style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w700)),
+                    Text(_formatFullRentAmount(_selectedLeasePlanMonths), style: GoogleFonts.spaceGrotesk(fontSize: 13, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B))),
                   ],
                 ),
                 const SizedBox(height: 14),
-                const Divider(color: Color(0xFFF1F5F9), height: 1),
-                const SizedBox(height: 14),
-                _buildRequestInfoRow(
-                  _t('Jumla ya Kodi Utakayolipa', 'Total Rent to Pay'),
-                  _formatFullRentAmount(_selectedLeasePlanMonths),
-                ),
-                const SizedBox(height: 16),
+                
                 Row(
                   children: [
                     Expanded(
-                      child: OutlinedButton(
+                      child: TextButton(
                         onPressed: () {
                           setState(() {
                             _hasIncomingRequest = false;
                           });
-                          Helpers.showSnackBar(
-                            context,
-                            _t('Ombi la mwenye nyumba limekataliwa.', 'Landlord request declined.'),
-                          );
+                          Helpers.showSnackBar(context, _t('Ombi limekataliwa.', 'Request declined.'));
                         },
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF64748B),
-                          side: const BorderSide(color: Color(0xFFE2E8F0)),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                        style: TextButton.styleFrom(
+                          foregroundColor: const Color(0xFFEF4444),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                         ),
-                        child: Text(_t('Kataa', 'Decline'), style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 13)),
+                        child: Text(_t('Kataa', 'Decline'), style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 12)),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
@@ -1635,20 +1627,17 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           });
                           Helpers.showSnackBar(
                             context,
-                            _t(
-                              'Hongera! Mkataba umeunganishwa kikamilifu. Sasa unaweza kuona nyumba yako na kulipa kodi.',
-                              'Success! Your lease has been connected. You can now access your house stats and pay rent.'
-                            ),
+                            _t('Hongera! Mkataba umeunganishwa kikamilifu.', 'Success! Lease connected successfully.'),
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF10B981), // Solid crisp success green
+                          backgroundColor: const Color(0xFF10B981),
                           foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(vertical: 12),
                           elevation: 0,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: Text(_t('Kubali', 'Accept'), style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 13)),
+                        child: Text(_t('Kubali', 'Accept'), style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 12)),
                       ),
                     ),
                   ],
@@ -1658,66 +1647,58 @@ class _TenantDashboardState extends State<TenantDashboard> {
           )
         else
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 8),
             child: Text(
-              _t('Hakuna maombi mapya ya kuingia.', 'No new incoming lease connection requests.'),
-              style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+              _t('Hakuna maombi mapya ya kuingia.', 'No new incoming requests.'),
+              style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
             ),
           ),
         
-        const SizedBox(height: 28),
+        const SizedBox(height: 24),
 
         // Section 2: Send request form
-        _buildRequestsSectionHeader(_t('TUMA OMBI KWA MWENYE NYUMBA', 'SEND REQUEST TO LANDLORD')),
-        const SizedBox(height: 12),
+        _buildRequestsSectionHeader(_t('TUMA OMBI JIPYA LA UNGANISHO', 'SEND NEW CONNECTION REQUEST')),
+        const SizedBox(height: 10),
         Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(10),
             border: Border.all(color: const Color(0xFFE2E8F0)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                _t('Weka namba ya simu ya Mwenye Nyumba kuomba kuunganishwa', 'Enter Landlord phone number to request a lease connection'),
-                style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500, height: 1.4),
-              ),
-              const SizedBox(height: 12),
               TextField(
                 controller: _phoneInputController,
                 keyboardType: TextInputType.phone,
-                style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: const Color(0xFF1E293B)),
+                style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: const Color(0xFF1E293B)),
                 decoration: InputDecoration(
-                  hintText: '+255 765 432 109',
-                  hintStyle: GoogleFonts.inter(fontSize: 14, color: const Color(0xFF94A3B8)),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  hintText: _t('Namba ya simu ya Mwenye Nyumba...', 'Landlord Phone Number...'),
+                  hintStyle: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF94A3B8)),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   filled: true,
                   fillColor: const Color(0xFFF8FAFC),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                     borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                     borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(8),
                     borderSide: const BorderSide(color: Color(0xFFFE5D37)),
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
+              const SizedBox(height: 12),
+              ElevatedButton(
                 onPressed: () {
                   final phone = _phoneInputController.text.trim();
                   if (phone.isEmpty) {
-                    Helpers.showSnackBar(
-                      context,
-                      _t('Tafadhali ingiza namba ya simu ya Landlord', 'Please enter Landlord phone number first'),
-                    );
+                    Helpers.showSnackBar(context, _t('Tafadhali weka namba ya simu', 'Please enter a phone number'));
                     return;
                   }
                   setState(() {
@@ -1725,91 +1706,159 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     _sentRequestPhone = phone;
                     _phoneInputController.clear();
                   });
-                  Helpers.showSnackBar(
-                    context,
-                    _t('Ombi limetumwa kwa namba ' + phone, 'Request successfully sent to ' + phone),
-                  );
+                  Helpers.showSnackBar(context, _t('Ombi limetumwa kwa ' + phone, 'Request sent to ' + phone));
                 },
-                icon: const Icon(Icons.send_rounded, size: 16),
-                label: Text(_t('Tuma Ombi', 'Send Connection Request'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFE5D37),
                   foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 44),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  minimumSize: const Size(double.infinity, 40),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   elevation: 0,
                 ),
+                child: Text(_t('Tuma Ombi', 'Send Request'), style: GoogleFonts.inter(fontWeight: FontWeight.w800, fontSize: 12)),
               ),
             ],
           ),
         ),
 
-        const SizedBox(height: 28),
+        const SizedBox(height: 24),
 
-        // Section 3: Pending Sent Requests
-        _buildRequestsSectionHeader(_t('MAOMBI YALIYOTUMWA', 'SENT REQUESTS HISTORY')),
-        const SizedBox(height: 12),
+        // Section 3: Pending & Historical Sent Requests
+        _buildRequestsSectionHeader(_t('HISTORIA YA MAOMBI YAKO', 'YOUR REQUESTS HISTORY')),
+        const SizedBox(height: 10),
+        
+        // Dynamic Active Pending Request
         if (_hasPendingSentRequest)
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFEF3C7), // soft amber
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(Icons.hourglass_empty_rounded, color: Color(0xFFD97706), size: 18),
+          _buildMinimalRequestRow(
+            phone: _sentRequestPhone,
+            date: _t('Leo', 'Today'),
+            statusText: _t('Inasubiri', 'Pending'),
+            statusColor: const Color(0xFFD97706),
+            backgroundColor: const Color(0xFFFFFBEB),
+            onCancel: () {
+              setState(() {
+                _hasPendingSentRequest = false;
+              });
+              Helpers.showSnackBar(context, _t('Ombi limefutwa.', 'Request canceled.'));
+            },
+          ),
+          
+        // Historical Record 1: Connected (Beautiful static normal row)
+        _buildMinimalRequestRow(
+          phone: '+255 765 890 123',
+          date: '12 May 2026',
+          statusText: _t('Ilikubaliwa', 'Accepted'),
+          statusColor: const Color(0xFF10B981),
+          backgroundColor: const Color(0xFFECFDF5),
+        ),
+
+        // Historical Record 2: Rejected (Beautiful static normal row)
+        _buildMinimalRequestRow(
+          phone: '+255 712 111 222',
+          date: '04 Apr 2026',
+          statusText: _t('Ilikataliwa', 'Rejected'),
+          statusColor: const Color(0xFFEF4444),
+          backgroundColor: const Color(0xFFFEF2F2),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSimplePlanChip(int months, String label) {
+    final isSelected = _selectedLeasePlanMonths == months;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedLeasePlanMonths = months;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+        decoration: BoxDecoration(
+          color: isSelected ? const Color(0xFFFE5D37) : const Color(0xFFF1F5F9),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Text(
+          label,
+          style: GoogleFonts.inter(
+            fontSize: 10,
+            fontWeight: FontWeight.w800,
+            color: isSelected ? Colors.white : const Color(0xFF64748B),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMinimalRequestRow({
+    required String phone,
+    required String date,
+    required String statusText,
+    required Color statusColor,
+    required Color backgroundColor,
+    VoidCallback? onCancel,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: const Color(0xFFF1F5F9)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                phone,
+                style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                date,
+                style: GoogleFonts.inter(fontSize: 9, color: const Color(0xFF94A3B8), fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: BorderRadius.circular(6),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _t('Inasubiri Uthibitisho', 'Awaiting Confirmation'),
-                        style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        _t('Mwenye Nyumba: ', 'Landlord Phone: ') + _sentRequestPhone,
-                        style: GoogleFonts.inter(fontSize: 10, color: const Color(0xFF64748B), fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 5,
+                      height: 5,
+                      decoration: BoxDecoration(color: statusColor, shape: BoxShape.circle),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      statusText,
+                      style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900, color: statusColor),
+                    ),
+                  ],
                 ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      _hasPendingSentRequest = false;
-                    });
-                    Helpers.showSnackBar(
-                      context,
-                      _t('Ombi la unganisho limefutwa.', 'Connection request canceled.'),
-                    );
-                  },
-                  child: Text(
-                    _t('Ghairi', 'Cancel'),
-                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFFEF4444)),
-                  ),
+              ),
+              if (onCancel != null) ...[
+                const SizedBox(width: 8),
+                GestureDetector(
+                  onTap: onCancel,
+                  child: const Icon(Icons.cancel_rounded, color: Color(0xFF94A3B8), size: 16),
                 ),
               ],
-            ),
-          )
-        else
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Text(
-              _t('Hakuna maombi yaliyotumwa kwa sasa.', 'No pending sent connection requests at the moment.'),
-              style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
-            ),
+            ],
           ),
+        ],
+      ),
+    );
+  }
       ],
     );
   }
