@@ -1915,9 +1915,6 @@ class _TenantDashboardState extends State<TenantDashboard> {
       ),
     );
   }
-      ],
-    );
-  }
 
   Widget _buildRequestsSectionHeader(String title) {
     return Text(
