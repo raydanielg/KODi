@@ -93,8 +93,8 @@ class _TenantDashboardState extends State<TenantDashboard> {
               bottom: false,
               child: Column(
                 children: [
-                  // 1. Beautiful Premium White Header
-                  _buildTopHeader(user),
+                  // 1. Beautiful Premium White Header (Hidden in Profile tab)
+                  if (_currentTab != 3) _buildTopHeader(user),
                   
                   // 2. Dynamic body content based on selected tab
                   Expanded(
