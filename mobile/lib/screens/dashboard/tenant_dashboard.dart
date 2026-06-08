@@ -1160,6 +1160,28 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 const SizedBox(height: 14),
                 _buildRequestInfoRow(_t('Nyumba aliyopo', 'Lease Property'), 'Palm Heights - Apt A4'),
                 _buildRequestInfoRow(_t('Kodi ya Mwezi', 'Monthly Rent'), 'TSh 450,000'),
+                const SizedBox(height: 14),
+                Text(
+                  _t('Chagua Mpango wa Malipo (Miezi):', 'Select Rent Plan (Months):'),
+                  style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildPlanChip(1, '1 ' + _t('Mwezi', 'Month')),
+                    _buildPlanChip(3, '3 ' + _t('Miezi', 'Months')),
+                    _buildPlanChip(6, '6 ' + _t('Miezi', 'Months')),
+                    _buildPlanChip(12, '12 ' + _t('Miezi', 'Months')),
+                  ],
+                ),
+                const SizedBox(height: 14),
+                const Divider(color: Color(0xFFF1F5F9), height: 1),
+                const SizedBox(height: 14),
+                _buildRequestInfoRow(
+                  _t('Jumla ya Kodi Utakayolipa', 'Total Rent to Pay'),
+                  _formatFullRentAmount(_selectedLeasePlanMonths),
+                ),
                 const SizedBox(height: 16),
                 Row(
                   children: [
