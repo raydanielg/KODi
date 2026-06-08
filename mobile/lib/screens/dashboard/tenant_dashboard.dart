@@ -1682,11 +1682,57 @@ class _TenantDashboardState extends State<TenantDashboard> {
       return _buildUnconnectedPlaceholder();
     }
 
-    final invoices = [
-      {'title': _t('Kodi ya Pango - June 2026', 'Rent Payment - June 2026'), 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '05 Jun 2026'},
-      {'title': _t('Kodi ya Pango - May 2026', 'Rent Payment - May 2026'), 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '02 May 2026'},
-      {'title': _t('Kodi ya Pango - April 2026', 'Rent Payment - April 2026'), 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '01 Apr 2026'},
+    // Base mock invoices
+    final List<Map<String, String>> invoices = [
+      {
+        'title': _t('Kodi ya Pango - June 2026', 'Rent Payment - June 2026'),
+        'desc': 'Palm Heights • Apt A4',
+        'amount': 'TSh 450,000',
+        'status': 'Paid',
+        'date': '05 Jun 2026',
+        'invNo': 'INV-2026-0098',
+        'method': _t('Benki / M-Pesa', 'Bank Transfer'),
+      },
+      {
+        'title': _t('Kodi ya Pango - May 2026', 'Rent Payment - May 2026'),
+        'desc': 'Palm Heights • Apt A4',
+        'amount': 'TSh 450,000',
+        'status': 'Paid',
+        'date': '02 May 2026',
+        'invNo': 'INV-2026-0081',
+        'method': _t('Pesa Taslimu', 'Cash'),
+      },
+      {
+        'title': _t('Kodi ya Pango - April 2026', 'Rent Payment - April 2026'),
+        'desc': 'Palm Heights • Apt A4',
+        'amount': 'TSh 450,000',
+        'status': 'Paid',
+        'date': '01 Apr 2026',
+        'invNo': 'INV-2026-0062',
+        'method': _t('Benki / M-Pesa', 'Bank Transfer'),
+      },
     ];
+
+    // Dynamically insert newly paid rent receipts in real time!
+    if (_stats != null && _stats!.recentItems != null) {
+      for (var item in _stats!.recentItems!) {
+        if (item['category'] == 'rent') {
+          final String title = item['title'] ?? '';
+          final String date = item['time'] == 'Leo' || item['time'] == 'Today' ? _t('Leo', 'Today') : (item['time'] ?? '');
+          final String amount = (item['amount'] ?? '').replaceAll('-', '');
+          
+          invoices.insert(0, {
+            'title': title,
+            'desc': 'Palm Heights • Apt A4',
+            'amount': amount.startsWith('TSh') ? amount : 'TSh $amount',
+            'status': 'Paid',
+            'date': date,
+            'invNo': 'INV-2026-01${12 + _stats!.recentItems!.indexOf(item)}',
+            'method': _payRentMethod == 'Cash' ? _t('Pesa Taslimu (Cash)', 'Cash Payment') : _t('Benki / M-Pesa', 'Bank Transfer'),
+          });
+        }
+      }
+    }
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -1702,63 +1748,66 @@ class _TenantDashboardState extends State<TenantDashboard> {
         ),
         const SizedBox(height: 20),
         ...invoices.map((inv) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE6F4EA),
-                    borderRadius: BorderRadius.circular(12),
+          return GestureDetector(
+            onTap: () => _showInvoiceDetailsBottomSheet(context, inv),
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE6F4EA),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(Icons.receipt_long_rounded, color: Color(0xFF137333), size: 20),
                   ),
-                  child: const Icon(Icons.receipt_long_rounded, color: Color(0xFF137333), size: 20),
-                ),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          inv['title']!,
+                          style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: const Color(0xFF1E293B)),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '${inv['date']} • ${inv['desc']}',
+                          style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        inv['title']!,
-                        style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: const Color(0xFF1E293B)),
+                        inv['amount']!,
+                        style: GoogleFonts.spaceGrotesk(fontSize: 14, fontWeight: FontWeight.bold, color: const Color(0xFF1E293B)),
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        '${inv['date']} • ${inv['desc']}',
-                        style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE6F4EA),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          _t('IMELIPWA', 'PAID'),
+                          style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.bold, color: const Color(0xFF137333)),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      inv['amount']!,
-                      style: GoogleFonts.spaceGrotesk(fontSize: 14, fontWeight: FontWeight.bold, color: const Color(0xFF1E293B)),
-                    ),
-                    const SizedBox(height: 4),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFE6F4EA),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        'PAID',
-                        style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.bold, color: const Color(0xFF137333)),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }).toList(),
