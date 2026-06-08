@@ -109,22 +109,22 @@ class _TenantDashboardState extends State<TenantDashboard> {
       child: Row(
         children: [
           // 1. Premium Avatar with Unsplash photo and gold border
-          Builder(
-            builder: (context) => GestureDetector(
-              onTap: () {
-                Scaffold.of(context).openDrawer();
-              },
-              child: Container(
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFFFE5D37), width: 1.5),
-                ),
-                child: const CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(
-                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop',
-                  ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _currentTab = 3; // Switch directly to the Profile/Mimi tab
+              });
+            },
+            child: Container(
+              padding: const EdgeInsets.all(2),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: const Color(0xFFFE5D37), width: 1.5),
+              ),
+              child: const CircleAvatar(
+                radius: 20,
+                backgroundImage: NetworkImage(
+                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop',
                 ),
               ),
             ),
