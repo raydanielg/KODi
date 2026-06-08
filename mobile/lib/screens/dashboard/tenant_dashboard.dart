@@ -1338,7 +1338,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             return Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
               ),
               child: Column(
                 children: [
