@@ -968,6 +968,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
   }
 
   Widget _buildHomeTabContent() {
+    if (!_isLeaseConnected) {
+      return _buildUnconnectedPlaceholder();
+    }
+
     return RefreshIndicator(
       onRefresh: _loadDashboard,
       color: const Color(0xFFFE5D37),
@@ -994,161 +998,409 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  Widget _buildSearchTabContent() {
-    final properties = [
-      {'title': 'Palm Heights Apartment', 'price': 'TSh 450,000/mo', 'location': 'Mikocheni, Dar es Salaam', 'beds': 2, 'baths': 2, 'image': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300&fit=crop'},
-      {'title': 'Bahari Beach Villa', 'price': 'TSh 1,200,000/mo', 'location': 'Tegeta, Dar es Salaam', 'beds': 4, 'baths': 3, 'image': 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&fit=crop'},
-      {'title': 'Oysterbay Executive Studio', 'price': 'TSh 800,000/mo', 'location': 'Oysterbay, Dar es Salaam', 'beds': 1, 'baths': 1, 'image': 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=300&fit=crop'},
-    ];
-
-    return ListView(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.all(20),
-      children: [
-        Text(
-          'Tafuta Nyumba za Kukodisha',
-          style: GoogleFonts.inter(
-            fontSize: 22,
-            fontWeight: FontWeight.w800,
-            color: const Color(0xFF1E293B),
-          ),
-        ),
-        const SizedBox(height: 16),
-        // Premium Search Bar
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+  Widget _buildUnconnectedPlaceholder() {
+    return Center(
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(24),
+        child: Container(
+          padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: const Color(0xFFE2E8F0)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.02),
+                color: Colors.black.withOpacity(0.01),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
             ],
           ),
-          child: Row(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.search_rounded, color: Color(0xFF64748B)),
-              const SizedBox(width: 12),
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Tafuta kwa eneo au jina...',
-                    hintStyle: GoogleFonts.inter(color: const Color(0xFF94A3B8), fontSize: 13),
-                    border: InputBorder.none,
-                  ),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFF1F0),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.link_off_rounded,
+                  color: Color(0xFFFE5D37),
+                  size: 32,
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.tune_rounded, color: Color(0xFFFE5D37)),
+              const SizedBox(height: 20),
+              Text(
+                _t('Mkataba Haujaunganishwa', 'Lease Not Connected'),
+                style: GoogleFonts.inter(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: const Color(0xFF1E293B),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                _t(
+                  'Ili kuona taarifa za kodi na kulipa, tafadhali unganisha akaunti yako na Mwenye Nyumba wako kwanza.',
+                  'To view rent information and pay bills, please connect your account with your Landlord first.'
+                ),
+                style: GoogleFonts.inter(
+                  fontSize: 12,
+                  color: const Color(0xFF64748B),
+                  fontWeight: FontWeight.w500,
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton.icon(
+                onPressed: () {
+                  setState(() {
+                    _currentTab = 1; // Direct jump to Requests Tab!
+                  });
+                },
+                icon: const Icon(Icons.swap_horiz_rounded, size: 16),
+                label: Text(
+                  _t('Nenda Kwenye Maombi', 'Go to Requests'),
+                  style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFE5D37),
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
+                ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 24),
+      ),
+    );
+  }
+
+  Widget _buildRequestsTabContent() {
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(20),
+      children: [
         Text(
-          'Inayopendekezwa (Recommended)',
+          _t('Maombi ya Mkataba', 'Lease Connection Requests'),
           style: GoogleFonts.inter(
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
             color: const Color(0xFF1E293B),
           ),
         ),
+        const SizedBox(height: 20),
+
+        // Section 1: Incoming Landlord Requests
+        _buildRequestsSectionHeader(_t('MAOMBI MAPYA YA KUINGIA', 'INCOMING LEASE REQUESTS')),
         const SizedBox(height: 12),
-        ...properties.map((prop) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 16),
+        if (_hasIncomingRequest)
+          Container(
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(color: const Color(0xFFE2E8F0)),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.02),
+                  color: Colors.black.withOpacity(0.01),
                   blurRadius: 8,
-                  offset: const Offset(0, 4),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                  child: Image.network(
-                    prop['image'] as String,
-                    height: 160,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFFFF1F0),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.gite_rounded, color: Color(0xFFFE5D37), size: 20),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            _t('Ombi la Mkataba Kutoka kwa Landlord', 'Lease Connection from Landlord'),
+                            style: GoogleFonts.inter(fontSize: 10, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            'Mama Ken',
+                            style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 14),
+                const Divider(color: Color(0xFFF1F5F9), height: 1),
+                const SizedBox(height: 14),
+                _buildRequestInfoRow(_t('Nyumba aliyopo', 'Lease Property'), 'Palm Heights - Apt A4'),
+                _buildRequestInfoRow(_t('Kodi ya Mwezi', 'Monthly Rent'), 'TSh 450,000'),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            _hasIncomingRequest = false;
+                          });
+                          Helpers.showSnackBar(
+                            context,
+                            _t('Ombi la mwenye nyumba limekataliwa.', 'Landlord request declined.'),
+                          );
+                        },
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: const Color(0xFF64748B),
+                          side: const BorderSide(color: Color(0xFFE2E8F0)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                        ),
+                        child: Text(_t('Kataa', 'Decline'), style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 13)),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _isLeaseConnected = true;
+                            _hasIncomingRequest = false;
+                          });
+                          Helpers.showSnackBar(
+                            context,
+                            _t(
+                              'Hongera! Mkataba umeunganishwa kikamilifu. Sasa unaweza kuona nyumba yako na kulipa kodi.',
+                              'Success! Your lease has been connected. You can now access your house stats and pay rent.'
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF10B981), // Solid crisp success green
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          elevation: 0,
+                        ),
+                        child: Text(_t('Kubali', 'Accept'), style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 13)),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              _t('Hakuna maombi mapya ya kuingia.', 'No new incoming lease connection requests.'),
+              style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+            ),
+          ),
+        
+        const SizedBox(height: 28),
+
+        // Section 2: Send request form
+        _buildRequestsSectionHeader(_t('TUMA OMBI KWA MWENYE NYUMBA', 'SEND REQUEST TO LANDLORD')),
+        const SizedBox(height: 12),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0xFFE2E8F0)),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _t('Weka namba ya simu ya Mwenye Nyumba kuomba kuunganishwa', 'Enter Landlord phone number to request a lease connection'),
+                style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500, height: 1.4),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: _phoneInputController,
+                keyboardType: TextInputType.phone,
+                style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: const Color(0xFF1E293B)),
+                decoration: InputDecoration(
+                  hintText: '+255 765 432 109',
+                  hintStyle: GoogleFonts.inter(fontSize: 14, color: const Color(0xFF94A3B8)),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  filled: true,
+                  fillColor: const Color(0xFFF8FAFC),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(color: Color(0xFFFE5D37)),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                onPressed: () {
+                  final phone = _phoneInputController.text.trim();
+                  if (phone.isEmpty) {
+                    Helpers.showSnackBar(
+                      context,
+                      _t('Tafadhali ingiza namba ya simu ya Landlord', 'Please enter Landlord phone number first'),
+                    );
+                    return;
+                  }
+                  setState(() {
+                    _hasPendingSentRequest = true;
+                    _sentRequestPhone = phone;
+                    _phoneInputController.clear();
+                  });
+                  Helpers.showSnackBar(
+                    context,
+                    _t('Ombi limetumwa kwa namba ' + phone, 'Request successfully sent to ' + phone),
+                  );
+                },
+                icon: const Icon(Icons.send_rounded, size: 16),
+                label: Text(_t('Tuma Ombi', 'Send Connection Request'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFFE5D37),
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 44),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  elevation: 0,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 28),
+
+        // Section 3: Pending Sent Requests
+        _buildRequestsSectionHeader(_t('MAOMBI YALIYOTUMWA', 'SENT REQUESTS HISTORY')),
+        const SizedBox(height: 12),
+        if (_hasPendingSentRequest)
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFE2E8F0)),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFEF3C7), // soft amber
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.hourglass_empty_rounded, color: Color(0xFFD97706), size: 18),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            prop['price'] as String,
-                            style: GoogleFonts.spaceGrotesk(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: const Color(0xFFFE5D37),
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              const Icon(Icons.star_rounded, color: Color(0xFFF59E0B), size: 16),
-                              const SizedBox(width: 4),
-                              Text('4.8', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold)),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
                       Text(
-                        prop['title'] as String,
-                        style: GoogleFonts.inter(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w800,
-                          color: const Color(0xFF1E293B),
-                        ),
+                        _t('Inasubiri Uthibitisho', 'Awaiting Confirmation'),
+                        style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
                       ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on_rounded, color: Color(0xFF64748B), size: 12),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              prop['location'] as String,
-                              style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ],
+                      const SizedBox(height: 2),
+                      Text(
+                        _t('Mwenye Nyumba: ', 'Landlord Phone: ') + _sentRequestPhone,
+                        style: GoogleFonts.inter(fontSize: 10, color: const Color(0xFF64748B), fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
                 ),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _hasPendingSentRequest = false;
+                    });
+                    Helpers.showSnackBar(
+                      context,
+                      _t('Ombi la unganisho limefutwa.', 'Connection request canceled.'),
+                    );
+                  },
+                  child: Text(
+                    _t('Ghairi', 'Cancel'),
+                    style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFFEF4444)),
+                  ),
+                ),
               ],
             ),
-          );
-        }).toList(),
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              _t('Hakuna maombi yaliyotumwa kwa sasa.', 'No pending sent connection requests at the moment.'),
+              style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+            ),
+          ),
       ],
     );
   }
 
+  Widget _buildRequestsSectionHeader(String title) {
+    return Text(
+      title,
+      style: GoogleFonts.inter(
+        fontSize: 11,
+        fontWeight: FontWeight.w900,
+        color: const Color(0xFF94A3B8),
+        letterSpacing: 1.0,
+      ),
+    );
+  }
+
+  Widget _buildRequestInfoRow(String label, String val) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w600)),
+          Text(val, style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF1E293B), fontWeight: FontWeight.w800)),
+        ],
+      ),
+    );
+  }
+
   Widget _buildPaymentsTabContent() {
+    if (!_isLeaseConnected) {
+      return _buildUnconnectedPlaceholder();
+    }
+
     final invoices = [
-      {'title': 'Kodi ya Pango - June 2026', 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '05 Jun 2026'},
-      {'title': 'Kodi ya Pango - May 2026', 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '02 May 2026'},
-      {'title': 'Kodi ya Pango - April 2026', 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '01 Apr 2026'},
+      {'title': _t('Kodi ya Pango - June 2026', 'Rent Payment - June 2026'), 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '05 Jun 2026'},
+      {'title': _t('Kodi ya Pango - May 2026', 'Rent Payment - May 2026'), 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '02 May 2026'},
+      {'title': _t('Kodi ya Pango - April 2026', 'Rent Payment - April 2026'), 'desc': 'Palm Heights • Apt A4', 'amount': 'TSh 450,000', 'status': 'Paid', 'date': '01 Apr 2026'},
     ];
 
     return ListView(
@@ -1156,9 +1408,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
       padding: const EdgeInsets.all(20),
       children: [
         Text(
-          'Historia ya Malipo (Invoices)',
+          _t('Historia ya Malipo (Invoices)', 'Payment History (Invoices)'),
           style: GoogleFonts.inter(
-            fontSize: 22,
+            fontSize: 20,
             fontWeight: FontWeight.w800,
             color: const Color(0xFF1E293B),
           ),
@@ -1170,7 +1422,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(color: const Color(0xFFE2E8F0)),
             ),
             child: Row(
