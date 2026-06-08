@@ -320,11 +320,41 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
   Widget _buildQuickServicesSection(BuildContext context) {
     final services = [
-      {'name': 'Umeme', 'icon': Icons.bolt_rounded, 'color': const Color(0xFFF59E0B), 'bg': const Color(0xFFFEF3C7)},
-      {'name': 'Maji', 'icon': Icons.water_drop_rounded, 'color': const Color(0xFF3B82F6), 'bg': const Color(0xFFDBEAFE)},
-      {'name': 'Usafi', 'icon': Icons.delete_outline_rounded, 'color': const Color(0xFF10B981), 'bg': const Color(0xFFD1FAE5)},
-      {'name': 'Ulinzi', 'icon': Icons.shield_outlined, 'color': const Color(0xFFEF4444), 'bg': const Color(0xFFFEE2E2)},
-      {'name': 'Stakabadhi', 'icon': Icons.receipt_long_rounded, 'color': const Color(0xFF6366F1), 'bg': const Color(0xFFE0E7FF)},
+      {
+        'name': 'Umeme',
+        'desc': 'Lipa Token',
+        'icon': Icons.bolt_rounded,
+        'color': const Color(0xFFF59E0B),
+        'gradient': const [Color(0xFFFFFBEB), Color(0xFFFEF3C7)],
+      },
+      {
+        'name': 'Maji',
+        'desc': 'Bili ya Maji',
+        'icon': Icons.water_drop_rounded,
+        'color': const Color(0xFF3B82F6),
+        'gradient': const [Color(0xFFEFF6FF), Color(0xFFDBEAFE)],
+      },
+      {
+        'name': 'Usafi',
+        'desc': 'Garbage fee',
+        'icon': Icons.delete_outline_rounded,
+        'color': const Color(0xFF10B981),
+        'gradient': const [Color(0xFFECFDF5), Color(0xFFD1FAE5)],
+      },
+      {
+        'name': 'Ulinzi',
+        'desc': 'Ulinzi Gate',
+        'icon': Icons.shield_outlined,
+        'color': const Color(0xFFEF4444),
+        'gradient': const [Color(0xFFFEF2F2), Color(0xFFFEE2E2)],
+      },
+      {
+        'name': 'Stakabadhi',
+        'desc': 'Risiti Zote',
+        'icon': Icons.receipt_long_rounded,
+        'color': const Color(0xFF6366F1),
+        'gradient': const [Color(0xFFEEF2FF), Color(0xFFE0E7FF)],
+      },
     ];
 
     return Column(
@@ -338,8 +368,8 @@ class _TenantDashboardState extends State<TenantDashboard> {
               Text(
                 'Huduma za Haraka (Tenant Services)',
                 style: GoogleFonts.inter(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
                 ),
               ),
@@ -347,16 +377,16 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 'Angalia Zote',
                 style: GoogleFonts.inter(
                   fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                   color: const Color(0xFFFE5D37),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 16),
         SizedBox(
-          height: 90,
+          height: 110,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
@@ -364,37 +394,90 @@ class _TenantDashboardState extends State<TenantDashboard> {
             itemCount: services.length,
             itemBuilder: (context, index) {
               final item = services[index];
+              final iconColor = item['color'] as Color;
+              final gradient = item['gradient'] as List<Color>;
+
               return Container(
-                margin: const EdgeInsets.only(right: 20),
-                child: Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Helpers.showSnackBar(context, 'Malipo ya huduma ya ${item['name']} yanashughulikiwa...');
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: item['bg'] as Color,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          item['icon'] as IconData,
-                          color: item['color'] as Color,
-                          size: 24,
-                        ),
+                width: 105,
+                margin: const EdgeInsets.only(right: 12),
+                child: InkWell(
+                  onTap: () {
+                    Helpers.showSnackBar(context, 'Malipo ya huduma ya ${item['name']} yanashughulikiwa...');
+                  },
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: gradient,
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      item['name'] as String,
-                      style: GoogleFonts.inter(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF4B5563),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: iconColor.withOpacity(0.12),
+                        width: 1.5,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: iconColor.withOpacity(0.04),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                  ],
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Icon wrapper with custom premium style (Neumorphic look / Glow effect)
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: iconColor.withOpacity(0.15),
+                                blurRadius: 6,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            item['icon'] as IconData,
+                            color: iconColor,
+                            size: 18,
+                          ),
+                        ),
+                        // Name and small description
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item['name'] as String,
+                              style: GoogleFonts.inter(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w800,
+                                color: const Color(0xFF1E293B),
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              item['desc'] as String,
+                              style: GoogleFonts.inter(
+                                fontSize: 9,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF64748B),
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               );
             },
