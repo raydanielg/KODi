@@ -276,11 +276,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
           Expanded(
             child: ElevatedButton.icon(
               onPressed: () {
-                Helpers.showSnackBar(context, 'Malipo ya kodi yanashughulikiwa...');
+                _showPayRentBottomSheet(context);
               },
               icon: const Icon(Icons.arrow_outward_rounded, size: 18),
               label: Text(
-                'Lipa Kodi',
+                _t('Lipa Kodi', 'Pay Rent'),
                 style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 14),
               ),
               style: ElevatedButton.styleFrom(
