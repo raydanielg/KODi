@@ -1766,12 +1766,12 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  Widget _buildProfileTabContent(UserModel user) {
+  Widget _buildSettingsTabContent(UserModel user) {
     return ListView(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       children: [
-        // 1. Premium Avatar Layout with Edit Camera Overlay Badge
+        // 1. Profile Avatar & Basic Info Card
         Center(
           child: Column(
             children: [
@@ -1784,7 +1784,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       border: Border.all(color: const Color(0xFFFE5D37), width: 1.5),
                     ),
                     child: const CircleAvatar(
-                      radius: 46,
+                      radius: 44,
                       backgroundImage: NetworkImage(
                         'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=100&fit=crop',
                       ),
@@ -1801,7 +1801,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(5),
                         decoration: const BoxDecoration(
                           color: Color(0xFFFE5D37),
                           shape: BoxShape.circle,
@@ -1809,16 +1809,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         child: const Icon(
                           Icons.camera_alt_rounded,
                           color: Colors.white,
-                          size: 16,
+                          size: 14,
                         ),
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
-              
-              // Name, Phone and Role Display
+              const SizedBox(height: 14),
               Text(
                 user.name,
                 style: GoogleFonts.inter(
@@ -1828,59 +1826,116 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 ),
               ),
               const SizedBox(height: 4),
-              Text(
-                user.phone.isNotEmpty ? user.phone : '+255 712 345 678',
-                style: GoogleFonts.inter(
-                  fontSize: 13,
-                  color: const Color(0xFF64748B),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  _t('Mpangaji', 'Tenant'),
-                  style: GoogleFonts.inter(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w800,
-                    color: const Color(0xFF64748B),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    user.phone.isNotEmpty ? user.phone : '+255 712 345 678',
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: const Color(0xFF64748B),
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE6F4EA),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.verified_rounded, color: Color(0xFF137333), size: 10),
+                        const SizedBox(width: 2),
+                        Text(
+                          _t('Kuthibitishwa', 'Verified'),
+                          style: GoogleFonts.inter(fontSize: 8, fontWeight: FontWeight.w800, color: const Color(0xFF137333)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 28),
 
-        // 2. Settings Menu Items
-        _buildProfileSettingTile(
-          icon: Icons.person_outline_rounded,
-          title: _t('Taarifa Binafsi', 'My Personal Info'),
-          subtitle: _t('Taarifa zako na za mwenye nyumba', 'Your details & landlord details'),
-          onTap: () => _showMyInfoBottomSheet(user),
+        // 2. ACCOUNT & SECURITY SECTION
+        _buildSettingsSectionTitle(_t('AKAUTI NA USALAMA', 'ACCOUNT & SECURITY')),
+        const SizedBox(height: 8),
+        _buildInteractiveSettingTile(
+          icon: Icons.lock_outline_rounded,
+          title: _t('Badilisha Nenosiri', 'Change Password'),
+          subtitle: _t('Sasisha nenosiri lako la sasa', 'Update your current login password'),
+          onTap: () => _showChangePasswordDialog(),
         ),
-        _buildProfileSettingTile(
-          icon: Icons.history_edu_rounded,
-          title: _t('Mkataba Wangu', 'My Lease Contract'),
-          subtitle: _t('Angalia na pakua mkataba wako', 'View and download your contract'),
-          onTap: () => _showMyContractBottomSheet(),
+        _buildInteractiveSettingTile(
+          icon: Icons.fingerprint_rounded,
+          title: _t('Ulinzi wa Alama ya Kidole', 'Biometric Login'),
+          subtitle: _t('Fungua app kwa alama ya kidole', 'Unlock app with fingerprint/face ID'),
+          trailing: Switch(
+            value: _biometricEnabled,
+            activeColor: const Color(0xFFFE5D37),
+            onChanged: (val) {
+              setState(() {
+                _biometricEnabled = val;
+              });
+              Helpers.showSnackBar(
+                context,
+                _t(
+                  _biometricEnabled ? 'Biometrisia imewezeshwa.' : 'Biometrisia imezimwa.',
+                  _biometricEnabled ? 'Biometrics enabled.' : 'Biometrics disabled.'
+                ),
+              );
+            },
+          ),
         ),
-        _buildProfileSettingTile(
-          icon: Icons.help_outline_rounded,
-          title: _t('Msaada na Maswali', 'Help & Support FAQs'),
-          subtitle: _t('Maswali ya mara kwa mara na msaada', 'Frequently asked questions & help'),
-          onTap: () => _showSupportBottomSheet(),
+        _buildInteractiveSettingTile(
+          icon: Icons.perm_identity_rounded,
+          title: _t('Kitambulisho cha Taifa (NIDA)', 'National ID (NIDA)'),
+          subtitle: '19950312-XXXXX-XXXXX-XX',
+          trailing: Text(
+            _t('IMETHIBITISHWA', 'VERIFIED'),
+            style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900, color: const Color(0xFF137333)),
+          ),
         ),
         
-        // 3. LANGUAGE SELECTION TILE (Fully Functional!)
-        _buildProfileSettingTile(
+        const SizedBox(height: 20),
+
+        // 3. PAYMENTS & BILLING SECTION
+        _buildSettingsSectionTitle(_t('MALIPO NA BILI', 'PAYMENTS & BILLING')),
+        const SizedBox(height: 8),
+        _buildInteractiveSettingTile(
+          icon: Icons.credit_card_rounded,
+          title: _t('Kadi za Malipo', 'Payment Methods'),
+          subtitle: _t('Visa, Mastercard au namba za simu', 'Saved cards & mobile money accounts'),
+          onTap: () => _showSavedCardsDialog(),
+        ),
+        _buildInteractiveSettingTile(
+          icon: Icons.receipt_rounded,
+          title: _t('Risiti za Kodi Kiotomatiki', 'Auto Tax Receipting'),
+          subtitle: _t('Tuma risiti kwenye barua pepe yako', 'Send digital receipts to your email'),
+          trailing: Switch(
+            value: _autoTaxReceipts,
+            activeColor: const Color(0xFFFE5D37),
+            onChanged: (val) {
+              setState(() {
+                _autoTaxReceipts = val;
+              });
+            },
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        // 4. APP PREFERENCES SECTION
+        _buildSettingsSectionTitle(_t('MAPENDELEO YA PROGRAMU', 'APP PREFERENCES')),
+        const SizedBox(height: 8),
+        _buildInteractiveSettingTile(
           icon: Icons.g_translate_rounded,
-          title: _t('Lugha / Language', 'Lugha / Language'),
+          title: _t('Lugha ya Programu', 'App Language'),
           subtitle: _isEnglish ? 'English' : 'Kiswahili',
           trailing: Switch(
             value: _isEnglish,
@@ -1895,20 +1950,62 @@ class _TenantDashboardState extends State<TenantDashboard> {
               );
             },
           ),
+        ),
+        _buildInteractiveSettingTile(
+          icon: Icons.dark_mode_outlined,
+          title: _t('Hali ya Giza (Dark Mode)', 'Dark Theme'),
+          subtitle: _t('Badilisha mwonekano wa giza', 'Switch screen colors to dark theme'),
+          trailing: Switch(
+            value: _isDarkMode,
+            activeColor: const Color(0xFFFE5D37),
+            onChanged: (val) {
+              setState(() {
+                _isDarkMode = val;
+              });
+              Helpers.showSnackBar(
+                context,
+                _t('Inakuja hivi karibuni!', 'Coming soon!'),
+              );
+            },
+          ),
+        ),
+        _buildInteractiveSettingTile(
+          icon: Icons.notifications_active_outlined,
+          title: _t('Arifa za Kusukuma (Push)', 'Push Notifications'),
+          subtitle: _t('Pokea arifa za kodi na matengenezo', 'Receive alerts for rent due & repairs'),
+          trailing: Switch(
+            value: _pushNotificationsEnabled,
+            activeColor: const Color(0xFFFE5D37),
+            onChanged: (val) {
+              setState(() {
+                _pushNotificationsEnabled = val;
+              });
+            },
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        // 5. LEGAL & SUPPORT SECTION
+        _buildSettingsSectionTitle(_t('MSAADA NA KISHERIA', 'SUPPORT & LEGAL')),
+        const SizedBox(height: 8),
+        _buildInteractiveSettingTile(
+          icon: Icons.gavel_rounded,
+          title: _t('Vigezo na Masharti', 'Terms of Service'),
+          subtitle: _t('Soma vigezo vya matumizi ya app', 'Read our terms of usage'),
           onTap: () {
-            setState(() {
-              _isEnglish = !_isEnglish;
-            });
-            Helpers.showSnackBar(
-              context,
-              _t('Lugha imebadilishwa kuwa Kiswahili', 'Language switched to English'),
-            );
+            Helpers.showSnackBar(context, _t('Inapakia vigezo...', 'Loading terms...'));
           },
         ),
-        
-        const SizedBox(height: 24),
-        
-        // 4. Logout Button (No Emojis, Rounded 12)
+        _buildInteractiveSettingTile(
+          icon: Icons.info_outline_rounded,
+          title: _t('Kuhusu Programu', 'About Manna'),
+          subtitle: _t('Manna App v2.1.0 • Made with Love', 'Manna App v2.1.0 • Made with Love'),
+        ),
+
+        const SizedBox(height: 28),
+
+        // 6. LOGOUT LIST TILE
         Container(
           decoration: BoxDecoration(
             color: const Color(0xFFFEE2E2),
@@ -1946,15 +2043,30 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
-  Widget _buildProfileSettingTile({
+  Widget _buildSettingsSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4, bottom: 4),
+      child: Text(
+        title,
+        style: GoogleFonts.inter(
+          fontSize: 11,
+          fontWeight: FontWeight.w900,
+          color: const Color(0xFF94A3B8),
+          letterSpacing: 1.0,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInteractiveSettingTile({
     required IconData icon,
     required String title,
     required String subtitle,
-    required VoidCallback onTap,
+    VoidCallback? onTap,
     Widget? trailing,
   }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -1973,7 +2085,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         title: Text(
           title,
           style: GoogleFonts.inter(
-            fontSize: 13,
+            fontSize: 12.5,
             fontWeight: FontWeight.w800,
             color: const Color(0xFF1E293B),
           ),
@@ -1986,8 +2098,94 @@ class _TenantDashboardState extends State<TenantDashboard> {
             color: const Color(0xFF64748B),
           ),
         ),
-        trailing: trailing ?? const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)),
+        trailing: trailing ?? (onTap != null ? const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)) : null),
       ),
+    );
+  }
+
+  void _showChangePasswordDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          title: Text(_t('Badilisha Nenosiri', 'Change Password'), style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: _t('Nenosiri la Sasa', 'Current Password'),
+                  labelStyle: GoogleFonts.inter(fontSize: 12),
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: _t('Nenosiri Jipya', 'New Password'),
+                  labelStyle: GoogleFonts.inter(fontSize: 12),
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(_t('Ghairi', 'Cancel'), style: GoogleFonts.inter(color: Colors.grey, fontWeight: FontWeight.bold)),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Helpers.showSnackBar(context, _t('Nenosiri limesasishwa kikamilifu!', 'Password updated successfully!'));
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFFE5D37),
+                elevation: 0,
+              ),
+              child: Text(_t('Hifadhi', 'Save'), style: GoogleFonts.inter(color: Colors.white, fontWeight: FontWeight.bold)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showSavedCardsDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          title: Text(_t('Njia Zilizohifadhiwa', 'Saved Payment Methods'), style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.credit_card, color: Color(0xFFFE5D37)),
+                title: const Text('Visa Card', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                subtitle: const Text('**** **** **** 4242', style: TextStyle(fontSize: 11)),
+                trailing: Text(_t('Kuu', 'Primary'), style: const TextStyle(color: Color(0xFF137333), fontSize: 9, fontWeight: FontWeight.bold)),
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.phone_android_rounded, color: Color(0xFF10B981)),
+                title: const Text('M-Pesa / Vodacom', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                subtitle: const Text('+255 754 *** 321', style: TextStyle(fontSize: 11)),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(_t('Funga', 'Close'), style: GoogleFonts.inter(color: const Color(0xFFFE5D37), fontWeight: FontWeight.bold)),
+            ),
+          ],
+        );
+      },
     );
   }
 
