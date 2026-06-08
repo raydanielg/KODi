@@ -3610,7 +3610,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Huduma Zaidi (More Services)',
+                          _t('Huduma Zaidi', 'More Services'),
                           style: GoogleFonts.inter(
                             fontSize: 18,
                             fontWeight: FontWeight.w800,
@@ -3636,66 +3636,170 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       padding: const EdgeInsets.all(24),
                       children: [
                         // Section 1: Kuomba (Requests)
-                        _buildPanelSectionHeader('MAOMBI YA HUDUMA (REQUESTS)'),
+                        _buildPanelSectionHeader(
+                          _t('MAOMBI YA HUDUMA', 'SERVICE REQUESTS'),
+                        ),
                         const SizedBox(height: 12),
                         _buildPanelItem(
                           context,
                           icon: Icons.plumbing_rounded,
                           color: const Color(0xff3b82f6),
-                          title: 'Omba Mafundi (Maintenance Request)',
-                          subtitle:
-                              'Fungua tiketi ya kurekebisha maji, umeme, nk.',
+                          title: _t('Omba Mafundi', 'Request Repairs'),
+                          subtitle: _t(
+                            'Fungua tiketi ya kurekebisha maji, umeme, nk.',
+                            'Open a ticket for water, electricity, etc. repairs',
+                          ),
                         ),
                         _buildPanelItem(
                           context,
                           icon: Icons.person_add_alt_1_rounded,
                           color: const Color(0xff10b981),
-                          title: 'Sajili Mpangaji Mwenza',
-                          subtitle: 'Ongeza ndugu au rafiki anayeishi nawe',
+                          title: _t('Sajili Mpangaji Mwenza', 'Add Co-Tenant'),
+                          subtitle: _t(
+                            'Ongeza ndugu au rafiki anayeishi nawe',
+                            'Add a family member or friend living with you',
+                          ),
                         ),
                         _buildPanelItem(
                           context,
                           icon: Icons.logout_rounded,
                           color: const Color(0xffef4444),
-                          title: 'Omba Kibali cha Kuhama',
-                          subtitle: 'Tuma taarifa ya kusitisha mkataba',
+                          title: _t('Omba Kibali cha Kuhama', 'Request Move-Out'),
+                          subtitle: _t(
+                            'Tuma taarifa ya kusitisha mkataba',
+                            'Submit notice to terminate your lease',
+                          ),
                         ),
                         _buildPanelItem(
                           context,
                           icon: Icons.discount_rounded,
                           color: const Color(0xfff59e0b),
-                          title: 'Omba Punguzo la Kodi',
-                          subtitle:
-                              'Tuma ombi la majadiliano ya bei na Landlord',
+                          title: _t('Omba Punguzo la Kodi', 'Request Rent Discount'),
+                          subtitle: _t(
+                            'Tuma ombi la majadiliano ya bei na Landlord',
+                            'Send a request to negotiate rent with Landlord',
+                          ),
                         ),
                         const SizedBox(height: 24),
 
                         // Section 2: Kuangalia (Views)
                         _buildPanelSectionHeader(
-                          'TAARIFA NA NYARAKA (VIEW INFO)',
+                          _t('TAARIFA NA NYARAKA', 'INFO & DOCUMENTS'),
                         ),
                         const SizedBox(height: 12),
                         _buildPanelItem(
                           context,
                           icon: Icons.gavel_rounded,
                           color: const Color(0xff6366f1),
-                          title: 'Sheria za Nyumba (House Rules)',
-                          subtitle: 'Angalia kanuni na taratibu za mpangaji',
+                          title: _t('Sheria za Nyumba', 'House Rules'),
+                          subtitle: _t(
+                            'Angalia kanuni na taratibu za mpangaji',
+                            'View tenant rules and regulations',
+                          ),
                         ),
                         _buildPanelItem(
                           context,
                           icon: Icons.receipt_long_rounded,
                           color: const Color(0xff06b6d4),
-                          title: 'Nyaraka za Mikataba',
-                          subtitle: 'Pakua na kusoma mikataba yako yote',
+                          title: _t('Nyaraka za Mikataba', 'Lease Documents'),
+                          subtitle: _t(
+                            'Pakua na kusoma mikataba yako yote',
+                            'Download and read all your lease contracts',
+                          ),
                         ),
                         _buildPanelItem(
                           context,
                           icon: Icons.contact_emergency_rounded,
                           color: const Color(0xffec4899),
-                          title: 'Namba za Dharura',
-                          subtitle:
-                              'Namba za ulinzi, zima moto, dharura za daktari',
+                          title: _t('Namba za Dharura', 'Emergency Contacts'),
+                          subtitle: _t(
+                            'Namba za ulinzi, zima moto, dharura za daktari',
+                            'Security, fire, and medical emergency numbers',
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+
+                        // Section 3: Malipo na Bili (Payments & Bills)
+                        _buildPanelSectionHeader(
+                          _t('MALIPO NA BILI', 'PAYMENTS & BILLS'),
+                        ),
+                        const SizedBox(height: 12),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.bolt_rounded,
+                          color: const Color(0xfff59e0b),
+                          title: _t('Lipa Umeme', 'Pay Electricity'),
+                          subtitle: _t(
+                            'Nunua token ya TANESCO na lipa bili',
+                            'Buy TANESCO token and pay electricity bill',
+                          ),
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.water_drop_rounded,
+                          color: const Color(0xff3b82f6),
+                          title: _t('Lipa Maji', 'Pay Water Bill'),
+                          subtitle: _t(
+                            'Lipa bili ya maji na ukaguzi wa mita',
+                            'Pay water bill and meter readings',
+                          ),
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.delete_outline_rounded,
+                          color: const Color(0xff10b981),
+                          title: _t('Lipa Usafi', 'Pay Garbage'),
+                          subtitle: _t(
+                            'Lipa bili ya taka na huduma za usafi',
+                            'Pay garbage collection and cleaning services',
+                          ),
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.security_rounded,
+                          color: const Color(0xffef4444),
+                          title: _t('Lipa Ulinzi', 'Pay Security'),
+                          subtitle: _t(
+                            'Lipa ada ya ulinzi na mlinzi wa gate',
+                            'Pay security fee and gate guard services',
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+
+                        // Section 4: Mawasiliano (Communication)
+                        _buildPanelSectionHeader(
+                          _t('MAWASILIANO', 'COMMUNICATION'),
+                        ),
+                        const SizedBox(height: 12),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.phone_in_talk_rounded,
+                          color: const Color(0xff10b981),
+                          title: _t('Piga Simu kwa Mwenye Nyumba', 'Call Landlord'),
+                          subtitle: _t(
+                            'Wasiliana moja kwa moja na Mwenye Nyumba',
+                            'Contact your Landlord directly',
+                          ),
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.chat_bubble_outline_rounded,
+                          color: const Color(0xff3b82f6),
+                          title: _t('Tuma Ujumbe', 'Send Message'),
+                          subtitle: _t(
+                            'Tuma ujumbe kwa Mwenye Nyumba au Wakala',
+                            'Send a message to Landlord or Agent',
+                          ),
+                        ),
+                        _buildPanelItem(
+                          context,
+                          icon: Icons.support_agent_rounded,
+                          color: const Color(0xff6366f1),
+                          title: _t('Msaada wa Mteja', 'Customer Support'),
+                          subtitle: _t(
+                            'Pata msaada na ushauri kutoka timu yetu',
+                            'Get help and advice from our support team',
+                          ),
                         ),
                       ],
                     ),
@@ -3740,7 +3844,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
           Navigator.pop(context);
           Helpers.showSnackBar(
             context,
-            'Ombi la "$title" limeshirikishwa kikamilifu!',
+            _t(
+              'Ombi la "$title" limeshirikishwa kikamilifu!',
+              'Request for "$title" submitted successfully!',
+            ),
           );
         },
         leading: Container(
