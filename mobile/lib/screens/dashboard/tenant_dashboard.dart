@@ -23,6 +23,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
   DashboardStatsModel? _stats;
   bool _isLoading = true;
   int _currentTab = 0;
+  bool _isEnglish = false; // Language Toggler State (Default Swahili)
+
+  String _t(String sw, String en) {
+    return _isEnglish ? en : sw;
+  }
 
   @override
   void initState() {
