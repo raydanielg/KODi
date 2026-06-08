@@ -265,7 +265,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 elevation: 0,
               ),
@@ -289,7 +289,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 foregroundColor: const Color(0xFF1E293B),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
+                  borderRadius: BorderRadius.circular(12),
                   side: const BorderSide(color: Color(0xFFE2E8F0), width: 1),
                 ),
                 elevation: 0,
@@ -308,7 +308,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               backgroundColor: Colors.white,
               padding: const EdgeInsets.all(16),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(12),
                 side: const BorderSide(color: Color(0xFFE2E8F0), width: 1),
               ),
             ),
