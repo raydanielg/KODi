@@ -325,35 +325,30 @@ class _TenantDashboardState extends State<TenantDashboard> {
         'desc': 'Lipa Token',
         'icon': Icons.bolt_rounded,
         'color': const Color(0xFFF59E0B),
-        'gradient': const [Color(0xFFFFFBEB), Color(0xFFFEF3C7)],
       },
       {
         'name': 'Maji',
         'desc': 'Bili ya Maji',
         'icon': Icons.water_drop_rounded,
         'color': const Color(0xFF3B82F6),
-        'gradient': const [Color(0xFFEFF6FF), Color(0xFFDBEAFE)],
       },
       {
         'name': 'Usafi',
-        'desc': 'Garbage fee',
+        'desc': 'Garbage',
         'icon': Icons.delete_outline_rounded,
         'color': const Color(0xFF10B981),
-        'gradient': const [Color(0xFFECFDF5), Color(0xFFD1FAE5)],
       },
       {
         'name': 'Ulinzi',
         'desc': 'Ulinzi Gate',
         'icon': Icons.shield_outlined,
         'color': const Color(0xFFEF4444),
-        'gradient': const [Color(0xFFFEF2F2), Color(0xFFFEE2E2)],
       },
       {
         'name': 'Stakabadhi',
         'desc': 'Risiti Zote',
         'icon': Icons.receipt_long_rounded,
         'color': const Color(0xFF6366F1),
-        'gradient': const [Color(0xFFEEF2FF), Color(0xFFE0E7FF)],
       },
     ];
 
@@ -368,7 +363,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               Text(
                 'Huduma za Haraka (Tenant Services)',
                 style: GoogleFonts.inter(
-                  fontSize: 15,
+                  fontSize: 14,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
                 ),
@@ -384,9 +379,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 14),
         SizedBox(
-          height: 110,
+          height: 100,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
@@ -394,8 +389,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             itemCount: services.length,
             itemBuilder: (context, index) {
               final item = services[index];
-              final iconColor = item['color'] as Color;
-              final gradient = item['gradient'] as List<Color>;
+              final brandColor = item['color'] as Color;
 
               return Container(
                 width: 105,
@@ -404,76 +398,64 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   onTap: () {
                     Helpers.showSnackBar(context, 'Malipo ya huduma ya ${item['name']} yanashughulikiwa...');
                   },
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(16),
                   child: Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: gradient,
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: iconColor.withOpacity(0.12),
-                        width: 1.5,
+                        color: const Color(0xFFE2E8F0), // Crisp, high-contrast subtle border
+                        width: 1,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: iconColor.withOpacity(0.04),
-                          blurRadius: 8,
+                          color: Colors.black.withOpacity(0.02),
+                          blurRadius: 10,
                           offset: const Offset(0, 4),
                         ),
                       ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Icon wrapper with custom premium style (Neumorphic look / Glow effect)
+                        // Highly premium squircle container for icon (Apple/Stripe style)
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: iconColor.withOpacity(0.15),
-                                blurRadius: 6,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
+                            color: brandColor.withOpacity(0.08), // Pastel accent background
+                            borderRadius: BorderRadius.circular(12), // Squircle shape
+                            border: Border.all(
+                              color: brandColor.withOpacity(0.16),
+                              width: 1,
+                            ),
                           ),
                           child: Icon(
                             item['icon'] as IconData,
-                            color: iconColor,
+                            color: brandColor,
                             size: 18,
                           ),
                         ),
-                        // Name and small description
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item['name'] as String,
-                              style: GoogleFonts.inter(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w800,
-                                color: const Color(0xFF1E293B),
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              item['desc'] as String,
-                              style: GoogleFonts.inter(
-                                fontSize: 9,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF64748B),
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                        const Spacer(),
+                        // Name and short description
+                        Text(
+                          item['name'] as String,
+                          style: GoogleFonts.inter(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            color: const Color(0xFF1E293B),
+                          ),
+                        ),
+                        const SizedBox(height: 1),
+                        Text(
+                          item['desc'] as String,
+                          style: GoogleFonts.inter(
+                            fontSize: 9,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF64748B),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
