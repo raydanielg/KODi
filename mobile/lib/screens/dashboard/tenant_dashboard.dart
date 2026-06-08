@@ -19,14 +19,27 @@ class TenantDashboard extends StatefulWidget {
 class _TenantDashboardState extends State<TenantDashboard> {
   final AuthService _authService = AuthService();
   final DashboardService _dashboardService = DashboardService();
+  final TextEditingController _phoneInputController = TextEditingController();
 
   DashboardStatsModel? _stats;
   bool _isLoading = true;
   int _currentTab = 0;
   bool _isEnglish = false; // Language Toggler State (Default Swahili)
+  
+  // Lease Connection Flow States
+  bool _isLeaseConnected = false; 
+  bool _hasIncomingRequest = true; 
+  bool _hasPendingSentRequest = false;
+  String _sentRequestPhone = '';
 
   String _t(String sw, String en) {
     return _isEnglish ? en : sw;
+  }
+
+  @override
+  void dispose() {
+    _phoneInputController.dispose();
+    super.dispose();
   }
 
   @override
