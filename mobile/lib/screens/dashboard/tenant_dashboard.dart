@@ -889,7 +889,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       case 0:
         return _buildHomeTabContent();
       case 1:
-        return _buildSearchTabContent();
+        return _buildRequestsTabContent(); // Custom requests connection router
       case 2:
         return _buildPaymentsTabContent();
       case 3:
@@ -901,10 +901,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
   Widget _buildBottomNavigationBar() {
     final items = [
-      {'icon': Icons.home_rounded, 'label': 'Nyumbani'},
-      {'icon': Icons.explore_rounded, 'label': 'Tafuta'},
-      {'icon': Icons.receipt_long_rounded, 'label': 'Malipo'},
-      {'icon': Icons.person_rounded, 'label': 'Mimi'},
+      {'icon': Icons.home_rounded, 'label': _t('Nyumbani', 'Home')},
+      {'icon': Icons.swap_horiz_rounded, 'label': _t('Maombi', 'Requests')},
+      {'icon': Icons.receipt_long_rounded, 'label': _t('Malipo', 'Payments')},
+      {'icon': Icons.person_rounded, 'label': _t('Wasifu', 'Profile')},
     ];
 
     return Container(
