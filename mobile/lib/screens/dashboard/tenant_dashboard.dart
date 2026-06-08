@@ -1958,3 +1958,246 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 }
+
+class FullscreenPdfViewerPage extends StatelessWidget {
+  final bool isEnglish;
+  final UserModel user;
+
+  const FullscreenPdfViewerPage({Key? key, required this.isEnglish, required this.user}) : super(key: key);
+
+  String _t(String sw, String en) {
+    return isEnglish ? en : sw;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFF525659), // Realistic dark grey PDF viewer background
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF323639), // Dark chrome bar
+        foregroundColor: Colors.white,
+        elevation: 4,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'mkataba_pango_MNA4.pdf',
+              style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              _t('Uhakiki wa Mkataba • Kurasa 1 ya 1', 'Contract Preview • Page 1 of 1'),
+              style: GoogleFonts.inter(fontSize: 10, color: const Color(0xFFCBD5E1)),
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share_rounded, size: 20),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.print_rounded, size: 20),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+          child: Center(
+            child: AspectRatio(
+              aspectRatio: 0.707, // Standard A4 Aspect Ratio (highly realistic!)
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(4), // Realistic paper sharp corners
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 16,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Official Government/Authority Header (Realistic Seal Logo Mockup)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'MANNA REAL ESTATE LTD',
+                              style: GoogleFonts.spaceGrotesk(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w900,
+                                color: const Color(0xFFFE5D37),
+                                letterSpacing: 1.5,
+                              ),
+                            ),
+                            Text(
+                              _t('Mikocheni, Dar es Salaam, Tanzania', 'Mikocheni, Dar es Salaam, Tanzania'),
+                              style: GoogleFonts.inter(fontSize: 8, fontWeight: FontWeight.w500, color: Colors.grey[500]),
+                            ),
+                          ],
+                        ),
+                        // Circular Stamp representation on top
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: const Color(0xFFFE5D37).withOpacity(0.25), width: 1.5),
+                          ),
+                          child: const Icon(Icons.verified_user_rounded, color: Color(0xFFFE5D37), size: 18),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                    const Divider(color: Colors.black87, thickness: 1.2),
+                    const SizedBox(height: 14),
+                    
+                    // Main Title
+                    Center(
+                      child: Text(
+                        _t('MKATABA WA KUKODISHA NYUMBA YA MAKAZI', 'RESIDENTIAL LEASE AGREEMENT'),
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black87,
+                          letterSpacing: 0.5,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    
+                    // Section 1: Parties Involved
+                    _buildDocSectionHeader(_t('1. PANDE HUSIKA (PARTIES)', '1. CONTRACT PARTIES')),
+                    const SizedBox(height: 6),
+                    _buildDocParagraph(
+                      _t(
+                        'Mkataba huu umeingia leo tarehe 01 Jan 2025 kati ya Mwenye Nyumba: MAMA KEN (Miliki) na Mpangaji: ${user.name.toUpperCase()} (Mteja).',
+                        'This Lease Agreement is made on 01 Jan 2025 between Landlord: MAMA KEN (Owner) and Tenant: ${user.name.toUpperCase()} (Client).'
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    
+                    // Section 2: Property Description
+                    _buildDocSectionHeader(_t('2. NYUMBA NA KODI (PROPERTY & RENT)', '2. PROPERTY & RENT DETAILS')),
+                    const SizedBox(height: 6),
+                    _buildDocParagraph(
+                      _t(
+                        'Mpangaji amekodishiwa nyumba ya makazi (Palm Heights - Apt A4) iliyopo Mikocheni, kwa kodi ya TSh 450,000 kwa mwezi inayolipwa kila tarehe 5 ya kila mwezi.',
+                        'The Landlord leases to the Tenant residential unit (Palm Heights - Apt A4) situated in Mikocheni, for a monthly rent of TSh 450,000 payable on the 5th of each month.'
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    
+                    // Section 3: Terms and conditions table
+                    _buildDocSectionHeader(_t('3. MASHARTI MAALUM (TERMS & CONDITIONS)', '3. TERMS & CONDITIONS')),
+                    const SizedBox(height: 6),
+                    _buildDocTermRow('1.', _t('Kodi ilipwe kwa wakati kila mwezi.', 'Rent must be paid strictly on time.')),
+                    _buildDocTermRow('2.', _t('Hakuna ruhusa ya kufuga wanyama yoyote.', 'No pets are allowed inside the premises.')),
+                    _buildDocTermRow('3.', _t('Mteja atalipia bili ya umeme na maji ya matumizi yake.', 'Tenant is fully responsible for electricity & water utility bills.')),
+                    const Spacer(),
+                    
+                    // Signatures & Official Stamp
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _t('Sahihi ya Mwenye Nyumba:', 'Landlord Signature:'),
+                              style: GoogleFonts.inter(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                            ),
+                            const SizedBox(height: 12),
+                            // Simulated handwriting signature
+                            Text(
+                              'Mama Ken',
+                              style: GoogleFonts.dancingScript(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue[900]),
+                            ),
+                            Container(width: 80, height: 1, color: Colors.black45),
+                          ],
+                        ),
+                        // Official Stamp Seal image representation
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: const Color(0xFFFE5D37).withOpacity(0.6), width: 1.5),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            _t('IMETHIBITISHWA\nMANNA ESTATE', 'APPROVED\nMANNA ESTATE'),
+                            style: GoogleFonts.inter(fontSize: 7, fontWeight: FontWeight.w900, color: const Color(0xFFFE5D37)),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _t('Sahihi ya Mpangaji:', 'Tenant Signature:'),
+                              style: GoogleFonts.inter(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              user.name.split(' ').first,
+                              style: GoogleFonts.dancingScript(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue[900]),
+                            ),
+                            Container(width: 80, height: 1, color: Colors.black45),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDocSectionHeader(String title) {
+    return Text(
+      title,
+      style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w900, color: Colors.black87, letterSpacing: 0.5),
+    );
+  }
+
+  Widget _buildDocParagraph(String text) {
+    return Text(
+      text,
+      style: GoogleFonts.inter(fontSize: 8.5, color: Colors.black54, height: 1.4, fontWeight: FontWeight.w500),
+      textAlign: TextAlign.justify,
+    );
+  }
+
+  Widget _buildDocTermRow(String index, String term) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('$index ', style: GoogleFonts.inter(fontSize: 8.5, fontWeight: FontWeight.bold, color: Colors.black87)),
+          const SizedBox(width: 4),
+          Expanded(
+            child: Text(
+              term,
+              style: GoogleFonts.inter(fontSize: 8.5, color: Colors.black54, height: 1.3, fontWeight: FontWeight.w500),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
