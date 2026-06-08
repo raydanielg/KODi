@@ -893,7 +893,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
         color: const Color(0xFF0D0F12), // Sleek Dark Floating Bar from Mockup
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.18),
@@ -919,7 +919,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
                 color: isSelected ? const Color(0xFFFE5D37) : Colors.transparent, // sliding capsule
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
