@@ -1219,34 +1219,72 @@ class _TenantDashboardState extends State<TenantDashboard> {
   Widget _buildProfileTabContent(UserModel user) {
     return ListView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       children: [
-        // Profile Info Card
+        // 1. Premium Avatar Layout with Edit Camera Overlay Badge
         Center(
           child: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFFFE5D37), width: 2),
-                ),
-                child: const CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(
-                    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=100&fit=crop',
+              Stack(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: const Color(0xFFFE5D37), width: 1.5),
+                    ),
+                    child: const CircleAvatar(
+                      radius: 46,
+                      backgroundImage: NetworkImage(
+                        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=100&fit=crop',
+                      ),
+                    ),
                   ),
-                ),
+                  Positioned(
+                    bottom: 0,
+                    right: 4,
+                    child: GestureDetector(
+                      onTap: () {
+                        Helpers.showSnackBar(
+                          context,
+                          _t('Tafadhali chagua picha kutoka kwenye maktaba...', 'Please select a photo from your gallery...'),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFFE5D37),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.camera_alt_rounded,
+                          color: Colors.white,
+                          size: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
+              
+              // Name, Phone and Role Display
               Text(
                 user.name,
-                style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: const Color(0xFF1E293B),
+                ),
               ),
               const SizedBox(height: 4),
               Text(
-                user.email,
-                style: GoogleFonts.inter(fontSize: 13, color: const Color(0xFF64748B), fontWeight: FontWeight.w500),
+                user.phone.isNotEmpty ? user.phone : '+255 712 345 678',
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  color: const Color(0xFF64748B),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 8),
               Container(
@@ -1256,62 +1294,124 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  user.roleLabel,
-                  style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.bold, color: const Color(0xFF64748B)),
+                  _t('Mpangaji', 'Tenant'),
+                  style: GoogleFonts.inter(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w800,
+                    color: const Color(0xFF64748B),
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 28),
-        // Settings Menu
-        _buildProfileMenuItem(icon: Icons.person_outline_rounded, label: 'Taarifa Binafsi (My Info)', color: const Color(0xFF1E293B)),
-        _buildProfileMenuItem(icon: Icons.credit_card_rounded, label: 'Kadi za Malipo (Payment Methods)', color: const Color(0xFF1E293B)),
-        _buildProfileMenuItem(icon: Icons.history_edu_rounded, label: 'Mkataba Wangu (My Lease Contract)', color: const Color(0xFF1E293B)),
-        _buildProfileMenuItem(icon: Icons.help_outline_rounded, label: 'Msaada na Maswali (Support)', color: const Color(0xFF1E293B)),
-        const SizedBox(height: 20),
-        // Logout Button
-        ListTile(
-          onTap: () async {
-            final confirm = await Helpers.showConfirmationDialog(
+        const SizedBox(height: 32),
+
+        // 2. Settings Menu Items
+        _buildProfileSettingTile(
+          icon: Icons.person_outline_rounded,
+          title: _t('Taarifa Binafsi', 'My Personal Info'),
+          subtitle: _t('Taarifa zako na za mwenye nyumba', 'Your details & landlord details'),
+          onTap: () => _showMyInfoBottomSheet(user),
+        ),
+        _buildProfileSettingTile(
+          icon: Icons.history_edu_rounded,
+          title: _t('Mkataba Wangu', 'My Lease Contract'),
+          subtitle: _t('Angalia na pakua mkataba wako', 'View and download your contract'),
+          onTap: () => _showMyContractBottomSheet(),
+        ),
+        _buildProfileSettingTile(
+          icon: Icons.help_outline_rounded,
+          title: _t('Msaada na Maswali', 'Help & Support FAQs'),
+          subtitle: _t('Maswali ya mara kwa mara na msaada', 'Frequently asked questions & help'),
+          onTap: () => _showSupportBottomSheet(),
+        ),
+        
+        // 3. LANGUAGE SELECTION TILE (Fully Functional!)
+        _buildProfileSettingTile(
+          icon: Icons.g_translate_rounded,
+          title: _t('Lugha / Language', 'Lugha / Language'),
+          subtitle: _isEnglish ? 'English' : 'Kiswahili',
+          trailing: Switch(
+            value: _isEnglish,
+            activeColor: const Color(0xFFFE5D37),
+            onChanged: (val) {
+              setState(() {
+                _isEnglish = val;
+              });
+              Helpers.showSnackBar(
+                context,
+                _t('Lugha imebadilishwa kuwa Kiswahili', 'Language switched to English'),
+              );
+            },
+          ),
+          onTap: () {
+            setState(() {
+              _isEnglish = !_isEnglish;
+            });
+            Helpers.showSnackBar(
               context,
-              title: 'Kutoka Kwenye App',
-              message: 'Je, una uhakika unataka kutoka kwenye akaunti yako?',
-              confirmText: 'Kutoka',
-              cancelText: 'Baki hapa',
+              _t('Lugha imebadilishwa kuwa Kiswahili', 'Language switched to English'),
             );
-            if (confirm) {
-              await _authService.logout();
-              if (mounted) {
-                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
-              }
-            }
           },
-          leading: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: const BoxDecoration(
-              color: Color(0xFFFEE2E2),
-              shape: BoxShape.circle,
+        ),
+        
+        const SizedBox(height: 24),
+        
+        // 4. Logout Button (No Emojis, Rounded 12)
+        Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFFFEE2E2),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: ListTile(
+            onTap: () async {
+              final confirm = await Helpers.showConfirmationDialog(
+                context,
+                title: _t('Kutoka Kwenye App', 'Logout'),
+                message: _t('Je, una uhakika unataka kutoka kwenye akaunti yako?', 'Are you sure you want to log out of your account?'),
+                confirmText: _t('Kutoka', 'Logout'),
+                cancelText: _t('Baki hapa', 'Cancel'),
+              );
+              if (confirm) {
+                await _authService.logout();
+                if (mounted) {
+                  Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+                }
+              }
+            },
+            leading: const Icon(Icons.logout_rounded, color: Color(0xFFEF4444), size: 20),
+            title: Text(
+              _t('Kutoka Kwenye Akaunti', 'Logout Account'),
+              style: GoogleFonts.inter(
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+                color: const Color(0xFFEF4444),
+              ),
             ),
-            child: const Icon(Icons.logout_rounded, color: Color(0xFFEF4444), size: 20),
+            trailing: const Icon(Icons.chevron_right_rounded, color: Color(0xFFEF4444)),
           ),
-          title: Text(
-            'Kutoka Kwenye Akaunti (Logout)',
-            style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: const Color(0xFFEF4444)),
-          ),
-          trailing: const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)),
         ),
       ],
     );
   }
 
-  Widget _buildProfileMenuItem({required IconData icon, required String label, required Color color}) {
+  Widget _buildProfileSettingTile({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+    Widget? trailing,
+  }) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFE2E8F0)),
+      ),
       child: ListTile(
-        onTap: () {
-          Helpers.showSnackBar(context, 'Kazi ya "$label" inakuja hivi karibuni!');
-        },
+        onTap: onTap,
         leading: Container(
           padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
@@ -1321,10 +1421,384 @@ class _TenantDashboardState extends State<TenantDashboard> {
           child: Icon(icon, color: const Color(0xFF64748B), size: 20),
         ),
         title: Text(
-          label,
-          style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: color),
+          title,
+          style: GoogleFonts.inter(
+            fontSize: 13,
+            fontWeight: FontWeight.w800,
+            color: const Color(0xFF1E293B),
+          ),
         ),
-        trailing: const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)),
+        subtitle: Text(
+          subtitle,
+          style: GoogleFonts.inter(
+            fontSize: 10,
+            fontWeight: FontWeight.w500,
+            color: const Color(0xFF64748B),
+          ),
+        ),
+        trailing: trailing ?? const Icon(Icons.chevron_right_rounded, color: Color(0xFF94A3B8)),
+      ),
+    );
+  }
+
+  void _showMyInfoBottomSheet(UserModel user) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(24),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(2.5),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  _t('Taarifa Binafsi', 'My Personal Info'),
+                  style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                ),
+                const SizedBox(height: 20),
+                
+                // Section 1: My Details
+                _buildInfoSectionHeader(_t('TAARIFA ZANGU', 'MY DETAILS')),
+                const SizedBox(height: 8),
+                _buildInfoRow(_t('Jina Kamili', 'Full Name'), user.name),
+                _buildInfoRow(_t('Barua Pepe', 'Email Address'), user.email),
+                _buildInfoRow(_t('Namba ya Simu', 'Phone Number'), user.phone.isNotEmpty ? user.phone : '+255 712 345 678'),
+                _buildInfoRow(_t('Namba ya NIDA', 'National ID (NIDA)'), '19950312-XXXXX-XXXXX-XX'),
+                _buildInfoRow(_t('Mwanzo wa Pango', 'Tenant Since'), '01 Jan 2025'),
+                
+                const SizedBox(height: 24),
+                
+                // Section 2: Landlord Details
+                _buildInfoSectionHeader(_t('TAARIFA ZA MWENYE NYUMBA', 'LANDLORD DETAILS')),
+                const SizedBox(height: 8),
+                _buildInfoRow(_t('Jina la Landlord', 'Landlord Name'), 'Mama Ken'),
+                _buildInfoRow(_t('Namba ya Simu', 'Phone Number'), '+255 765 432 109'),
+                _buildInfoRow(_t('Nyumba / Ghorofa', 'Apartment Unit'), 'Palm Heights - Apt A4'),
+                _buildInfoRow(_t('Eneo', 'Location'), 'Mikochem, Dar es Salaam'),
+                
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFE5D37),
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    elevation: 0,
+                  ),
+                  child: Text(_t('Funga', 'Close'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showMyContractBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(24),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(2.5),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                _t('Mkataba Wangu', 'My Lease Contract'),
+                style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+              ),
+              const SizedBox(height: 20),
+              
+              _buildInfoRow(_t('Namba ya Mkataba', 'Contract ID'), 'MNA-2025-A4'),
+              _buildInfoRow(_t('Muda wa Mkataba', 'Lease Period'), '12 ' + _t('Miezi', 'Months') + ' (01 Jan 2025 - 31 Dec 2026)'),
+              _buildInfoRow(_t('Kodi ya Mwezi', 'Monthly Rent'), 'TSh 450,000'),
+              _buildInfoRow(_t('Dhamana ya Nyumba', 'Security Deposit'), 'TSh 900,000'),
+              _buildInfoRow(_t('Hali ya Mkataba', 'Contract Status'), 'ACTIVE'),
+              
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _showMockPdfPreviewDialog();
+                      },
+                      icon: const Icon(Icons.picture_as_pdf_rounded, size: 18),
+                      label: Text(_t('Hakiki PDF', 'Preview')),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: const Color(0xFFFE5D37),
+                        side: const BorderSide(color: Color(0xFFFE5D37)),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _handlePdfDownload();
+                      },
+                      icon: const Icon(Icons.file_download_rounded, size: 18),
+                      label: Text(_t('Pakua', 'Download')),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFE5D37),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        elevation: 0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showMockPdfPreviewDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          title: Text(_t('Hakiki ya Mkataba (PDF)', 'Contract PDF Preview'), style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
+          content: Container(
+            width: double.maxFinite,
+            height: 300,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF1F5F9),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFE2E8F0)),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Text(
+                      _t('MKATABA WA PANGO LA NYUMBA', 'LEASE AGREEMENT'),
+                      style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    _t('KATI YA:\nMwenye Nyumba (Mama Ken)\n\nNA:\nMpangaji (Mteja)', 'BETWEEN:\nLandlord (Mama Ken)\n\nAND:\nTenant (Client)'),
+                    style: GoogleFonts.inter(fontSize: 10, color: Colors.black54),
+                  ),
+                  const Divider(height: 24),
+                  Text(
+                    _t('MASHARTI NA TARATIBU:\n1. Kodi ilipwe kabla ya tarehe 5 kila mwezi.\n2. Hakuna ruhusa ya kufuga wanyama.\n3. Utunzaji wa nyumba ni jukumu la mpangaji.', 'TERMS & CONDITIONS:\n1. Rent must be paid before the 5th of each month.\n2. No pets are allowed.\n3. House maintenance is the tenant\'s responsibility.'),
+                    style: GoogleFonts.inter(fontSize: 10, color: Colors.black54, height: 1.5),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(_t('Funga', 'Close'), style: GoogleFonts.inter(color: const Color(0xFFFE5D37), fontWeight: FontWeight.bold)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _handlePdfDownload() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.pop(context);
+          Helpers.showSnackBar(
+            context,
+            _t('Mkataba umepakuliwa kikamilifu: MNA-2025-A4.pdf', 'Contract downloaded successfully: MNA-2025-A4.pdf'),
+          );
+        });
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          content: Row(
+            children: [
+              const CircularProgressIndicator(color: Color(0xFFFE5D37)),
+              const SizedBox(width: 20),
+              Expanded(
+                child: Text(
+                  _t('Inapakua mkataba kama PDF...', 'Downloading contract as PDF...'),
+                  style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showSupportBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(24),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(2.5),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  _t('Msaada na Maswali', 'Help & Support FAQs'),
+                  style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w800, color: const Color(0xFF1E293B)),
+                ),
+                const SizedBox(height: 20),
+                
+                // FAQs
+                _buildInfoSectionHeader(_t('MASWALI YA MARA KWA MARA', 'FREQUENTLY ASKED QUESTIONS')),
+                const SizedBox(height: 10),
+                _buildFaqItem(_t('Nalipaje kodi ya mwezi?', 'How do I pay monthly rent?'), _t('Bonyeza kitufe cha "Lipa Kodi" kwenye skrini kuu ili kufanya malipo ya kodi kupitia mitandao ya simu au benki.', 'Tap the "Lipa Kodi" button on the home screen to pay your rent via mobile money or bank transfer.')),
+                _buildFaqItem(_t('Nikitaka mafundi inakuwaje?', 'How do I request repairs?'), _t('Tuma ombi kupitia kitufe cha "Omba Fundi" au nenda kwenye huduma zaidi kupata fundi husika wa maji, umeme nk.', 'Send a request via the "Omba Fundi" button or go to More Services to request a specific plumber, electrician, etc.')),
+                _buildFaqItem(_t('Nitapakua wapi risiti yangu?', 'Where can I download my receipt?'), _t('Nenda kwenye ukurasa wa "Malipo" kupata list ya risiti zako zote na kuzipakua kama PDF.', 'Go to the "Payments" tab to see all your invoices and download them as PDF.')),
+                
+                const SizedBox(height: 24),
+                
+                // Emergency Actions
+                _buildInfoSectionHeader(_t('MAWASILIANO YA DHARURA', 'EMERGENCY CONTACTS')),
+                const SizedBox(height: 10),
+                ListTile(
+                  onTap: () {
+                    Helpers.showSnackBar(context, _t('Inapiga simu kwa Mwenye Nyumba: +255 765 432 109', 'Calling Landlord: +255 765 432 109'));
+                  },
+                  leading: const Icon(Icons.phone_in_talk_rounded, color: Color(0xFF10B981)),
+                  title: Text(_t('Piga simu kwa Landlord', 'Call Landlord'), style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.bold)),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                ),
+                ListTile(
+                  onTap: () {
+                    Helpers.showSnackBar(context, _t('Inafungua soga ya WhatsApp na Wakala...', 'Opening WhatsApp chat with Agent...'));
+                  },
+                  leading: const Icon(Icons.chat_bubble_outline_rounded, color: Color(0xFF3B82F6)),
+                  title: Text(_t('Tuma ujumbe kwa Wakala', 'Chat with Agent'), style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.bold)),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                ),
+                
+                const SizedBox(height: 24),
+                ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFE5D37),
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 48),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    elevation: 0,
+                  ),
+                  child: Text(_t('Funga', 'Close'), style: GoogleFonts.inter(fontWeight: FontWeight.w700)),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildInfoSectionHeader(String title) {
+    return Text(
+      title,
+      style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w900, color: const Color(0xFF94A3B8), letterSpacing: 1),
+    );
+  }
+
+  Widget _buildInfoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF64748B), fontWeight: FontWeight.w600)),
+          Text(value, style: GoogleFonts.inter(fontSize: 12, color: const Color(0xFF1E293B), fontWeight: FontWeight.w800)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFaqItem(String question, String answer) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF8FAFC),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFF1F5F9)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(question, style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: const Color(0xFF1E293B))),
+          const SizedBox(height: 6),
+          Text(answer, style: GoogleFonts.inter(fontSize: 11, color: const Color(0xFF64748B), height: 1.4, fontWeight: FontWeight.w500)),
+        ],
       ),
     );
   }
