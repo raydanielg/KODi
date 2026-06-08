@@ -1599,54 +1599,15 @@ class _TenantDashboardState extends State<TenantDashboard> {
   }
 
   void _showMockPdfPreviewDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          title: Text(_t('Hakiki ya Mkataba (PDF)', 'Contract PDF Preview'), style: GoogleFonts.inter(fontWeight: FontWeight.bold)),
-          content: Container(
-            width: double.maxFinite,
-            height: 300,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Text(
-                      _t('MKATABA WA PANGO LA NYUMBA', 'LEASE AGREEMENT'),
-                      style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black87),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    _t('KATI YA:\nMwenye Nyumba (Mama Ken)\n\nNA:\nMpangaji (Mteja)', 'BETWEEN:\nLandlord (Mama Ken)\n\nAND:\nTenant (Client)'),
-                    style: GoogleFonts.inter(fontSize: 10, color: Colors.black54),
-                  ),
-                  const Divider(height: 24),
-                  Text(
-                    _t('MASHARTI NA TARATIBU:\n1. Kodi ilipwe kabla ya tarehe 5 kila mwezi.\n2. Hakuna ruhusa ya kufuga wanyama.\n3. Utunzaji wa nyumba ni jukumu la mpangaji.', 'TERMS & CONDITIONS:\n1. Rent must be paid before the 5th of each month.\n2. No pets are allowed.\n3. House maintenance is the tenant\'s responsibility.'),
-                    style: GoogleFonts.inter(fontSize: 10, color: Colors.black54, height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(_t('Funga', 'Close'), style: GoogleFonts.inter(color: const Color(0xFFFE5D37), fontWeight: FontWeight.bold)),
-            ),
-          ],
-        );
-      },
+    final user = _authService.currentUser!;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FullscreenPdfViewerPage(
+          isEnglish: _isEnglish,
+          user: user,
+        ),
+      ),
     );
   }
 
