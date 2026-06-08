@@ -741,16 +741,16 @@ class _TenantDashboardState extends State<TenantDashboard> {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: color.withOpacity(0.12),
+                color: const Color(0xFFE2E8F0), // Standard crisp gray border
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: color.withOpacity(0.02),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+                  color: Colors.black.withOpacity(0.01),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
