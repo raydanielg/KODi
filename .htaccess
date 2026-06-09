@@ -1,23 +1,12 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Handle Authorization Header
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    # Prevent direct access to sensitive files
+    RedirectMatch 404 /\.(env|git|config|lock|json)$
+    RedirectMatch 404 /composer\.(json|lock)$
+    RedirectMatch 404 /package(-lock)?\.json$
 
-    # Rewrite asset requests to public directory
-    RewriteCond %{REQUEST_URI} ^/(css|js|images|icons|build|fonts|service-worker\.js|manifest\.json|logo\.png|hero-bg\.jpg|sitemap\.xml|robots\.txt)
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
+    # Send everything to the public/ directory transparently
+    RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
-
-    # Redirect Trailing Slashes If Not A Folder
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
-
-    # Send Requests To Front Controller
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
 </IfModule>
