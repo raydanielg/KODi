@@ -64,5 +64,6 @@ class AppStrings {
   static const String sort = 'Sort';
 
   // API Configuration
-  static const String apiBaseUrl = 'https://manna.co.tz/api';
+  static const String apiBaseUrl = 'http://10.0.2.2:8000/api'; // For Android emulator testing
+  // For production after deployment: 'https://manna.co.tz/api'
 }
