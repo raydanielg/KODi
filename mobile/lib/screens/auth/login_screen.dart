@@ -437,14 +437,15 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildDemoButton({
     required String role,
     required String label,
-    required String icon,
+    required IconData icon,
     required String email,
+    required Color color,
   }) {
     return InkWell(
       onTap: () async {
         setState(() => _isLoading = true);
         try {
-          final result = await _authService.login(email, 'password123');
+          final result = await _authService.login(email, 'password');
           final user = result['user'] as UserModel;
           if (mounted) {
             Helpers.showSnackBar(
@@ -467,28 +468,35 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: const Color(0xffe5e7eb)),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: color.withOpacity(0.3)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
+              color: color.withOpacity(0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
             ),
           ],
         ),
         child: Column(
           children: [
-            Text(icon, style: const TextStyle(fontSize: 20)),
-            const SizedBox(height: 6),
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, color: color, size: 22),
+            ),
+            const SizedBox(height: 8),
             Text(
               label,
               style: GoogleFonts.poppins(
                 fontSize: 11,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w700,
                 color: const Color(0xff374151),
               ),
               textAlign: TextAlign.center,
