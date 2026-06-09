@@ -6,6 +6,6 @@ class DashboardService {
 
   Future<DashboardStatsModel> fetchDashboardStats() async {
     final response = await _api.get('dashboard');
-    return DashboardStatsModel.fromJson(response);
+    return DashboardStatsModel.fromJson(response['data']);
   }
 }
