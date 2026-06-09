@@ -41,26 +41,17 @@ class _AgentDashboardState extends State<AgentDashboard> {
         _stats = stats;
         _isLoading = false;
       });
-    } catch (_) {
-      // Local Fallback Mock Stats
+    } catch (e) {
       setState(() {
-        _stats = DashboardStatsModel(
-          stats: {
-            'total_properties': 45,
-            'total_landlords': 8,
-            'total_tenants': 32,
-            'total_revenue': 7200000.0,
-            'pending_payments': 450000.0,
-            'maintenance_requests': 5,
-          },
-          recentItems: [
-            {'title': 'Nyumba mpya imesajiliwa na Mama Ken', 'time': 'Masaa 3 yaliyopita'},
-            {'title': 'Ukaguzi wa Villa Bahari umekamilika', 'time': 'Leo mchana'},
-            {'title': 'Malipo ya kamisheni ya uwakala yamepokelewa', 'time': 'Siku 4 zilizopita'},
-          ],
-        );
         _isLoading = false;
+        _error = e.toString();
       });
+      if (mounted) {
+        Helpers.showSnackBar(
+          context,
+          'Failed to load dashboard data. Please try again.',
+        );
+      }
     }
   }
 

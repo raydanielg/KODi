@@ -395,38 +395,23 @@ class _LoginScreenState extends State<LoginScreen> {
       onTap: () async {
         setState(() => _isLoading = true);
         try {
-          // 1. Try actual login through AuthService (to make it fully real if API is up)
           final result = await _authService.login(email, 'password123');
           final user = result['user'] as UserModel;
           if (mounted) {
             Helpers.showSnackBar(
               context,
-              'Demo: Karibu tena, ${user.name}! Umeingia kama ${user.roleLabel}.',
+              'Karibu tena, ${user.name}! Umeingia kama ${user.roleLabel}.',
               isError: false,
             );
             Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
           }
-        } catch (_) {
-          // 2. Local Fallback - instant login with beautiful mock model
-          final fallbackUser = UserModel(
-            id: role == 'tenant' ? 101 : (role == 'landlord' ? 102 : 103),
-            name: role == 'tenant' ? 'Daniel Juma (Mpangaji Demo)' : (role == 'landlord' ? 'Mama Ken (Mwenye Nyumba Demo)' : 'Rashid Salim (Wakala Demo)'),
-            email: email,
-            phone: '+255 712 345 678',
-            role: role,
-            createdAt: DateTime.now().toIso8601String(),
-          );
-          
-          final apiService = ApiService();
-          apiService.setAuth('demo_token_123', fallbackUser);
-          
+        } catch (e) {
           if (mounted) {
             Helpers.showSnackBar(
               context,
-              'Demo Mode: Umeingia kama ${fallbackUser.roleLabel}!',
-              isError: false,
+              'Imeshindikana kuingia. Tafadhali angalia barua pepe na nywila.',
+              isError: true,
             );
-            Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
           }
         } finally {
           if (mounted) setState(() => _isLoading = false);
