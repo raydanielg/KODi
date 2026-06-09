@@ -91,6 +91,13 @@ class DashboardController extends Controller
 
     private function landlordDashboard($user)
     {
+        $activeLeases = Lease::where('landlord_id', $user->id)->where('status', 'active')->get();
+        $totalDeposits = $activeLeases->sum('deposit_amount');
+        $paidDeposits = $activeLeases->where('deposit_paid', true)->sum('deposit_amount');
+        $pendingDeposits = $totalDeposits - $paidDeposits;
+        $depositPaidCount = $activeLeases->where('deposit_paid', true)->count();
+        $depositPendingCount = $activeLeases->where('deposit_paid', false)->count();
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -101,6 +108,11 @@ class DashboardController extends Controller
                     'monthly_rent' => RentPayment::where('landlord_id', $user->id)->where('status', 'completed')->whereMonth('created_at', now()->month)->sum('amount'),
                     'pending_maintenance' => MaintenanceRequest::where('landlord_id', $user->id)->whereIn('status', ['pending', 'assigned'])->count(),
                     'overdue_payments' => RentPayment::where('landlord_id', $user->id)->where('status', 'pending')->count(),
+                    'deposit_paid_count' => $depositPaidCount,
+                    'deposit_pending_count' => $depositPendingCount,
+                    'total_deposits' => $totalDeposits,
+                    'paid_deposits' => $paidDeposits,
+                    'pending_deposits' => $pendingDeposits,
                 ],
                 'my_properties' => Property::where('user_id', $user->id)->with('activeLease.tenant')->get(),
                 'recent_payments' => RentPayment::where('landlord_id', $user->id)->latest()->take(5)->get(),

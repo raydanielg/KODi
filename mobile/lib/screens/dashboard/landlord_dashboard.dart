@@ -332,6 +332,16 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
   }
 
   Widget _buildPortfolioHighlightCard(BuildContext context) {
+    final stats = _stats?.stats ?? {};
+    final totalDeposits = (stats['total_deposits'] ?? 0).toDouble();
+    final paidDeposits = (stats['paid_deposits'] ?? 0).toDouble();
+    final pendingDeposits = (stats['pending_deposits'] ?? 0).toDouble();
+    final depositPaidCount = stats['deposit_paid_count'] ?? 0;
+    final depositPendingCount = stats['deposit_pending_count'] ?? 0;
+    
+    final depositProgress = totalDeposits > 0 ? paidDeposits / totalDeposits : 0.0;
+    final depositPercentage = (depositProgress * 100).toInt();
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -360,11 +370,11 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                       color: const Color(0xff6366f1).withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.analytics_rounded, color: Color(0xff6366f1), size: 20),
+                    child: const Icon(Icons.account_balance_wallet_rounded, color: Color(0xff6366f1), size: 20),
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    'Ukusanyaji wa Kodi (Collection Status)',
+                    'Hali ya Malipo ya Dipoziti (Deposit Status)',
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -381,11 +391,11 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Ukusanyaji wa Mwezi huu',
+                'Malipo ya Dipoziti',
                 style: TextStyle(color: Colors.grey[600], fontSize: 12),
               ),
               Text(
-                '81% Imekusanywa',
+                '$depositPercentage% Imelipwa',
                 style: GoogleFonts.poppins(
                   color: const Color(0xff10b981),
                   fontWeight: FontWeight.w700,
@@ -397,10 +407,10 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
           const SizedBox(height: 8),
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
-            child: const LinearProgressIndicator(
-              value: 0.81,
-              backgroundColor: Color(0xfff3f4f6),
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xff10b981)),
+            child: LinearProgressIndicator(
+              value: depositProgress,
+              backgroundColor: const Color(0xfff3f4f6),
+              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xff10b981)),
               minHeight: 8,
             ),
           ),
@@ -414,12 +424,12 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Zilizolipwa (Received)',
+                    'Zilizolipwa ($depositPaidCount)',
                     style: TextStyle(color: Colors.grey[500], fontSize: 11),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'TSh 3,850,000',
+                    'TSh ${Helpers.formatMoney(paidDeposits)}',
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
@@ -432,12 +442,12 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'Bado (Pending)',
+                    'Bado ($depositPendingCount)',
                     style: TextStyle(color: Colors.grey[500], fontSize: 11),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'TSh 900,000',
+                    'TSh ${Helpers.formatMoney(pendingDeposits)}',
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
