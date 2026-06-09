@@ -66,11 +66,20 @@ class ApiService {
   }
 
   Map<String, dynamic> _handleResponse(http.Response response) {
-    final body = jsonDecode(response.body) as Map<String, dynamic>;
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      return body;
+    print('🔍 API Response Status: ${response.statusCode}');
+    print('🔍 API Response Body: ${response.body}');
+    
+    try {
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return body;
+      }
+      throw ApiException(body['message'] ?? 'Something went wrong', response.statusCode);
+    } catch (e) {
+      print('❌ JSON Parse Error: $e');
+      print('❌ Response Body: ${response.body}');
+      throw ApiException('Failed to parse server response: ${e.toString()}', response.statusCode);
     }
-    throw ApiException(body['message'] ?? 'Something went wrong', response.statusCode);
   }
 
   void setAuth(String token, UserModel user) {
