@@ -7,6 +7,7 @@ class DashboardStatsModel {
   final List<dynamic>? myProperties;
   final List<dynamic>? recentCommissions;
   final List<dynamic>? pendingApplications;
+  final List<dynamic>? applicationsHistory;
 
   DashboardStatsModel({
     required this.stats,
@@ -17,6 +18,7 @@ class DashboardStatsModel {
     this.myProperties,
     this.recentCommissions,
     this.pendingApplications,
+    this.applicationsHistory,
   });
 
   factory DashboardStatsModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class DashboardStatsModel {
       myProperties: json['my_properties'] as List<dynamic>?,
       recentCommissions: json['recent_commissions'] as List<dynamic>?,
       pendingApplications: json['pending_applications'] as List<dynamic>?,
+      applicationsHistory: json['applications_history'] as List<dynamic>?,
     );
   }
 }
