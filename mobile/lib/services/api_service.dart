@@ -77,8 +77,24 @@ class ApiService {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return body;
       }
+      
+      // If there are validation errors (e.g., status 422), parse them nicely
+      if (body.containsKey('errors')) {
+        final errors = body['errors'] as Map<String, dynamic>;
+        final errorMessages = <String>[];
+        errors.forEach((key, value) {
+          if (value is List) {
+            errorMessages.addAll(value.map((e) => e.toString()));
+          } else {
+            errorMessages.add(value.toString());
+          }
+        });
+        throw ApiException(errorMessages.join('\n'), response.statusCode);
+      }
+      
       throw ApiException(body['message'] ?? 'Something went wrong', response.statusCode);
     } catch (e) {
+      if (e is ApiException) rethrow;
       print('❌ JSON Parse Error: $e');
       print('❌ Response Body: ${response.body}');
       throw ApiException('Failed to parse server response: ${e.toString()}', response.statusCode);
