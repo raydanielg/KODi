@@ -485,34 +485,102 @@ function clearSelection() {
 
 function bulkApprove() {
     const checkboxes = document.querySelectorAll('.user-checkbox:checked');
-    alert('Activating ' + checkboxes.length + ' users');
-    clearSelection();
+    Swal.fire({
+        title: 'Activate Users?',
+        text: `Are you sure you want to activate ${checkboxes.length} users?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, activate!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Activated!',
+                text: `${checkboxes.length} users have been activated.`,
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+            clearSelection();
+        }
+    });
 }
 
 function bulkDelete() {
     const checkboxes = document.querySelectorAll('.user-checkbox:checked');
-    if (confirm('Are you sure you want to delete ' + checkboxes.length + ' users?')) {
-        alert('Deleting ' + checkboxes.length + ' users');
-        clearSelection();
-    }
+    Swal.fire({
+        title: 'Delete Users?',
+        text: `Are you sure you want to delete ${checkboxes.length} users? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Deleted!',
+                text: `${checkboxes.length} users have been deleted.`,
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+            clearSelection();
+        }
+    });
 }
 
 function viewDetails(id) {
-    alert('Viewing details for user #' + id);
+    window.location.href = `/admin/users/${id}`;
 }
 
 function editUser(id) {
-    alert('Editing user #' + id);
+    window.location.href = `/admin/users/${id}/edit`;
 }
 
 function toggleStatus(id) {
-    alert('Toggling status for user #' + id);
+    Swal.fire({
+        title: 'Toggle User Status?',
+        text: 'Are you sure you want to change this user\'s status?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3b82f6',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, change!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Status Changed!',
+                text: 'User status has been updated.',
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+    });
 }
 
 function deleteUser(id) {
-    if (confirm('Are you sure you want to delete this user?')) {
-        alert('Deleting user #' + id);
-    }
+    Swal.fire({
+        title: 'Delete User?',
+        text: 'Are you sure you want to delete this user? This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'User has been deleted.',
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+    });
 }
 </script>
 @endsection

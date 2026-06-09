@@ -3,6 +3,7 @@
 @section('title', 'Payments')
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
     .page-header { margin-bottom: 1.5rem; }
     .page-header h1 { font-size: 1.75rem; font-weight: 800; color: #111827; margin-bottom: 0.5rem; }
