@@ -145,6 +145,11 @@ class DashboardController extends Controller
                 'active_lease' => $activeLease ? $activeLease->load('property', 'landlord') : null,
                 'recent_payments' => RentPayment::where('tenant_id', $user->id)->latest()->take(5)->get(),
                 'maintenance_requests' => MaintenanceRequest::where('tenant_id', $user->id)->latest()->take(3)->get(),
+                'pending_applications' => Application::where('tenant_id', $user->id)
+                    ->whereIn('status', ['pending', 'approved'])
+                    ->with(['property', 'landlord'])
+                    ->latest()
+                    ->get(),
             ]
         ]);
     }
