@@ -104,7 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Expanded(
                                   child: Text(
                                     AppStrings.welcomeBack,
-                                    style: GoogleFonts.poppins(
+                                    style: const TextStyle(
+                                      fontFamily: 'Times New Roman',
                                       fontSize: 32,
                                       fontWeight: FontWeight.w700,
                                       color: Colors.black,
@@ -116,9 +117,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 8),
                             Text(
                               'Sign in to your account to continue your journey with us.',
-                              style: GoogleFonts.poppins(
+                              style: const TextStyle(
+                                fontFamily: 'Times New Roman',
                                 fontSize: 14,
-                                color: Colors.grey[600],
+                                color: Color(0xff6b7280),
                               ),
                             ),
                             const SizedBox(height: 32),
@@ -128,10 +130,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Text(
                                   AppStrings.emailAddress,
-                                  style: GoogleFonts.poppins(
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
+                                    color: Color(0xff374151),
                                   ),
                                 ),
                                 const SizedBox(height: 8),
@@ -152,14 +155,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                     controller: _emailController,
                                     keyboardType: TextInputType.emailAddress,
                                     validator: Validators.validateEmail,
-                                    style: GoogleFonts.poppins(
-                                      color: const Color(0xff1f2937),
+                                    style: const TextStyle(
+                                      fontFamily: 'Times New Roman',
+                                      color: Color(0xff1f2937),
                                       fontSize: 15,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: 'name@company.com',
-                                      hintStyle: GoogleFonts.poppins(
-                                        color: const Color(0xff6b7280),
+                                      hintStyle: const TextStyle(
+                                        fontFamily: 'Times New Roman',
+                                        color: Color(0xff6b7280),
                                       ),
                                       prefixIcon: const Icon(
                                         Icons.email_outlined,
@@ -183,10 +188,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Text(
                                   AppStrings.password,
-                                  style: GoogleFonts.poppins(
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
+                                    color: Color(0xff374151),
                                   ),
                                 ),
                                 const SizedBox(height: 8),
@@ -207,13 +213,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     controller: _passwordController,
                                     obscureText: _obscurePassword,
                                     validator: Validators.validatePassword,
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: const Color(0xff1f2937),
                                       fontSize: 15,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: '••••••••',
-                                      hintStyle: GoogleFonts.poppins(
+                                      hintStyle: TextStyle(fontFamily: 'Times New Roman'(
                                         color: const Color(0xff6b7280),
                                       ),
                                       prefixIcon: const Icon(
@@ -254,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     Text(
                                       'Remember me',
-                                      style: GoogleFonts.poppins(
+                                      style: TextStyle(fontFamily: 'Times New Roman'(
                                         fontSize: 14,
                                         color: Colors.grey[700],
                                       ),
@@ -270,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   child: Text(
                                     'Forgot Password?',
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: AppColors.primary,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 14,
@@ -295,7 +301,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       )
                                     : Text(
                                         AppStrings.signIn,
-                                        style: GoogleFonts.poppins(
+                                        style: TextStyle(fontFamily: 'Times New Roman'(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                         ),
@@ -308,13 +314,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Text(
                                   AppStrings.dontHaveAccount,
-                                  style: GoogleFonts.poppins(color: Colors.grey[600]),
+                                  style: TextStyle(fontFamily: 'Times New Roman'(color: Colors.grey[600]),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pushNamed(context, '/register'),
                                   child: Text(
                                     'Create account',
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: AppColors.primary,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -331,7 +337,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   padding: const EdgeInsets.symmetric(horizontal: 16),
                                   child: Text(
                                     'Or Login as Demo',
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.grey[500],
@@ -440,7 +446,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 6),
             Text(
               label,
-              style: GoogleFonts.poppins(
+              style: TextStyle(fontFamily: 'Times New Roman'(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
                 color: const Color(0xff374151),
