@@ -2155,41 +2155,78 @@ class _TenantDashboardState extends State<TenantDashboard> {
         ),
         const SizedBox(height: 10),
 
-        // Dynamic Active Pending Request
-        if (_hasPendingSentRequest)
-          _buildMinimalRequestRow(
-            phone: _sentRequestPhone,
-            date: _t('Leo', 'Today'),
-            statusText: _t('Inasubiri', 'Pending'),
-            statusColor: const Color(0xFFD97706),
-            backgroundColor: const Color(0xFFFFFBEB),
-            onCancel: () {
-              setState(() {
-                _hasPendingSentRequest = false;
-              });
-              Helpers.showSnackBar(
-                context,
-                _t('Ombi limefutwa.', 'Request canceled.'),
+        Builder(
+          builder: (context) {
+            final history = _stats?.applicationsHistory ?? [];
+            if (history.isNotEmpty) {
+              return Column(
+                children: history.map((app) {
+                  final map = app as Map<String, dynamic>;
+                  final landlord = map['landlord'] as Map<String, dynamic>? ?? {};
+                  final landlordName = landlord['name'] ?? 'Mwenye Nyumba';
+                  final property = map['property'] as Map<String, dynamic>? ?? {};
+                  final propertyName = property['title'] ?? 'Nyumba';
+                  final String status = map['status'] ?? 'pending';
+
+                  String dateText = '---';
+                  if (map['created_at'] != null) {
+                    try {
+                      final date = DateTime.parse(map['created_at']);
+                      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                      dateText = '${date.day} ${months[date.month - 1]} ${date.year}';
+                    } catch (_) {
+                      dateText = map['created_at'].toString().split('T')[0];
+                    }
+                  }
+
+                  String statusText = _t('Inasubiri', 'Pending');
+                  Color statusColor = const Color(0xFFD97706);
+                  Color backgroundColor = const Color(0xFFFFFBEB);
+
+                  if (status == 'approved') {
+                    statusText = _t('Ilikubaliwa', 'Accepted');
+                    statusColor = const Color(0xFF10B981);
+                    backgroundColor = const Color(0xFFECFDF5);
+                  } else if (status == 'rejected') {
+                    statusText = _t('Ilikataliwa', 'Rejected');
+                    statusColor = const Color(0xFFEF4444);
+                    backgroundColor = const Color(0xFFFEF2F2);
+                  } else if (status == 'cancelled') {
+                    statusText = _t('Ilikatishwa', 'Cancelled');
+                    statusColor = const Color(0xFF64748B);
+                    backgroundColor = const Color(0xFFF1F5F9);
+                  } else if (status == 'waitlisted') {
+                    statusText = _t('Kwenye Orodha', 'Waitlisted');
+                    statusColor = const Color(0xFF3B82F6);
+                    backgroundColor = const Color(0xFFEFF6FF);
+                  }
+
+                  return _buildMinimalRequestRow(
+                    phone: '$propertyName ($landlordName)',
+                    date: dateText,
+                    statusText: statusText,
+                    statusColor: statusColor,
+                    backgroundColor: backgroundColor,
+                  );
+                }).toList(),
               );
-            },
-          ),
-
-        // Historical Record 1: Connected (Beautiful static normal row)
-        _buildMinimalRequestRow(
-          phone: '+255 765 890 123',
-          date: '12 May 2026',
-          statusText: _t('Ilikubaliwa', 'Accepted'),
-          statusColor: const Color(0xFF10B981),
-          backgroundColor: const Color(0xFFECFDF5),
-        ),
-
-        // Historical Record 2: Rejected (Beautiful static normal row)
-        _buildMinimalRequestRow(
-          phone: '+255 712 111 222',
-          date: '04 Apr 2026',
-          statusText: _t('Ilikataliwa', 'Rejected'),
-          statusColor: const Color(0xFFEF4444),
-          backgroundColor: const Color(0xFFFEF2F2),
+            } else {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  _t(
+                    'Hakuna historia ya maombi bado.',
+                    'No requests history yet.',
+                  ),
+                  style: GoogleFonts.poppins(
+                    fontSize: 11,
+                    color: const Color(0xFF64748B),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            }
+          },
         ),
       ],
     );
