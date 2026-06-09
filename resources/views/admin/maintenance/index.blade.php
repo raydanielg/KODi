@@ -467,34 +467,102 @@ function clearSelection() {
 
 function bulkApprove() {
     const checkboxes = document.querySelectorAll('.maintenance-checkbox:checked');
-    alert('Marking ' + checkboxes.length + ' requests as complete');
-    clearSelection();
+    Swal.fire({
+        title: 'Mark Requests Complete?',
+        text: `Are you sure you want to mark ${checkboxes.length} requests as complete?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, mark complete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Completed!',
+                text: `${checkboxes.length} requests have been marked as complete.`,
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+            clearSelection();
+        }
+    });
 }
 
 function bulkDelete() {
     const checkboxes = document.querySelectorAll('.maintenance-checkbox:checked');
-    if (confirm('Are you sure you want to delete ' + checkboxes.length + ' requests?')) {
-        alert('Deleting ' + checkboxes.length + ' requests');
-        clearSelection();
-    }
+    Swal.fire({
+        title: 'Delete Requests?',
+        text: `Are you sure you want to delete ${checkboxes.length} requests? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Deleted!',
+                text: `${checkboxes.length} requests have been deleted.`,
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+            clearSelection();
+        }
+    });
 }
 
 function viewDetails(id) {
-    alert('Viewing details for request #' + id);
+    window.location.href = `/admin/maintenance/${id}`;
 }
 
 function editRequest(id) {
-    alert('Editing request #' + id);
+    window.location.href = `/admin/maintenance/${id}/edit`;
 }
 
 function markComplete(id) {
-    alert('Marking request #' + id + ' as complete');
+    Swal.fire({
+        title: 'Mark Request Complete?',
+        text: 'Are you sure you want to mark this request as complete?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, mark complete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Completed!',
+                text: 'Request has been marked as complete.',
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+    });
 }
 
 function deleteRequest(id) {
-    if (confirm('Are you sure you want to delete this request?')) {
-        alert('Deleting request #' + id);
-    }
+    Swal.fire({
+        title: 'Delete Request?',
+        text: 'Are you sure you want to delete this request? This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Request has been deleted.',
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+    });
 }
 </script>
 @endsection
