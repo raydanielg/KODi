@@ -13,6 +13,10 @@ class DatabaseSeeder extends Seeder
             UsersSeeder::class,
             PropertiesSeeder::class,
             AmenitiesSeeder::class,
+            LeasesSeeder::class,
+            ApplicationsSeeder::class,
+            RentPaymentsSeeder::class,
+            MaintenanceRequestsSeeder::class,
         ]);
     }
 }
