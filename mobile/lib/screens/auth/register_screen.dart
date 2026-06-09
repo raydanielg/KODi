@@ -143,10 +143,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         Text(
                           title,
-                          style: TextStyle(fontFamily: 'Times New Roman'(
+                          style: const TextStyle(
+                            fontFamily: 'Times New Roman',
                             fontSize: 22,
                             fontWeight: FontWeight.w800,
-                            color: const Color(0xff111827),
+                            color: Color(0xff111827),
                           ),
                         ),
                         IconButton(
@@ -199,18 +200,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   section['title']!,
-                                  style: TextStyle(fontFamily: 'Times New Roman'(
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
-                                    color: const Color(0xff111827),
+                                    color: Color(0xff111827),
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
                                   section['content']!,
-                                  style: TextStyle(fontFamily: 'Times New Roman'(
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
                                     fontSize: 14,
-                                    color: const Color(0xff4b5563),
+                                    color: Color(0xff4b5563),
                                     height: 1.6,
                                   ),
                                 ),
@@ -355,7 +358,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const SizedBox(height: 20),
                             Text(
                               AppStrings.createAccount,
-                              style: TextStyle(fontFamily: 'Times New Roman'(
+                              style: const TextStyle(
+                                fontFamily: 'Times New Roman',
                                 fontSize: 32,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black,
@@ -364,9 +368,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const SizedBox(height: 8),
                             Text(
                               'Start your journey today by creating a new account.',
-                              style: TextStyle(fontFamily: 'Times New Roman'(
+                              style: const TextStyle(
+                                fontFamily: 'Times New Roman',
                                 fontSize: 14,
-                                color: Colors.grey[600],
+                                color: Color(0xff6b7280),
                               ),
                             ),
                             const SizedBox(height: 32),
@@ -422,8 +427,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         value: role,
                                         child: Text(
                                           role,
-                                          style: TextStyle(fontFamily: 'Times New Roman'(
-                                            color: const Color(0xff1f2937),
+                                          style: const TextStyle(
+                                            fontFamily: 'Times New Roman',
+                                            color: Color(0xff1f2937),
                                             fontSize: 14,
                                           ),
                                         ),
@@ -455,10 +461,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'Full name',
-                                  style: TextStyle(fontFamily: 'Times New Roman'(
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
+                                    color: Color(0xff374151),
                                   ),
                                 ),
                                 const SizedBox(height: 8),
@@ -550,10 +557,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'Phone number',
-                                  style: TextStyle(fontFamily: 'Times New Roman'(
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
+                                    color: Color(0xff374151),
                                   ),
                                 ),
                                 const SizedBox(height: 8),
@@ -598,10 +606,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'Password',
-                                  style: TextStyle(fontFamily: 'Times New Roman'(
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
+                                    color: Color(0xff374151),
                                   ),
                                 ),
                                 const SizedBox(height: 8),
@@ -655,10 +664,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'Confirm password',
-                                  style: TextStyle(fontFamily: 'Times New Roman'(
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
+                                    color: Color(0xff374151),
                                   ),
                                 ),
                                 const SizedBox(height: 8),
@@ -749,7 +759,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       Text(
                                         ' and ',
-                                        style: TextStyle(fontFamily: 'Times New Roman'(fontSize: 13, color: Colors.grey[700]),
+                                        style: const TextStyle(
+                                          fontFamily: 'Times New Roman',
+                                          fontSize: 13,
+                                          color: Color(0xff374151),
+                                        ),
                                       ),
                                       GestureDetector(
                                         onTap: () {
@@ -811,8 +825,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   onPressed: () => Navigator.pushNamed(context, '/login'),
                                   child: Text(
                                     AppStrings.signIn,
-                                    style: TextStyle(fontFamily: 'Times New Roman'(
-                                      color: AppColors.primary,
+                                    style: const TextStyle(
+                                      fontFamily: 'Times New Roman',
+                                      color: Color(0xff10b981),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
@@ -888,6 +903,9 @@ class PremiumAuthBackgroundPainter extends CustomPainter {
     }
   }
 
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
