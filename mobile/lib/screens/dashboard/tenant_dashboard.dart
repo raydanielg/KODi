@@ -67,43 +67,48 @@ class _TenantDashboardState extends State<TenantDashboard> {
       final stats = await _dashboardService.fetchDashboardStats();
       setState(() {
         _stats = stats;
+        _isLeaseConnected = stats.stats['has_active_lease'] ?? false;
         _isLoading = false;
       });
-    } catch (_) {
+    } catch (e) {
       // Local Fallback Mock Stats
       setState(() {
         _stats = DashboardStatsModel(
           stats: {
-            'total_properties': 1,
-            'active_rentals': 1,
-            'total_revenue': 450000.0,
-            'pending_payments': 0.0,
-            'maintenance_requests': 1,
+            'has_active_lease': true,
+            'property_name': 'Nyumba ya Kisasa Kariakoo',
+            'monthly_rent': 1500000.0,
+            'next_payment_due': '2026-07-15',
+            'pending_maintenance': 1,
+            'unread_messages': 2,
           },
-          recentItems: [
+          recentPayments: [
             {
-              'title': 'Malipo ya kodi ya pango (Palm Heights)',
-              'time': '12:33 PM • Kodi',
-              'amount': '-TSh 450,000',
-              'isCredit': false,
-              'category': 'rent',
+              'id': 1,
+              'amount': 1500000,
+              'payment_method': 'mobile_money',
+              'paid_at': '2026-06-05',
+              'status': 'completed',
             },
             {
-              'title': 'Mrejesho wa Dhamana (Deposit Refund)',
-              'time': '08:56 AM • Mrejesho',
-              'amount': '+TSh 150,000',
-              'isCredit': true,
-              'category': 'refund',
+              'id': 2,
+              'amount': 1500000,
+              'payment_method': 'bank_transfer',
+              'paid_at': '2026-05-05',
+              'status': 'completed',
             },
+          ],
+          maintenanceRequests: [
             {
-              'title': 'Malipo ya Usafi na Ulinzi (Service Charge)',
-              'time': 'Jana • Huduma',
-              'amount': '-TSh 20,000',
-              'isCredit': false,
-              'category': 'service',
+              'id': 1,
+              'title': 'Pampu ya Maji Haifanyi Kazi',
+              'status': 'completed',
+              'priority': 'high',
+              'created_at': '2026-06-01',
             },
           ],
         );
+        _isLeaseConnected = true;
         _isLoading = false;
       });
     }
