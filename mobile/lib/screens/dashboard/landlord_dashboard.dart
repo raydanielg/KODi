@@ -41,26 +41,17 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
         _stats = stats;
         _isLoading = false;
       });
-    } catch (_) {
-      // Local Fallback Mock Stats
+    } catch (e) {
       setState(() {
-        _stats = DashboardStatsModel(
-          stats: {
-            'total_properties': 12,
-            'active_rentals': 9,
-            'vacant_properties': 3,
-            'total_revenue': 3850000.0,
-            'pending_payments': 900000.0,
-            'maintenance_requests': 2,
-          },
-          recentItems: [
-            {'title': 'Kodi imelipwa na Daniel Juma (Apt A4)', 'time': 'Masaa 2 yaliyopita'},
-            {'title': 'Ombi la matengenezo toka kwa Aisha (Apt B2)', 'time': 'Leo asubuhi'},
-            {'title': 'Mpangaji mpya kajiunga (Hamis - Apt C1)', 'time': 'Siku 2 zilizopita'},
-          ],
-        );
         _isLoading = false;
+        _error = e.toString();
       });
+      if (mounted) {
+        Helpers.showSnackBar(
+          context,
+          'Failed to load dashboard data. Please try again.',
+        );
+      }
     }
   }
 

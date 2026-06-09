@@ -71,46 +71,15 @@ class _TenantDashboardState extends State<TenantDashboard> {
         _isLoading = false;
       });
     } catch (e) {
-      // Local Fallback Mock Stats
       setState(() {
-        _stats = DashboardStatsModel(
-          stats: {
-            'has_active_lease': true,
-            'property_name': 'Nyumba ya Kisasa Kariakoo',
-            'monthly_rent': 1500000.0,
-            'next_payment_due': '2026-07-15',
-            'pending_maintenance': 1,
-            'unread_messages': 2,
-          },
-          recentPayments: [
-            {
-              'id': 1,
-              'amount': 1500000,
-              'payment_method': 'mobile_money',
-              'paid_at': '2026-06-05',
-              'status': 'completed',
-            },
-            {
-              'id': 2,
-              'amount': 1500000,
-              'payment_method': 'bank_transfer',
-              'paid_at': '2026-05-05',
-              'status': 'completed',
-            },
-          ],
-          maintenanceRequests: [
-            {
-              'id': 1,
-              'title': 'Pampu ya Maji Haifanyi Kazi',
-              'status': 'completed',
-              'priority': 'high',
-              'created_at': '2026-06-01',
-            },
-          ],
-        );
-        _isLeaseConnected = true;
         _isLoading = false;
       });
+      if (mounted) {
+        Helpers.showSnackBar(
+          context,
+          _t('Imeshindikana kupata data. Tafadhali jaribu tena.', 'Failed to load data. Please try again.'),
+        );
+      }
     }
   }
 
