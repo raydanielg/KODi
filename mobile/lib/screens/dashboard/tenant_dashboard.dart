@@ -1832,204 +1832,218 @@ class _TenantDashboardState extends State<TenantDashboard> {
           _t('MAOMBI MAPYA YA KUINGIA', 'INCOMING REQUESTS'),
         ),
         const SizedBox(height: 10),
-        if (_hasIncomingRequest)
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Mama Ken (Mwenye Nyumba)',
-                      style: GoogleFonts.poppins(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w800,
-                        color: const Color(0xFF1E293B),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFF1F0),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Text(
-                        _t('Apt A4 • Palm Heights', 'Apt A4 • Palm Heights'),
-                        style: GoogleFonts.poppins(
-                          fontSize: 9,
-                          fontWeight: FontWeight.w800,
-                          color: const Color(0xFFFE5D37),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _t('Kodi ya Mwezi:', 'Monthly Rent:'),
-                      style: GoogleFonts.poppins(
-                        fontSize: 11,
-                        color: const Color(0xFF64748B),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      'TSh 450,000',
-                      style: GoogleFonts.poppins(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w800,
-                        color: const Color(0xFF1E293B),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
+        Builder(
+          builder: (context) {
+            final applications = _stats?.pendingApplications ?? [];
+            if (applications.isNotEmpty) {
+              return Column(
+                children: applications.map((app) {
+                  final map = app as Map<String, dynamic>;
+                  final landlord = map['landlord'] as Map<String, dynamic>? ?? {};
+                  final landlordName = landlord['name'] ?? 'Mwenye Nyumba';
+                  final property = map['property'] as Map<String, dynamic>? ?? {};
+                  final propertyName = property['title'] ?? 'Nyumba';
+                  final double monthlyRent = (map['monthly_offer'] ?? property['price'] ?? 0).toDouble();
+                  final String status = map['status'] ?? 'pending';
 
-                // Simple inline plan chips (Normal, clean, minimalist)
-                Row(
-                  children: [
-                    Text(
-                      _t('Muda:', 'Duration:'),
-                      style: GoogleFonts.poppins(
-                        fontSize: 11,
-                        color: const Color(0xFF64748B),
-                        fontWeight: FontWeight.w500,
-                      ),
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: const Color(0xFFE2E8F0)),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildSimplePlanChip(1, '1M'),
-                          _buildSimplePlanChip(3, '3M'),
-                          _buildSimplePlanChip(6, '6M'),
-                          _buildSimplePlanChip(12, '12M'),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                const Divider(color: Color(0xFFF1F5F9), height: 1),
-                const SizedBox(height: 12),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _t('Jumla ya Malipo:', 'Total Amount:'),
-                      style: GoogleFonts.poppins(
-                        fontSize: 11,
-                        color: const Color(0xFF64748B),
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      _formatFullRentAmount(_selectedLeasePlanMonths),
-                      style: GoogleFonts.spaceGrotesk(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w800,
-                        color: const Color(0xFF1E293B),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 14),
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _hasIncomingRequest = false;
-                          });
-                          Helpers.showSnackBar(
-                            context,
-                            _t('Ombi limekataliwa.', 'Request declined.'),
-                          );
-                        },
-                        style: TextButton.styleFrom(
-                          foregroundColor: const Color(0xFFEF4444),
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                        ),
-                        child: Text(
-                          _t('Kataa', 'Decline'),
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _isLeaseConnected = true;
-                            _hasIncomingRequest = false;
-                          });
-                          Helpers.showSnackBar(
-                            context,
-                            _t(
-                              'Hongera! Mkataba umeunganishwa kikamilifu.',
-                              'Success! Lease connected successfully.',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                landlordName,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w800,
+                                  color: const Color(0xFF1E293B),
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF10B981),
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
+                            const SizedBox(width: 8),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFFFF1F0),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                propertyName,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w800,
+                                  color: const Color(0xFFFE5D37),
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
                         ),
-                        child: Text(
-                          _t('Kubali', 'Accept'),
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w800,
-                            fontSize: 12,
-                          ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              _t('Kodi ya Mwezi:', 'Monthly Rent:'),
+                              style: GoogleFonts.poppins(
+                                  fontSize: 11,
+                                  color: const Color(0xFF64748B),
+                                  fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              'TSh ${Helpers.formatMoney(monthlyRent)}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w800,
+                                color: const Color(0xFF1E293B),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              _t('Hali ya Maombi:', 'Application Status:'),
+                              style: GoogleFonts.poppins(
+                                fontSize: 11,
+                                color: const Color(0xFF64748B),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: status == 'approved' ? const Color(0xFFE6F4EA) : const Color(0xFFFEF3C7),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Text(
+                                status == 'approved' ? _t('Imekubaliwa', 'Approved') : _t('Inasubiri', 'Pending'),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w800,
+                                  color: status == 'approved' ? const Color(0xFF137333) : const Color(0xFFD97706),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        const Divider(color: Color(0xFFF1F5F9), height: 1),
+                        const SizedBox(height: 12),
+
+                        Row(
+                          children: [
+                            if (status == 'approved') ...[
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () {
+                                    Helpers.showSnackBar(
+                                      context,
+                                      _t('Ombi limefutwa.', 'Request cancelled.'),
+                                    );
+                                  },
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: const Color(0xFFEF4444),
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                  ),
+                                  child: Text(
+                                    _t('Kataa', 'Decline'),
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    Helpers.showSnackBar(
+                                      context,
+                                      _t(
+                                        'Hongera! Mkataba umeunganishwa kikamilifu.',
+                                        'Success! Lease connected successfully.',
+                                      ),
+                                    );
+                                    _loadDashboard();
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF10B981),
+                                    foregroundColor: Colors.white,
+                                    elevation: 0,
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    _t('Saini Mkataba', 'Sign Lease'),
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ] else ...[
+                              Expanded(
+                                child: Center(
+                                  child: Text(
+                                    _t('Mwenye nyumba anafanyia kazi ombi hili...', 'Landlord is reviewing this request...'),
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 11,
+                                      color: const Color(0xFF64748B),
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ]
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
+                  );
+                }).toList(),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  _t(
+                    'Hakuna maombi mapya ya kuingia.',
+                    'No new incoming requests.',
+                  ),
+                  style: GoogleFonts.poppins(
+                    fontSize: 11,
+                    color: const Color(0xFF64748B),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ],
-            ),
-          )
-        else
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(
-              _t(
-                'Hakuna maombi mapya ya kuingia.',
-                'No new incoming requests.',
-              ),
-              style: GoogleFonts.poppins(
-                fontSize: 11,
-                color: const Color(0xFF64748B),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
+              );
+            }
+          },
+        ),
 
         const SizedBox(height: 24),
 
