@@ -61,7 +61,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               children: [
                                 Text(
                                   '🔐',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 40,
                                   ),
                                 ),
@@ -69,7 +69,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 Expanded(
                                   child: Text(
                                     'Forgot Password',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 32,
                                       fontWeight: FontWeight.w700,
                                       color: Colors.black,
@@ -81,7 +81,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             const SizedBox(height: 8),
                             Text(
                               'Enter your email address and we\'ll send you a link to reset your password.',
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.poppins(
                                 fontSize: 14,
                                 color: Colors.grey[600],
                               ),
@@ -93,7 +93,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               children: [
                                 Text(
                                   'Your Email',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.grey[700],
@@ -118,7 +118,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     keyboardType: TextInputType.emailAddress,
                                     decoration: InputDecoration(
                                       hintText: 'name@company.com',
-                                      hintStyle: GoogleFonts.inter(
+                                      hintStyle: GoogleFonts.poppins(
                                         color: const Color(0xff6b7280),
                                       ),
                                       prefixIcon: const Icon(
@@ -161,7 +161,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               ),
                               child: Text(
                                 'Send Reset Link',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 16,
                                 ),
@@ -174,7 +174,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               children: [
                                 Text(
                                   'Remember your password?',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.poppins(
                                     color: Colors.grey[600],
                                   ),
                                 ),
@@ -184,7 +184,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   },
                                   child: Text(
                                     'Sign in',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.poppins(
                                       color: AppColors.primary,
                                       fontWeight: FontWeight.w600,
                                     ),

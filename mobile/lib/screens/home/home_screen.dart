@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen>
       ),
       title: Text(
         title,
-        style: GoogleFonts.inter(
+        style: GoogleFonts.poppins(
           color: Colors.white,
           fontSize: 15,
           fontWeight: FontWeight.w500,
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen>
                         children: [
                           Text(
                             AppStrings.appName,
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.poppins(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                               color: Colors.white,
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen>
                           const SizedBox(height: 4),
                           Text(
                             'Find your perfect home',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.poppins(
                               fontSize: 12,
                               color: Colors.white.withOpacity(0.8),
                             ),
@@ -269,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen>
                   children: [
                     Text(
                       '© 2024 ${AppStrings.appName}',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         color: Colors.grey,
                         fontSize: 12,
                       ),
@@ -278,7 +278,7 @@ class _HomeScreenState extends State<HomeScreen>
                     const SizedBox(height: 8),
                     Text(
                       'Version 1.0.0',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         color: Colors.grey.shade600,
                         fontSize: 10,
                       ),
@@ -359,7 +359,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     children: [
                                       Text(
                                         _onboardingData[index]['title']!,
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 40,
                                           fontWeight: FontWeight.w800,
                                           color: Colors.black87,
@@ -368,7 +368,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       ),
                                       Text(
                                         _onboardingData[index]['subtitle']!,
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.poppins(
                                           fontSize: 40,
                                           fontWeight: FontWeight.w800,
                                           color: AppColors.primary,
@@ -378,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen>
                                       const SizedBox(height: 20),
                                       Text(
                                         _onboardingData[index]['description']!,
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.poppins(
                                           color: Colors.white,
                                           fontSize: 15,
                                           height: 1.5,
@@ -453,7 +453,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 children: [
                                   Text(
                                     "GET STARTED",
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w700,
                                       color: Colors.black,
