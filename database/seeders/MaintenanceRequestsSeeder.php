@@ -133,7 +133,7 @@ class MaintenanceRequestsSeeder extends Seeder
                 'description' => 'Jiko la gas halitumiwa, mpira wa gas unaonyesha kuwa umefika lakini jiko halitumika.',
                 'priority' => 'high',
                 'status' => 'in_progress',
-                'category' => 'appliance',
+                'category' => 'appliances',
                 'scheduled_at' => $now->copy()->subDays(3),
                 'completed_at' => null,
                 'assigned_to' => null,
