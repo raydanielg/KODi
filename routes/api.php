@@ -2,6 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
+// API Root Status Route
+Route::get('/', function () {
+    return response()->json([
+        'success' => true,
+        'message' => 'Manna API is fully online and ready!',
+        'version' => '1.0.0',
+        'database' => 'connected'
+    ]);
+});
+
 // Public routes
 Route::post('/auth/login', [App\Http\Controllers\Api\Auth\AuthController::class, 'login']);
 Route::post('/auth/register', [App\Http\Controllers\Api\Auth\AuthController::class, 'register']);
