@@ -319,56 +319,105 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 24),
-                            // Divider with "Or Demo Login"
-                            Row(
-                              children: [
-                                const Expanded(child: Divider(color: Color(0xffe5e7eb))),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                                  child: Text(
-                                    'Or Login as Demo',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey[500],
-                                    ),
-                                  ),
+                            const SizedBox(height: 32),
+                            // Demo Login Section
+                            Container(
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    const Color(0xff10b981).withOpacity(0.08),
+                                    const Color(0xff059669).withOpacity(0.05),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
                                 ),
-                                const Expanded(child: Divider(color: Color(0xffe5e7eb))),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            // Demo Login buttons
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _buildDemoButton(
-                                    role: 'tenant',
-                                    label: 'Mpangaji',
-                                    icon: '🔑',
-                                    email: 'mpangaji@manna.co.tz',
-                                  ),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: const Color(0xff10b981).withOpacity(0.2),
                                 ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _buildDemoButton(
-                                    role: 'landlord',
-                                    label: 'Mwenye Nyumba',
-                                    icon: '🏠',
-                                    email: 'landlord@manna.co.tz',
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xff10b981).withOpacity(0.15),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: const Icon(
+                                          Icons.flash_on_rounded,
+                                          color: Color(0xff10b981),
+                                          size: 20,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'JARIBU KAMA DEMO',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w800,
+                                                color: const Color(0xff10b981),
+                                                letterSpacing: 0.5,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 2),
+                                            Text(
+                                              'Ingia papo hapo bila akaunti',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 11,
+                                                color: Colors.grey[600],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: _buildDemoButton(
-                                    role: 'agent',
-                                    label: 'Wakala',
-                                    icon: '💼',
-                                    email: 'wakala@manna.co.tz',
+                                  const SizedBox(height: 20),
+                                  // Demo Login buttons
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: _buildDemoButton(
+                                          role: 'tenant',
+                                          label: 'Mpangaji',
+                                          icon: Icons.person_rounded,
+                                          email: 'mpangaji@manna.co.tz',
+                                          color: const Color(0xff6366f1),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: _buildDemoButton(
+                                          role: 'landlord',
+                                          label: 'Mwenye Nyumba',
+                                          icon: Icons.home_work_rounded,
+                                          email: 'landlord@manna.co.tz',
+                                          color: const Color(0xff10b981),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: _buildDemoButton(
+                                          role: 'agent',
+                                          label: 'Wakala',
+                                          icon: Icons.business_center_rounded,
+                                          email: 'wakala@manna.co.tz',
+                                          color: const Color(0xfff59e0b),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 32),
                           ],
