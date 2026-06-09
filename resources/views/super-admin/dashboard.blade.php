@@ -43,8 +43,8 @@
 
     .stat-icon svg { width: 24px; height: 24px; }
 
-    .stat-icon.green { background: linear-gradient(135deg, #ecfdf5, #d1fae5); color: #10B981; }
-    .stat-icon.blue { background: linear-gradient(135deg, #eff6ff, #dbeafe); color: #3b82f6; }
+    .stat-icon.green { background: linear-gradient(135deg, #eff6ff, #dbeafe); color: #0d6efd; }
+    .stat-icon.blue { background: linear-gradient(135deg, #ecfdf5, #d1fae5); color: #10B981; }
     .stat-icon.purple { background: linear-gradient(135deg, #f5f3ff, #ede9fe); color: #8b5cf6; }
     .stat-icon.orange { background: linear-gradient(135deg, #fff7ed, #ffedd5); color: #f97316; }
     .stat-icon.red { background: linear-gradient(135deg, #fef2f2, #fee2e2); color: #ef4444; }
@@ -98,14 +98,14 @@
     }
 
     .btn-primary {
-        background: linear-gradient(135deg, #10B981, #059669);
+        background: linear-gradient(135deg, #0d6efd, #0b5ed7);
         color: #fff;
         border: none;
     }
 
     .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+        box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
     }
 
     .card {
@@ -192,13 +192,13 @@
 
     .quick-action:hover {
         background: #fff;
-        border-color: #10B981;
+        border-color: #0d6efd;
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(16,185,129,0.15);
+        box-shadow: 0 4px 15px rgba(13, 110, 253, 0.15);
     }
 
     .quick-action svg { width: 28px; height: 28px; color: #64748b; }
-    .quick-action:hover svg { color: #10B981; }
+    .quick-action:hover svg { color: #0d6efd; }
 
     .quick-action-title {
         font-size: 0.875rem;
@@ -252,13 +252,6 @@
     </p>
 </div>
 
-<!-- System Status -->
-<div style="margin-bottom: 2rem;">
-    <div class="system-status">
-        <div class="status-dot"></div>
-        <span>Mfumo uko katika hali nzuri • Uptime: 99.9%</span>
-    </div>
-</div>
 
 <!-- Stats Grid -->
 <div class="stats-grid">
@@ -372,7 +365,7 @@
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">Shughuli za Hivi Karibuni</h3>
-        <a href="#" style="color: #10B981; text-decoration: none; font-size: 0.875rem; font-weight: 600;">Angalia Zote</a>
+        <a href="#" style="color: #0d6efd; text-decoration: none; font-size: 0.875rem; font-weight: 600;">Angalia Zote</a>
     </div>
     <div class="card-body">
         <div class="activity-item">

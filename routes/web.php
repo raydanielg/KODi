@@ -101,6 +101,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin,super_ad
         Route::get('/generate', [App\Http\Controllers\Admin\ReportController::class, 'generate'])->name('generate');
     });
 
+    // Maintenance
+    Route::prefix('maintenance')->name('maintenance.')->group(function () {
+        Route::get('/', [App\Http\Controllers\Admin\MaintenanceController::class, 'index'])->name('index');
+        Route::get('/{id}', [App\Http\Controllers\Admin\MaintenanceController::class, 'show'])->name('show');
+        Route::put('/{id}/status', [App\Http\Controllers\Admin\MaintenanceController::class, 'updateStatus'])->name('updateStatus');
+    });
+
     // Logs
     Route::prefix('logs')->name('logs.')->group(function () {
         Route::get('/', function () { return view('admin.logs.index'); })->name('index');

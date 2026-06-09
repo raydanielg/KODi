@@ -5,281 +5,387 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'KODI') }} - Admin</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f8fafc;
-            min-height: 100vh;
-            display: flex;
-            color: #0f172a;
+        @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap');
+        
+        /* Fix Bootstrap Icons display */
+        .bi {
+            display: inline-block;
+            font-family: bootstrap-icons !important;
+            font-style: normal;
+            font-weight: 400;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            vertical-align: -0.125em;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-
-        .sidebar {
-            width: 280px;
-            min-width: 280px;
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+        
+        body { 
+            font-family: 'Public Sans', sans-serif; 
+            overflow-x: hidden; 
+            background-color: #eef2f6; 
+            color: #475569; 
+            transition: padding 0.3s; 
+        }
+        #wrapper { display: flex; width: 100%; align-items: stretch; }
+        
+        /* Sidebar Styling */
+        #sidebar-wrapper {
+            min-width: 260px;
+            max-width: 260px;
+            min-height: 100vh;
+            transition: all 0.3s;
+            background: #f8fafc;
+            z-index: 1000;
+            border-right: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
-            position: fixed;
-            left: 0;
-            top: 0;
-            height: 100vh;
-            z-index: 1000;
-            transition: transform 0.3s ease;
         }
 
-        .sidebar-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+        /* Responsive Sidebar */
+        @media (max-width: 991.98px) {
+            #sidebar-wrapper {
+                margin-left: -260px !important;
+                position: fixed !important;
+                height: 100vh !important;
+                top: 0 !important;
+                left: 0 !important;
+                display: block !important;
+            }
+            #sidebar-wrapper.toggled {
+                margin-left: 0 !important;
+                box-shadow: 0 0 20px rgba(0,0,0,0.2) !important;
+            }
+            #page-content-wrapper {
+                min-width: 100vw !important;
+                width: 100% !important;
+            }
+        }
+        
+        .sidebar-brand {
+            padding: 25px;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #fff;
         }
 
-        .sidebar-logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #10B981, #059669);
-            border-radius: 10px;
+        .sidebar-brand-logo {
+            width: 42px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(16,185,129,0.3);
         }
 
-        .sidebar-logo svg { width: 22px; height: 22px; fill: #fff; }
+        .sidebar-brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
 
-        .sidebar-brand {
-            font-size: 1.25rem;
+        .sidebar-brand .brand-name {
+            font-size: 1.35rem;
             font-weight: 800;
-            letter-spacing: -0.02em;
-            color: #fff;
+            color: #1e293b;
+            letter-spacing: -0.5px;
         }
 
-        .sidebar-nav {
-            flex: 1;
-            padding: 1.5rem 1rem;
-            overflow-y: auto;
+        .sidebar-brand .brand-name .brand-accent {
+            color: #0d6efd;
         }
 
-        .nav-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .nav-section-title {
-            font-size: 0.7rem;
-            font-weight: 600;
+        .sidebar-brand .admin-label {
+            font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(255,255,255,0.4);
-            padding: 0 0.75rem;
-            margin-bottom: 0.75rem;
+            color: #0d6efd;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-top: 2px;
         }
 
-        .nav-item {
+        .sidebar-heading {
+            padding: 20px 25px 10px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .list-group-item {
+            background: transparent;
+            color: #64748b;
+            border: none;
+            padding: 12px 16px;
+            transition: background-color 0.2s ease;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
+            font-weight: 400;
+            border-radius: 8px;
+            margin: 0 10px 2px;
+        }
+
+        .list-group-item i {
+            font-size: 1.1rem;
+            margin-right: 12px;
+            color: #9ca3af;
+            width: 20px;
+            text-align: center;
+        }
+
+        .list-group-item:hover {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+
+        .list-group-item:hover i {
+            color: #111827;
+        }
+
+        .list-group-item.active {
+            background-color: #f3f4f6;
+            color: #111827;
             font-weight: 500;
-            transition: all 0.2s ease;
-            margin-bottom: 0.25rem;
         }
 
-        .nav-item:hover {
-            background: rgba(255,255,255,0.08);
-            color: #fff;
+        .list-group-item.active i {
+            color: #111827;
         }
 
-        .nav-item.active {
-            background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.1));
-            color: #10B981;
-            border: 1px solid rgba(16,185,129,0.3);
+        .list-group-item .chevron {
+            margin-left: auto;
+            font-size: 0.75rem;
+            transition: transform 0.2s;
         }
 
-        .nav-item svg {
+        .list-group-item[aria-expanded="true"] .chevron {
+            transform: rotate(180deg);
+        }
+
+        .collapse .list-group-item {
+            padding: 10px 25px 10px 57px;
+            font-size: 0.8rem;
+            margin: 0 10px;
+        }
+
+        .collapse .list-group-item:hover {
+            transform: translateX(2px);
+        }
+
+        .logout-section {
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: auto;
+            background: #fff;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            color: #ef4444;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 12px 15px;
+            border-radius: 10px;
+            transition: all 0.2s;
+            gap: 12px;
+        }
+
+        .logout-btn:hover {
+            background: #fef2f2;
+            transform: translateX(4px);
+        }
+
+        .logout-btn i {
+            font-size: 1.1rem;
+        }
+
+        #page-content-wrapper { 
+            width: 100%; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        /* Navbar Styling */
+        .navbar {
+            background: #fff;
+            padding: 10px 16px;
+            border: none;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 384px;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            width: 16px;
+            height: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 10px 10px 36px;
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: #111827;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: #9ca3af;
+        }
+
+        /* Header Buttons */
+        .header-btn {
+            padding: 8px;
+            color: #6b7280;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-btn:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        .header-btn svg {
             width: 20px;
             height: 20px;
-            flex-shrink: 0;
         }
 
-        .nav-badge {
-            margin-left: auto;
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
             background: #ef4444;
             color: #fff;
-            font-size: 0.7rem;
+            border-radius: 50%;
+            font-size: 10px;
             font-weight: 600;
-            padding: 0.15rem 0.5rem;
-            border-radius: 20px;
-        }
-
-        .sidebar-footer {
-            padding: 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .sidebar-user {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 10px;
+            justify-content: center;
+            border: 2px solid #fff;
         }
 
-        .sidebar-user-avatar {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #10B981, #059669);
-            border-radius: 8px;
+        /* User Profile */
+        .header-profile {
+            background: #f3f4f6;
+            border-radius: 9999px;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .header-profile:hover {
+            background: #e5e7eb;
+        }
+
+        .header-profile-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
-        .sidebar-user-info {
-            flex: 1;
-        }
-
-        .sidebar-user-name {
-            color: #fff;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .sidebar-user-role {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.75rem;
-        }
-
-        .sidebar-logout {
-            background: none;
-            border: none;
-            color: rgba(255,255,255,0.5);
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .sidebar-logout:hover {
-            background: rgba(239,68,68,0.2);
-            color: #ef4444;
-        }
-
-        .sidebar-logout svg { width: 18px; height: 18px; }
-
-        .main-content {
-            flex: 1;
-            margin-left: 280px;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .header {
-            background: #fff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .menu-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 8px;
-            display: none;
-            transition: background 0.2s ease;
-        }
-
-        .menu-toggle:hover { background: #f1f5f9; }
-        .menu-toggle svg { width: 24px; height: 24px; color: #64748b; }
-
-        .header-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .header-search {
-            display: flex;
-            align-items: center;
-            background: #f1f5f9;
-            border-radius: 10px;
-            padding: 0.5rem 1rem;
-            gap: 0.5rem;
-        }
-
-        .header-search svg { width: 18px; height: 18px; color: #94a3b8; }
-
-        .header-search input {
-            background: none;
-            border: none;
-            outline: none;
-            font-size: 0.9rem;
-            color: #0f172a;
-            width: 200px;
-        }
-
-        .header-search input::placeholder { color: #94a3b8; }
-
-        .header-btn {
-            background: #f1f5f9;
-            border: none;
-            padding: 0.6rem;
-            border-radius: 10px;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .header-btn:hover { background: #e2e8f0; }
-        .header-btn svg { width: 20px; height: 20px; color: #64748b; }
-
-        .header-btn .badge {
+        /* Dropdown Menu */
+        .dropdown-menu {
             position: absolute;
-            top: -4px;
-            right: -4px;
-            background: #ef4444;
-            color: #fff;
-            font-size: 0.65rem;
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            min-width: 224px;
+            z-index: 50;
+            display: none;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 12px 16px;
+            color: #374151;
+            text-decoration: none;
+            display: block;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: #f3f4f6;
+        }
+
+        .dropdown-divider {
+            border-top: 1px solid #e5e7eb;
+            margin: 8px 0;
+        }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            font-size: 0.875rem;
             font-weight: 600;
-            padding: 0.1rem 0.35rem;
-            border-radius: 10px;
+            color: #111827;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .content-area {
@@ -288,192 +394,204 @@
             overflow-y: auto;
         }
 
-        @media (max-width: 1024px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; }
-            .menu-toggle { display: block; }
-            .header-search input { width: 150px; }
-        }
+        #sidebar-wrapper.toggled { margin-left: -260px; }
 
-        @media (max-width: 768px) {
-            .header { padding: 1rem; }
-            .header-title { font-size: 1.25rem; }
-            .header-search { display: none; }
-            .content-area { padding: 1rem; }
-        }
-
+        /* Sidebar overlay for mobile */
         .sidebar-overlay {
+            display: none;
             position: fixed;
-            inset: 0;
+            width: 100vw;
+            height: 100vh;
             background: rgba(0,0,0,0.5);
             z-index: 999;
+            top: 0;
+            left: 0;
+        }
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* Menu toggle button */
+        .menu-toggle {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
             display: none;
         }
 
-        .sidebar-overlay.show { display: block; }
+        .menu-toggle:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .menu-toggle i {
+            font-size: 1.2rem;
+            color: #64748b;
+        }
+
+        @media (max-width: 991.98px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 15px; }
+            .content-area { padding: 1rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
-                    <path d="M2 17L12 22L22 17" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                    <path d="M2 12L12 17L22 12" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-                </svg>
-            </div>
-            <span class="sidebar-brand">{{ config('app.name', 'KODI') }}</span>
-        </div>
-
-        <nav class="sidebar-nav">
-            <div class="nav-section">
-                <div class="nav-section-title">Main Menu</div>
-                <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->is('admin/dashboard*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                    </svg>
-                    Dashboard
-                </a>
-                <a href="{{ route('admin.properties.index') }}" class="nav-item {{ request()->is('admin/properties*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                    </svg>
-                    Properties
-                </a>
-                <a href="{{ route('admin.applications.index') }}" class="nav-item {{ request()->is('admin/applications*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    Applications
-                </a>
-                <a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->is('admin/users*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                    </svg>
-                    Users
-                </a>
-            </div>
-
-            <div class="nav-section">
-                <div class="nav-section-title">Management</div>
-                <a href="{{ route('admin.payments.index') }}" class="nav-item {{ request()->is('admin/payments*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
-                    Payments
-                </a>
-                <a href="{{ route('admin.disputes.index') }}" class="nav-item {{ request()->is('admin/disputes*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                    </svg>
-                    Disputes
-                </a>
-                <a href="{{ route('admin.announcements.index') }}" class="nav-item {{ request()->is('admin/announcements*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
-                    </svg>
-                    Announcements
-                </a>
-            </div>
-
-            <div class="nav-section">
-                <div class="nav-section-title">Reports</div>
-                <a href="{{ route('admin.reports.index') }}" class="nav-item {{ request()->is('admin/reports*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                    </svg>
-                    Reports
-                </a>
-                <a href="{{ route('admin.logs.index') }}" class="nav-item {{ request()->is('admin/logs*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    Logs
-                </a>
-            </div>
-
-            <div class="nav-section">
-                <div class="nav-section-title">Settings</div>
-                <a href="{{ route('admin.settings.index') }}" class="nav-item {{ request()->is('admin/settings*') ? 'active' : '' }}">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                    </svg>
-                    Settings
-                </a>
-            </div>
-        </nav>
-
-        <div class="sidebar-footer">
-            <div class="sidebar-user">
-                <div class="sidebar-user-avatar">
-                    {{ substr(auth()->user()->name ?? 'AD', 0, 2) }}
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper" class="d-flex flex-column" style="overflow-y: auto;">
+            <div class="sidebar-brand sticky-top">
+                <div class="sidebar-brand-logo">
+                    <img src="{{ asset('images/logo.png') }}" alt="KODI Logo">
                 </div>
-                <div class="sidebar-user-info">
-                    <div class="sidebar-user-name">{{ auth()->user()->name ?? 'Admin' }}</div>
-                    <div class="sidebar-user-role">Admin</div>
+                <div>
+                    <span class="brand-name"><span class="brand-accent">KODI</span> Admin</span>
+                    <div class="admin-label">{{ auth()->user()->role ?? 'Administrator' }}</div>
                 </div>
+            </div>
+
+            <!-- Main Menu -->
+            <div class="list-group list-group-flush px-2 mt-3">
+                <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                    <i class="bi bi-grid-fill"></i> Dashboard
+                </a>
+                <a href="{{ route('admin.properties.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.properties*') ? 'active' : '' }}">
+                    <i class="bi bi-building"></i> Properties
+                </a>
+                <a href="{{ route('admin.users.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
+                    <i class="bi bi-people-fill"></i> Users
+                </a>
+                <a href="{{ route('admin.payments.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.payments*') ? 'active' : '' }}">
+                    <i class="bi bi-cash-stack"></i> Payments
+                </a>
+                <a href="{{ route('admin.maintenance.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.maintenance*') ? 'active' : '' }}">
+                    <i class="bi bi-tools"></i> Maintenance
+                </a>
+                <a href="{{ route('admin.reports.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.reports*') ? 'active' : '' }}">
+                    <i class="bi bi-file-earmark-bar-graph"></i> Reports
+                </a>
+                <a href="{{ route('admin.settings.index') }}" class="list-group-item list-group-item-action {{ request()->routeIs('admin.settings*') ? 'active' : '' }}">
+                    <i class="bi bi-gear-fill"></i> Settings
+                </a>
+            </div>
+
+            <!-- Logout -->
+            <div class="logout-section">
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="sidebar-logout" title="Logout">
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                        </svg>
+                    <button type="submit" class="logout-btn w-100">
+                        <i class="bi bi-box-arrow-right"></i> Logout
                     </button>
                 </form>
             </div>
         </div>
-    </aside>
 
-    <main class="main-content">
-        <header class="header">
-            <div class="header-left">
-                <button class="menu-toggle" id="menuToggle">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-                <h1 class="header-title">@yield('title', 'Dashboard')</h1>
-            </div>
-            <div class="header-right">
-                <div class="header-search">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                    <input type="text" placeholder="Search...">
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center gap-3 flex-grow-1">
+                        <button class="menu-toggle" id="menu-toggle">
+                            <i class="bi bi-list"></i>
+                        </button>
+                        <h1 class="page-title mb-0 d-none d-md-block">@yield('title', 'Dashboard')</h1>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <!-- Search Bar -->
+                        <div class="search-container d-none d-lg-block">
+                            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                            <input type="text" class="search-input" placeholder="Search...">
+                        </div>
+
+                        <!-- Notifications -->
+                        <button class="header-btn position-relative">
+                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-.293L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
+                            </svg>
+                            <span class="notification-badge">3</span>
+                        </button>
+
+                        <!-- Apps -->
+                        <button class="header-btn">
+                            <svg fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                            </svg>
+                        </button>
+
+                        <!-- User Profile -->
+                        <div class="position-relative">
+                            <div class="header-profile" id="user-menu-btn">
+                                <div class="header-profile-avatar">
+                                    {{ substr(auth()->user()->name ?? 'AD', 0, 2) }}
+                                </div>
+                            </div>
+                            <div class="dropdown-menu" id="user-dropdown">
+                                <div class="dropdown-header">
+                                    <div class="font-semibold">{{ auth()->user()->name ?? 'Admin' }}</div>
+                                    <div class="text-xs text-gray-500">{{ auth()->user()->email ?? 'admin@manna.com' }}</div>
+                                </div>
+                                <a href="#" class="dropdown-item">My Profile</a>
+                                <a href="#" class="dropdown-item">Account Settings</a>
+                                <div class="dropdown-divider"></div>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item w-100 text-left" style="border: none; background: none; cursor: pointer;">Sign Out</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button class="header-btn">
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-                    </svg>
-                    <span class="badge">3</span>
-                </button>
+            </nav>
+
+            <div class="content-area">
+                @yield('content')
             </div>
-        </header>
-
-        <div class="content-area">
-            @yield('content')
         </div>
-    </main>
+    </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebarWrapper = document.getElementById('sidebar-wrapper');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const userMenuBtn = document.getElementById('user-menu-btn');
+        const userDropdown = document.getElementById('user-dropdown');
 
-        if (menuToggle && sidebar && sidebarOverlay) {
+        if (menuToggle && sidebarWrapper && sidebarOverlay) {
             menuToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('open');
-                sidebarOverlay.classList.toggle('show');
+                sidebarWrapper.classList.toggle('toggled');
+                sidebarOverlay.classList.toggle('active');
             });
 
             sidebarOverlay.addEventListener('click', function() {
-                sidebar.classList.remove('open');
-                sidebarOverlay.classList.remove('show');
+                sidebarWrapper.classList.remove('toggled');
+                sidebarOverlay.classList.remove('active');
+            });
+        }
+
+        // User dropdown toggle
+        if (userMenuBtn && userDropdown) {
+            userMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('show');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.remove('show');
+                }
             });
         }
     </script>
