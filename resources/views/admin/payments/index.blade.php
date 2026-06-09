@@ -454,42 +454,133 @@ function clearSelection() {
 
 function bulkApprove() {
     const checkboxes = document.querySelectorAll('.payment-checkbox:checked');
-    alert('Marking ' + checkboxes.length + ' payments as complete');
-    clearSelection();
+    Swal.fire({
+        title: 'Mark Payments Complete?',
+        text: `Are you sure you want to mark ${checkboxes.length} payments as complete?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, mark complete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Completed!',
+                text: `${checkboxes.length} payments have been marked as complete.`,
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+            clearSelection();
+        }
+    });
 }
 
 function bulkDelete() {
     const checkboxes = document.querySelectorAll('.payment-checkbox:checked');
-    if (confirm('Are you sure you want to delete ' + checkboxes.length + ' payments?')) {
-        alert('Deleting ' + checkboxes.length + ' payments');
-        clearSelection();
-    }
+    Swal.fire({
+        title: 'Delete Payments?',
+        text: `Are you sure you want to delete ${checkboxes.length} payments? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Deleted!',
+                text: `${checkboxes.length} payments have been deleted.`,
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+            clearSelection();
+        }
+    });
 }
 
 function viewDetails(id) {
-    alert('Viewing details for payment #' + id);
+    window.location.href = `/admin/payments/${id}`;
 }
 
 function editPayment(id) {
-    alert('Editing payment #' + id);
+    window.location.href = `/admin/payments/${id}/edit`;
 }
 
 function downloadReceipt(id) {
-    alert('Downloading receipt for payment #' + id);
+    Swal.fire({
+        title: 'Downloading Receipt',
+        text: 'Receipt is being downloaded...',
+        icon: 'info',
+        confirmButtonColor: '#3b82f6'
+    });
 }
 
 function markComplete(id) {
-    alert('Marking payment #' + id + ' as complete');
+    Swal.fire({
+        title: 'Mark Payment Complete?',
+        text: 'Are you sure you want to mark this payment as complete?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, mark complete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Completed!',
+                text: 'Payment has been marked as complete.',
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+    });
 }
 
 function sendReminder(id) {
-    alert('Sending reminder for payment #' + id);
+    Swal.fire({
+        title: 'Send Reminder?',
+        text: 'Are you sure you want to send a payment reminder?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3b82f6',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, send!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Reminder Sent!',
+                text: 'Payment reminder has been sent.',
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+    });
 }
 
 function deletePayment(id) {
-    if (confirm('Are you sure you want to delete this payment?')) {
-        alert('Deleting payment #' + id);
-    }
+    Swal.fire({
+        title: 'Delete Payment?',
+        text: 'Are you sure you want to delete this payment? This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Payment has been deleted.',
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+    });
 }
 </script>
 @endsection
