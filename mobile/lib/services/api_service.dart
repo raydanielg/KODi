@@ -32,6 +32,7 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> get(String endpoint) async {
+    print('📡 GET Request: $_baseUrl/$endpoint');
     final response = await http.get(
       Uri.parse('$_baseUrl/$endpoint'),
       headers: _headers,
@@ -40,6 +41,8 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> post(String endpoint, {Map<String, dynamic>? body}) async {
+    print('📡 POST Request: $_baseUrl/$endpoint');
+    print('📡 POST Body: ${body != null ? jsonEncode(body) : "null"}');
     final response = await http.post(
       Uri.parse('$_baseUrl/$endpoint'),
       headers: _headers,
