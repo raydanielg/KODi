@@ -168,7 +168,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
                 backgroundColor: AppColors.primary.withOpacity(0.15),
                 child: Text(
                   user.initials,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
@@ -186,7 +186,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
               children: [
                 Text(
                   _getGreeting(),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 11,
                     color: Colors.grey[500],
                     fontWeight: FontWeight.w600,
@@ -195,7 +195,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
                 const SizedBox(height: 2),
                 Text(
                   user.name,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
                     color: const Color(0xff111827),
@@ -280,7 +280,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
             children: [
               Text(
                 'WAKALA CREDENTIALS',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
                   color: Colors.white.withOpacity(0.85),
@@ -307,7 +307,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
           const SizedBox(height: 12),
           Text(
             user.name,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 18,
               fontWeight: FontWeight.w800,
               color: Colors.white,
@@ -320,7 +320,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
               const SizedBox(width: 8),
               Text(
                 user.email,
-                style: GoogleFonts.inter(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500),
+                style: GoogleFonts.poppins(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -331,7 +331,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
               const SizedBox(width: 8),
               Text(
                 user.phone,
-                style: GoogleFonts.inter(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500),
+                style: GoogleFonts.poppins(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -371,7 +371,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
               const SizedBox(width: 12),
               Text(
                 'Utendaji wa Wakala (Agent Rating)',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: const Color(0xff1f2937),
@@ -395,7 +395,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
                     children: [
                       Text(
                         '4.9',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.poppins(
                           fontSize: 22,
                           fontWeight: FontWeight.w800,
                           color: const Color(0xff1f2937),
@@ -421,7 +421,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
                   const SizedBox(height: 4),
                   Text(
                     'TSh 450,000',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w800,
                       color: const Color(0xff10b981),
@@ -483,7 +483,7 @@ class _AgentDashboardState extends State<AgentDashboard> {
                     const SizedBox(height: 6),
                     Text(
                       act['label'] as String,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
                         color: const Color(0xff374151),
