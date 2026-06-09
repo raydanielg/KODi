@@ -150,6 +150,10 @@ class DashboardController extends Controller
                     ->with(['property', 'landlord'])
                     ->latest()
                     ->get(),
+                'applications_history' => Application::where('tenant_id', $user->id)
+                    ->with(['property', 'landlord'])
+                    ->latest()
+                    ->get(),
             ]
         ]);
     }
