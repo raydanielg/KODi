@@ -59,6 +59,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin,super_ad
     Route::prefix('properties')->name('properties.')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('index');
         Route::get('/{id}', [App\Http\Controllers\Admin\PropertyController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [App\Http\Controllers\Admin\PropertyController::class, 'edit'])->name('edit');
         Route::get('/{id}/verify', [App\Http\Controllers\Admin\PropertyController::class, 'verify'])->name('verify');
     });
 
@@ -79,8 +80,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin,super_ad
 
     // Payments
     Route::prefix('payments')->name('payments.')->group(function () {
-        Route::get('/', function () { return view('admin.payments.index'); })->name('index');
-        Route::get('/{id}', function () { return view('admin.payments.show'); })->name('show');
+        Route::get('/', [App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('index');
+        Route::get('/{id}', [App\Http\Controllers\Admin\PaymentController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [App\Http\Controllers\Admin\PaymentController::class, 'edit'])->name('edit');
     });
 
     // Disputes
