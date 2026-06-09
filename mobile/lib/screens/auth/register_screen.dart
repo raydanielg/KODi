@@ -184,10 +184,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           child: Text(
                             'Effective Date: $effectiveDate',
-                            style: TextStyle(fontFamily: 'Times New Roman'(
+                            style: const TextStyle(
+                              fontFamily: 'Times New Roman',
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: const Color(0xff374151),
+                              color: Color(0xff374151),
                             ),
                           ),
                         ),
@@ -419,7 +420,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                     hint: Text(
                                       'Select your role',
-                                      style: TextStyle(fontFamily: 'Times New Roman'(color: const Color(0xff6b7280)),
+                                      style: const TextStyle(
+                                        fontFamily: 'Times New Roman',
+                                        color: Color(0xff6b7280),
+                                      ),
                                     ),
                                     icon: const Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 20),
                                     items: _roles.map((String role) {
@@ -819,7 +823,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   AppStrings.alreadyHaveAccount,
-                                  style: TextStyle(fontFamily: 'Times New Roman'(color: Colors.grey[600]),
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
+                                    color: Color(0xff6b7280),
+                                  ),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pushNamed(context, '/login'),
@@ -908,4 +915,6 @@ class PremiumAuthBackgroundPainter extends CustomPainter {
 }
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+}
 }
