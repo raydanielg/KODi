@@ -471,30 +471,80 @@ function clearSelection() {
 
 function bulkApprove() {
     const checkboxes = document.querySelectorAll('.property-checkbox:checked');
-    alert('Approving ' + checkboxes.length + ' properties');
-    clearSelection();
+    Swal.fire({
+        title: 'Approve Properties?',
+        text: `Are you sure you want to approve ${checkboxes.length} properties?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, approve!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Approved!',
+                text: `${checkboxes.length} properties have been approved.`,
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+            clearSelection();
+        }
+    });
 }
 
 function bulkDelete() {
     const checkboxes = document.querySelectorAll('.property-checkbox:checked');
-    if (confirm('Are you sure you want to delete ' + checkboxes.length + ' properties?')) {
-        alert('Deleting ' + checkboxes.length + ' properties');
-        clearSelection();
-    }
+    Swal.fire({
+        title: 'Delete Properties?',
+        text: `Are you sure you want to delete ${checkboxes.length} properties? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Deleted!',
+                text: `${checkboxes.length} properties have been deleted.`,
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+            clearSelection();
+        }
+    });
 }
 
 function viewDetails(id) {
-    alert('Viewing details for property #' + id);
+    window.location.href = `/admin/properties/${id}`;
 }
 
 function editProperty(id) {
-    alert('Editing property #' + id);
+    window.location.href = `/admin/properties/${id}/edit`;
 }
 
 function deleteProperty(id) {
-    if (confirm('Are you sure you want to delete this property?')) {
-        alert('Deleting property #' + id);
-    }
+    Swal.fire({
+        title: 'Delete Property?',
+        text: 'Are you sure you want to delete this property? This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Yes, delete!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Property has been deleted.',
+                icon: 'success',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+    });
 }
 </script>
 @endsection
