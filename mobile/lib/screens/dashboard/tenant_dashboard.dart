@@ -186,7 +186,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               children: [
                 Text(
                   _getGreeting(),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 12,
                     color: const Color(0xFF64748B),
                     fontWeight: FontWeight.w500,
@@ -195,7 +195,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 const SizedBox(height: 2),
                 Text(
                   user.name,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                     color: const Color(0xFF1E293B),
@@ -242,7 +242,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   ),
                   child: Text(
                     '3',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 8,
                       fontWeight: FontWeight.bold,
@@ -265,7 +265,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         children: [
           Text(
             _t('Kodi ya Mwezi Huu', 'Monthly Rent'),
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 13,
               color: const Color(0xFF64748B),
               fontWeight: FontWeight.w600,
@@ -288,7 +288,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               const SizedBox(width: 8),
               Text(
                 'Apt A4',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 14,
                   color: const Color(0xFFFE5D37),
                   fontWeight: FontWeight.w600,
@@ -315,7 +315,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               icon: const Icon(Icons.arrow_outward_rounded, size: 18),
               label: Text(
                 _t('Lipa Kodi', 'Pay Rent'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                 ),
@@ -348,7 +348,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               icon: const Icon(Icons.build_rounded, size: 18),
               label: Text(
                 _t('Omba Fundi', 'Request Fix'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                 ),
@@ -435,7 +435,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             children: [
               Text(
                 _t('Huduma za Haraka', 'Quick Services'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
@@ -443,7 +443,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ),
               Text(
                 _t('Angalia Zote', 'View All'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
                   color: const Color(0xFFFE5D37),
@@ -525,7 +525,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         // Name and short description
                         Text(
                           item['name'] as String,
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontSize: 12,
                             fontWeight: FontWeight.w800,
                             color: const Color(0xFF1E293B),
@@ -534,7 +534,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         const SizedBox(height: 1),
                         Text(
                           item['desc'] as String,
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontSize: 9,
                             fontWeight: FontWeight.w600,
                             color: const Color(0xFF64748B),
@@ -580,7 +580,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             children: [
               Text(
                 _t('Shughuli za Karibuni', 'Recent Activity'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
@@ -600,7 +600,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   children: [
                     Text(
                       _t('Ona Zote', 'See All'),
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         color: const Color(0xFFFE5D37),
@@ -626,7 +626,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               child: Center(
                 child: Text(
                   _t('Hakuna malipo ya karibuni.', 'No recent payments.'),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: const Color(0xFF64748B),
                   ),
@@ -746,7 +746,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     }
                     return Text(
                       titleText,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 13,
                         fontWeight: FontWeight.w800,
                         color: const Color(0xFF1E293B),
@@ -789,7 +789,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         }
                         return Text(
                           timeText,
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontSize: 10,
                             color: const Color(0xFF64748B),
                             fontWeight: FontWeight.w600,
@@ -828,7 +828,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 ),
                 child: Text(
                   isCredit ? 'IMEFANIKIWA' : 'KUTOKA',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 8,
                     fontWeight: FontWeight.w800,
                     color: isCredit
@@ -884,7 +884,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           children: [
             Text(
               _t('Arifa za Mwenye Nyumba', 'Landlord Alerts'),
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
                 color: const Color(0xFF1E293B),
@@ -906,7 +906,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   const SizedBox(width: 4),
                   Text(
                     _t('2 MPYA', '2 NEW'),
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 8,
                       fontWeight: FontWeight.w900,
                       color: const Color(0xFFEF4444),
@@ -959,7 +959,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       ),
                       child: Text(
                         alert['priority'] as String,
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.poppins(
                           fontSize: 8,
                           fontWeight: FontWeight.w900,
                           color: color,
@@ -970,7 +970,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     const Spacer(),
                     Text(
                       alert['time'] as String,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 10,
                         color: const Color(0xFF94A3B8),
                         fontWeight: FontWeight.w600,
@@ -1001,7 +1001,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         children: [
                           Text(
                             alert['title'] as String,
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.poppins(
                               fontSize: 13,
                               fontWeight: FontWeight.w800,
                               color: const Color(0xFF1E293B),
@@ -1010,7 +1010,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           const SizedBox(height: 4),
                           Text(
                             alert['desc'] as String,
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.poppins(
                               fontSize: 11,
                               color: const Color(0xFF64748B),
                               fontWeight: FontWeight.w500,
@@ -1097,7 +1097,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         ),
         child: Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 10,
             fontWeight: FontWeight.bold,
             color: isSelected ? Colors.white : const Color(0xFF64748B),
@@ -1138,7 +1138,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   const SizedBox(height: 16),
                   Text(
                     _t('Lipa Kodi ya Pango', 'Pay Rent Payment'),
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w800,
                       color: const Color(0xFF1E293B),
@@ -1149,7 +1149,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   // 1. Select Duration
                   Text(
                     _t('Muda Unaolipia (Miezi):', 'Payment Duration (Months):'),
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
                       color: const Color(0xFF64748B),
@@ -1186,7 +1186,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   // 2. Select Payment Method (Cash or Bank Transfer)
                   Text(
                     _t('Njia ya Malipo:', 'Payment Method:'),
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
                       color: const Color(0xFF64748B),
@@ -1210,7 +1210,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                               'Benki / M-Pesa / TigoPesa',
                               'Bank / Mobile Money Transfer',
                             ),
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: const Color(0xFF1E293B),
@@ -1231,7 +1231,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           activeColor: const Color(0xFFFE5D37),
                           title: Text(
                             _t('Pesa Taslimu (Cash)', 'Cash Payment'),
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: const Color(0xFF1E293B),
@@ -1256,7 +1256,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     children: [
                       Text(
                         _t('Jumla ya Malipo:', 'Total Amount Due:'),
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.poppins(
                           fontSize: 13,
                           color: const Color(0xFF64748B),
                           fontWeight: FontWeight.w600,
@@ -1291,7 +1291,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     ),
                     child: Text(
                       _t('Kamilisha Malipo', 'Complete Payment'),
-                      style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
                     ),
                   ),
                 ],
@@ -1325,7 +1325,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         ),
         child: Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 10,
             fontWeight: FontWeight.bold,
             color: isSelected ? Colors.white : const Color(0xFF64748B),
@@ -1388,7 +1388,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     'Inachakata malipo ya kodi...',
                     'Processing rent payment...',
                   ),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
@@ -1450,7 +1450,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       ),
                       Text(
                         'Palm Heights • Apt A4',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.poppins(
                           fontSize: 10,
                           color: const Color(0xFF64748B),
                           fontWeight: FontWeight.w600,
@@ -1480,7 +1480,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         const SizedBox(width: 4),
                         Text(
                           _t('IMELIPWA', 'PAID'),
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontSize: 9,
                             fontWeight: FontWeight.w900,
                             color: const Color(0xFF137333),
@@ -1499,7 +1499,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               // Receipt Title
               Text(
                 _t('STAKABADHI YA MALIPO', 'PAYMENT RECEIPT'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 10,
                   fontWeight: FontWeight.w900,
                   color: const Color(0xFF94A3B8),
@@ -1509,7 +1509,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               const SizedBox(height: 6),
               Text(
                 inv['title'] ?? '',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
@@ -1574,7 +1574,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                                   'Inatengeneza risiti ya PDF...',
                                   'Generating PDF receipt...',
                                 ),
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -1589,7 +1589,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 icon: const Icon(Icons.download_rounded, size: 18),
                 label: Text(
                   _t('Pakua Risiti (PDF)', 'Download PDF Receipt'),
-                  style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFE5D37),
@@ -1616,7 +1616,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         children: [
           Text(
             label,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 12,
               color: const Color(0xFF64748B),
               fontWeight: FontWeight.w600,
@@ -1624,7 +1624,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           ),
           Text(
             value,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 12,
               color: const Color(0xFF1E293B),
               fontWeight: FontWeight.w800,
@@ -1704,7 +1704,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     const SizedBox(width: 8),
                     Text(
                       items[index]['label'] as String,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
@@ -1788,7 +1788,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               const SizedBox(height: 20),
               Text(
                 _t('Mkataba Haujaunganishwa', 'Lease Not Connected'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
@@ -1801,7 +1801,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   'Ili kuona taarifa za kodi na kulipa, tafadhali unganisha akaunti yako na Mwenye Nyumba wako kwanza.',
                   'To view rent information and pay bills, please connect your account with your Landlord first.',
                 ),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 12,
                   color: const Color(0xFF64748B),
                   fontWeight: FontWeight.w500,
@@ -1819,7 +1819,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 icon: const Icon(Icons.swap_horiz_rounded, size: 16),
                 label: Text(
                   _t('Nenda Kwenye Maombi', 'Go to Requests'),
-                  style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFE5D37),
@@ -1845,7 +1845,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       children: [
         Text(
           _t('Maombi ya Mkataba', 'Lease Requests'),
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.w800,
             color: const Color(0xFF1E293B),
@@ -1874,7 +1874,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   children: [
                     Text(
                       'Mama Ken (Mwenye Nyumba)',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 13,
                         fontWeight: FontWeight.w800,
                         color: const Color(0xFF1E293B),
@@ -1891,7 +1891,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       ),
                       child: Text(
                         _t('Apt A4 • Palm Heights', 'Apt A4 • Palm Heights'),
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.poppins(
                           fontSize: 9,
                           fontWeight: FontWeight.w800,
                           color: const Color(0xFFFE5D37),
@@ -1906,7 +1906,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   children: [
                     Text(
                       _t('Kodi ya Mwezi:', 'Monthly Rent:'),
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 11,
                         color: const Color(0xFF64748B),
                         fontWeight: FontWeight.w500,
@@ -1914,7 +1914,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     ),
                     Text(
                       'TSh 450,000',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
                         color: const Color(0xFF1E293B),
@@ -1929,7 +1929,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   children: [
                     Text(
                       _t('Muda:', 'Duration:'),
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 11,
                         color: const Color(0xFF64748B),
                         fontWeight: FontWeight.w500,
@@ -1958,7 +1958,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   children: [
                     Text(
                       _t('Jumla ya Malipo:', 'Total Amount:'),
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 11,
                         color: const Color(0xFF64748B),
                         fontWeight: FontWeight.w700,
@@ -1995,7 +1995,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         ),
                         child: Text(
                           _t('Kataa', 'Decline'),
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w800,
                             fontSize: 12,
                           ),
@@ -2029,7 +2029,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         ),
                         child: Text(
                           _t('Kubali', 'Accept'),
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w800,
                             fontSize: 12,
                           ),
@@ -2049,7 +2049,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 'Hakuna maombi mapya ya kuingia.',
                 'No new incoming requests.',
               ),
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 11,
                 color: const Color(0xFF64748B),
                 fontWeight: FontWeight.w500,
@@ -2077,7 +2077,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               TextField(
                 controller: _phoneInputController,
                 keyboardType: TextInputType.phone,
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: const Color(0xFF1E293B),
@@ -2087,7 +2087,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     'Namba ya simu ya Mwenye Nyumba...',
                     'Landlord Phone Number...',
                   ),
-                  hintStyle: GoogleFonts.inter(
+                  hintStyle: GoogleFonts.poppins(
                     fontSize: 12,
                     color: const Color(0xFF94A3B8),
                   ),
@@ -2149,7 +2149,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 ),
                 child: Text(
                   _t('Tuma Ombi', 'Send Request'),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w800,
                     fontSize: 12,
                   ),
@@ -2223,7 +2223,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         ),
         child: Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 10,
             fontWeight: FontWeight.w800,
             color: isSelected ? Colors.white : const Color(0xFF64748B),
@@ -2257,7 +2257,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             children: [
               Text(
                 phone,
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 12,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
@@ -2266,7 +2266,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               const SizedBox(height: 2),
               Text(
                 date,
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 9,
                   color: const Color(0xFF94A3B8),
                   fontWeight: FontWeight.w600,
@@ -2295,7 +2295,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     const SizedBox(width: 4),
                     Text(
                       statusText,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         fontSize: 9,
                         fontWeight: FontWeight.w900,
                         color: statusColor,
@@ -2325,7 +2325,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
   Widget _buildRequestsSectionHeader(String title) {
     return Text(
       title,
-      style: GoogleFonts.inter(
+      style: GoogleFonts.poppins(
         fontSize: 11,
         fontWeight: FontWeight.w900,
         color: const Color(0xFF94A3B8),
@@ -2342,7 +2342,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         children: [
           Text(
             label,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 12,
               color: const Color(0xFF64748B),
               fontWeight: FontWeight.w600,
@@ -2350,7 +2350,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           ),
           Text(
             val,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 12,
               color: const Color(0xFF1E293B),
               fontWeight: FontWeight.w800,
@@ -2428,7 +2428,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       children: [
         Text(
           _t('Historia ya Malipo (Invoices)', 'Payment History (Invoices)'),
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.w800,
             color: const Color(0xFF1E293B),
@@ -2467,7 +2467,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       children: [
                         Text(
                           inv['title']!,
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             color: const Color(0xFF1E293B),
@@ -2476,7 +2476,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         const SizedBox(height: 4),
                         Text(
                           '${inv['date']} • ${inv['desc']}',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontSize: 11,
                             color: const Color(0xFF64748B),
                             fontWeight: FontWeight.w500,
@@ -2508,7 +2508,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         ),
                         child: Text(
                           _t('IMELIPWA', 'PAID'),
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontSize: 9,
                             fontWeight: FontWeight.bold,
                             color: const Color(0xFF137333),
@@ -2585,7 +2585,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               const SizedBox(height: 14),
               Text(
                 user.name,
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
@@ -2597,7 +2597,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 children: [
                   Text(
                     user.phone.isNotEmpty ? user.phone : '+255 712 345 678',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 12,
                       color: const Color(0xFF64748B),
                       fontWeight: FontWeight.w600,
@@ -2623,7 +2623,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                         const SizedBox(width: 2),
                         Text(
                           _t('Kuthibitishwa', 'Verified'),
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontSize: 8,
                             fontWeight: FontWeight.w800,
                             color: const Color(0xFF137333),
@@ -2687,7 +2687,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           subtitle: '19950312-XXXXX-XXXXX-XX',
           trailing: Text(
             _t('IMETHIBITISHWA', 'VERIFIED'),
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 9,
               fontWeight: FontWeight.w900,
               color: const Color(0xFF137333),
@@ -2860,7 +2860,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             ),
             title: Text(
               _t('Kutoka Kwenye Akaunti', 'Logout Account'),
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 13,
                 fontWeight: FontWeight.w800,
                 color: const Color(0xFFEF4444),
@@ -2881,7 +2881,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       padding: const EdgeInsets.only(left: 4, bottom: 4),
       child: Text(
         title,
-        style: GoogleFonts.inter(
+        style: GoogleFonts.poppins(
           fontSize: 11,
           fontWeight: FontWeight.w900,
           color: const Color(0xFF94A3B8),
@@ -2917,7 +2917,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         ),
         title: Text(
           title,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 12.5,
             fontWeight: FontWeight.w800,
             color: const Color(0xFF1E293B),
@@ -2925,7 +2925,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         ),
         subtitle: Text(
           subtitle,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 10,
             fontWeight: FontWeight.w500,
             color: const Color(0xFF64748B),
@@ -2953,7 +2953,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           ),
           title: Text(
             _t('Badilisha Nenosiri', 'Change Password'),
-            style: GoogleFonts.inter(fontWeight: FontWeight.bold),
+            style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -2962,7 +2962,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: _t('Nenosiri la Sasa', 'Current Password'),
-                  labelStyle: GoogleFonts.inter(fontSize: 12),
+                  labelStyle: GoogleFonts.poppins(fontSize: 12),
                   border: const OutlineInputBorder(),
                 ),
               ),
@@ -2971,7 +2971,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: _t('Nenosiri Jipya', 'New Password'),
-                  labelStyle: GoogleFonts.inter(fontSize: 12),
+                  labelStyle: GoogleFonts.poppins(fontSize: 12),
                   border: const OutlineInputBorder(),
                 ),
               ),
@@ -2982,7 +2982,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               onPressed: () => Navigator.pop(context),
               child: Text(
                 _t('Ghairi', 'Cancel'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   color: Colors.grey,
                   fontWeight: FontWeight.bold,
                 ),
@@ -3005,7 +3005,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ),
               child: Text(
                 _t('Hifadhi', 'Save'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -3027,7 +3027,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           ),
           title: Text(
             _t('Njia Zilizohifadhiwa', 'Saved Payment Methods'),
-            style: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 16),
+            style: GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -3076,7 +3076,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               onPressed: () => Navigator.pop(context),
               child: Text(
                 _t('Funga', 'Close'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   color: const Color(0xFFFE5D37),
                   fontWeight: FontWeight.bold,
                 ),
@@ -3117,7 +3117,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 const SizedBox(height: 16),
                 Text(
                   _t('Taarifa Binafsi', 'My Personal Info'),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                     color: const Color(0xFF1E293B),
@@ -3181,7 +3181,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   ),
                   child: Text(
                     _t('Funga', 'Close'),
-                    style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
                   ),
                 ),
               ],
@@ -3221,7 +3221,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               const SizedBox(height: 16),
               Text(
                 _t('Mkataba Wangu', 'My Lease Contract'),
-                style: GoogleFonts.inter(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.w800,
                   color: const Color(0xFF1E293B),
@@ -3334,7 +3334,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     'Inapakua mkataba kama PDF...',
                     'Downloading contract as PDF...',
                   ),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                   ),
@@ -3376,7 +3376,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 const SizedBox(height: 16),
                 Text(
                   _t('Msaada na Maswali', 'Help & Support FAQs'),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                     color: const Color(0xFF1E293B),
@@ -3440,7 +3440,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   ),
                   title: Text(
                     _t('Piga simu kwa Landlord', 'Call Landlord'),
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                     ),
@@ -3463,7 +3463,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   ),
                   title: Text(
                     _t('Tuma ujumbe kwa Wakala', 'Chat with Agent'),
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.poppins(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
                     ),
@@ -3485,7 +3485,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   ),
                   child: Text(
                     _t('Funga', 'Close'),
-                    style: GoogleFonts.inter(fontWeight: FontWeight.w700),
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
                   ),
                 ),
               ],
@@ -3499,7 +3499,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
   Widget _buildInfoSectionHeader(String title) {
     return Text(
       title,
-      style: GoogleFonts.inter(
+      style: GoogleFonts.poppins(
         fontSize: 11,
         fontWeight: FontWeight.w900,
         color: const Color(0xFF94A3B8),
@@ -3516,7 +3516,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         children: [
           Text(
             label,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 12,
               color: const Color(0xFF64748B),
               fontWeight: FontWeight.w600,
@@ -3524,7 +3524,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           ),
           Text(
             value,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 12,
               color: const Color(0xFF1E293B),
               fontWeight: FontWeight.w800,
@@ -3549,7 +3549,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         children: [
           Text(
             question,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.bold,
               color: const Color(0xFF1E293B),
@@ -3558,7 +3558,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           const SizedBox(height: 6),
           Text(
             answer,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 11,
               color: const Color(0xFF64748B),
               height: 1.4,
@@ -3611,7 +3611,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                       children: [
                         Text(
                           _t('Huduma Zaidi', 'More Services'),
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.poppins(
                             fontSize: 18,
                             fontWeight: FontWeight.w800,
                             color: const Color(0xff1e293b),
@@ -3816,7 +3816,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
   Widget _buildPanelSectionHeader(String title) {
     return Text(
       title,
-      style: GoogleFonts.inter(
+      style: GoogleFonts.poppins(
         fontSize: 11,
         fontWeight: FontWeight.w800,
         color: const Color(0xff64748b),
@@ -3860,7 +3860,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
         ),
         title: Text(
           title,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.poppins(
             fontSize: 13,
             fontWeight: FontWeight.w700,
             color: const Color(0xff1e293b),
@@ -3870,7 +3870,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           padding: const EdgeInsets.only(top: 2),
           child: Text(
             subtitle,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 10,
               color: const Color(0xff64748b),
               fontWeight: FontWeight.w500,
@@ -3916,7 +3916,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
           children: [
             Text(
               'mkataba_pango_MNA4.pdf',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -3928,7 +3928,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                 'Uhakiki wa Mkataba • Kurasa 1 ya 1',
                 'Contract Preview • Page 1 of 1',
               ),
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 10,
                 color: const Color(0xFFCBD5E1),
               ),
@@ -3996,7 +3996,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                                 'Mikocheni, Dar es Salaam, Tanzania',
                                 'Mikocheni, Dar es Salaam, Tanzania',
                               ),
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.poppins(
                                 fontSize: 8,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey[500],
@@ -4033,7 +4033,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                           'MKATABA WA KUKODISHA NYUMBA YA MAKAZI',
                           'RESIDENTIAL LEASE AGREEMENT',
                         ),
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.poppins(
                           fontSize: 12,
                           fontWeight: FontWeight.w900,
                           color: Colors.black87,
@@ -4116,7 +4116,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                                 'Sahihi ya Mwenye Nyumba:',
                                 'Landlord Signature:',
                               ),
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.poppins(
                                 fontSize: 8,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey[700],
@@ -4157,7 +4157,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                               'IMETHIBITISHWA\nMANNA ESTATE',
                               'APPROVED\nMANNA ESTATE',
                             ),
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.poppins(
                               fontSize: 7,
                               fontWeight: FontWeight.w900,
                               color: const Color(0xFFFE5D37),
@@ -4170,7 +4170,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
                           children: [
                             Text(
                               _t('Sahihi ya Mpangaji:', 'Tenant Signature:'),
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.poppins(
                                 fontSize: 8,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey[700],
@@ -4207,7 +4207,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
   Widget _buildDocSectionHeader(String title) {
     return Text(
       title,
-      style: GoogleFonts.inter(
+      style: GoogleFonts.poppins(
         fontSize: 9,
         fontWeight: FontWeight.w900,
         color: Colors.black87,
@@ -4219,7 +4219,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
   Widget _buildDocParagraph(String text) {
     return Text(
       text,
-      style: GoogleFonts.inter(
+      style: GoogleFonts.poppins(
         fontSize: 8.5,
         color: Colors.black54,
         height: 1.4,
@@ -4237,7 +4237,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
         children: [
           Text(
             '$index ',
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 8.5,
               fontWeight: FontWeight.bold,
               color: Colors.black87,
@@ -4247,7 +4247,7 @@ class FullscreenPdfViewerPage extends StatelessWidget {
           Expanded(
             child: Text(
               term,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.poppins(
                 fontSize: 8.5,
                 color: Colors.black54,
                 height: 1.3,
