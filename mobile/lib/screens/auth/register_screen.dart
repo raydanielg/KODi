@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
 import '../../models/user_model.dart';
@@ -144,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         Text(
                           title,
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(fontFamily: 'Times New Roman'(
                             fontSize: 22,
                             fontWeight: FontWeight.w800,
                             color: const Color(0xff111827),
@@ -169,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         Text(
                           'Last Updated: $lastUpdated',
-                          style: GoogleFonts.poppins(
+                          style: TextStyle(fontFamily: 'Times New Roman'(
                             fontSize: 13,
                             color: const Color(0xff6b7280),
                           ),
@@ -184,7 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           child: Text(
                             'Effective Date: $effectiveDate',
-                            style: GoogleFonts.poppins(
+                            style: TextStyle(fontFamily: 'Times New Roman'(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               color: const Color(0xff374151),
@@ -200,7 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   section['title']!,
-                                  style: GoogleFonts.poppins(
+                                  style: TextStyle(fontFamily: 'Times New Roman'(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
                                     color: const Color(0xff111827),
@@ -209,7 +208,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 const SizedBox(height: 8),
                                 Text(
                                   section['content']!,
-                                  style: GoogleFonts.poppins(
+                                  style: TextStyle(fontFamily: 'Times New Roman'(
                                     fontSize: 14,
                                     color: const Color(0xff4b5563),
                                     height: 1.6,
@@ -252,7 +251,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               child: Text(
                                 'I Understand',
-                                style: GoogleFonts.poppins(
+                                style: TextStyle(fontFamily: 'Times New Roman'(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 15,
                                 ),
@@ -356,7 +355,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const SizedBox(height: 20),
                             Text(
                               AppStrings.createAccount,
-                              style: GoogleFonts.poppins(
+                              style: TextStyle(fontFamily: 'Times New Roman'(
                                 fontSize: 32,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black,
@@ -365,7 +364,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const SizedBox(height: 8),
                             Text(
                               'Start your journey today by creating a new account.',
-                              style: GoogleFonts.poppins(
+                              style: TextStyle(fontFamily: 'Times New Roman'(
                                 fontSize: 14,
                                 color: Colors.grey[600],
                               ),
@@ -377,7 +376,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'I am a',
-                                  style: GoogleFonts.poppins(
+                                  style: TextStyle(fontFamily: 'Times New Roman'(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.grey[700],
@@ -400,7 +399,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: DropdownButtonFormField<String>(
                                     value: _selectedRole.isEmpty ? null : _selectedRole,
                                     isExpanded: true,
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: const Color(0xff1f2937),
                                       fontSize: 14,
                                     ),
@@ -415,7 +414,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                     hint: Text(
                                       'Select your role',
-                                      style: GoogleFonts.poppins(color: const Color(0xff6b7280)),
+                                      style: TextStyle(fontFamily: 'Times New Roman'(color: const Color(0xff6b7280)),
                                     ),
                                     icon: const Icon(Icons.keyboard_arrow_down, color: Colors.grey, size: 20),
                                     items: _roles.map((String role) {
@@ -423,7 +422,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         value: role,
                                         child: Text(
                                           role,
-                                          style: GoogleFonts.poppins(
+                                          style: TextStyle(fontFamily: 'Times New Roman'(
                                             color: const Color(0xff1f2937),
                                             fontSize: 14,
                                           ),
@@ -442,7 +441,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 padding: const EdgeInsets.only(top: 8),
                                 child: Text(
                                   _roleDescriptions[_selectedRole]!,
-                                  style: GoogleFonts.poppins(
+                                  style: TextStyle(fontFamily: 'Times New Roman'(
                                     fontSize: 12,
                                     color: Colors.grey[600],
                                     fontStyle: FontStyle.italic,
@@ -456,7 +455,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'Full name',
-                                  style: GoogleFonts.poppins(
+                                  style: TextStyle(fontFamily: 'Times New Roman'(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.grey[700],
@@ -479,7 +478,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: TextFormField(
                                     controller: _nameController,
                                     validator: Validators.validateName,
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: const Color(0xff1f2937),
                                       fontSize: 15,
                                     ),
@@ -503,7 +502,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'Email address',
-                                  style: GoogleFonts.poppins(
+                                  style: TextStyle(fontFamily: 'Times New Roman'(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.grey[700],
@@ -527,7 +526,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _emailController,
                                     keyboardType: TextInputType.emailAddress,
                                     validator: Validators.validateEmail,
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: const Color(0xff1f2937),
                                       fontSize: 15,
                                     ),
@@ -551,7 +550,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'Phone number',
-                                  style: GoogleFonts.poppins(
+                                  style: TextStyle(fontFamily: 'Times New Roman'(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.grey[700],
@@ -575,7 +574,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _phoneController,
                                     keyboardType: TextInputType.phone,
                                     validator: Validators.validatePhone,
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: const Color(0xff1f2937),
                                       fontSize: 15,
                                     ),
@@ -599,7 +598,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'Password',
-                                  style: GoogleFonts.poppins(
+                                  style: TextStyle(fontFamily: 'Times New Roman'(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.grey[700],
@@ -623,7 +622,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _passwordController,
                                     obscureText: _obscurePassword,
                                     validator: Validators.validatePassword,
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: const Color(0xff1f2937),
                                       fontSize: 15,
                                     ),
@@ -656,7 +655,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   'Confirm password',
-                                  style: GoogleFonts.poppins(
+                                  style: TextStyle(fontFamily: 'Times New Roman'(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.grey[700],
@@ -680,7 +679,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     controller: _confirmPasswordController,
                                     obscureText: _obscureConfirmPassword,
                                     validator: (value) => Validators.validateConfirmPassword(value, _passwordController.text),
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: const Color(0xff1f2937),
                                       fontSize: 15,
                                     ),
@@ -726,7 +725,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     children: [
                                       Text(
                                         'I agree to the ',
-                                        style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[700]),
+                                        style: TextStyle(fontFamily: 'Times New Roman'(fontSize: 13, color: Colors.grey[700]),
                                       ),
                                       GestureDetector(
                                         onTap: () {
@@ -740,7 +739,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         },
                                         child: Text(
                                           'Terms of Service',
-                                          style: GoogleFonts.poppins(
+                                          style: TextStyle(fontFamily: 'Times New Roman'(
                                             fontSize: 13,
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.w600,
@@ -750,7 +749,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       ),
                                       Text(
                                         ' and ',
-                                        style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[700]),
+                                        style: TextStyle(fontFamily: 'Times New Roman'(fontSize: 13, color: Colors.grey[700]),
                                       ),
                                       GestureDetector(
                                         onTap: () {
@@ -764,7 +763,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         },
                                         child: Text(
                                           'Privacy Policy',
-                                          style: GoogleFonts.poppins(
+                                          style: TextStyle(fontFamily: 'Times New Roman'(
                                             fontSize: 13,
                                             color: AppColors.primary,
                                             fontWeight: FontWeight.w600,
@@ -793,7 +792,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       )
                                     : Text(
                                         'Create account',
-                                        style: GoogleFonts.poppins(
+                                        style: TextStyle(fontFamily: 'Times New Roman'(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16,
                                         ),
@@ -806,13 +805,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               children: [
                                 Text(
                                   AppStrings.alreadyHaveAccount,
-                                  style: GoogleFonts.poppins(color: Colors.grey[600]),
+                                  style: TextStyle(fontFamily: 'Times New Roman'(color: Colors.grey[600]),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pushNamed(context, '/login'),
                                   child: Text(
                                     AppStrings.signIn,
-                                    style: GoogleFonts.poppins(
+                                    style: TextStyle(fontFamily: 'Times New Roman'(
                                       color: AppColors.primary,
                                       fontWeight: FontWeight.w600,
                                     ),
