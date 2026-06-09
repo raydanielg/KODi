@@ -76,6 +76,12 @@ class Helpers {
     return '\$${amount.toStringAsFixed(2)}';
   }
 
+  static String formatMoney(double amount) {
+    String val = amount.toStringAsFixed(0);
+    RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    return val.replaceAllMapped(reg, (Match m) => '${m[1]},');
+  }
+
   static String formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year}';
   }
