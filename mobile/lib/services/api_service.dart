@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/user_model.dart';
+import '../constants/app_strings.dart';
 
 class ApiService {
   static final ApiService _instance = ApiService._internal();
   factory ApiService() => _instance;
   ApiService._internal();
 
-  String _baseUrl = 'http://localhost:8000/api';
+  String _baseUrl = AppStrings.apiBaseUrl;
   String? _token;
   UserModel? _currentUser;
 

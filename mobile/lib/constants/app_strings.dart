@@ -62,4 +62,9 @@ class AppStrings {
   static const String search = 'Search';
   static const String filter = 'Filter';
   static const String sort = 'Sort';
+
+  // API Configuration
+  static const String apiBaseUrl = 'http://10.0.2.2:8000/api'; // For Android emulator
+  // For physical device, use your computer's IP: 'http://192.168.x.x:8000/api'
+  // For production, use your actual API URL: 'https://your-domain.com/api'
 }
