@@ -78,48 +78,101 @@
         color: #fff;
     }
     
-    .property-card {
+    .table-card {
         background: #fff;
         border-radius: 12px;
         border: 1px solid #e5e7eb;
         overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .property-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
-        border-color: #3b82f6;
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
     }
-    .property-image {
-        height: 160px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-size: 3rem;
-    }
-    .property-badge {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        padding: 6px 12px;
-        border-radius: 20px;
+    .custom-table th {
+        background: #f9fafb;
+        padding: 16px;
+        text-align: left;
         font-size: 0.75rem;
         font-weight: 600;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid #e5e7eb;
     }
-    .property-price {
-        font-size: 1.25rem;
-        font-weight: 700;
+    .custom-table td {
+        padding: 16px;
+        border-bottom: 1px solid #e5e7eb;
+        vertical-align: middle;
+    }
+    .custom-table tr:hover td {
+        background: #f9fafb;
+    }
+    .property-name {
+        font-size: 0.95rem;
+        font-weight: 600;
         color: #111827;
     }
     .property-location {
-        font-size: 0.875rem;
+        font-size: 0.8rem;
         color: #6b7280;
+    }
+    .property-price {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #111827;
     }
     .property-meta {
         font-size: 0.8rem;
         color: #9ca3af;
+    }
+    .status-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+    .action-btn {
+        padding: 6px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        background: #fff;
+        font-size: 0.75rem;
+        color: #374151;
+        transition: all 0.2s;
+        margin-right: 4px;
+    }
+    .action-btn:hover {
+        background: #f3f4f6;
+        border-color: #9ca3af;
+    }
+    .action-btn.approve {
+        background: #10b981;
+        border-color: #10b981;
+        color: #fff;
+    }
+    .action-btn.approve:hover {
+        background: #059669;
+    }
+    .action-btn.delete {
+        background: #ef4444;
+        border-color: #ef4444;
+        color: #fff;
+    }
+    .action-btn.delete:hover {
+        background: #dc2626;
+    }
+    .bulk-actions {
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        border-radius: 8px;
+        padding: 12px 16px;
+        display: none;
+    }
+    .bulk-actions.show {
+        display: flex;
+        align-items: center;
+        gap-2;
     }
     
     @keyframes fadeInUp {
@@ -132,7 +185,6 @@
     }
     .delay-1 { animation-delay: 0.1s; }
     .delay-2 { animation-delay: 0.2s; }
-    .delay-3 { animation-delay: 0.3s; }
 </style>
 
 <div class="page-header animate-fade-in">
@@ -203,7 +255,7 @@
             <input type="text" class="search-input w-100" placeholder="Search properties...">
         </div>
         <div class="col-12 col-md-8">
-            <div class="d-flex gap-2 flex-wrap">
+            <div class="d-flex gap-2 flex-wrap align-items-center">
                 <button class="filter-btn active">All</button>
                 <button class="filter-btn">Occupied</button>
                 <button class="filter-btn">Vacant</button>
@@ -214,89 +266,234 @@
             </div>
         </div>
     </div>
+    <div class="bulk-actions mt-3" id="bulkActions">
+        <span class="text-sm text-primary fw-semibold me-3"><span id="selectedCount">0</span> selected</span>
+        <button class="action-btn approve" onclick="bulkApprove()">
+            <i class="bi bi-check-lg me-1"></i> Approve All
+        </button>
+        <button class="action-btn delete" onclick="bulkDelete()">
+            <i class="bi bi-trash me-1"></i> Delete All
+        </button>
+        <button class="action-btn" onclick="clearSelection()">
+            <i class="bi bi-x-lg me-1"></i> Clear
+        </button>
+    </div>
 </div>
 
-<!-- Properties Grid -->
-<div class="row g-3">
-    <div class="col-12 col-sm-6 col-lg-4 col-xl-3 animate-fade-in delay-1">
-        <div class="property-card">
-            <div class="position-relative">
-                <div class="property-image">
-                    <i class="bi bi-building"></i>
-                </div>
-                <span class="property-badge bg-success text-white">Occupied</span>
-            </div>
-            <div class="p-3">
-                <h5 class="fw-bold mb-1" style="color: #111827;">Sunset Apartments</h5>
-                <p class="property-location mb-2"><i class="bi bi-geo-alt me-1"></i> Dar es Salaam, Tanzania</p>
-                <div class="property-price mb-2">TZS 450,000/mo</div>
-                <div class="d-flex gap-3 property-meta">
-                    <span><i class="bi bi-door-open me-1"></i> 2 Beds</span>
-                    <span><i class="bi bi-droplet me-1"></i> 2 Baths</span>
-                    <span><i class="bi bi-rulers me-1"></i> 85m²</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-4 col-xl-3 animate-fade-in delay-1">
-        <div class="property-card">
-            <div class="position-relative">
-                <div class="property-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                    <i class="bi bi-house"></i>
-                </div>
-                <span class="property-badge bg-warning text-white">Vacant</span>
-            </div>
-            <div class="p-3">
-                <h5 class="fw-bold mb-1" style="color: #111827;">Green Valley Estate</h5>
-                <p class="property-location mb-2"><i class="bi bi-geo-alt me-1"></i> Arusha, Tanzania</p>
-                <div class="property-price mb-2">TZS 320,000/mo</div>
-                <div class="d-flex gap-3 property-meta">
-                    <span><i class="bi bi-door-open me-1"></i> 3 Beds</span>
-                    <span><i class="bi bi-droplet me-1"></i> 2 Baths</span>
-                    <span><i class="bi bi-rulers me-1"></i> 120m²</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-4 col-xl-3 animate-fade-in delay-2">
-        <div class="property-card">
-            <div class="position-relative">
-                <div class="property-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                    <i class="bi bi-building"></i>
-                </div>
-                <span class="property-badge bg-success text-white">Occupied</span>
-            </div>
-            <div class="p-3">
-                <h5 class="fw-bold mb-1" style="color: #111827;">Ocean View Towers</h5>
-                <p class="property-location mb-2"><i class="bi bi-geo-alt me-1"></i> Mwanza, Tanzania</p>
-                <div class="property-price mb-2">TZS 580,000/mo</div>
-                <div class="d-flex gap-3 property-meta">
-                    <span><i class="bi bi-door-open me-1"></i> 2 Beds</span>
-                    <span><i class="bi bi-droplet me-1"></i> 2 Baths</span>
-                    <span><i class="bi bi-rulers me-1"></i> 95m²</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-4 col-xl-3 animate-fade-in delay-2">
-        <div class="property-card">
-            <div class="position-relative">
-                <div class="property-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                    <i class="bi bi-house"></i>
-                </div>
-                <span class="property-badge bg-info text-white">Pending</span>
-            </div>
-            <div class="p-3">
-                <h5 class="fw-bold mb-1" style="color: #111827;">Safari Heights</h5>
-                <p class="property-location mb-2"><i class="bi bi-geo-alt me-1"></i> Dodoma, Tanzania</p>
-                <div class="property-price mb-2">TZS 280,000/mo</div>
-                <div class="d-flex gap-3 property-meta">
-                    <span><i class="bi bi-door-open me-1"></i> 1 Bed</span>
-                    <span><i class="bi bi-droplet me-1"></i> 1 Bath</span>
-                    <span><i class="bi bi-rulers me-1"></i> 60m²</span>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- Properties Table -->
+<div class="table-card animate-fade-in delay-2">
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th style="width: 40px;"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
+                <th>Property</th>
+                <th>Location</th>
+                <th>Price</th>
+                <th>Details</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
+                <td>
+                    <div class="property-name">Sunset Apartments</div>
+                    <div class="property-location">Unit 2A</div>
+                </td>
+                <td>
+                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Dar es Salaam, Tanzania</div>
+                </td>
+                <td>
+                    <div class="property-price">TZS 450,000/mo</div>
+                </td>
+                <td>
+                    <div class="property-meta">
+                        <span><i class="bi bi-door-open me-1"></i> 2 Beds</span>
+                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 2 Baths</span>
+                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 85m²</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge bg-success bg-opacity-10 text-success">Occupied</span>
+                </td>
+                <td>
+                    <button class="action-btn" onclick="viewDetails(1)"><i class="bi bi-eye"></i></button>
+                    <button class="action-btn" onclick="editProperty(1)"><i class="bi bi-pencil"></i></button>
+                    <button class="action-btn delete" onclick="deleteProperty(1)"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
+                <td>
+                    <div class="property-name">Green Valley Estate</div>
+                    <div class="property-location">Unit 5B</div>
+                </td>
+                <td>
+                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Arusha, Tanzania</div>
+                </td>
+                <td>
+                    <div class="property-price">TZS 320,000/mo</div>
+                </td>
+                <td>
+                    <div class="property-meta">
+                        <span><i class="bi bi-door-open me-1"></i> 3 Beds</span>
+                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 2 Baths</span>
+                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 120m²</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge bg-warning bg-opacity-10 text-warning">Vacant</span>
+                </td>
+                <td>
+                    <button class="action-btn" onclick="viewDetails(2)"><i class="bi bi-eye"></i></button>
+                    <button class="action-btn" onclick="editProperty(2)"><i class="bi bi-pencil"></i></button>
+                    <button class="action-btn delete" onclick="deleteProperty(2)"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
+                <td>
+                    <div class="property-name">Ocean View Towers</div>
+                    <div class="property-location">Unit 3C</div>
+                </td>
+                <td>
+                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Mwanza, Tanzania</div>
+                </td>
+                <td>
+                    <div class="property-price">TZS 580,000/mo</div>
+                </td>
+                <td>
+                    <div class="property-meta">
+                        <span><i class="bi bi-door-open me-1"></i> 2 Beds</span>
+                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 2 Baths</span>
+                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 95m²</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge bg-success bg-opacity-10 text-success">Occupied</span>
+                </td>
+                <td>
+                    <button class="action-btn" onclick="viewDetails(3)"><i class="bi bi-eye"></i></button>
+                    <button class="action-btn" onclick="editProperty(3)"><i class="bi bi-pencil"></i></button>
+                    <button class="action-btn delete" onclick="deleteProperty(3)"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
+                <td>
+                    <div class="property-name">Safari Heights</div>
+                    <div class="property-location">Unit 1A</div>
+                </td>
+                <td>
+                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Dodoma, Tanzania</div>
+                </td>
+                <td>
+                    <div class="property-price">TZS 280,000/mo</div>
+                </td>
+                <td>
+                    <div class="property-meta">
+                        <span><i class="bi bi-door-open me-1"></i> 1 Bed</span>
+                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 1 Bath</span>
+                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 60m²</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge bg-info bg-opacity-10 text-info">Pending</span>
+                </td>
+                <td>
+                    <button class="action-btn" onclick="viewDetails(4)"><i class="bi bi-eye"></i></button>
+                    <button class="action-btn" onclick="editProperty(4)"><i class="bi bi-pencil"></i></button>
+                    <button class="action-btn delete" onclick="deleteProperty(4)"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
+                <td>
+                    <div class="property-name">City Center Apartments</div>
+                    <div class="property-location">Unit 4D</div>
+                </td>
+                <td>
+                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Dar es Salaam, Tanzania</div>
+                </td>
+                <td>
+                    <div class="property-price">TZS 520,000/mo</div>
+                </td>
+                <td>
+                    <div class="property-meta">
+                        <span><i class="bi bi-door-open me-1"></i> 2 Beds</span>
+                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 2 Baths</span>
+                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 90m²</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-badge bg-success bg-opacity-10 text-success">Occupied</span>
+                </td>
+                <td>
+                    <button class="action-btn" onclick="viewDetails(5)"><i class="bi bi-eye"></i></button>
+                    <button class="action-btn" onclick="editProperty(5)"><i class="bi bi-pencil"></i></button>
+                    <button class="action-btn delete" onclick="deleteProperty(5)"><i class="bi bi-trash"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
+
+<script>
+function toggleSelectAll() {
+    const selectAll = document.getElementById('selectAll');
+    const checkboxes = document.querySelectorAll('.property-checkbox');
+    checkboxes.forEach(cb => cb.checked = selectAll.checked);
+    updateBulkActions();
+}
+
+function updateBulkActions() {
+    const checkboxes = document.querySelectorAll('.property-checkbox:checked');
+    const bulkActions = document.getElementById('bulkActions');
+    const selectedCount = document.getElementById('selectedCount');
+    
+    if (checkboxes.length > 0) {
+        bulkActions.classList.add('show');
+        selectedCount.textContent = checkboxes.length;
+    } else {
+        bulkActions.classList.remove('show');
+    }
+}
+
+function clearSelection() {
+    const checkboxes = document.querySelectorAll('.property-checkbox');
+    const selectAll = document.getElementById('selectAll');
+    checkboxes.forEach(cb => cb.checked = false);
+    selectAll.checked = false;
+    updateBulkActions();
+}
+
+function bulkApprove() {
+    const checkboxes = document.querySelectorAll('.property-checkbox:checked');
+    alert('Approving ' + checkboxes.length + ' properties');
+    clearSelection();
+}
+
+function bulkDelete() {
+    const checkboxes = document.querySelectorAll('.property-checkbox:checked');
+    if (confirm('Are you sure you want to delete ' + checkboxes.length + ' properties?')) {
+        alert('Deleting ' + checkboxes.length + ' properties');
+        clearSelection();
+    }
+}
+
+function viewDetails(id) {
+    alert('Viewing details for property #' + id);
+}
+
+function editProperty(id) {
+    alert('Editing property #' + id);
+}
+
+function deleteProperty(id) {
+    if (confirm('Are you sure you want to delete this property?')) {
+        alert('Deleting property #' + id);
+    }
+}
+</script>
 @endsection
