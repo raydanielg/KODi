@@ -17,6 +17,11 @@ class PropertyController extends Controller
         return view('admin.properties.show', compact('id'));
     }
 
+    public function edit($id)
+    {
+        return view('admin.properties.edit', compact('id'));
+    }
+
     public function verify($id)
     {
         return redirect()->route('admin.properties.index');
