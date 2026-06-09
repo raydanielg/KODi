@@ -21,4 +21,9 @@ class MaintenanceController extends Controller
     {
         return view('admin.maintenance.edit', compact('id'));
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        return back();
+    }
 }

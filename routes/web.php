@@ -107,6 +107,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin,super_ad
     Route::prefix('maintenance')->name('maintenance.')->group(function () {
         Route::get('/', [App\Http\Controllers\Admin\MaintenanceController::class, 'index'])->name('index');
         Route::get('/{id}', [App\Http\Controllers\Admin\MaintenanceController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [App\Http\Controllers\Admin\MaintenanceController::class, 'edit'])->name('edit');
         Route::put('/{id}/status', [App\Http\Controllers\Admin\MaintenanceController::class, 'updateStatus'])->name('updateStatus');
     });
 
