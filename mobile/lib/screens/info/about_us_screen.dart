@@ -38,7 +38,7 @@ class AboutUsScreen extends StatelessWidget {
                     const SizedBox(width: 8),
                     Text(
                       'Back',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -75,7 +75,7 @@ class AboutUsScreen extends StatelessWidget {
                               const SizedBox(height: 16),
                               Text(
                                 'About Us',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.poppins(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w800,
                                   color: const Color(0xff111827),
@@ -84,7 +84,7 @@ class AboutUsScreen extends StatelessWidget {
                               const SizedBox(height: 8),
                               Text(
                                 'Last Updated: January 1, 2025',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   color: const Color(0xff6b7280),
                                 ),
@@ -100,7 +100,7 @@ class AboutUsScreen extends StatelessWidget {
                                 child: Center(
                                   child: Text(
                                     'Welcome to ${AppStrings.appName}',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.poppins(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
                                       color: const Color(0xff374151),
@@ -165,7 +165,7 @@ class AboutUsScreen extends StatelessWidget {
         children: [
           Text(
             title,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: const Color(0xff111827),
@@ -174,7 +174,7 @@ class AboutUsScreen extends StatelessWidget {
           const SizedBox(height: 12),
           Text(
             content,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.poppins(
               fontSize: 15,
               color: const Color(0xff4b5563),
               height: 1.8,
