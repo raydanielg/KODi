@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
 import '../../models/user_model.dart';
@@ -95,7 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Text(
                                   '\u{1F44B}',
-                                  style: GoogleFonts.poppins(fontSize: 40),
+                                  style: const TextStyle(
+                                    fontFamily: 'Times New Roman',
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
