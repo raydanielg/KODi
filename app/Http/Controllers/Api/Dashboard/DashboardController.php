@@ -139,8 +139,6 @@ class DashboardController extends Controller
                     'property_name' => $activeLease ? $activeLease->property->title : null,
                     'monthly_rent' => $activeLease ? $activeLease->rent_amount : 0,
                     'next_payment_due' => $activeLease ? $activeLease->end_date : null,
-                    'deposit_paid' => $activeLease ? $activeLease->deposit_paid : false,
-                    'deposit_amount' => $activeLease ? $activeLease->deposit_amount : 0,
                     'pending_maintenance' => MaintenanceRequest::where('tenant_id', $user->id)->whereIn('status', ['pending', 'assigned', 'in_progress'])->count(),
                     'unread_messages' => Message::where('receiver_id', $user->id)->where('is_read', false)->count(),
                 ],
