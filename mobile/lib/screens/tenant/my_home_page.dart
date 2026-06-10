@@ -276,26 +276,28 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-            const SizedBox(height: 24),
+                  const SizedBox(height: 24),
 
-            // Landlord Contact
-            _sectionCard(
-              title: _t('Mawasilio ya Mwenye Nyumba', 'Landlord Contact'),
-              child: Column(
-                children: [
-                  _contactRow(Icons.person, 'John Doe', _t('Mwenye Nyumba', 'Landlord')),
-                  const Divider(color: Color(0xffe5e7eb)),
-                  _contactRow(Icons.phone, '+255 123 456 789', _t('Simu', 'Phone')),
-                  const Divider(color: Color(0xffe5e7eb)),
-                  _contactRow(Icons.email, 'john@example.com', _t('Barua Pepe', 'Email')),
+                  // Landlord Contact
+                  _sectionCard(
+                    title: _t('Mawasilio ya Mwenye Nyumba', 'Landlord Contact'),
+                    child: Column(
+                      children: [
+                        _contactRow(Icons.person, _stats?.stats['landlord_name'] ?? 'N/A', _t('Mwenye Nyumba', 'Landlord')),
+                        const Divider(color: Color(0xffe5e7eb)),
+                        _contactRow(Icons.phone, _stats?.stats['landlord_phone'] ?? 'N/A', _t('Simu', 'Phone')),
+                        const Divider(color: Color(0xffe5e7eb)),
+                        _contactRow(Icons.email, _stats?.stats['landlord_email'] ?? 'N/A', _t('Barua Pepe', 'Email')),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
-    );
-  }
+      );
+    }
 
   Widget _amenityBadge(IconData icon, String value) {
     return Container(
