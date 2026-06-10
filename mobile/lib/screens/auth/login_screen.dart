@@ -53,7 +53,16 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       if (mounted) {
-        Helpers.showSnackBar(context, e.toString(), isError: true);
+        // Extract the error message from ApiException if available
+        String errorMessage = 'Imeshindikana kuingia. Tafadhali jaribu tena.';
+        if (e.toString().contains('Tafadhali angalia mtandao wako')) {
+          errorMessage = e.toString();
+        } else if (e.toString().contains('Imeshindikana kuunganisha')) {
+          errorMessage = e.toString();
+        } else if (e.toString().contains('Muunganisho umechukua')) {
+          errorMessage = e.toString();
+        }
+        Helpers.showSnackBar(context, errorMessage, isError: true);
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
