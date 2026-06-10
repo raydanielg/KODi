@@ -35,7 +35,7 @@ class NotificationService {
 
   Future<void> markAsRead(String notificationId) async {
     try {
-      await _apiService.put('/notifications/$notificationId/read', {});
+      await _apiService.put('/notifications/$notificationId/read', body: {});
     } catch (e) {
       throw Exception('Failed to mark notification as read: $e');
     }
@@ -43,7 +43,7 @@ class NotificationService {
 
   Future<void> markAllAsRead() async {
     try {
-      await _apiService.post('/notifications/mark-all-read', {});
+      await _apiService.post('/notifications/mark-all-read', body: {});
     } catch (e) {
       throw Exception('Failed to mark all notifications as read: $e');
     }

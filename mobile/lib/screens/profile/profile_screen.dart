@@ -81,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       // If avatar is selected, upload it
       if (_avatarFile != null) {
-        final response = await _apiService.uploadFile('/auth/profile', _avatarFile!, data);
+        final response = await _apiService.uploadFile('/auth/profile', _avatarFile!, fields: data);
         
         if (response['success'] == true) {
           // Update user data
@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       } else {
         // Update without avatar
-        final response = await _apiService.put('/auth/profile', data);
+        final response = await _apiService.put('/auth/profile', body: data);
         
         if (response['success'] == true) {
           final updatedUser = UserModel.fromJson(response['data']);

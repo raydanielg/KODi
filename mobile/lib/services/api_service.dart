@@ -53,6 +53,8 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> put(String endpoint, {Map<String, dynamic>? body}) async {
+    print('📡 PUT Request: $_baseUrl/$endpoint');
+    print('📡 PUT Body: ${body != null ? jsonEncode(body) : "null"}');
     final response = await http.put(
       Uri.parse('$_baseUrl/$endpoint'),
       headers: _headers,
