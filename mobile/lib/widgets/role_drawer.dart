@@ -197,7 +197,7 @@ class _RoleDrawerState extends State<RoleDrawer> {
         items.addAll([
           _MenuItem(Icons.search_rounded, _t('Tafuta Nyumba', 'Search Homes'), '/search'),
           _MenuItem(Icons.home_rounded, _t('Nyumba Yangu', 'My Home'), '/my-rental'),
-          _MenuItem(Icons.payment_rounded, _t('Malipo', 'Payments'), '/payments'),
+          _MenuItem(Icons.payment_rounded, _t('Malipo', 'Payments'), '/tenant-payments'),
           _MenuItem(Icons.build_rounded, _t('Matengenezo', 'Maintenance'), '/maintenance'),
           _MenuItem(Icons.message_rounded, _t('Ujumbe', 'Messages'), '/messages'),
           _MenuItem(Icons.favorite_rounded, _t('Zinazopendwa', 'Favorites'), '/favorites'),
