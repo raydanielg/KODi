@@ -439,7 +439,7 @@ class _AddLeaseSheetState extends State<_AddLeaseSheet> {
                     _freqChip('yearly', 'Kila Mwaka'),
                   ]),
                   const SizedBox(height: 14),
-                  Text('Siku ya kufika kodi (siku $dueDay ya mwezi)', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                  Text('Siku ya kufika kodi (siku $_dueDay ya mwezi)', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
                   Slider(
                     value: _dueDay.toDouble(),
                     min: 1, max: 31,
