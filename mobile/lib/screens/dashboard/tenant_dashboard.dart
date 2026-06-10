@@ -409,45 +409,108 @@ class _TenantDashboardState extends State<TenantDashboard> {
         ? double.tryParse(monthlyRentRaw) ?? 0.0 
         : (monthlyRentRaw is double ? monthlyRentRaw : monthlyRentRaw is int ? monthlyRentRaw.toDouble() : 0.0);
     final propertyName = _stats?.stats['property_name'] ?? 'N/A';
+    final propertyUnit = _stats?.stats['unit_number'] ?? 'N/A';
     
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _t('Kodi ya Mwezi Huu', 'Monthly Rent'),
-            style: GoogleFonts.poppins(
-              fontSize: 13,
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Text(
-                'TSh ${Helpers.formatMoney(monthlyRent)}',
-                style: GoogleFonts.poppins(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xff111827),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                propertyName,
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              const Color(0xff1a1a1a),
+              const Color(0xff2d2d2d),
+              const Color(0xff3d3d3d),
             ],
           ),
-        ],
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.5),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(
+                    Icons.home_outlined,
+                    color: AppColors.primary,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Text(
+                  _t('Kodi ya Mwezi Huu', 'This Month\'s Rent'),
+                  style: GoogleFonts.poppins(
+                    color: Colors.white70,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'TSh ${Helpers.formatMoney(monthlyRent)}',
+              style: GoogleFonts.poppins(
+                color: Colors.white,
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                letterSpacing: -1,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Icon(
+                  Icons.location_on_outlined,
+                  color: Colors.white60,
+                  size: 16,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  '$propertyUnit, $propertyName',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white60,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Icon(
+                  Icons.calendar_today_outlined,
+                  color: Colors.white60,
+                  size: 16,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  DateTime.now().toString().substring(0, 7),
+                  style: GoogleFonts.poppins(
+                    color: Colors.white60,
+                    fontSize: 13,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
