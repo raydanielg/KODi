@@ -145,45 +145,131 @@ class _PayRentPageState extends State<PayRentPage> {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                   colors: [
                     const Color(0xff1a1a1a),
                     const Color(0xff2d2d2d),
+                    const Color(0xff3d3d3d),
                   ],
                 ),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.4),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
+                    color: Colors.black.withOpacity(0.5),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
                   ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    _t('Kodi ya Mwezi Huu', 'This Month\'s Rent'),
-                    style: GoogleFonts.poppins(
-                      color: Colors.white70,
-                      fontSize: 14,
-                    ),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(
+                          Icons.home_outlined,
+                          color: AppColors.primary,
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        _t('Kodi ya Mwezi Huu', 'This Month\'s Rent'),
+                        style: GoogleFonts.poppins(
+                          color: Colors.white70,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 16),
                   Text(
                     'TZS 450,000',
                     style: GoogleFonts.poppins(
                       color: Colors.white,
-                      fontSize: 32,
+                      fontSize: 36,
                       fontWeight: FontWeight.bold,
+                      letterSpacing: -1,
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                        color: Colors.white60,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Unit A-12, Manna Gardens',
+                        style: GoogleFonts.poppins(
+                          color: Colors.white60,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 4),
-                  Text(
-                    'Unit A-12',
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 14,
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_today_outlined,
+                        color: Colors.white60,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'June 2024',
+                        style: GoogleFonts.poppins(
+                          color: Colors.white60,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.2),
+                        width: 1,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.phone_outlined,
+                          color: AppColors.primary,
+                          size: 18,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '+255 754 123 456',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const Spacer(),
+                        Icon(
+                          Icons.copy,
+                          color: Colors.white60,
+                          size: 16,
+                        ),
+                      ],
                     ),
                   ),
                 ],
