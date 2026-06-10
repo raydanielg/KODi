@@ -1999,7 +1999,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   Text(
                     _getGreeting(),
                     style: GoogleFonts.poppins(
-                      color: Colors.white70,
+                      color: Colors.black87,
                       fontSize: 14,
                     ),
                   ),
@@ -2007,7 +2007,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   Text(
                     user.name,
                     style: GoogleFonts.poppins(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
@@ -2016,7 +2016,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   Text(
                     propertyName,
                     style: GoogleFonts.poppins(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 14,
                     ),
                   ),
