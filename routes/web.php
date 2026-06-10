@@ -65,11 +65,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin,super_ad
 
     // Users Management
     Route::prefix('users')->name('users.')->group(function () {
-        Route::get('/', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('index');
-        Route::get('/{id}', [App\Http\Controllers\Admin\UserController::class, 'show'])->name('show');
-        Route::get('/{id}/edit', [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('edit');
-        Route::get('/{id}/suspend', [App\Http\Controllers\Admin\UserController::class, 'suspend'])->name('suspend');
-        Route::get('/verify', [App\Http\Controllers\Admin\UserController::class, 'verify'])->name('verify');
+        Route::get('/',              [App\Http\Controllers\Admin\UserController::class, 'index'])->name('index');
+        Route::post('/',             [App\Http\Controllers\Admin\UserController::class, 'store'])->name('store');
+        Route::get('/{id}',          [App\Http\Controllers\Admin\UserController::class, 'show'])->name('show');
+        Route::get('/{id}/edit',     [App\Http\Controllers\Admin\UserController::class, 'edit'])->name('edit');
+        Route::put('/{id}',          [App\Http\Controllers\Admin\UserController::class, 'update'])->name('update');
+        Route::delete('/{id}',       [App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('destroy');
+        Route::post('/{id}/suspend', [App\Http\Controllers\Admin\UserController::class, 'suspend'])->name('suspend');
+        Route::get('/verify',        [App\Http\Controllers\Admin\UserController::class, 'verify'])->name('verify');
     });
 
     // Applications
