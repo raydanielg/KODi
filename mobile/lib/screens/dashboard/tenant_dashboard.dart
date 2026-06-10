@@ -2100,61 +2100,165 @@ class _TenantDashboardState extends State<TenantDashboard> {
             /// Recent Payments
             _sectionCard(
               title: _t('Malipo ya Karibuni', 'Recent Payments'),
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: Icon(Icons.check_circle, color: Colors.green),
-                    title: Text(
-                      _t('Malipo ya Kodi', 'Rent Payment'),
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white : Colors.black87,
-                        fontSize: 14,
+              child: _paymentHistory.isEmpty
+                  ? Container(
+                      padding: const EdgeInsets.all(32),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            const Color(0xff1a1a1a),
+                            const Color(0xff2d2d2d),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                    ),
-                    subtitle: Text(
-                      _t('Machi 2025', 'March 2025'),
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white70 : Colors.black54,
-                        fontSize: 12,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Icon(
+                              Icons.receipt_long_outlined,
+                              size: 48,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            _t('Hakuna Malipo Bado', 'No Payments Yet'),
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            _t('Anza kulipia kodi yako sasa hivi', 'Start paying your rent now'),
+                            style: GoogleFonts.poppins(
+                              color: Colors.white60,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
                       ),
+                    )
+                  : Column(
+                      children: _paymentHistory.take(3).map((payment) {
+                        final status = payment['status'] ?? 'pending';
+                        final statusColor = status == 'approved' 
+                            ? const Color(0xFF10B981)
+                            : status == 'rejected'
+                                ? const Color(0xFFEF4444)
+                                : const Color(0xFFF59E0B);
+                        final statusText = status == 'approved'
+                            ? _t('Imekubaliwa', 'Approved')
+                            : status == 'rejected'
+                                ? _t('Imekataliwa', 'Rejected')
+                                : _t('Inasubiri', 'Pending');
+                        
+                        return Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    const Color(0xff1a1a1a),
+                                    const Color(0xff2d2d2d),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Icon(
+                                      Icons.payments_outlined,
+                                      color: AppColors.primary,
+                                      size: 24,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _t('Malipo ya Kodi', 'Rent Payment'),
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          payment['created_at'] ?? 'N/A',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white60,
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        'TZS ${Helpers.formatMoney(payment['amount'] ?? 0)}',
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                        decoration: BoxDecoration(
+                                          color: statusColor.withOpacity(0.2),
+                                          borderRadius: BorderRadius.circular(6),
+                                        ),
+                                        child: Text(
+                                          statusText,
+                                          style: GoogleFonts.poppins(
+                                            color: statusColor,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            if (payment != _paymentHistory.last) const SizedBox(height: 12),
+                          ],
+                        );
+                      }).toList(),
                     ),
-                    trailing: Text(
-                      'TZS ${Helpers.formatMoney(monthlyRent)}',
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white : Colors.black87,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Divider(color: _isDarkMode ? const Color(0xff374151) : Colors.grey[300]),
-                  ListTile(
-                    leading: Icon(Icons.check_circle, color: Colors.green),
-                    title: Text(
-                      _t('Malipo ya Kodi', 'Rent Payment'),
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white : Colors.black87,
-                        fontSize: 14,
-                      ),
-                    ),
-                    subtitle: Text(
-                      _t('Februari 2025', 'February 2025'),
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white70 : Colors.black54,
-                        fontSize: 12,
-                      ),
-                    ),
-                    trailing: Text(
-                      'TZS ${Helpers.formatMoney(monthlyRent)}',
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white : Colors.black87,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
 
             const SizedBox(height: 20),
