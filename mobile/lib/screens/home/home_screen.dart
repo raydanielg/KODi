@@ -455,19 +455,24 @@ class _HomeScreenState extends State<HomeScreen>
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        padding: const EdgeInsets.all(16),
+                                        padding: const EdgeInsets.all(20),
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
                                             colors: [
-                                              AppColors.primary.withOpacity(0.15),
-                                              AppColors.primary.withOpacity(0.05),
+                                              const Color(0xff1a1a1a),
+                                              const Color(0xff2d2d2d),
                                             ],
                                           ),
                                           borderRadius: BorderRadius.circular(20),
-                                          border: Border.all(
-                                            color: AppColors.primary.withOpacity(0.3),
-                                            width: 1,
-                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.3),
+                                              blurRadius: 12,
+                                              offset: const Offset(0, 4),
+                                            ),
+                                          ],
                                         ),
                                         child: Text(
                                           _onboardingData[index]['title']!,
@@ -495,17 +500,27 @@ class _HomeScreenState extends State<HomeScreen>
                                       Container(
                                         padding: const EdgeInsets.all(20),
                                         decoration: BoxDecoration(
-                                          color: Colors.white.withOpacity(0.1),
-                                          borderRadius: BorderRadius.circular(16),
-                                          border: Border.all(
-                                            color: Colors.white.withOpacity(0.2),
-                                            width: 1,
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              const Color(0xff1a1a1a),
+                                              const Color(0xff2d2d2d),
+                                            ],
                                           ),
+                                          borderRadius: BorderRadius.circular(16),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.2),
+                                              blurRadius: 8,
+                                              offset: const Offset(0, 2),
+                                            ),
+                                          ],
                                         ),
                                         child: Text(
                                           _onboardingData[index]['description']!,
                                           style: GoogleFonts.poppins(
-                                            color: Colors.white,
+                                            color: Colors.white70,
                                             fontSize: 16,
                                             height: 1.6,
                                             fontWeight: FontWeight.w400,
