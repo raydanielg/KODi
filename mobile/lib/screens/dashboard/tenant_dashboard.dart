@@ -1962,14 +1962,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
     final user = _authService.currentUser!;
     final monthlyRentRaw = _stats?.stats['monthly_rent'] ?? 0.0;
-    final monthlyRent = monthlyRentRaw is String 
-        ? double.tryParse(monthlyRentRaw) ?? 0.0 
+    final monthlyRent = monthlyRentRaw is String
+        ? double.tryParse(monthlyRentRaw) ?? 0.0
         : (monthlyRentRaw is double ? monthlyRentRaw : monthlyRentRaw is int ? monthlyRentRaw.toDouble() : 0.0);
     final propertyName = _stats?.stats['property_name'] ?? 'N/A';
-    final balanceRaw = _stats?.stats['balance'] ?? 0.0;
-    final balance = balanceRaw is String 
-        ? double.tryParse(balanceRaw) ?? 0.0 
-        : (balanceRaw is double ? balanceRaw : balanceRaw is int ? balanceRaw.toDouble() : 0.0);
+    final leaseStart   = _stats?.stats['lease_start'] ?? 'N/A';
+    final leaseEnd     = _stats?.stats['lease_end'] ?? 'N/A';
+    final maintenanceCount = _stats?.stats['maintenance_requests'] ?? 0;
 
     return RefreshIndicator(
       onRefresh: _loadDashboard,
