@@ -30,6 +30,8 @@ class _LandlordMainScreenState extends State<LandlordMainScreen> {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
     ));
 
     return Scaffold(
@@ -43,21 +45,22 @@ class _LandlordMainScreenState extends State<LandlordMainScreen> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
+        border: const Border(top: BorderSide(color: Color(0xFFF3F4F6), width: 1)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 12,
-            offset: const Offset(0, -3),
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 16,
+            offset: const Offset(0, -4),
           ),
         ],
       ),
       child: SafeArea(
         child: SizedBox(
-          height: 60,
+          height: 62,
           child: Row(
             children: [
               _navItem(0, Icons.home_rounded, Icons.home_outlined, 'Home'),
-              _navItem(1, Icons.people_rounded, Icons.people_outline, 'Tenants'),
+              _navItem(1, Icons.people_rounded, Icons.people_outline_rounded, 'Tenants'),
               _navItem(2, Icons.apartment_rounded, Icons.apartment_outlined, 'Properties'),
               _navItem(3, Icons.description_rounded, Icons.description_outlined, 'Leases'),
               _navItem(4, Icons.bar_chart_rounded, Icons.bar_chart_outlined, 'Reports'),
@@ -77,12 +80,20 @@ class _LandlordMainScreenState extends State<LandlordMainScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              isActive ? activeIcon : inactiveIcon,
-              color: isActive ? AppColors.primary : const Color(0xFF9CA3AF),
-              size: 24,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+              decoration: BoxDecoration(
+                color: isActive ? AppColors.primaryLight : Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Icon(
+                isActive ? activeIcon : inactiveIcon,
+                color: isActive ? AppColors.primary : const Color(0xFF9CA3AF),
+                size: 22,
+              ),
             ),
-            const SizedBox(height: 3),
+            const SizedBox(height: 2),
             Text(
               label,
               style: TextStyle(
