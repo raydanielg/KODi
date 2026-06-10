@@ -155,79 +155,107 @@ class _MaintenancePageState extends State<MaintenancePage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            // Quick Actions
-            Row(
-              children: [
-                Expanded(
-                  child: _quickActionCard(
-                    _t('Ripoti Tatizo', 'Report Issue'),
-                    Icons.report_problem_outlined,
-                    () => _showReportDialog(),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _quickActionCard(
-                    _t('Ombi Zangu', 'My Requests'),
-                    Icons.list_alt_outlined,
-                    () {},
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            )
+          : RefreshIndicator(
+              onRefresh: _loadMaintenanceData,
+              color: AppColors.primary,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    // Quick Actions
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _quickActionCard(
+                            _t('Ripoti Tatizo', 'Report Issue'),
+                            Icons.report_problem_outlined,
+                            () => _showReportDialog(),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: _quickActionCard(
+                            _t('Ombi Zangu', 'My Requests'),
+                            Icons.list_alt_outlined,
+                            () {},
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
 
-            // Active Requests
-            _buildSectionCard(
-              title: _t('Ombi Linalofanya Kazi', 'Active Requests'),
-              child: Column(
-                children: [
-                  _requestCard(
-                    'Plumbing Issue',
-                    'Sink not draining',
-                    _t('Inaendelea', 'In Progress'),
-                    Colors.orange,
-                  ),
-                  const SizedBox(height: 12),
-                  _requestCard(
-                    'Electrical',
-                    'Light fixture broken',
-                    _t('Inasubiri', 'Pending'),
-                    Colors.grey,
-                  ),
-                ],
+                    // Active Requests
+                    _buildSectionCard(
+                      title: _t('Ombi Linalofanya Kazi', 'Active Requests'),
+                      child: _activeRequests.isEmpty
+                          ? Center(
+                              padding: const EdgeInsets.all(20),
+                              child: Text(
+                                _t('Hakuna ombi la kufanya kazi', 'No active requests'),
+                                style: GoogleFonts.poppins(
+                                  color: Colors.grey[500],
+                                  fontSize: 14,
+                                ),
+                              ),
+                            )
+                          : Column(
+                              children: _activeRequests.map((request) {
+                                return Column(
+                                  children: [
+                                    _requestCard(
+                                      request['category'] ?? 'General',
+                                      request['title'] ?? 'No title',
+                                      _getStatusText(request['status']),
+                                      _getStatusColor(request['status']),
+                                    ),
+                                    if (request != _activeRequests.last)
+                                      const SizedBox(height: 12),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Recent History
+                    _buildSectionCard(
+                      title: _t('Historia ya Karibuni', 'Recent History'),
+                      child: _requestHistory.isEmpty
+                          ? Center(
+                              padding: const EdgeInsets.all(20),
+                              child: Text(
+                                _t('Hakuna historia ya ombi', 'No request history'),
+                                style: GoogleFonts.poppins(
+                                  color: Colors.grey[500],
+                                  fontSize: 14,
+                                ),
+                              ),
+                            )
+                          : Column(
+                              children: _requestHistory.map((request) {
+                                return Column(
+                                  children: [
+                                    _requestCard(
+                                      request['category'] ?? 'General',
+                                      request['title'] ?? 'No title',
+                                      _getStatusText(request['status']),
+                                      _getStatusColor(request['status']),
+                                    ),
+                                    if (request != _requestHistory.last)
+                                      const SizedBox(height: 12),
+                                  ],
+                                );
+                              }).toList(),
+                            ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 24),
-
-            // Recent History
-            _buildSectionCard(
-              title: _t('Historia ya Karibuni', 'Recent History'),
-              child: Column(
-                children: [
-                  _requestCard(
-                    'Painting',
-                    'Wall repaint',
-                    _t('Imekamilika', 'Completed'),
-                    Colors.green,
-                  ),
-                  const SizedBox(height: 12),
-                  _requestCard(
-                    'Carpentry',
-                    'Door repair',
-                    _t('Imekamilika', 'Completed'),
-                    Colors.green,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
@@ -501,19 +529,70 @@ class _MaintenancePageState extends State<MaintenancePage> {
     setState(() => _isSubmitting = true);
     Navigator.pop(context);
 
-    // Simulate submission
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() => _isSubmitting = false);
-
-    if (mounted) {
-      Helpers.showSnackBar(
-        context,
-        _t('Ombi limetumwa!', 'Request submitted!'),
-        isError: false,
+    try {
+      final response = await _maintenanceService.submitMaintenanceRequest(
+        category: _selectedCategory,
+        title: _issueController.text.trim(),
+        description: _descriptionController.text.trim(),
       );
-      _issueController.clear();
-      _descriptionController.clear();
+
+      setState(() => _isSubmitting = false);
+
+      if (mounted) {
+        if (response['success'] == true) {
+          Helpers.showSnackBar(
+            context,
+            _t('Ombi limetumwa!', 'Request submitted!'),
+            isError: false,
+          );
+          _issueController.clear();
+          _descriptionController.clear();
+          _loadMaintenanceData(); // Refresh data
+        } else {
+          Helpers.showSnackBar(
+            context,
+            response['message'] ?? _t('Imeshindikana kutuma ombi', 'Failed to submit request'),
+          );
+        }
+      }
+    } catch (e) {
+      setState(() => _isSubmitting = false);
+      if (mounted) {
+        Helpers.showSnackBar(
+          context,
+          _t('Imeshindikana kutuma ombi', 'Failed to submit request'),
+        );
+      }
+    }
+  }
+
+  String _getStatusText(String? status) {
+    switch (status?.toLowerCase()) {
+      case 'pending':
+        return _t('Inasubiri', 'Pending');
+      case 'in_progress':
+        return _t('Inaendelea', 'In Progress');
+      case 'completed':
+        return _t('Imekamilika', 'Completed');
+      case 'rejected':
+        return _t('Imekataliwa', 'Rejected');
+      default:
+        return _t('Haijulikani', 'Unknown');
+    }
+  }
+
+  Color _getStatusColor(String? status) {
+    switch (status?.toLowerCase()) {
+      case 'pending':
+        return Colors.grey;
+      case 'in_progress':
+        return Colors.orange;
+      case 'completed':
+        return Colors.green;
+      case 'rejected':
+        return Colors.red;
+      default:
+        return Colors.grey;
     }
   }
 }
