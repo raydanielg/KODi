@@ -52,7 +52,8 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> post(String endpoint, {Map<String, dynamic>? body}) async {
-    final url = '$_baseUrl/$endpoint';
+    final cleanEndpoint = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
+    final url = '$_baseUrl/$cleanEndpoint';
     print('📡 POST Request: $url');
     print('📡 POST Body: ${body != null ? jsonEncode(body) : "null"}');
     print('📡 Headers: $_headers');
@@ -84,11 +85,12 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> put(String endpoint, {Map<String, dynamic>? body}) async {
-    print('📡 PUT Request: $_baseUrl/$endpoint');
+    final cleanEndpoint = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
+    print('📡 PUT Request: $_baseUrl/$cleanEndpoint');
     print('📡 PUT Body: ${body != null ? jsonEncode(body) : "null"}');
     try {
       final response = await http.put(
-        Uri.parse('$_baseUrl/$endpoint'),
+        Uri.parse('$_baseUrl/$cleanEndpoint'),
         headers: _headers,
         body: body != null ? jsonEncode(body) : null,
       ).timeout(
@@ -104,9 +106,10 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> delete(String endpoint) async {
+    final cleanEndpoint = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
     try {
       final response = await http.delete(
-        Uri.parse('$_baseUrl/$endpoint'),
+        Uri.parse('$_baseUrl/$cleanEndpoint'),
         headers: _headers,
       ).timeout(
         const Duration(seconds: 10),
