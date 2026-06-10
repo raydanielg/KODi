@@ -8,7 +8,7 @@ class MaintenanceService {
   // Fetch maintenance requests
   Future<List<Map<String, dynamic>>> fetchMaintenanceRequests() async {
     try {
-      final response = await _apiService.get('/maintenance');
+      final response = await _apiService.get('maintenance');
       if (response['success'] == true) {
         return List<Map<String, dynamic>>.from(response['data'] ?? []);
       }
@@ -28,7 +28,7 @@ class MaintenanceService {
     try {
       final user = _authService.currentUser;
       final response = await _apiService.post(
-        '/maintenance',
+        'maintenance',
         body: {
           'user_id': user?.id,
           'category': category,
@@ -47,7 +47,7 @@ class MaintenanceService {
   // Get request history - using same endpoint but filtering completed requests
   Future<List<Map<String, dynamic>>> getRequestHistory() async {
     try {
-      final response = await _apiService.get('/maintenance');
+      final response = await _apiService.get('maintenance');
       if (response['success'] == true) {
         final allRequests = List<Map<String, dynamic>>.from(response['data'] ?? []);
         // Filter for completed requests
@@ -69,7 +69,7 @@ class MaintenanceService {
   ) async {
     try {
       final response = await _apiService.put(
-        '/maintenance/$requestId/status',
+        'maintenance/$requestId/status',
         body: {
           'status': status,
         },
