@@ -402,7 +402,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
-                  color: const Color(0xFF1E293B),
+                  color: const Color(0xff111827),
                 ),
               ),
               Text(
@@ -410,7 +410,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 style: GoogleFonts.poppins(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFFFE5D37),
+                  color: AppColors.primary,
                 ),
               ),
             ],
@@ -446,38 +446,27 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: const Color(
-                          0xFFE2E8F0,
-                        ), // Crisp, high-contrast subtle border
+                        color: const Color(0xffe5e7eb),
                         width: 1,
                       ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.02),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Highly premium squircle container for icon (Apple/Stripe style)
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
-                            color: brandColor.withOpacity(
-                              0.08,
-                            ), // Pastel accent background
-                            borderRadius: BorderRadius.circular(
-                              12,
-                            ), // Squircle shape
-                            border: Border.all(
-                              color: brandColor.withOpacity(0.16),
-                              width: 1,
-                            ),
+                            color: brandColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
                             item['icon'] as IconData,
@@ -486,13 +475,12 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           ),
                         ),
                         const Spacer(),
-                        // Name and short description
                         Text(
                           item['name'] as String,
                           style: GoogleFonts.poppins(
                             fontSize: 12,
-                            fontWeight: FontWeight.w800,
-                            color: const Color(0xFF1E293B),
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xff111827),
                           ),
                         ),
                         const SizedBox(height: 1),
@@ -500,8 +488,8 @@ class _TenantDashboardState extends State<TenantDashboard> {
                           item['desc'] as String,
                           style: GoogleFonts.poppins(
                             fontSize: 9,
-                            fontWeight: FontWeight.w600,
-                            color: const Color(0xFF64748B),
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey[600],
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
