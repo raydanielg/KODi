@@ -1,586 +1,254 @@
 @extends('layouts.admin')
-
 @section('title', 'Users')
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-    .page-header { margin-bottom: 1.5rem; }
-    .page-header h1 { font-size: 1.75rem; font-weight: 800; color: #111827; margin-bottom: 0.5rem; }
-    .page-header p { color: #6b7280; font-size: 0.95rem; }
-    
-    .stat-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e5e7eb;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .stat-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.1);
-        border-color: #3b82f6;
-    }
-    .stat-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-    }
-    .stat-value {
-        font-size: 1.75rem;
-        font-weight: 800;
-        color: #111827;
-    }
-    .stat-label {
-        font-size: 0.875rem;
-        color: #6b7280;
-        font-weight: 500;
-    }
-    
-    .filter-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e5e7eb;
-        margin-bottom: 1.5rem;
-    }
-    .search-input {
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        padding: 10px 16px;
-        font-size: 0.875rem;
-        transition: all 0.2s;
-    }
-    .search-input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-    .filter-btn {
-        padding: 10px 16px;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        background: #fff;
-        font-size: 0.875rem;
-        color: #374151;
-        transition: all 0.2s;
-    }
-    .filter-btn:hover {
-        background: #f3f4f6;
-        border-color: #9ca3af;
-    }
-    .filter-btn.active {
-        background: #3b82f6;
-        border-color: #3b82f6;
-        color: #fff;
-    }
-    
-    .table-card {
-        background: #fff;
-        border-radius: 12px;
-        border: 1px solid #e5e7eb;
-        overflow: hidden;
-    }
-    .custom-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .custom-table th {
-        background: #f9fafb;
-        padding: 16px;
-        text-align: left;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #6b7280;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-bottom: 1px solid #e5e7eb;
-    }
-    .custom-table td {
-        padding: 16px;
-        border-bottom: 1px solid #e5e7eb;
-        vertical-align: middle;
-    }
-    .custom-table tr:hover td {
-        background: #f9fafb;
-    }
-    .user-name {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #111827;
-    }
-    .user-email {
-        font-size: 0.8rem;
-        color: #6b7280;
-    }
-    .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.9rem;
-        font-weight: 700;
-        color: #fff;
-    }
-    .status-badge {
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 20px;
-        display: inline-block;
-    }
-    .role-badge {
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 20px;
-        display: inline-block;
-    }
-    .action-btn {
-        padding: 6px 12px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        background: #fff;
-        font-size: 0.75rem;
-        color: #374151;
-        transition: all 0.2s;
-        margin-right: 4px;
-    }
-    .action-btn:hover {
-        background: #f3f4f6;
-        border-color: #9ca3af;
-    }
-    .action-btn.approve {
-        background: #10b981;
-        border-color: #10b981;
-        color: #fff;
-    }
-    .action-btn.approve:hover {
-        background: #059669;
-    }
-    .action-btn.delete {
-        background: #ef4444;
-        border-color: #ef4444;
-        color: #fff;
-    }
-    .action-btn.delete:hover {
-        background: #dc2626;
-    }
-    .bulk-actions {
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        border-radius: 8px;
-        padding: 12px 16px;
-        display: none;
-    }
-    .bulk-actions.show {
-        display: flex;
-        align-items: center;
-        gap-2;
-    }
-    
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-        animation: fadeInUp 0.5s ease forwards;
-        opacity: 0;
-    }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-</style>
-
-<div class="page-header animate-fade-in">
-    <h1>Users</h1>
-    <p>Manage all users registered on the platform</p>
+<!-- Header -->
+<div class="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-3 fade-up">
+    <div>
+        <h1 class="page-title">Users</h1>
+        <p class="page-subtitle">Manage all platform users — tenants, landlords, agents, and admins</p>
+    </div>
+    <div class="d-flex gap-2">
+        <button class="btn-ghost" onclick="exportUsers()"><i class="ri-download-2-line"></i> Export</button>
+        <a href="#" class="btn-brand" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <i class="ri-user-add-line"></i> Add User
+        </a>
+    </div>
 </div>
 
-<!-- Stats Row -->
-<div class="row g-3 mb-4">
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-1">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">1,248</div>
-                    <div class="stat-label">Total Users</div>
-                </div>
-                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
-                    <i class="bi bi-people"></i>
-                </div>
+<!-- Stat Cards -->
+<div class="row g-3 mb-4 fade-up delay-1">
+    <div class="col-6 col-md-4 col-lg-2">
+        <a href="?role=" class="text-decoration-none">
+            <div class="kpi-card" style="--accent:#B44040;">
+                <div class="kpi-label">All Users</div>
+                <div class="kpi-value">{{ number_format($stats['total']) }}</div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-1">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">856</div>
-                    <div class="stat-label">Tenants</div>
-                </div>
-                <div class="stat-icon bg-success bg-opacity-10 text-success">
-                    <i class="bi bi-person-check"></i>
-                </div>
+    <div class="col-6 col-md-4 col-lg-2">
+        <a href="?role=tenant" class="text-decoration-none">
+            <div class="kpi-card" style="--accent:#16a34a;">
+                <div class="kpi-label">Tenants</div>
+                <div class="kpi-value">{{ number_format($stats['tenants']) }}</div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-2">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">342</div>
-                    <div class="stat-label">Landlords</div>
-                </div>
-                <div class="stat-icon bg-info bg-opacity-10 text-info">
-                    <i class="bi bi-building"></i>
-                </div>
+    <div class="col-6 col-md-4 col-lg-2">
+        <a href="?role=landlord" class="text-decoration-none">
+            <div class="kpi-card" style="--accent:#2563eb;">
+                <div class="kpi-label">Landlords</div>
+                <div class="kpi-value">{{ number_format($stats['landlords']) }}</div>
             </div>
-        </div>
+        </a>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-2">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">50</div>
-                    <div class="stat-label">Agents</div>
-                </div>
-                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
-                    <i class="bi bi-person-badge"></i>
-                </div>
+    <div class="col-6 col-md-4 col-lg-2">
+        <a href="?role=agent" class="text-decoration-none">
+            <div class="kpi-card" style="--accent:#ca8a04;">
+                <div class="kpi-label">Agents</div>
+                <div class="kpi-value">{{ number_format($stats['agents']) }}</div>
             </div>
-        </div>
+        </a>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2">
+        <a href="?role=admin" class="text-decoration-none">
+            <div class="kpi-card" style="--accent:#9333ea;">
+                <div class="kpi-label">Admins</div>
+                <div class="kpi-value">{{ number_format($stats['admins']) }}</div>
+            </div>
+        </a>
     </div>
 </div>
 
 <!-- Filters -->
-<div class="filter-card animate-fade-in delay-2">
-    <div class="row g-3 align-items-center">
-        <div class="col-12 col-md-4">
-            <input type="text" class="search-input w-100" placeholder="Search users...">
-        </div>
-        <div class="col-12 col-md-8">
-            <div class="d-flex gap-2 flex-wrap align-items-center">
-                <button class="filter-btn active">All</button>
-                <button class="filter-btn">Tenants</button>
-                <button class="filter-btn">Landlords</button>
-                <button class="filter-btn">Agents</button>
-                <button class="filter-btn ms-auto">
-                    <i class="bi bi-plus-lg me-1"></i> Add User
-                </button>
+<div class="k-card mb-4 fade-up delay-2">
+    <div class="k-card-body" style="padding: 16px 20px;">
+        <form method="GET" class="d-flex align-items-center gap-3 flex-wrap">
+            <div style="position:relative; flex: 1; min-width:220px;">
+                <i class="ri-search-line" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.9rem;"></i>
+                <input type="text" name="search" value="{{ request('search') }}"
+                    placeholder="Search name, email, phone..."
+                    style="width:100%;padding:9px 12px 9px 34px;border:1.5px solid var(--border);border-radius:8px;font-size:0.875rem;color:var(--text-primary);background:var(--body-bg);transition:all 0.2s;"
+                    onfocus="this.style.borderColor='var(--brand)'" onblur="this.style.borderColor='var(--border)'">
             </div>
+            <div class="filter-bar">
+                <a href="?" class="filter-chip {{ !request('role') ? 'active' : '' }}">All</a>
+                <a href="?role=tenant"    class="filter-chip {{ request('role')=='tenant' ? 'active' : '' }}">Tenants</a>
+                <a href="?role=landlord"  class="filter-chip {{ request('role')=='landlord' ? 'active' : '' }}">Landlords</a>
+                <a href="?role=agent"     class="filter-chip {{ request('role')=='agent' ? 'active' : '' }}">Agents</a>
+                <a href="?role=admin"     class="filter-chip {{ request('role')=='admin' ? 'active' : '' }}">Admins</a>
+            </div>
+            <button type="submit" class="btn-brand" style="padding:9px 16px;"><i class="ri-search-line"></i></button>
+        </form>
+    </div>
+</div>
+
+<!-- Table -->
+<div class="k-card fade-up delay-3">
+    <div class="k-card-header">
+        <div class="k-card-title"><i class="ri-group-line"></i> User List</div>
+        <span style="font-size:0.8rem;color:var(--text-muted);">{{ $users->total() }} total</span>
+    </div>
+    <div style="overflow-x:auto;">
+        <table class="k-table">
+            <thead>
+                <tr>
+                    <th style="width:40px;"><input type="checkbox" id="selectAll" style="cursor:pointer;"></th>
+                    <th>User</th>
+                    <th>Role</th>
+                    <th>Phone</th>
+                    <th>Properties</th>
+                    <th>Leases</th>
+                    <th>Status</th>
+                    <th>Joined</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($users as $user)
+                @php
+                    $colors = ['#B44040','#16a34a','#2563eb','#ca8a04','#9333ea','#0891b2','#ea580c'];
+                    $ci = abs(crc32($user->email)) % count($colors);
+                    $initials = collect(explode(' ', $user->name))->map(fn($w) => strtoupper($w[0] ?? ''))->take(2)->implode('');
+                @endphp
+                <tr>
+                    <td><input type="checkbox" class="row-cb" style="cursor:pointer;"></td>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="user-avatar" style="background:{{ $colors[$ci] }};">{{ $initials }}</div>
+                            <div>
+                                <div style="font-weight:700;font-size:0.875rem;color:var(--text-primary);">{{ $user->name }}</div>
+                                <div style="font-size:0.75rem;color:var(--text-muted);">{{ $user->email }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        @php
+                            $roleBadge = match($user->role) {
+                                'tenant'     => 'badge-success',
+                                'landlord'   => 'badge-info',
+                                'agent'      => 'badge-warning',
+                                'admin'      => 'badge-brand',
+                                'super_admin'=> 'badge-purple',
+                                default      => 'badge-neutral',
+                            };
+                        @endphp
+                        <span class="k-badge {{ $roleBadge }}">{{ ucfirst(str_replace('_',' ',$user->role)) }}</span>
+                    </td>
+                    <td style="font-size:0.83rem;color:var(--text-sub);">{{ $user->phone ?? '—' }}</td>
+                    <td style="text-align:center;font-weight:700;color:var(--text-primary);">{{ $user->properties_count }}</td>
+                    <td style="text-align:center;font-weight:700;color:var(--text-primary);">{{ $user->leases_as_tenant_count }}</td>
+                    <td>
+                        @if($user->suspended_at)
+                        <span class="k-badge badge-danger"><i class="ri-close-circle-line"></i> Suspended</span>
+                        @else
+                        <span class="k-badge badge-success"><i class="ri-checkbox-circle-line"></i> Active</span>
+                        @endif
+                    </td>
+                    <td style="font-size:0.8rem;color:var(--text-muted);">{{ $user->created_at?->format('d M Y') }}</td>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:4px;">
+                            <a href="{{ route('admin.users.show', $user->id) }}" class="icon-btn" title="View"><i class="ri-eye-line"></i></a>
+                            <a href="{{ route('admin.users.edit', $user->id) }}" class="icon-btn" title="Edit"><i class="ri-pencil-line"></i></a>
+                            <form method="POST" action="{{ route('admin.users.suspend', $user->id) }}" style="margin:0;">
+                                @csrf
+                                <button type="submit" class="icon-btn {{ $user->suspended_at ? 'success' : '' }}"
+                                    title="{{ $user->suspended_at ? 'Activate' : 'Suspend' }}"
+                                    onclick="return confirm('{{ $user->suspended_at ? 'Activate' : 'Suspend' }} this user?')">
+                                    <i class="ri-{{ $user->suspended_at ? 'user-follow' : 'user-forbid' }}-line"></i>
+                                </button>
+                            </form>
+                            <form method="POST" action="{{ route('admin.users.destroy', $user->id) }}" style="margin:0;">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="icon-btn danger" title="Delete"
+                                    onclick="return confirm('Delete {{ addslashes($user->name) }}? This cannot be undone.')">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="9" style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+                        <i class="ri-user-search-line" style="font-size:2.5rem;display:block;margin-bottom:10px;"></i>
+                        No users found matching your criteria.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    @if($users->hasPages())
+    <div style="padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:0.8rem;color:var(--text-muted);">
+            Showing {{ $users->firstItem() }}–{{ $users->lastItem() }} of {{ $users->total() }}
+        </div>
+        <div>
+            {{ $users->links() }}
         </div>
     </div>
-    <div class="bulk-actions mt-3" id="bulkActions">
-        <span class="text-sm text-primary fw-semibold me-3"><span id="selectedCount">0</span> selected</span>
-        <button class="action-btn approve" onclick="bulkApprove()">
-            <i class="bi bi-check-lg me-1"></i> Activate All
-        </button>
-        <button class="action-btn delete" onclick="bulkDelete()">
-            <i class="bi bi-trash me-1"></i> Delete All
-        </button>
-        <button class="action-btn" onclick="clearSelection()">
-            <i class="bi bi-x-lg me-1"></i> Clear
-        </button>
+    @endif
+</div>
+
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius:16px;border:1px solid var(--border);">
+            <div class="modal-header" style="border-bottom:1px solid var(--border);padding:20px 24px;">
+                <h5 style="font-weight:700;color:var(--text-primary);margin:0;font-size:1rem;">Add New User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" action="{{ route('admin.users.store') }}">
+                @csrf
+                <div class="modal-body" style="padding:24px;">
+                    <div class="mb-3">
+                        <label style="font-size:0.8rem;font-weight:700;color:var(--text-sub);margin-bottom:6px;display:block;">Full Name</label>
+                        <input type="text" name="name" required class="form-control form-control-sm" placeholder="John Doe">
+                    </div>
+                    <div class="mb-3">
+                        <label style="font-size:0.8rem;font-weight:700;color:var(--text-sub);margin-bottom:6px;display:block;">Email Address</label>
+                        <input type="email" name="email" required class="form-control form-control-sm" placeholder="john@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label style="font-size:0.8rem;font-weight:700;color:var(--text-sub);margin-bottom:6px;display:block;">Phone</label>
+                        <input type="tel" name="phone" class="form-control form-control-sm" placeholder="+255...">
+                    </div>
+                    <div class="mb-3">
+                        <label style="font-size:0.8rem;font-weight:700;color:var(--text-sub);margin-bottom:6px;display:block;">Role</label>
+                        <select name="role" required class="form-select form-select-sm">
+                            <option value="tenant">Tenant</option>
+                            <option value="landlord">Landlord</option>
+                            <option value="agent">Agent</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label style="font-size:0.8rem;font-weight:700;color:var(--text-sub);margin-bottom:6px;display:block;">Password</label>
+                        <input type="password" name="password" required class="form-control form-control-sm" placeholder="Min 8 characters">
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top:1px solid var(--border);padding:16px 24px;gap:8px;">
+                    <button type="button" class="btn-ghost" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn-brand">Create User</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<!-- Users Table -->
-<div class="table-card animate-fade-in delay-2">
-    <table class="custom-table">
-        <thead>
-            <tr>
-                <th style="width: 40px;"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
-                <th>User</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Joined</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input type="checkbox" class="user-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">JD</div>
-                        <div>
-                            <div class="user-name">John Doe</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="user-email">john@example.com</div>
-                </td>
-                <td>
-                    <span class="role-badge bg-primary bg-opacity-10 text-primary">Tenant</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Active</span>
-                </td>
-                <td>
-                    <div class="user-email">Jan 15, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(1)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editUser(1)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn" onclick="toggleStatus(1)"><i class="bi bi-power"></i></button>
-                    <button class="action-btn delete" onclick="deleteUser(1)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="user-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">SM</div>
-                        <div>
-                            <div class="user-name">Sarah Miller</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="user-email">sarah@example.com</div>
-                </td>
-                <td>
-                    <span class="role-badge bg-info bg-opacity-10 text-info">Landlord</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Active</span>
-                </td>
-                <td>
-                    <div class="user-email">Jan 14, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(2)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editUser(2)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn" onclick="toggleStatus(2)"><i class="bi bi-power"></i></button>
-                    <button class="action-btn delete" onclick="deleteUser(2)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="user-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">MJ</div>
-                        <div>
-                            <div class="user-name">Michael Johnson</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="user-email">michael@example.com</div>
-                </td>
-                <td>
-                    <span class="role-badge bg-warning bg-opacity-10 text-warning">Agent</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Active</span>
-                </td>
-                <td>
-                    <div class="user-email">Jan 13, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(3)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editUser(3)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn" onclick="toggleStatus(3)"><i class="bi bi-power"></i></button>
-                    <button class="action-btn delete" onclick="deleteUser(3)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="user-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">EW</div>
-                        <div>
-                            <div class="user-name">Emily Wilson</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="user-email">emily@example.com</div>
-                </td>
-                <td>
-                    <span class="role-badge bg-primary bg-opacity-10 text-primary">Tenant</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-danger bg-opacity-10 text-danger">Inactive</span>
-                </td>
-                <td>
-                    <div class="user-email">Jan 12, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(4)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editUser(4)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn" onclick="toggleStatus(4)"><i class="bi bi-power"></i></button>
-                    <button class="action-btn delete" onclick="deleteUser(4)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="user-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="user-avatar" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">RB</div>
-                        <div>
-                            <div class="user-name">Robert Brown</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="user-email">robert@example.com</div>
-                </td>
-                <td>
-                    <span class="role-badge bg-info bg-opacity-10 text-info">Landlord</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Active</span>
-                </td>
-                <td>
-                    <div class="user-email">Jan 11, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(5)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editUser(5)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn" onclick="toggleStatus(5)"><i class="bi bi-power"></i></button>
-                    <button class="action-btn delete" onclick="deleteUser(5)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
+@push('scripts')
 <script>
-function toggleSelectAll() {
-    const selectAll = document.getElementById('selectAll');
-    const checkboxes = document.querySelectorAll('.user-checkbox');
-    checkboxes.forEach(cb => cb.checked = selectAll.checked);
-    updateBulkActions();
-}
-
-function updateBulkActions() {
-    const checkboxes = document.querySelectorAll('.user-checkbox:checked');
-    const bulkActions = document.getElementById('bulkActions');
-    const selectedCount = document.getElementById('selectedCount');
-    
-    if (checkboxes.length > 0) {
-        bulkActions.classList.add('show');
-        selectedCount.textContent = checkboxes.length;
-    } else {
-        bulkActions.classList.remove('show');
-    }
-}
-
-function clearSelection() {
-    const checkboxes = document.querySelectorAll('.user-checkbox');
-    const selectAll = document.getElementById('selectAll');
-    checkboxes.forEach(cb => cb.checked = false);
-    selectAll.checked = false;
-    updateBulkActions();
-}
-
-function bulkApprove() {
-    const checkboxes = document.querySelectorAll('.user-checkbox:checked');
-    Swal.fire({
-        title: 'Activate Users?',
-        text: `Are you sure you want to activate ${checkboxes.length} users?`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#10b981',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, activate!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Activated!',
-                text: `${checkboxes.length} users have been activated.`,
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-            clearSelection();
-        }
-    });
-}
-
-function bulkDelete() {
-    const checkboxes = document.querySelectorAll('.user-checkbox:checked');
-    Swal.fire({
-        title: 'Delete Users?',
-        text: `Are you sure you want to delete ${checkboxes.length} users? This action cannot be undone.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, delete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Deleted!',
-                text: `${checkboxes.length} users have been deleted.`,
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-            clearSelection();
-        }
-    });
-}
-
-function viewDetails(id) {
-    window.location.href = `/admin/users/${id}`;
-}
-
-function editUser(id) {
-    window.location.href = `/admin/users/${id}/edit`;
-}
-
-function toggleStatus(id) {
-    Swal.fire({
-        title: 'Toggle User Status?',
-        text: 'Are you sure you want to change this user\'s status?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3b82f6',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, change!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Status Changed!',
-                text: 'User status has been updated.',
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-        }
-    });
-}
-
-function deleteUser(id) {
-    Swal.fire({
-        title: 'Delete User?',
-        text: 'Are you sure you want to delete this user? This action cannot be undone.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, delete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Deleted!',
-                text: 'User has been deleted.',
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-        }
-    });
+document.getElementById('selectAll')?.addEventListener('change', function() {
+    document.querySelectorAll('.row-cb').forEach(cb => cb.checked = this.checked);
+});
+function exportUsers() {
+    Swal.fire({ title: 'Export Users', text: 'Choose format:', icon: 'info',
+        showDenyButton: true, confirmButtonText: 'CSV', denyButtonText: 'Excel',
+        confirmButtonColor: '#B44040', denyButtonColor: '#2563eb' });
 }
 </script>
+@endpush
 @endsection
