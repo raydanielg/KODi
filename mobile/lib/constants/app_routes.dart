@@ -17,4 +17,7 @@ class AppRoutes {
   static const String payRent = '/pay-rent';
   static const String tenantMaintenance = '/tenant-maintenance';
   static const String tenantProfile = '/tenant-profile';
+  static const String searchHomes = '/search';
+  static const String myHome = '/my-rental';
+  static const String favorites = '/favorites';
 }
