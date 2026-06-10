@@ -48,7 +48,7 @@ class DashboardController extends Controller
         $propertiesGrowth = $prevProperties > 0 ? (($totalProperties - $prevProperties) / $prevProperties) * 100 : 0;
         
         // Recent activity
-        $recentPayments = RentPayment::with('user')->orderBy('created_at', 'desc')->limit(5)->get();
+        $recentPayments = RentPayment::with('tenant')->orderBy('created_at', 'desc')->limit(5)->get();
         $recentTenants = User::where('role', 'tenant')->orderBy('created_at', 'desc')->limit(5)->get();
         $recentRequests = MaintenanceRequest::orderBy('created_at', 'desc')->limit(5)->get();
         
