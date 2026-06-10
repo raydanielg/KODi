@@ -319,11 +319,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
-                foregroundColor: const Color(0xFF1E293B),
+                foregroundColor: const Color(0xff111827),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-                  side: const BorderSide(color: Color(0xFFE2E8F0), width: 1),
+                  side: const BorderSide(color: Color(0xffe5e7eb), width: 1),
                 ),
                 elevation: 0,
               ),
@@ -331,14 +331,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
           ),
           const SizedBox(width: 12),
 
-          // Action 3: Menu Grid Icon (Huduma Zaidi Sliding Panel)
+          // Action 3: Menu Grid Icon
           IconButton(
             onPressed: () {
               _showMoreServicesPanel(context);
             },
             icon: const Icon(
               Icons.grid_view_rounded,
-              color: Color(0xFF1E293B),
+              color: Color(0xff111827),
               size: 20,
             ),
             style: IconButton.styleFrom(
@@ -346,7 +346,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               padding: const EdgeInsets.all(16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
-                side: const BorderSide(color: Color(0xFFE2E8F0), width: 1),
+                side: const BorderSide(color: Color(0xffe5e7eb), width: 1),
               ),
             ),
           ),
