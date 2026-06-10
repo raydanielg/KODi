@@ -3,10 +3,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_assets.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_strings.dart';
+import '../../constants/app_routes.dart';
 import '../info/about_us_screen.dart';
 import '../info/privacy_policy_screen.dart';
 import '../info/terms_of_service_screen.dart';
 import '../auth/login_screen.dart';
+import '../../services/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,10 +19,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
+  final AuthService _authService = AuthService();
   late AnimationController _controller;
   late Animation<double> _animation;
   late PageController _pageController;
   int _currentPage = 0;
+  bool _isCheckingAuth = true;
 
   final List<Map<String, String>> _onboardingData = [
     {
@@ -51,6 +55,19 @@ class _HomeScreenState extends State<HomeScreen>
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
     _pageController = PageController();
+    _checkAuthAndNavigate();
+  }
+
+  Future<void> _checkAuthAndNavigate() async {
+    await _authService.loadSavedAuth();
+    final isLoggedIn = await _authService.isLoggedIn();
+    
+    if (isLoggedIn && mounted) {
+      setState(() => _isCheckingAuth = false);
+      Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
+    } else {
+      setState(() => _isCheckingAuth = false);
+    }
   }
 
   @override
