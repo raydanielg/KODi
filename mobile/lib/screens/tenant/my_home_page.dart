@@ -137,116 +137,145 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            // Property Card
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(color: AppColors.primary),
+            )
+          : SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Image
-                  Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                    ),
-                    child: Center(
-                      child: Icon(Icons.home_outlined, size: 64, color: Colors.grey[400]),
-                    ),
-                  ),
+                  // Greeting
                   Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Row(
                       children: [
                         Text(
-                          'Mwanga Apartments',
+                          _getGreeting(),
                           style: GoogleFonts.poppins(
-                            fontSize: 20,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: const Color(0xff111827),
                           ),
                         ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on_outlined, size: 18, color: Colors.grey),
-                            const SizedBox(width: 4),
-                            Text(
-                              'Dar es Salaam, Tanzania',
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            _amenityBadge(Icons.bed_outlined, '2'),
-                            const SizedBox(width: 12),
-                            _amenityBadge(Icons.bathtub_outlined, '2'),
-                            const SizedBox(width: 12),
-                            _amenityBadge(Icons.square_foot_outlined, '1200'),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _infoCard(
-                                _t('Kodi ya Mwezi', 'Monthly Rent'),
-                                'TZS 450,000',
-                                Icons.payments_outlined,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: _infoCard(
-                                _t('Salio', 'Balance'),
-                                'TZS 0',
-                                Icons.account_balance_wallet_outlined,
-                              ),
-                            ),
-                          ],
+                        const SizedBox(width: 8),
+                        Text(
+                          user?.name ?? '',
+                          style: GoogleFonts.poppins(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
+                  // Property Card
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Image
+                        Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                          ),
+                          child: Center(
+                            child: Icon(Icons.home_outlined, size: 64, color: Colors.grey[400]),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _stats?.stats['property_name'] ?? 'N/A',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xff111827),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  const Icon(Icons.location_on_outlined, size: 18, color: Colors.grey),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    _stats?.stats['location'] ?? 'N/A',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              Row(
+                                children: [
+                                  _amenityBadge(Icons.bed_outlined, _stats?.stats['bedrooms']?.toString() ?? '2'),
+                                  const SizedBox(width: 12),
+                                  _amenityBadge(Icons.bathtub_outlined, _stats?.stats['bathrooms']?.toString() ?? '2'),
+                                  const SizedBox(width: 12),
+                                  _amenityBadge(Icons.square_foot_outlined, _stats?.stats['area']?.toString() ?? '1200'),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: _infoCard(
+                                      _t('Kodi ya Mwezi', 'Monthly Rent'),
+                                      'TZS ${Helpers.formatMoney(_stats?.stats['monthly_rent'] ?? 0)}',
+                                      Icons.payments_outlined,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: _infoCard(
+                                      _t('Salio', 'Balance'),
+                                      'TZS ${Helpers.formatMoney(_stats?.stats['balance'] ?? 0)}',
+                                      Icons.account_balance_wallet_outlined,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
 
-            // Lease Details
-            _sectionCard(
-              title: _t('Maelezo ya Mkataba', 'Lease Details'),
-              child: Column(
-                children: [
-                  _detailRow(_t('Tarehe ya Kuanza', 'Lease Start'), '01/01/2025'),
-                  const Divider(color: Color(0xffe5e7eb)),
-                  _detailRow(_t('Tarehe ya Mwisho', 'Lease End'), '31/12/2025'),
-                  const Divider(color: Color(0xffe5e7eb)),
-                  _detailRow(_t('Muda wa Mkataba', 'Lease Duration'), '12 Months'),
-                ],
-              ),
-            ),
+                  // Lease Details
+                  _sectionCard(
+                    title: _t('Maelezo ya Mkataba', 'Lease Details'),
+                    child: Column(
+                      children: [
+                        _detailRow(_t('Tarehe ya Kuanza', 'Lease Start'), _stats?.stats['lease_start'] ?? 'N/A'),
+                        const Divider(color: Color(0xffe5e7eb)),
+                        _detailRow(_t('Tarehe ya Mwisho', 'Lease End'), _stats?.stats['lease_end'] ?? 'N/A'),
+                        const Divider(color: Color(0xffe5e7eb)),
+                        _detailRow(_t('Namba ya Chumba', 'Unit Number'), _stats?.stats['unit_number'] ?? 'N/A'),
+                      ],
+                    ),
+                  ),
             const SizedBox(height: 24),
 
             // Landlord Contact
