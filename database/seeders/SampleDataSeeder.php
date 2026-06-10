@@ -324,7 +324,6 @@ class SampleDataSeeder extends Seeder
                     'rent_amount'      => $prop->price,
                     'deposit_amount'   => $prop->deposit ?? ($prop->price * 2),
                     'deposit_paid'     => true,
-                    'currency'         => 'TZS',
                     'payment_frequency'=> 'monthly',
                     'due_day'          => 1,
                     'late_fee'         => 10000,
