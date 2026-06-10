@@ -13,6 +13,11 @@ class TenantProfilePage extends StatefulWidget {
 
 class _TenantProfilePageState extends State<TenantProfilePage> {
   final AuthService _authService = AuthService();
+  bool _isEnglish = false;
+
+  String _t(String sw, String en) {
+    return _isEnglish ? en : sw;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +33,74 @@ class _TenantProfilePageState extends State<TenantProfilePage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Wasifu',
+          _t('Wasifu', 'Profile'),
           style: GoogleFonts.poppins(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: const Color(0xff111827),
           ),
         ),
+        actions: [
+          // Language toggle
+          Container(
+            margin: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: const Color(0xfff3f4f6),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = false;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: !_isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'SW',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        fontWeight: !_isEnglish ? FontWeight.bold : FontWeight.w500,
+                        color: !_isEnglish ? Colors.black : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = true;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'EN',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        fontWeight: _isEnglish ? FontWeight.bold : FontWeight.w500,
+                        color: _isEnglish ? Colors.black : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -98,25 +164,25 @@ class _TenantProfilePageState extends State<TenantProfilePage> {
 
             // Profile Options
             _buildSectionCard(
-              title: 'Maelezo Binafsi',
+              title: _t('Maelezo Binafsi', 'Personal Information'),
               child: Column(
                 children: [
                   _profileOption(
-                    'Jina Kamili',
+                    _t('Jina Kamili', 'Full Name'),
                     user?.name ?? 'N/A',
                     Icons.person_outline,
                     () {},
                   ),
                   const Divider(color: Color(0xffe5e7eb)),
                   _profileOption(
-                    'Barua Pepe',
+                    _t('Barua Pepe', 'Email'),
                     user?.email ?? 'N/A',
                     Icons.email_outlined,
                     () {},
                   ),
                   const Divider(color: Color(0xffe5e7eb)),
                   _profileOption(
-                    'Namba ya Simu',
+                    _t('Namba ya Simu', 'Phone Number'),
                     user?.phone ?? 'N/A',
                     Icons.phone_outlined,
                     () {},
@@ -127,18 +193,18 @@ class _TenantProfilePageState extends State<TenantProfilePage> {
             const SizedBox(height: 20),
 
             _buildSectionCard(
-              title: 'Mawasilio ya Dharura',
+              title: _t('Mawasilio ya Dharura', 'Emergency Contact'),
               child: Column(
                 children: [
                   _profileOption(
-                    'Jina la Mawasilio',
+                    _t('Jina la Mawasilio', 'Contact Name'),
                     'John Doe',
                     Icons.contact_phone_outlined,
                     () {},
                   ),
                   const Divider(color: Color(0xffe5e7eb)),
                   _profileOption(
-                    'Namba ya Simu',
+                    _t('Namba ya Simu', 'Phone Number'),
                     '+255 123 456 789',
                     Icons.phone_outlined,
                     () {},
@@ -149,19 +215,19 @@ class _TenantProfilePageState extends State<TenantProfilePage> {
             const SizedBox(height: 20),
 
             _buildSectionCard(
-              title: 'Usalama',
+              title: _t('Usalama', 'Security'),
               child: Column(
                 children: [
                   _profileOption(
-                    'Badilisha Nenosiri',
+                    _t('Badilisha Nenosiri', 'Change Password'),
                     '••••••••',
                     Icons.lock_outline,
                     () {},
                   ),
                   const Divider(color: Color(0xffe5e7eb)),
                   _profileOption(
-                    'Usalama wa Akaunti',
-                    'Imewezeshwa',
+                    _t('Usalama wa Akaunti', 'Account Security'),
+                    _t('Imewezeshwa', 'Enabled'),
                     Icons.security_outlined,
                     () {},
                   ),
@@ -188,7 +254,7 @@ class _TenantProfilePageState extends State<TenantProfilePage> {
                     const Icon(Icons.logout, color: Colors.red, size: 24),
                     const SizedBox(width: 12),
                     Text(
-                      'Toka',
+                      _t('Toka', 'Logout'),
                       style: GoogleFonts.poppins(
                         color: Colors.red,
                         fontSize: 16,
