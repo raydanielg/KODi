@@ -73,9 +73,14 @@ class AuthService {
   }
 
   Future<bool> isLoggedIn() async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString(_tokenKey);
-    return token != null && token.isNotEmpty;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString(_tokenKey);
+      return token != null && token.isNotEmpty;
+    } catch (e) {
+      print('❌ Error checking login status: $e');
+      return false;
+    }
   }
 
   Future<void> loadSavedAuth() async {
@@ -92,7 +97,7 @@ class AuthService {
       }
     } catch (e) {
       print('❌ Failed to load saved auth: $e');
-      await _clearAuthData();
+      // Don't clear auth data on platform errors, just log it
     }
   }
 
