@@ -23,12 +23,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
   final AuthService _authService = AuthService();
   final DashboardService _dashboardService = DashboardService();
   final NotificationService _notificationService = NotificationService();
+  final PaymentService _paymentService = PaymentService();
   final TextEditingController _phoneInputController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   DashboardStatsModel? _stats;
   bool _isLoading = true;
   int _currentTab = 0;
+  List<Map<String, dynamic>> _paymentHistory = [];
   bool _isEnglish = false; // Language Toggler State (Default Swahili)
 
   // Lease Connection Flow States
@@ -70,9 +72,11 @@ class _TenantDashboardState extends State<TenantDashboard> {
     });
     try {
       final stats = await _dashboardService.fetchDashboardStats();
+      final paymentHistory = await _paymentService.getPaymentHistory();
       setState(() {
         _stats = stats;
         _isLeaseConnected = stats.stats['has_active_lease'] ?? false;
+        _paymentHistory = paymentHistory;
         _isLoading = false;
       });
     } catch (e) {
