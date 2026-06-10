@@ -80,4 +80,42 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/users/{id}/role', [App\Http\Controllers\Api\User\UserController::class, 'updateRole']);
         Route::post('/users/{id}/suspend', [App\Http\Controllers\Api\User\UserController::class, 'suspend']);
     });
+
+    // ─── Landlord API Routes ──────────────────────────────────────────────────
+    Route::prefix('landlord')->group(function () {
+        // Dashboard
+        Route::get('/dashboard', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'dashboard']);
+
+        // Properties
+        Route::get('/properties', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'properties']);
+        Route::post('/properties', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'storeProperty']);
+        Route::put('/properties/{id}', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'updateProperty']);
+        Route::delete('/properties/{id}', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'deleteProperty']);
+
+        // Tenants
+        Route::get('/tenants', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'tenants']);
+        Route::post('/tenants', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'storeTenant']);
+        Route::get('/tenants/{id}', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'tenantDetail']);
+
+        // Leases
+        Route::get('/leases', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'leases']);
+        Route::post('/leases', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'storeLease']);
+        Route::post('/leases/{id}/terminate', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'terminateLease']);
+
+        // Payments
+        Route::get('/payments', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'payments']);
+        Route::post('/payments/record', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'recordPayment']);
+
+        // Reports
+        Route::get('/reports/revenue', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'revenueReport']);
+        Route::get('/reports/occupancy', [App\Http\Controllers\Api\Landlord\LandlordApiController::class, 'occupancyReport']);
+
+        // SMS
+        Route::post('/sms/paid-tenants', [App\Http\Controllers\Api\Landlord\LandlordSmsController::class, 'sendToPaidTenants']);
+        Route::post('/sms/unpaid-tenants', [App\Http\Controllers\Api\Landlord\LandlordSmsController::class, 'sendToUnpaidTenants']);
+        Route::post('/sms/utility-bill', [App\Http\Controllers\Api\Landlord\LandlordSmsController::class, 'sendUtilityBill']);
+        Route::post('/sms/bulk-utility', [App\Http\Controllers\Api\Landlord\LandlordSmsController::class, 'sendBulkUtilityBills']);
+        Route::post('/sms/send', [App\Http\Controllers\Api\Landlord\LandlordSmsController::class, 'sendToTenant']);
+        Route::get('/sms/history', [App\Http\Controllers\Api\Landlord\LandlordSmsController::class, 'smsHistory']);
+    });
 });
