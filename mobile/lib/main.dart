@@ -39,6 +39,7 @@ class MannaApp extends StatelessWidget {
         AppRoutes.maintenance: (context) => const MaintenanceScreen(),
         AppRoutes.messages: (context) => const MessageScreen(),
         AppRoutes.profile: (context) => const ProfileScreen(),
+        AppRoutes.notifications: (context) => const NotificationsScreen(),
       },
     );
   }
