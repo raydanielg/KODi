@@ -380,7 +380,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           );
-      );
     }
 
   Widget _amenityBadge(IconData icon, String value) {
