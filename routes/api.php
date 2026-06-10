@@ -67,6 +67,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/messages', [App\Http\Controllers\Api\Message\MessageController::class, 'store']);
     Route::put('/messages/{id}/read', [App\Http\Controllers\Api\Message\MessageController::class, 'markAsRead']);
 
+    // Notifications
+    Route::get('/notifications', [App\Http\Controllers\Api\Notification\NotificationController::class, 'index']);
+    Route::get('/notifications/unread-count', [App\Http\Controllers\Api\Notification\NotificationController::class, 'unreadCount']);
+    Route::put('/notifications/{id}/read', [App\Http\Controllers\Api\Notification\NotificationController::class, 'markAsRead']);
+    Route::post('/notifications/mark-all-read', [App\Http\Controllers\Api\Notification\NotificationController::class, 'markAllAsRead']);
+
     // Admin/Super Admin routes
     Route::middleware('role:super_admin,admin')->group(function () {
         Route::get('/users', [App\Http\Controllers\Api\User\UserController::class, 'index']);
