@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  // Primary Colors
-  static const Color primary = Color(0xFF10B981);
-  static const Color primaryDark = Color(0xFF059669);
-  static const Color primaryDarker = Color(0xFF047857);
-  static const Color primaryDarkest = Color(0xFF065F46);
+  // Primary Colors - Gold
+  static const Color primary = Color(0xFFFFD700);
+  static const Color primaryDark = Color(0xFFE6C200);
+  static const Color primaryDarker = Color(0xFFCCAC00);
+  static const Color primaryDarkest = Color(0xFFB39600);
 
-  // Secondary Colors
-  static const Color secondary = Color(0xFF6366F1);
-  static const Color secondaryDark = Color(0xFF4F46E5);
+  // Secondary Colors - Blue
+  static const Color secondary = Color(0xFF3B82F6);
+  static const Color secondaryDark = Color(0xFF2563EB);
+  static const Color secondaryDarker = Color(0xFF1D4ED8);
+  static const Color secondaryDarkest = Color(0xFF1E40AF);
 
   // Neutral Colors
   static const Color white = Color(0xFFFFFFFF);
@@ -33,11 +35,27 @@ class AppColors {
   static const Color error = Color(0xFFEF4444);
   static const Color info = Color(0xFF3B82F6);
 
-  // Gradient Colors
+  // Gradient Colors - Gold to Blue
   static const List<Color> primaryGradient = [
+    primary,
+    primaryDark,
+    secondary,
+    secondaryDark,
+  ];
+  
+  // Gold Gradient
+  static const List<Color> goldGradient = [
     primary,
     primaryDark,
     primaryDarker,
     primaryDarkest,
+  ];
+  
+  // Blue Gradient
+  static const List<Color> blueGradient = [
+    secondary,
+    secondaryDark,
+    secondaryDarker,
+    secondaryDarkest,
   ];
 }
