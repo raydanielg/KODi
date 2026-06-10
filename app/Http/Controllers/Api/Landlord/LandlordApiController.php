@@ -159,7 +159,7 @@ class LandlordApiController extends Controller
 
         $query = User::whereHas('leases', function ($q) use ($propertyIds) {
             $q->whereIn('property_id', $propertyIds);
-        })->orWhereHas('tenantLeases', function ($q) use ($propertyIds) {
+        })->orWhereHas('leasesAsTenant', function ($q) use ($propertyIds) {
             $q->whereIn('property_id', $propertyIds);
         });
 
@@ -172,7 +172,7 @@ class LandlordApiController extends Controller
             });
         }
 
-        $tenants = $query->with(['tenantLeases' => function ($q) use ($propertyIds) {
+        $tenants = $query->with(['leasesAsTenant' => function ($q) use ($propertyIds) {
             $q->whereIn('property_id', $propertyIds)->with('property')->latest()->limit(1);
         }])->get();
 
@@ -181,7 +181,7 @@ class LandlordApiController extends Controller
         $monthEnd = $now->copy()->endOfMonth();
 
         $result = $tenants->map(function ($tenant) use ($propertyIds, $monthStart, $monthEnd) {
-            $lease = $tenant->tenantLeases->first();
+            $lease = $tenant->leasesAsTenant->first();
             $hasPaid = false;
             $balance = 0;
 
@@ -269,9 +269,9 @@ class LandlordApiController extends Controller
         $user = $request->user();
         $propertyIds = Property::where('user_id', $user->id)->pluck('id');
 
-        $tenant = User::whereHas('tenantLeases', function ($q) use ($propertyIds) {
+        $tenant = User::whereHas('leasesAsTenant', function ($q) use ($propertyIds) {
             $q->whereIn('property_id', $propertyIds);
-        })->with(['tenantLeases' => function ($q) use ($propertyIds) {
+        })->with(['leasesAsTenant' => function ($q) use ($propertyIds) {
             $q->whereIn('property_id', $propertyIds)->with('property');
         }])->findOrFail($id);
 
