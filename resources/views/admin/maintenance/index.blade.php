@@ -1,568 +1,133 @@
 @extends('layouts.admin')
-
 @section('title', 'Maintenance')
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-    .page-header { margin-bottom: 1.5rem; }
-    .page-header h1 { font-size: 1.75rem; font-weight: 800; color: #111827; margin-bottom: 0.5rem; }
-    .page-header p { color: #6b7280; font-size: 0.95rem; }
-    
-    .stat-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e5e7eb;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .stat-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.1);
-        border-color: #3b82f6;
-    }
-    .stat-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-    }
-    .stat-value {
-        font-size: 1.75rem;
-        font-weight: 800;
-        color: #111827;
-    }
-    .stat-label {
-        font-size: 0.875rem;
-        color: #6b7280;
-        font-weight: 500;
-    }
-    
-    .filter-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e5e7eb;
-        margin-bottom: 1.5rem;
-    }
-    .search-input {
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        padding: 10px 16px;
-        font-size: 0.875rem;
-        transition: all 0.2s;
-    }
-    .search-input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-    .filter-btn {
-        padding: 10px 16px;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        background: #fff;
-        font-size: 0.875rem;
-        color: #374151;
-        transition: all 0.2s;
-    }
-    .filter-btn:hover {
-        background: #f3f4f6;
-        border-color: #9ca3af;
-    }
-    .filter-btn.active {
-        background: #3b82f6;
-        border-color: #3b82f6;
-        color: #fff;
-    }
-    
-    .table-card {
-        background: #fff;
-        border-radius: 12px;
-        border: 1px solid #e5e7eb;
-        overflow: hidden;
-    }
-    .custom-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .custom-table th {
-        background: #f9fafb;
-        padding: 16px;
-        text-align: left;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #6b7280;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-bottom: 1px solid #e5e7eb;
-    }
-    .custom-table td {
-        padding: 16px;
-        border-bottom: 1px solid #e5e7eb;
-        vertical-align: middle;
-    }
-    .custom-table tr:hover td {
-        background: #f9fafb;
-    }
-    .maintenance-title {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #111827;
-    }
-    .maintenance-property {
-        font-size: 0.8rem;
-        color: #6b7280;
-    }
-    .maintenance-date {
-        font-size: 0.8rem;
-        color: #9ca3af;
-    }
-    .status-badge {
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 20px;
-        display: inline-block;
-    }
-    .priority-badge {
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 4px 10px;
-        border-radius: 20px;
-        display: inline-block;
-    }
-    .action-btn {
-        padding: 6px 12px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        background: #fff;
-        font-size: 0.75rem;
-        color: #374151;
-        transition: all 0.2s;
-        margin-right: 4px;
-    }
-    .action-btn:hover {
-        background: #f3f4f6;
-        border-color: #9ca3af;
-    }
-    .action-btn.approve {
-        background: #10b981;
-        border-color: #10b981;
-        color: #fff;
-    }
-    .action-btn.approve:hover {
-        background: #059669;
-    }
-    .action-btn.delete {
-        background: #ef4444;
-        border-color: #ef4444;
-        color: #fff;
-    }
-    .action-btn.delete:hover {
-        background: #dc2626;
-    }
-    .bulk-actions {
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        border-radius: 8px;
-        padding: 12px 16px;
-        display: none;
-    }
-    .bulk-actions.show {
-        display: flex;
-        align-items: center;
-        gap-2;
-    }
-    
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-        animation: fadeInUp 0.5s ease forwards;
-        opacity: 0;
-    }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-</style>
-
-<div class="page-header animate-fade-in">
-    <h1>Maintenance</h1>
-    <p>Track and manage property maintenance requests</p>
+<div class="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-3 fade-up">
+    <div>
+        <h1 class="page-title">Maintenance Requests</h1>
+        <p class="page-subtitle">Manage and resolve property maintenance issues</p>
+    </div>
 </div>
 
-<!-- Stats Row -->
-<div class="row g-3 mb-4">
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-1">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
+<!-- Stats -->
+<div class="row g-3 mb-4 fade-up delay-1">
+    @php $mcards = [
+        ['label'=>'Total','value'=>$stats['total'],'color'=>'#64748b','bg'=>'#f1f5f9','icon'=>'ri-tools-line'],
+        ['label'=>'Open','value'=>$stats['open'],'color'=>'#dc2626','bg'=>'#fee2e2','icon'=>'ri-alarm-warning-line'],
+        ['label'=>'In Progress','value'=>$stats['in_progress'],'color'=>'#2563eb','bg'=>'#dbeafe','icon'=>'ri-loader-4-line'],
+        ['label'=>'Completed','value'=>$stats['completed'],'color'=>'#16a34a','bg'=>'#dcfce7','icon'=>'ri-checkbox-circle-line'],
+    ]; @endphp
+    @foreach($mcards as $c)
+    <div class="col-6 col-lg-3">
+        <div class="kpi-card" style="--accent:{{ $c['color'] }};">
+            <div class="d-flex justify-content-between align-items-start">
                 <div>
-                    <div class="stat-value">48</div>
-                    <div class="stat-label">Total Requests</div>
+                    <div class="kpi-label">{{ $c['label'] }}</div>
+                    <div class="kpi-value">{{ number_format($c['value']) }}</div>
                 </div>
-                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
-                    <i class="bi bi-tools"></i>
-                </div>
+                <div class="kpi-icon" style="background:{{ $c['bg'] }};color:{{ $c['color'] }};"><i class="{{ $c['icon'] }}"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-1">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">12</div>
-                    <div class="stat-label">In Progress</div>
-                </div>
-                <div class="stat-icon bg-info bg-opacity-10 text-info">
-                    <i class="bi bi-gear"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-2">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">8</div>
-                    <div class="stat-label">Pending</div>
-                </div>
-                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
-                    <i class="bi bi-clock"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-2">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">28</div>
-                    <div class="stat-label">Completed</div>
-                </div>
-                <div class="stat-icon bg-success bg-opacity-10 text-success">
-                    <i class="bi bi-check-circle"></i>
-                </div>
-            </div>
-        </div>
-    </div>
+    @endforeach
 </div>
 
 <!-- Filters -->
-<div class="filter-card animate-fade-in delay-2">
-    <div class="row g-3 align-items-center">
-        <div class="col-12 col-md-4">
-            <input type="text" class="search-input w-100" placeholder="Search requests...">
-        </div>
-        <div class="col-12 col-md-8">
-            <div class="d-flex gap-2 flex-wrap align-items-center">
-                <button class="filter-btn active">All</button>
-                <button class="filter-btn">Pending</button>
-                <button class="filter-btn">In Progress</button>
-                <button class="filter-btn">Completed</button>
-                <button class="filter-btn ms-auto">
-                    <i class="bi bi-plus-lg me-1"></i> New Request
-                </button>
+<div class="k-card mb-4 fade-up delay-2">
+    <div class="k-card-body" style="padding:16px 20px;">
+        <form method="GET" class="d-flex align-items-center gap-3 flex-wrap">
+            <div style="position:relative;flex:1;min-width:200px;">
+                <i class="ri-search-line" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.9rem;"></i>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search requests..."
+                    style="width:100%;padding:9px 12px 9px 34px;border:1.5px solid var(--border);border-radius:8px;font-size:0.875rem;background:var(--body-bg);"
+                    onfocus="this.style.borderColor='var(--brand)'" onblur="this.style.borderColor='var(--border)'">
             </div>
-        </div>
-    </div>
-    <div class="bulk-actions mt-3" id="bulkActions">
-        <span class="text-sm text-primary fw-semibold me-3"><span id="selectedCount">0</span> selected</span>
-        <button class="action-btn approve" onclick="bulkApprove()">
-            <i class="bi bi-check-lg me-1"></i> Mark Complete
-        </button>
-        <button class="action-btn delete" onclick="bulkDelete()">
-            <i class="bi bi-trash me-1"></i> Delete All
-        </button>
-        <button class="action-btn" onclick="clearSelection()">
-            <i class="bi bi-x-lg me-1"></i> Clear
-        </button>
+            <div class="filter-bar">
+                <a href="?"                  class="filter-chip {{ !request('status') ? 'active' : '' }}">All</a>
+                <a href="?status=open"       class="filter-chip {{ request('status')=='open' ? 'active' : '' }}">Open</a>
+                <a href="?status=in_progress"class="filter-chip {{ request('status')=='in_progress' ? 'active' : '' }}">In Progress</a>
+                <a href="?status=completed"  class="filter-chip {{ request('status')=='completed' ? 'active' : '' }}">Completed</a>
+            </div>
+            <select name="priority" onchange="this.form.submit()"
+                style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:0.82rem;background:#fff;">
+                <option value="">All Priorities</option>
+                <option value="high"   {{ request('priority')=='high'?'selected':'' }}>High</option>
+                <option value="medium" {{ request('priority')=='medium'?'selected':'' }}>Medium</option>
+                <option value="low"    {{ request('priority')=='low'?'selected':'' }}>Low</option>
+            </select>
+        </form>
     </div>
 </div>
 
-<!-- Maintenance Table -->
-<div class="table-card animate-fade-in delay-2">
-    <table class="custom-table">
-        <thead>
-            <tr>
-                <th style="width: 40px;"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
-                <th>Request</th>
-                <th>Property</th>
-                <th>Reported By</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input type="checkbox" class="maintenance-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="maintenance-title">Water Leak in Bathroom</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">Sunset Apartments - Unit 2A</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">John Doe</div>
-                </td>
-                <td>
-                    <span class="priority-badge bg-danger bg-opacity-10 text-danger">High</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-info bg-opacity-10 text-info">In Progress</span>
-                </td>
-                <td>
-                    <div class="maintenance-date">Jan 15, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(1)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editRequest(1)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn approve" onclick="markComplete(1)"><i class="bi bi-check"></i></button>
-                    <button class="action-btn delete" onclick="deleteRequest(1)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="maintenance-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="maintenance-title">Electrical Issue - Lights Not Working</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">Green Valley Estate - Unit 5B</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">Sarah Miller</div>
-                </td>
-                <td>
-                    <span class="priority-badge bg-warning bg-opacity-10 text-warning">Medium</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-warning bg-opacity-10 text-warning">Pending</span>
-                </td>
-                <td>
-                    <div class="maintenance-date">Jan 14, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(2)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editRequest(2)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn approve" onclick="markComplete(2)"><i class="bi bi-check"></i></button>
-                    <button class="action-btn delete" onclick="deleteRequest(2)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="maintenance-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="maintenance-title">AC Repair</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">Ocean View Towers - Unit 3C</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">Michael Johnson</div>
-                </td>
-                <td>
-                    <span class="priority-badge bg-secondary bg-opacity-10 text-secondary">Low</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Completed</span>
-                </td>
-                <td>
-                    <div class="maintenance-date">Jan 13, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(3)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editRequest(3)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn delete" onclick="deleteRequest(3)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="maintenance-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="maintenance-title">Door Lock Replacement</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">Safari Heights - Unit 1A</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">Emily Wilson</div>
-                </td>
-                <td>
-                    <span class="priority-badge bg-warning bg-opacity-10 text-warning">Medium</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-info bg-opacity-10 text-info">In Progress</span>
-                </td>
-                <td>
-                    <div class="maintenance-date">Jan 12, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(4)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editRequest(4)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn approve" onclick="markComplete(4)"><i class="bi bi-check"></i></button>
-                    <button class="action-btn delete" onclick="deleteRequest(4)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="maintenance-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="maintenance-title">Plumbing Fix - Kitchen Sink</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">City Center Apartments - Unit 4D</div>
-                </td>
-                <td>
-                    <div class="maintenance-property">Robert Brown</div>
-                </td>
-                <td>
-                    <span class="priority-badge bg-secondary bg-opacity-10 text-secondary">Low</span>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Completed</span>
-                </td>
-                <td>
-                    <div class="maintenance-date">Jan 11, 2026</div>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(5)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editRequest(5)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn delete" onclick="deleteRequest(5)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<!-- Table -->
+<div class="k-card fade-up delay-3">
+    <div class="k-card-header">
+        <div class="k-card-title"><i class="ri-hammer-line"></i> Requests List</div>
+        <span style="font-size:0.8rem;color:var(--text-muted);">{{ $requests->total() }} total</span>
+    </div>
+    <div style="overflow-x:auto;">
+        <table class="k-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Tenant</th>
+                    <th>Property</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Reported</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($requests as $mr)
+                <tr>
+                    <td>
+                        <div style="font-weight:700;font-size:0.875rem;color:var(--text-primary);">{{ $mr->title ?? 'Maintenance Request' }}</div>
+                        <div style="font-size:0.72rem;color:var(--text-muted);max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $mr->description }}</div>
+                    </td>
+                    <td style="font-size:0.82rem;color:var(--text-sub);">{{ $mr->tenant?->name ?? '—' }}</td>
+                    <td style="font-size:0.82rem;color:var(--text-sub);max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $mr->property?->title ?? '—' }}</td>
+                    <td>
+                        @php $pb = match($mr->priority) { 'high'=>'badge-danger', 'medium'=>'badge-warning', 'low'=>'badge-neutral', default=>'badge-neutral' }; @endphp
+                        <span class="k-badge {{ $pb }} text-capitalize">{{ $mr->priority ?? '—' }}</span>
+                    </td>
+                    <td>
+                        @php $sb = match($mr->status) { 'open'=>'badge-danger', 'in_progress'=>'badge-info', 'completed'=>'badge-success', default=>'badge-neutral' }; @endphp
+                        <span class="k-badge {{ $sb }} text-capitalize">{{ str_replace('_',' ',$mr->status) }}</span>
+                    </td>
+                    <td style="font-size:0.8rem;color:var(--text-muted);">{{ $mr->created_at?->format('d M Y') }}</td>
+                    <td>
+                        <div style="display:flex;gap:4px;align-items:center;">
+                            <a href="{{ route('admin.maintenance.show', $mr->id) }}" class="icon-btn" title="View"><i class="ri-eye-line"></i></a>
+                            <!-- Quick status update -->
+                            <form method="POST" action="{{ route('admin.maintenance.updateStatus', $mr->id) }}" style="margin:0;">
+                                @csrf @method('PUT')
+                                <select name="status" onchange="this.form.submit()"
+                                    style="padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:0.75rem;background:#fff;color:var(--text-sub);cursor:pointer;">
+                                    <option value="open"        {{ $mr->status=='open'?'selected':'' }}>Open</option>
+                                    <option value="in_progress" {{ $mr->status=='in_progress'?'selected':'' }}>In Progress</option>
+                                    <option value="completed"   {{ $mr->status=='completed'?'selected':'' }}>Completed</option>
+                                </select>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="7" style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+                        <i class="ri-tools-line" style="font-size:2.5rem;display:block;margin-bottom:10px;"></i>
+                        No maintenance requests found.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+    @if($requests->hasPages())
+    <div style="padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:0.8rem;color:var(--text-muted);">Showing {{ $requests->firstItem() }}–{{ $requests->lastItem() }} of {{ $requests->total() }}</div>
+        {{ $requests->links() }}
+    </div>
+    @endif
 </div>
-
-<script>
-function toggleSelectAll() {
-    const selectAll = document.getElementById('selectAll');
-    const checkboxes = document.querySelectorAll('.maintenance-checkbox');
-    checkboxes.forEach(cb => cb.checked = selectAll.checked);
-    updateBulkActions();
-}
-
-function updateBulkActions() {
-    const checkboxes = document.querySelectorAll('.maintenance-checkbox:checked');
-    const bulkActions = document.getElementById('bulkActions');
-    const selectedCount = document.getElementById('selectedCount');
-    
-    if (checkboxes.length > 0) {
-        bulkActions.classList.add('show');
-        selectedCount.textContent = checkboxes.length;
-    } else {
-        bulkActions.classList.remove('show');
-    }
-}
-
-function clearSelection() {
-    const checkboxes = document.querySelectorAll('.maintenance-checkbox');
-    const selectAll = document.getElementById('selectAll');
-    checkboxes.forEach(cb => cb.checked = false);
-    selectAll.checked = false;
-    updateBulkActions();
-}
-
-function bulkApprove() {
-    const checkboxes = document.querySelectorAll('.maintenance-checkbox:checked');
-    Swal.fire({
-        title: 'Mark Requests Complete?',
-        text: `Are you sure you want to mark ${checkboxes.length} requests as complete?`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#10b981',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, mark complete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Completed!',
-                text: `${checkboxes.length} requests have been marked as complete.`,
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-            clearSelection();
-        }
-    });
-}
-
-function bulkDelete() {
-    const checkboxes = document.querySelectorAll('.maintenance-checkbox:checked');
-    Swal.fire({
-        title: 'Delete Requests?',
-        text: `Are you sure you want to delete ${checkboxes.length} requests? This action cannot be undone.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, delete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Deleted!',
-                text: `${checkboxes.length} requests have been deleted.`,
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-            clearSelection();
-        }
-    });
-}
-
-function viewDetails(id) {
-    window.location.href = `/admin/maintenance/${id}`;
-}
-
-function editRequest(id) {
-    window.location.href = `/admin/maintenance/${id}/edit`;
-}
-
-function markComplete(id) {
-    Swal.fire({
-        title: 'Mark Request Complete?',
-        text: 'Are you sure you want to mark this request as complete?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#10b981',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, mark complete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Completed!',
-                text: 'Request has been marked as complete.',
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-        }
-    });
-}
-
-function deleteRequest(id) {
-    Swal.fire({
-        title: 'Delete Request?',
-        text: 'Are you sure you want to delete this request? This action cannot be undone.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, delete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Deleted!',
-                text: 'Request has been deleted.',
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-        }
-    });
-}
-</script>
 @endsection
