@@ -27,13 +27,16 @@ class MaintenanceService {
   }) async {
     try {
       final user = _authService.currentUser;
-      final response = await _apiService.post('/maintenance-requests', {
-        'user_id': user?.id,
-        'category': category,
-        'title': title,
-        'description': description,
-        'status': 'pending',
-      });
+      final response = await _apiService.post(
+        '/maintenance-requests',
+        body: {
+          'user_id': user?.id,
+          'category': category,
+          'title': title,
+          'description': description,
+          'status': 'pending',
+        },
+      );
       return response;
     } catch (e) {
       print('Error submitting maintenance request: $e');
@@ -61,9 +64,12 @@ class MaintenanceService {
     String status,
   ) async {
     try {
-      final response = await _apiService.put('/maintenance-requests/$requestId', {
-        'status': status,
-      });
+      final response = await _apiService.put(
+        '/maintenance-requests/$requestId',
+        body: {
+          'status': status,
+        },
+      );
       return response;
     } catch (e) {
       print('Error updating request status: $e');
