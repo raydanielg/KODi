@@ -260,8 +260,22 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xff1a1a1a),
+            const Color(0xff2d2d2d),
+          ],
+        ),
         borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -271,7 +285,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label,
             style: GoogleFonts.poppins(
               fontSize: 12,
-              color: Colors.grey[600],
+              color: Colors.white70,
             ),
           ),
           const SizedBox(height: 4),
@@ -280,7 +294,7 @@ class _MyHomePageState extends State<MyHomePage> {
             style: GoogleFonts.poppins(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: const Color(0xff111827),
+              color: Colors.white,
             ),
           ),
         ],
