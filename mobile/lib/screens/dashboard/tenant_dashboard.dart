@@ -1974,313 +1974,247 @@ class _TenantDashboardState extends State<TenantDashboard> {
       onRefresh: _loadDashboard,
       color: AppColors.primary,
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// Welcome Card
+
+            // ── Hero: Greeting + Rent
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    AppColors.primary,
-                    AppColors.primaryDark,
-                  ],
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFB44040), Color(0xFF7E2B2B)],
+                  begin: Alignment.topLeft, end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.3),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                boxShadow: [BoxShadow(color: const Color(0xFFB44040).withValues(alpha: 0.3), blurRadius: 16, offset: const Offset(0, 6))],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _getGreeting(),
-                    style: GoogleFonts.poppins(
-                      color: Colors.black87,
-                      fontSize: 14,
+              child: Padding(
+                padding: const EdgeInsets.all(22),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Row(children: [
+                    Container(padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(10)),
+                      child: const Icon(Icons.home_rounded, color: Colors.white, size: 18)),
+                    const SizedBox(width: 10),
+                    Expanded(child: Text(propertyName,
+                        style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w600),
+                        overflow: TextOverflow.ellipsis)),
+                  ]),
+                  const SizedBox(height: 14),
+                  Text(_getGreeting(), style: const TextStyle(color: Colors.white60, fontSize: 12)),
+                  const SizedBox(height: 2),
+                  Text(user.name.split(' ').first,
+                      style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900)),
+                  const SizedBox(height: 14),
+                  const Divider(color: Colors.white24, height: 1),
+                  const SizedBox(height: 14),
+                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Text(_t('Kodi ya Mwezi Huu', 'This Month\'s Rent'),
+                          style: const TextStyle(color: Colors.white60, fontSize: 11)),
+                      const SizedBox(height: 3),
+                      Text('TZS ${Helpers.formatMoney(monthlyRent)}',
+                          style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900)),
+                    ]),
+                    GestureDetector(
+                      onTap: () => _showPayRentBottomSheet(context),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
+                        child: const Text('Lipa Sasa',
+                            style: TextStyle(color: Color(0xFFB44040), fontWeight: FontWeight.w800, fontSize: 13)),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    user.name,
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    propertyName,
-                    style: GoogleFonts.poppins(
-                      color: Colors.black,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
+                  ]),
+                ]),
               ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // ── Metrics
+            Row(children: [
+              _tenantMetricCard(_t('Malipo', 'Payments'), _paymentHistory.length.toString(), Icons.receipt_rounded, const Color(0xFF10B981), const Color(0xFFDCFCE7)),
+              const SizedBox(width: 10),
+              _tenantMetricCard(_t('Matengenezo', 'Maintenance'), '$maintenanceCount', Icons.build_rounded, const Color(0xFF3B82F6), const Color(0xFFDBEAFE)),
+              const SizedBox(width: 10),
+              _tenantMetricCard(_t('Mkataba', 'Lease'), '1', Icons.description_rounded, const Color(0xFFB44040), const Color(0xFFFDF0F0)),
+            ]),
+
+            const SizedBox(height: 20),
+
+            // ── Lease Info
+            Text(_t('Maelezo ya Mkataba', 'Lease Information'),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Color(0xFF0F172A))),
+            const SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFE2E8F0)),
+                boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)],
+              ),
+              child: Column(children: [
+                _tenantLeaseRow(Icons.calendar_today_rounded, _t('Tarehe ya Kuanza', 'Lease Start'), leaseStart, const Color(0xFF10B981)),
+                const Divider(height: 1, color: Color(0xFFF1F5F9), indent: 16, endIndent: 16),
+                _tenantLeaseRow(Icons.event_rounded, _t('Tarehe ya Mwisho', 'Lease End'), leaseEnd, const Color(0xFFB44040)),
+                const Divider(height: 1, color: Color(0xFFF1F5F9), indent: 16, endIndent: 16),
+                _tenantLeaseRow(Icons.home_work_rounded, _t('Mali', 'Property'), propertyName, const Color(0xFF3B82F6)),
+              ]),
             ),
 
             const SizedBox(height: 20),
 
-            Row(
-              children: [
-                Expanded(
-                  child: _statCard(
-                    _t('Kodi Inayolipwa', 'Rent Due'),
-                    'TZS ${Helpers.formatMoney(monthlyRent)}',
-                    Icons.payments_outlined,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _statCard(
-                    _t('Kodi Iliyolipwa', 'Paid Rent'),
-                    'TZS ${Helpers.formatMoney(monthlyRent)}',
-                    Icons.check_circle_outlined,
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-
-            /// Lease Details
-            _sectionCard(
-              title: _t('Maelezo ya Mkataba', 'Lease Information'),
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Text(
-                      _t('Tarehe ya Kuanza', 'Lease Start'),
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white : Colors.black87,
-                        fontSize: 14,
-                      ),
-                    ),
-                    trailing: Text(
-                      _stats?.stats['lease_start'] ?? 'N/A',
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white70 : Colors.black54,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Divider(color: _isDarkMode ? const Color(0xff374151) : Colors.grey[300]),
-                  ListTile(
-                    title: Text(
-                      _t('Tarehe ya Mwisho', 'Lease End'),
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white : Colors.black87,
-                        fontSize: 14,
-                      ),
-                    ),
-                    trailing: Text(
-                      _stats?.stats['lease_end'] ?? 'N/A',
-                      style: GoogleFonts.poppins(
-                        color: _isDarkMode ? Colors.white70 : Colors.black54,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            /// Recent Payments
-            _sectionCard(
-              title: _t('Malipo ya Karibuni', 'Recent Payments'),
-              child: _paymentHistory.isEmpty
-                  ? Container(
-                      padding: const EdgeInsets.all(32),
-                      child: Column(
-                        children: [
-                          Text(
-                            _t('Hakuna Malipo Bado', 'No Payments Yet'),
-                            style: GoogleFonts.poppins(
-                              color: Colors.grey[600],
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            _t('Anza kulipia kodi yako sasa hivi', 'Start paying your rent now'),
-                            style: GoogleFonts.poppins(
-                              color: Colors.grey[400],
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Column(
-                      children: _paymentHistory.take(3).map((payment) {
-                        final status = payment['status'] ?? 'pending';
-                        final statusColor = status == 'approved' 
-                            ? const Color(0xFF10B981)
-                            : status == 'rejected'
-                                ? const Color(0xFFEF4444)
-                                : const Color(0xFFF59E0B);
-                        final statusText = status == 'approved'
-                            ? _t('Imekubaliwa', 'Approved')
-                            : status == 'rejected'
-                                ? _t('Imekataliwa', 'Rejected')
-                                : _t('Inasubiri', 'Pending');
-                        
-                        return Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    const Color(0xff1a1a1a),
-                                    const Color(0xff2d2d2d),
-                                  ],
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary.withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Icon(
-                                      Icons.payments_outlined,
-                                      color: AppColors.primary,
-                                      size: 24,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _t('Malipo ya Kodi', 'Rent Payment'),
-                                          style: GoogleFonts.poppins(
-                                            color: Colors.white,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          payment['created_at'] ?? 'N/A',
-                                          style: GoogleFonts.poppins(
-                                            color: Colors.white60,
-                                            fontSize: 11,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        'TZS ${Helpers.formatMoney(payment['amount'] ?? 0)}',
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                        decoration: BoxDecoration(
-                                          color: statusColor.withOpacity(0.2),
-                                          borderRadius: BorderRadius.circular(6),
-                                        ),
-                                        child: Text(
-                                          statusText,
-                                          style: GoogleFonts.poppins(
-                                            color: statusColor,
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            if (payment != _paymentHistory.last) const SizedBox(height: 12),
-                          ],
-                        );
-                      }).toList(),
-                    ),
-            ),
-
-            const SizedBox(height: 20),
-
-            /// Quick Actions
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                _t('Vitendo vya Haraka', 'Quick Actions'),
-                style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: _isDarkMode ? Colors.white : Colors.black,
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
+            // ── Quick Actions
+            Text(_t('Vitendo vya Haraka', 'Quick Actions'),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Color(0xFF0F172A))),
+            const SizedBox(height: 10),
             GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              childAspectRatio: 1.6,
+              crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 10, mainAxisSpacing: 10, childAspectRatio: 1.8,
               children: [
-                _actionCard(
-                  Icons.payments,
-                  _t('Lipa Kodi', 'Pay Rent'),
-                ),
-                _actionCard(
-                  Icons.build_outlined,
-                  _t('Ripoti Tatizo', 'Report Issue'),
-                ),
-                _actionCard(
-                  Icons.receipt_long_outlined,
-                  _t('Risiti', 'Receipts'),
-                ),
-                _actionCard(
-                  Icons.message_outlined,
-                  _t('Ujumbe', 'Messages'),
-                ),
+                _tenantActionCard(Icons.payments_rounded, _t('Lipa Kodi', 'Pay Rent'), const Color(0xFFB44040), const Color(0xFFFDF0F0), () => _showPayRentBottomSheet(context)),
+                _tenantActionCard(Icons.build_rounded, _t('Ripoti Tatizo', 'Report Issue'), const Color(0xFF3B82F6), const Color(0xFFDBEAFE), () => Helpers.showSnackBar(context, _t('Inafungua tiketi...', 'Opening ticket...'))),
+                _tenantActionCard(Icons.receipt_long_rounded, _t('Risiti', 'Receipts'), const Color(0xFF10B981), const Color(0xFFDCFCE7), () => Helpers.showSnackBar(context, _t('Risiti zangu...', 'My receipts...'))),
+                _tenantActionCard(Icons.sms_rounded, _t('Wasiliana', 'Contact'), const Color(0xFF8B5CF6), const Color(0xFFF3E8FF), () => Helpers.showSnackBar(context, _t('Ujumbe...', 'Messages...'))),
               ],
             ),
+
+            const SizedBox(height: 20),
+
+            // ── Recent Payments
+            Text(_t('Malipo ya Karibuni', 'Recent Payments'),
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Color(0xFF0F172A))),
+            const SizedBox(height: 10),
+            if (_paymentHistory.isEmpty)
+              Container(
+                padding: const EdgeInsets.all(32),
+                decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                ),
+                child: Column(children: [
+                  Container(padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(color: const Color(0xFFFDF0F0), shape: BoxShape.circle),
+                    child: const Icon(Icons.receipt_long_rounded, color: AppColors.primary, size: 28)),
+                  const SizedBox(height: 12),
+                  Text(_t('Hakuna Malipo Bado', 'No Payments Yet'),
+                      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14, color: Color(0xFF374151))),
+                  const SizedBox(height: 4),
+                  Text(_t('Anza kulipia kodi yako', 'Start paying your rent'),
+                      style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 12)),
+                ]),
+              )
+            else
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: const Color(0xFFE2E8F0)),
+                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)],
+                ),
+                child: Column(
+                  children: _paymentHistory.take(5).map((payment) {
+                    final status = payment['status'] ?? 'pending';
+                    final statusColor = status == 'approved' || status == 'completed'
+                        ? const Color(0xFF10B981)
+                        : status == 'rejected' ? const Color(0xFFEF4444) : const Color(0xFFF59E0B);
+                    final statusText = status == 'approved' || status == 'completed'
+                        ? _t('Imefanikiwa', 'Completed')
+                        : status == 'rejected' ? _t('Imekataliwa', 'Rejected') : _t('Inasubiri', 'Pending');
+                    final isLast = payment == _paymentHistory.take(5).last;
+
+                    return Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+                        child: Row(children: [
+                          Container(width: 42, height: 42,
+                            decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                            child: Icon(Icons.payments_rounded, color: statusColor, size: 20)),
+                          const SizedBox(width: 12),
+                          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                            Text(_t('Malipo ya Kodi', 'Rent Payment'),
+                                style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: Color(0xFF0F172A))),
+                            const SizedBox(height: 2),
+                            Text(payment['created_at'] ?? 'N/A',
+                                style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 11)),
+                          ])),
+                          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                            Text('TZS ${Helpers.formatMoney(payment['amount'] ?? 0)}',
+                                style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: Color(0xFF0F172A))),
+                            const SizedBox(height: 4),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                              decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(20)),
+                              child: Text(statusText, style: TextStyle(color: statusColor, fontSize: 10, fontWeight: FontWeight.w700)),
+                            ),
+                          ]),
+                        ]),
+                      ),
+                      if (!isLast) const Divider(height: 1, color: Color(0xFFF1F5F9), indent: 14, endIndent: 14),
+                    ]);
+                  }).toList(),
+                ),
+              ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _tenantMetricCard(String label, String value, IconData icon, Color color, Color bg) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(10, 14, 10, 14),
+        decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: color.withValues(alpha: 0.2)),
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)],
+        ),
+        child: Column(children: [
+          Container(padding: const EdgeInsets.all(8), decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(10)),
+            child: Icon(icon, color: color, size: 18)),
+          const SizedBox(height: 8),
+          Text(value, style: TextStyle(color: color, fontWeight: FontWeight.w900, fontSize: 20)),
+          const SizedBox(height: 2),
+          Text(label, style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 10), textAlign: TextAlign.center),
+        ]),
+      ),
+    );
+  }
+
+  Widget _tenantLeaseRow(IconData icon, String label, String value, Color color) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      child: Row(children: [
+        Container(padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(9)),
+          child: Icon(icon, color: color, size: 16)),
+        const SizedBox(width: 12),
+        Text(label, style: const TextStyle(color: Color(0xFF64748B), fontSize: 13, fontWeight: FontWeight.w600)),
+        const Spacer(),
+        Flexible(child: Text(value, style: const TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w800, fontSize: 13),
+            overflow: TextOverflow.ellipsis, textAlign: TextAlign.right)),
+      ]),
+    );
+  }
+
+  Widget _tenantActionCard(IconData icon, String label, Color color, Color bg, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: color.withValues(alpha: 0.2)),
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 6)],
+        ),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Container(padding: const EdgeInsets.all(10), decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(11)),
+            child: Icon(icon, color: color, size: 20)),
+          const SizedBox(width: 8),
+          Flexible(child: Text(label, style: TextStyle(color: color, fontWeight: FontWeight.w700, fontSize: 12),
+              overflow: TextOverflow.ellipsis)),
+        ]),
       ),
     );
   }
