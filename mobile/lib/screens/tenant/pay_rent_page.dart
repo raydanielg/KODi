@@ -330,10 +330,113 @@ class _PayRentPageState extends State<PayRentPage> {
                       ),
               ),
             ),
+            const SizedBox(height: 32),
+
+            // Payment History
+            _buildSectionCard(
+              title: _t('Historia ya Malipo', 'Payment History'),
+              child: _paymentHistory.isEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Center(
+                        child: Text(
+                          _t('Hakuna historia ya malipo', 'No payment history'),
+                          style: GoogleFonts.poppins(
+                            color: Colors.grey[500],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Column(
+                      children: _paymentHistory.map((payment) {
+                        return Column(
+                          children: [
+                            _paymentHistoryItem(payment),
+                            if (payment != _paymentHistory.last)
+                              const Divider(color: Color(0xffe5e7eb)),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _paymentHistoryItem(Map<String, dynamic> payment) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: _getPaymentStatusColor(payment['status']).withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(
+              _getPaymentStatusIcon(payment['status']),
+              color: _getPaymentStatusColor(payment['status']),
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'TZS ${payment['amount'] ?? '0'}',
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xff111827),
+                  ),
+                ),
+                Text(
+                  payment['payment_method'] ?? 'Unknown',
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    color: Colors.grey[500],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: _getPaymentStatusColor(payment['status']).withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              _getPaymentStatusText(payment['status']),
+              style: GoogleFonts.poppins(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: _getPaymentStatusColor(payment['status']),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  IconData _getPaymentStatusIcon(String? status) {
+    switch (status?.toLowerCase()) {
+      case 'pending':
+        return Icons.pending;
+      case 'approved':
+        return Icons.check_circle;
+      case 'rejected':
+        return Icons.cancel;
+      default:
+        return Icons.help_outline;
+    }
   }
 
   Widget _buildSectionCard({required String title, required Widget child}) {
