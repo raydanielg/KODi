@@ -2393,32 +2393,62 @@ class _TenantDashboardState extends State<TenantDashboard> {
   }
 
   Widget _actionCard(IconData icon, String title) {
-    return Container(
-      decoration: BoxDecoration(
-        color: _isDarkMode ? const Color(0xff1f2937) : Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: AppColors.primary, size: 28),
-          const SizedBox(height: 10),
-          Text(
-            title,
-            style: GoogleFonts.poppins(
-              fontSize: 13,
-              color: _isDarkMode ? Colors.white : Colors.black,
+    return TweenAnimationBuilder<double>(
+      duration: const Duration(milliseconds: 300),
+      tween: Tween(begin: 0, end: 1),
+      builder: (context, value, child) {
+        return Transform.scale(
+          scale: value,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  const Color(0xff1a1a1a),
+                  const Color(0xff2d2d2d),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TweenAnimationBuilder<double>(
+                  duration: const Duration(milliseconds: 500),
+                  tween: Tween(begin: 0, end: 1),
+                  builder: (context, animValue, child) {
+                    return Transform.rotate(
+                      angle: animValue * 0.1,
+                      child: Icon(
+                        icon,
+                        color: AppColors.primary,
+                        size: 32,
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    fontSize: 13,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
