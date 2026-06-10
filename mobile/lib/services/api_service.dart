@@ -118,7 +118,12 @@ class ApiService {
       });
     }
     
-    final response = await request.send();
+    final response = await request.send().timeout(
+      const Duration(seconds: 60),
+      onTimeout: () {
+        throw Exception('Upload timed out. Please check your internet connection.');
+      },
+    );
     final responseBody = await response.stream.bytesToString();
     
     print('🔍 API Response Status: ${response.statusCode}');
