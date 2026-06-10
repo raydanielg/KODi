@@ -59,4 +59,8 @@ class AuthService {
     } catch (_) {}
     _api.clearAuth();
   }
+
+  void updateUser(UserModel updatedUser) {
+    _api.setAuth(_api.token ?? '', updatedUser);
+  }
 }
