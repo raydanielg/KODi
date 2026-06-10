@@ -32,12 +32,16 @@ class ApiService {
     return headers;
   }
 
-  Future<Map<String, dynamic>> get(String endpoint) async {
+  Future<Map<String, dynamic>> get(String endpoint, {Map<String, String>? params}) async {
     final cleanEndpoint = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
-    print('📡 GET Request: $_baseUrl/$cleanEndpoint');
+    var uri = Uri.parse('$_baseUrl/$cleanEndpoint');
+    if (params != null && params.isNotEmpty) {
+      uri = uri.replace(queryParameters: params);
+    }
+    print('📡 GET Request: $uri');
     try {
       final response = await http.get(
-        Uri.parse('$_baseUrl/$cleanEndpoint'),
+        uri,
         headers: _headers,
       ).timeout(
         const Duration(seconds: 10),
