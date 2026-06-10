@@ -192,13 +192,15 @@ class _MaintenancePageState extends State<MaintenancePage> {
                     _buildSectionCard(
                       title: _t('Ombi Linalofanya Kazi', 'Active Requests'),
                       child: _activeRequests.isEmpty
-                          ? Center(
+                          ? Padding(
                               padding: const EdgeInsets.all(20),
-                              child: Text(
-                                _t('Hakuna ombi la kufanya kazi', 'No active requests'),
-                                style: GoogleFonts.poppins(
-                                  color: Colors.grey[500],
-                                  fontSize: 14,
+                              child: Center(
+                                child: Text(
+                                  _t('Hakuna ombi la kufanya kazi', 'No active requests'),
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.grey[500],
+                                    fontSize: 14,
+                                  ),
                                 ),
                               ),
                             )
