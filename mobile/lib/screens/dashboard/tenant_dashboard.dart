@@ -2286,21 +2286,40 @@ class _TenantDashboardState extends State<TenantDashboard> {
               mainAxisSpacing: 12,
               childAspectRatio: 1.6,
               children: [
-                _actionCard(
-                  Icons.payments,
-                  _t('Lipa Kodi', 'Pay Rent'),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/tenant-payments'),
+                  child: _actionCard(
+                    Icons.payments,
+                    _t('Lipa Kodi', 'Pay Rent'),
+                  ),
                 ),
-                _actionCard(
-                  Icons.build_outlined,
-                  _t('Ripoti Tatizo', 'Report Issue'),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/tenant-maintenance'),
+                  child: _actionCard(
+                    Icons.build_outlined,
+                    _t('Ripoti Tatizo', 'Report Issue'),
+                  ),
                 ),
-                _actionCard(
-                  Icons.receipt_long_outlined,
-                  _t('Risiti', 'Receipts'),
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/tenant-payments'),
+                  child: _actionCard(
+                    Icons.receipt_long_outlined,
+                    _t('Risiti', 'Receipts'),
+                  ),
                 ),
-                _actionCard(
-                  Icons.message_outlined,
-                  _t('Ujumbe', 'Messages'),
+                GestureDetector(
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(_t('Kuna ujumbe mpya', 'New message feature coming soon')),
+                        backgroundColor: AppColors.primary,
+                      ),
+                    );
+                  },
+                  child: _actionCard(
+                    Icons.message_outlined,
+                    _t('Ujumbe', 'Messages'),
+                  ),
                 ),
               ],
             ),
