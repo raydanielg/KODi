@@ -172,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     decoration: InputDecoration(
                                       hintText: 'name@company.com',
                                       hintStyle: GoogleFonts.poppins(
-                                        color: Colors.white40,
+                                        color: Colors.white.withOpacity(0.4),
                                       ),
                                       prefixIcon: const Icon(
                                         Icons.email_outlined,
@@ -220,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     decoration: InputDecoration(
                                       hintText: '••••••••',
                                       hintStyle: GoogleFonts.poppins(
-                                        color: Colors.white40,
+                                        color: Colors.white.withOpacity(0.4),
                                       ),
                                       prefixIcon: const Icon(
                                         Icons.lock_outlined,
