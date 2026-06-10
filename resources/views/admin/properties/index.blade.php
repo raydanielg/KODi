@@ -1,550 +1,154 @@
 @extends('layouts.admin')
-
 @section('title', 'Properties')
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-    .page-header { margin-bottom: 1.5rem; }
-    .page-header h1 { font-size: 1.75rem; font-weight: 800; color: #111827; margin-bottom: 0.5rem; }
-    .page-header p { color: #6b7280; font-size: 0.95rem; }
-    
-    .stat-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e5e7eb;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .stat-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.1);
-        border-color: #3b82f6;
-    }
-    .stat-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-    }
-    .stat-value {
-        font-size: 1.75rem;
-        font-weight: 800;
-        color: #111827;
-    }
-    .stat-label {
-        font-size: 0.875rem;
-        color: #6b7280;
-        font-weight: 500;
-    }
-    
-    .filter-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e5e7eb;
-        margin-bottom: 1.5rem;
-    }
-    .search-input {
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        padding: 10px 16px;
-        font-size: 0.875rem;
-        transition: all 0.2s;
-    }
-    .search-input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-    .filter-btn {
-        padding: 10px 16px;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        background: #fff;
-        font-size: 0.875rem;
-        color: #374151;
-        transition: all 0.2s;
-    }
-    .filter-btn:hover {
-        background: #f3f4f6;
-        border-color: #9ca3af;
-    }
-    .filter-btn.active {
-        background: #3b82f6;
-        border-color: #3b82f6;
-        color: #fff;
-    }
-    
-    .table-card {
-        background: #fff;
-        border-radius: 12px;
-        border: 1px solid #e5e7eb;
-        overflow: hidden;
-    }
-    .custom-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .custom-table th {
-        background: #f9fafb;
-        padding: 16px;
-        text-align: left;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #6b7280;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-bottom: 1px solid #e5e7eb;
-    }
-    .custom-table td {
-        padding: 16px;
-        border-bottom: 1px solid #e5e7eb;
-        vertical-align: middle;
-    }
-    .custom-table tr:hover td {
-        background: #f9fafb;
-    }
-    .property-name {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #111827;
-    }
-    .property-location {
-        font-size: 0.8rem;
-        color: #6b7280;
-    }
-    .property-price {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: #111827;
-    }
-    .property-meta {
-        font-size: 0.8rem;
-        color: #9ca3af;
-    }
-    .status-badge {
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 20px;
-        display: inline-block;
-    }
-    .action-btn {
-        padding: 6px 12px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        background: #fff;
-        font-size: 0.75rem;
-        color: #374151;
-        transition: all 0.2s;
-        margin-right: 4px;
-    }
-    .action-btn:hover {
-        background: #f3f4f6;
-        border-color: #9ca3af;
-    }
-    .action-btn.approve {
-        background: #10b981;
-        border-color: #10b981;
-        color: #fff;
-    }
-    .action-btn.approve:hover {
-        background: #059669;
-    }
-    .action-btn.delete {
-        background: #ef4444;
-        border-color: #ef4444;
-        color: #fff;
-    }
-    .action-btn.delete:hover {
-        background: #dc2626;
-    }
-    .bulk-actions {
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        border-radius: 8px;
-        padding: 12px 16px;
-        display: none;
-    }
-    .bulk-actions.show {
-        display: flex;
-        align-items: center;
-        gap-2;
-    }
-    
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-        animation: fadeInUp 0.5s ease forwards;
-        opacity: 0;
-    }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-</style>
-
-<div class="page-header animate-fade-in">
-    <h1>Properties</h1>
-    <p>Manage all properties registered on the platform</p>
+<div class="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-3 fade-up">
+    <div>
+        <h1 class="page-title">Properties</h1>
+        <p class="page-subtitle">Review, verify and manage all listed properties</p>
+    </div>
+    <button class="btn-ghost"><i class="ri-download-2-line"></i> Export</button>
 </div>
 
-<!-- Stats Row -->
-<div class="row g-3 mb-4">
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-1">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
+<!-- Stats -->
+<div class="row g-3 mb-4 fade-up delay-1">
+    @php $pcards = [
+        ['label'=>'Total','value'=>$stats['total'],'color'=>'#B44040','bg'=>'#fdf0f0','icon'=>'ri-building-2-line'],
+        ['label'=>'Available','value'=>$stats['available'],'color'=>'#16a34a','bg'=>'#dcfce7','icon'=>'ri-door-open-line'],
+        ['label'=>'Rented','value'=>$stats['rented'],'color'=>'#2563eb','bg'=>'#dbeafe','icon'=>'ri-home-heart-line'],
+        ['label'=>'Pending Verify','value'=>$stats['pending'],'color'=>'#ca8a04','bg'=>'#fef9c3','icon'=>'ri-time-line'],
+    ]; @endphp
+    @foreach($pcards as $c)
+    <div class="col-6 col-lg-3">
+        <div class="kpi-card" style="--accent:{{ $c['color'] }};">
+            <div class="d-flex justify-content-between align-items-start">
                 <div>
-                    <div class="stat-value">156</div>
-                    <div class="stat-label">Total Properties</div>
+                    <div class="kpi-label">{{ $c['label'] }}</div>
+                    <div class="kpi-value">{{ number_format($c['value']) }}</div>
                 </div>
-                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
-                    <i class="bi bi-building"></i>
-                </div>
+                <div class="kpi-icon" style="background:{{ $c['bg'] }};color:{{ $c['color'] }};"><i class="{{ $c['icon'] }}"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-1">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">142</div>
-                    <div class="stat-label">Occupied</div>
-                </div>
-                <div class="stat-icon bg-success bg-opacity-10 text-success">
-                    <i class="bi bi-check-circle"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-2">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">14</div>
-                    <div class="stat-label">Vacant</div>
-                </div>
-                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
-                    <i class="bi bi-exclamation-circle"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-2">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="stat-value">8</div>
-                    <div class="stat-label">Pending</div>
-                </div>
-                <div class="stat-icon bg-info bg-opacity-10 text-info">
-                    <i class="bi bi-clock"></i>
-                </div>
-            </div>
-        </div>
-    </div>
+    @endforeach
 </div>
 
 <!-- Filters -->
-<div class="filter-card animate-fade-in delay-2">
-    <div class="row g-3 align-items-center">
-        <div class="col-12 col-md-4">
-            <input type="text" class="search-input w-100" placeholder="Search properties...">
-        </div>
-        <div class="col-12 col-md-8">
-            <div class="d-flex gap-2 flex-wrap align-items-center">
-                <button class="filter-btn active">All</button>
-                <button class="filter-btn">Occupied</button>
-                <button class="filter-btn">Vacant</button>
-                <button class="filter-btn">Pending</button>
-                <button class="filter-btn ms-auto">
-                    <i class="bi bi-plus-lg me-1"></i> Add Property
-                </button>
+<div class="k-card mb-4 fade-up delay-2">
+    <div class="k-card-body" style="padding:16px 20px;">
+        <form method="GET" class="d-flex align-items-center gap-3 flex-wrap">
+            <div style="position:relative;flex:1;min-width:200px;">
+                <i class="ri-search-line" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.9rem;"></i>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search properties..."
+                    style="width:100%;padding:9px 12px 9px 34px;border:1.5px solid var(--border);border-radius:8px;font-size:0.875rem;background:var(--body-bg);"
+                    onfocus="this.style.borderColor='var(--brand)'" onblur="this.style.borderColor='var(--border)'">
             </div>
-        </div>
-    </div>
-    <div class="bulk-actions mt-3" id="bulkActions">
-        <span class="text-sm text-primary fw-semibold me-3"><span id="selectedCount">0</span> selected</span>
-        <button class="action-btn approve" onclick="bulkApprove()">
-            <i class="bi bi-check-lg me-1"></i> Approve All
-        </button>
-        <button class="action-btn delete" onclick="bulkDelete()">
-            <i class="bi bi-trash me-1"></i> Delete All
-        </button>
-        <button class="action-btn" onclick="clearSelection()">
-            <i class="bi bi-x-lg me-1"></i> Clear
-        </button>
+            <div class="filter-bar">
+                <a href="?"                 class="filter-chip {{ !request('status') ? 'active' : '' }}">All</a>
+                <a href="?status=available" class="filter-chip {{ request('status')=='available' ? 'active' : '' }}">Available</a>
+                <a href="?status=rented"    class="filter-chip {{ request('status')=='rented' ? 'active' : '' }}">Rented</a>
+            </div>
+            <select name="type" onchange="this.form.submit()"
+                style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:0.82rem;background:#fff;color:var(--text-sub);">
+                <option value="">All Types</option>
+                <option value="apartment" {{ request('type')=='apartment'?'selected':'' }}>Apartment</option>
+                <option value="house"     {{ request('type')=='house'?'selected':'' }}>House</option>
+                <option value="commercial"{{ request('type')=='commercial'?'selected':'' }}>Commercial</option>
+                <option value="room"      {{ request('type')=='room'?'selected':'' }}>Room</option>
+            </select>
+            <button type="submit" class="btn-brand" style="padding:9px 16px;"><i class="ri-search-line"></i></button>
+        </form>
     </div>
 </div>
 
-<!-- Properties Table -->
-<div class="table-card animate-fade-in delay-2">
-    <table class="custom-table">
-        <thead>
-            <tr>
-                <th style="width: 40px;"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
-                <th>Property</th>
-                <th>Location</th>
-                <th>Price</th>
-                <th>Details</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="property-name">Sunset Apartments</div>
-                    <div class="property-location">Unit 2A</div>
-                </td>
-                <td>
-                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Dar es Salaam, Tanzania</div>
-                </td>
-                <td>
-                    <div class="property-price">TZS 450,000/mo</div>
-                </td>
-                <td>
-                    <div class="property-meta">
-                        <span><i class="bi bi-door-open me-1"></i> 2 Beds</span>
-                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 2 Baths</span>
-                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 85m²</span>
-                    </div>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Occupied</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(1)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editProperty(1)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn delete" onclick="deleteProperty(1)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="property-name">Green Valley Estate</div>
-                    <div class="property-location">Unit 5B</div>
-                </td>
-                <td>
-                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Arusha, Tanzania</div>
-                </td>
-                <td>
-                    <div class="property-price">TZS 320,000/mo</div>
-                </td>
-                <td>
-                    <div class="property-meta">
-                        <span><i class="bi bi-door-open me-1"></i> 3 Beds</span>
-                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 2 Baths</span>
-                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 120m²</span>
-                    </div>
-                </td>
-                <td>
-                    <span class="status-badge bg-warning bg-opacity-10 text-warning">Vacant</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(2)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editProperty(2)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn delete" onclick="deleteProperty(2)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="property-name">Ocean View Towers</div>
-                    <div class="property-location">Unit 3C</div>
-                </td>
-                <td>
-                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Mwanza, Tanzania</div>
-                </td>
-                <td>
-                    <div class="property-price">TZS 580,000/mo</div>
-                </td>
-                <td>
-                    <div class="property-meta">
-                        <span><i class="bi bi-door-open me-1"></i> 2 Beds</span>
-                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 2 Baths</span>
-                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 95m²</span>
-                    </div>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Occupied</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(3)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editProperty(3)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn delete" onclick="deleteProperty(3)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="property-name">Safari Heights</div>
-                    <div class="property-location">Unit 1A</div>
-                </td>
-                <td>
-                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Dodoma, Tanzania</div>
-                </td>
-                <td>
-                    <div class="property-price">TZS 280,000/mo</div>
-                </td>
-                <td>
-                    <div class="property-meta">
-                        <span><i class="bi bi-door-open me-1"></i> 1 Bed</span>
-                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 1 Bath</span>
-                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 60m²</span>
-                    </div>
-                </td>
-                <td>
-                    <span class="status-badge bg-info bg-opacity-10 text-info">Pending</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(4)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editProperty(4)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn delete" onclick="deleteProperty(4)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="property-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="property-name">City Center Apartments</div>
-                    <div class="property-location">Unit 4D</div>
-                </td>
-                <td>
-                    <div class="property-location"><i class="bi bi-geo-alt me-1"></i> Dar es Salaam, Tanzania</div>
-                </td>
-                <td>
-                    <div class="property-price">TZS 520,000/mo</div>
-                </td>
-                <td>
-                    <div class="property-meta">
-                        <span><i class="bi bi-door-open me-1"></i> 2 Beds</span>
-                        <span class="ms-2"><i class="bi bi-droplet me-1"></i> 2 Baths</span>
-                        <span class="ms-2"><i class="bi bi-rulers me-1"></i> 90m²</span>
-                    </div>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Occupied</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(5)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editProperty(5)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn delete" onclick="deleteProperty(5)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<!-- Table -->
+<div class="k-card fade-up delay-3">
+    <div class="k-card-header">
+        <div class="k-card-title"><i class="ri-building-2-line"></i> Properties List</div>
+        <span style="font-size:0.8rem;color:var(--text-muted);">{{ $properties->total() }} total</span>
+    </div>
+    <div style="overflow-x:auto;">
+        <table class="k-table">
+            <thead>
+                <tr>
+                    <th>Property</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Owner</th>
+                    <th>Price / mo</th>
+                    <th>Status</th>
+                    <th>Verified</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($properties as $prop)
+                <tr>
+                    <td>
+                        <div style="font-weight:700;font-size:0.875rem;color:var(--text-primary);max-width:220px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                            {{ $prop->title }}
+                        </div>
+                        <div style="font-size:0.72rem;color:var(--text-muted);">
+                            {{ $prop->bedrooms ?? '—' }} bed · {{ $prop->bathrooms ?? '—' }} bath{{ $prop->area_sqft ? ' · '.number_format($prop->area_sqft).' sqft' : '' }}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="k-badge badge-neutral text-capitalize">{{ str_replace('_',' ',$prop->property_type) }}</span>
+                    </td>
+                    <td style="font-size:0.82rem;color:var(--text-sub);">{{ $prop->location_area }}, {{ $prop->location_city }}</td>
+                    <td>
+                        <div style="font-size:0.82rem;font-weight:600;color:var(--text-primary);">{{ $prop->user?->name ?? '—' }}</div>
+                        <div style="font-size:0.72rem;color:var(--text-muted);">{{ $prop->user?->email }}</div>
+                    </td>
+                    <td style="font-weight:700;color:var(--text-primary);">TZS {{ number_format($prop->price) }}</td>
+                    <td>
+                        @php $sb = match($prop->status) { 'available'=>'badge-success', 'rented'=>'badge-info', default=>'badge-warning' }; @endphp
+                        <span class="k-badge {{ $sb }} text-capitalize">{{ $prop->status }}</span>
+                    </td>
+                    <td>
+                        @if($prop->approved_at)
+                            <span class="k-badge badge-success"><i class="ri-shield-check-line"></i> Verified</span>
+                        @else
+                            <span class="k-badge badge-warning"><i class="ri-time-line"></i> Pending</span>
+                        @endif
+                    </td>
+                    <td>
+                        <div style="display:flex;gap:4px;">
+                            <a href="{{ route('admin.properties.show', $prop->id) }}" class="icon-btn" title="View"><i class="ri-eye-line"></i></a>
+                            <a href="{{ route('admin.properties.edit', $prop->id) }}" class="icon-btn" title="Edit"><i class="ri-pencil-line"></i></a>
+                            @if(!$prop->approved_at)
+                            <form method="POST" action="{{ route('admin.properties.verify', $prop->id) }}" style="margin:0;">
+                                @csrf
+                                <button type="submit" class="icon-btn success" title="Verify" onclick="return confirm('Approve this property?')">
+                                    <i class="ri-shield-check-line"></i>
+                                </button>
+                            </form>
+                            @endif
+                            <form method="POST" action="{{ route('admin.properties.destroy', $prop->id) }}" style="margin:0;">
+                                @csrf @method('DELETE')
+                                <button type="submit" class="icon-btn danger" title="Delete" onclick="return confirm('Delete this property permanently?')">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="8" style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+                        <i class="ri-building-line" style="font-size:2.5rem;display:block;margin-bottom:10px;"></i>
+                        No properties found.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+    @if($properties->hasPages())
+    <div style="padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:0.8rem;color:var(--text-muted);">Showing {{ $properties->firstItem() }}–{{ $properties->lastItem() }} of {{ $properties->total() }}</div>
+        {{ $properties->links() }}
+    </div>
+    @endif
 </div>
-
-<script>
-function toggleSelectAll() {
-    const selectAll = document.getElementById('selectAll');
-    const checkboxes = document.querySelectorAll('.property-checkbox');
-    checkboxes.forEach(cb => cb.checked = selectAll.checked);
-    updateBulkActions();
-}
-
-function updateBulkActions() {
-    const checkboxes = document.querySelectorAll('.property-checkbox:checked');
-    const bulkActions = document.getElementById('bulkActions');
-    const selectedCount = document.getElementById('selectedCount');
-    
-    if (checkboxes.length > 0) {
-        bulkActions.classList.add('show');
-        selectedCount.textContent = checkboxes.length;
-    } else {
-        bulkActions.classList.remove('show');
-    }
-}
-
-function clearSelection() {
-    const checkboxes = document.querySelectorAll('.property-checkbox');
-    const selectAll = document.getElementById('selectAll');
-    checkboxes.forEach(cb => cb.checked = false);
-    selectAll.checked = false;
-    updateBulkActions();
-}
-
-function bulkApprove() {
-    const checkboxes = document.querySelectorAll('.property-checkbox:checked');
-    Swal.fire({
-        title: 'Approve Properties?',
-        text: `Are you sure you want to approve ${checkboxes.length} properties?`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#10b981',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, approve!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Approved!',
-                text: `${checkboxes.length} properties have been approved.`,
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-            clearSelection();
-        }
-    });
-}
-
-function bulkDelete() {
-    const checkboxes = document.querySelectorAll('.property-checkbox:checked');
-    Swal.fire({
-        title: 'Delete Properties?',
-        text: `Are you sure you want to delete ${checkboxes.length} properties? This action cannot be undone.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, delete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Deleted!',
-                text: `${checkboxes.length} properties have been deleted.`,
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-            clearSelection();
-        }
-    });
-}
-
-function viewDetails(id) {
-    window.location.href = `/admin/properties/${id}`;
-}
-
-function editProperty(id) {
-    window.location.href = `/admin/properties/${id}/edit`;
-}
-
-function deleteProperty(id) {
-    Swal.fire({
-        title: 'Delete Property?',
-        text: 'Are you sure you want to delete this property? This action cannot be undone.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, delete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Deleted!',
-                text: 'Property has been deleted.',
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-        }
-    });
-}
-</script>
 @endsection

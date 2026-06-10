@@ -57,10 +57,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin,super_ad
 
     // Properties
     Route::prefix('properties')->name('properties.')->group(function () {
-        Route::get('/', [App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('index');
-        Route::get('/{id}', [App\Http\Controllers\Admin\PropertyController::class, 'show'])->name('show');
-        Route::get('/{id}/edit', [App\Http\Controllers\Admin\PropertyController::class, 'edit'])->name('edit');
-        Route::get('/{id}/verify', [App\Http\Controllers\Admin\PropertyController::class, 'verify'])->name('verify');
+        Route::get('/',              [App\Http\Controllers\Admin\PropertyController::class, 'index'])->name('index');
+        Route::get('/{id}',          [App\Http\Controllers\Admin\PropertyController::class, 'show'])->name('show');
+        Route::get('/{id}/edit',     [App\Http\Controllers\Admin\PropertyController::class, 'edit'])->name('edit');
+        Route::put('/{id}',          [App\Http\Controllers\Admin\PropertyController::class, 'update'])->name('update');
+        Route::delete('/{id}',       [App\Http\Controllers\Admin\PropertyController::class, 'destroy'])->name('destroy');
+        Route::post('/{id}/verify',  [App\Http\Controllers\Admin\PropertyController::class, 'verify'])->name('verify');
     });
 
     // Users Management
