@@ -157,9 +157,7 @@ class LandlordApiController extends Controller
         $user = $request->user();
         $propertyIds = Property::where('user_id', $user->id)->pluck('id');
 
-        $query = User::whereHas('leases', function ($q) use ($propertyIds) {
-            $q->whereIn('property_id', $propertyIds);
-        })->orWhereHas('leasesAsTenant', function ($q) use ($propertyIds) {
+        $query = User::whereHas('leasesAsTenant', function ($q) use ($propertyIds) {
             $q->whereIn('property_id', $propertyIds);
         });
 
