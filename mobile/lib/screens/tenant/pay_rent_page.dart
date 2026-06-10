@@ -231,33 +231,6 @@ class _PayRentPageState extends State<PayRentPage> {
             ),
             const SizedBox(height: 20),
 
-            // Payment Method
-            _buildSectionCard(
-              title: _t('Njia ya Malipo', 'Payment Method'),
-              child: Column(
-                children: [
-                  _paymentMethodOption(
-                    _t('Transfer', 'Transfer'),
-                    Icons.account_balance_outlined,
-                    _t('Benki', 'Bank'),
-                  ),
-                  const SizedBox(height: 12),
-                  _paymentMethodOption(
-                    _t('Cash', 'Cash'),
-                    Icons.money_outlined,
-                    _t('Fedha Taslimu', 'Cash'),
-                  ),
-                  const SizedBox(height: 12),
-                  _paymentMethodOption(
-                    _t('Mobile Money', 'Mobile Money'),
-                    Icons.phone_android_outlined,
-                    _t('M-Pesa / Tigo Pesa', 'M-Pesa / Tigo Pesa'),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-
             // Transaction ID
             _buildSectionCard(
               title: _t('Namba ya Muamala', 'Transaction ID'),
