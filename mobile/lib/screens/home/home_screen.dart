@@ -84,16 +84,25 @@ class _HomeScreenState extends State<HomeScreen>
   }) {
     return ListTile(
       leading: Container(
-        width: 40,
-        height: 40,
+        width: 44,
+        height: 44,
         decoration: BoxDecoration(
-          color: Colors.grey.shade800,
-          borderRadius: BorderRadius.circular(10),
+          gradient: LinearGradient(
+            colors: [
+              AppColors.primary.withOpacity(0.2),
+              AppColors.primary.withOpacity(0.1),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: AppColors.primary.withOpacity(0.3),
+            width: 1,
+          ),
         ),
         child: Icon(
           icon,
-          color: Colors.white,
-          size: 20,
+          color: AppColors.primary,
+          size: 22,
         ),
       ),
       title: Text(
@@ -101,8 +110,13 @@ class _HomeScreenState extends State<HomeScreen>
         style: GoogleFonts.poppins(
           color: Colors.white,
           fontSize: 15,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
         ),
+      ),
+      trailing: Icon(
+        Icons.chevron_right,
+        color: Colors.grey.shade600,
+        size: 20,
       ),
       onTap: onTap,
     );
@@ -342,11 +356,11 @@ class _HomeScreenState extends State<HomeScreen>
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Colors.white.withOpacity(0.7),
-                Colors.white.withOpacity(0.3),
-                Colors.transparent,
+                Colors.black.withOpacity(0.3),
+                Colors.black.withOpacity(0.5),
+                Colors.black.withOpacity(0.7),
               ],
-              stops: const [0.0, 0.3, 0.5],
+              stops: const [0.0, 0.4, 0.8],
             ),
           ),
           child: SafeArea(
@@ -359,22 +373,46 @@ class _HomeScreenState extends State<HomeScreen>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset(
-                          AppAssets.appIcon,
-                          width: 120,
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: AppColors.primary.withOpacity(0.3),
+                              width: 1,
+                            ),
+                          ),
+                          child: Image.asset(
+                            AppAssets.appIcon,
+                            width: 40,
+                          ),
                         ),
                         Builder(
-                          builder: (context) => IconButton(
-                            onPressed: () {
-                              Scaffold.of(context).openDrawer();
-                            },
-                            icon: const Icon(Icons.menu),
+                          builder: (context) => Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.2),
+                                width: 1,
+                              ),
+                            ),
+                            child: IconButton(
+                              onPressed: () {
+                                Scaffold.of(context).openDrawer();
+                              },
+                              icon: const Icon(
+                                Icons.menu,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 40),
                   Expanded(
                     child: Column(
                       children: [
@@ -392,38 +430,69 @@ class _HomeScreenState extends State<HomeScreen>
                               return Padding(
                                 padding: const EdgeInsets.only(top: 20),
                                 child: SizedBox(
-                                  width: 230,
+                                  width: 280,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        _onboardingData[index]['title']!,
-                                        style: GoogleFonts.poppins(
-                                          fontSize: 40,
-                                          fontWeight: FontWeight.w800,
-                                          color: Colors.black87,
-                                          height: 1.1,
+                                      Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              AppColors.primary.withOpacity(0.15),
+                                              AppColors.primary.withOpacity(0.05),
+                                            ],
+                                          ),
+                                          borderRadius: BorderRadius.circular(20),
+                                          border: Border.all(
+                                            color: AppColors.primary.withOpacity(0.3),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          _onboardingData[index]['title']!,
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 42,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.white,
+                                            height: 1.1,
+                                            letterSpacing: -1,
+                                          ),
                                         ),
                                       ),
+                                      const SizedBox(height: 16),
                                       Text(
                                         _onboardingData[index]['subtitle']!,
                                         style: GoogleFonts.poppins(
-                                          fontSize: 40,
+                                          fontSize: 42,
                                           fontWeight: FontWeight.w800,
                                           color: AppColors.primary,
                                           height: 1.1,
+                                          letterSpacing: -1,
                                         ),
                                       ),
-                                      const SizedBox(height: 20),
-                                      Text(
-                                        _onboardingData[index]['description']!,
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          height: 1.5,
+                                      const SizedBox(height: 24),
+                                      Container(
+                                        padding: const EdgeInsets.all(20),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.1),
+                                          borderRadius: BorderRadius.circular(16),
+                                          border: Border.all(
+                                            color: Colors.white.withOpacity(0.2),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          _onboardingData[index]['description']!,
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            height: 1.6,
+                                            fontWeight: FontWeight.w400,
+                                          ),
                                         ),
                                       ),
-                                      const SizedBox(height: 25),
+                                      const SizedBox(height: 30),
                                       Row(
                                         children: List.generate(
                                           _onboardingData.length,
@@ -437,19 +506,28 @@ class _HomeScreenState extends State<HomeScreen>
                                                 );
                                               },
                                               child: Container(
-                                                margin: const EdgeInsets.only(right: 6),
-                                                width: _currentPage == dotIndex ? 20 : 6,
-                                                height: 6,
+                                                margin: const EdgeInsets.only(right: 8),
+                                                width: _currentPage == dotIndex ? 32 : 8,
+                                                height: 8,
                                                 decoration: BoxDecoration(
                                                   color: _currentPage == dotIndex
                                                       ? AppColors.primary
-                                                      : Colors.grey.shade300,
+                                                      : Colors.white.withOpacity(0.3),
                                                   borderRadius: _currentPage == dotIndex
                                                       ? BorderRadius.circular(10)
                                                       : null,
                                                   shape: _currentPage == dotIndex
                                                       ? BoxShape.rectangle
                                                       : BoxShape.circle,
+                                                  boxShadow: _currentPage == dotIndex
+                                                      ? [
+                                                          BoxShadow(
+                                                            color: AppColors.primary.withOpacity(0.5),
+                                                            blurRadius: 8,
+                                                            offset: const Offset(0, 2),
+                                                          ),
+                                                        ]
+                                                      : null,
                                                 ),
                                               ),
                                             );
@@ -465,54 +543,73 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                         // Button at bottom
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 25),
+                          padding: const EdgeInsets.only(bottom: 30),
                           child: Center(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginScreen(),
-                                  ),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
-                                foregroundColor: Colors.black,
-                                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    AppColors.primary,
+                                    const Color(0xffd4a017),
+                                  ],
                                 ),
-                                elevation: 0,
-                                shadowColor: AppColors.primary.withOpacity(0.4),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "GET STARTED",
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  AnimatedBuilder(
-                                    animation: _animation,
-                                    builder: (context, child) {
-                                      return Transform.translate(
-                                        offset: Offset(_animation.value, 0),
-                                        child: const Icon(
-                                          Icons.arrow_forward,
-                                          color: Colors.black,
-                                          size: 20,
-                                        ),
-                                      );
-                                    },
+                                borderRadius: BorderRadius.circular(50),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.primary.withOpacity(0.5),
+                                    blurRadius: 20,
+                                    offset: const Offset(0, 8),
                                   ),
                                 ],
+                              ),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginScreen(),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  foregroundColor: Colors.black,
+                                  padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 22),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  elevation: 0,
+                                  shadowColor: Colors.transparent,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "GET STARTED",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.black,
+                                        letterSpacing: 1,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    AnimatedBuilder(
+                                      animation: _animation,
+                                      builder: (context, child) {
+                                        return Transform.translate(
+                                          offset: Offset(_animation.value, 0),
+                                          child: const Icon(
+                                            Icons.arrow_forward,
+                                            color: Colors.black,
+                                            size: 22,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
