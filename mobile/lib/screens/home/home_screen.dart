@@ -160,34 +160,41 @@ class _HomeScreenState extends State<HomeScreen>
                       const Color(0xffd4a017),
                       const Color(0xffb8860b),
                     ],
-                  ),
+                ),
                 ),
                 padding: const EdgeInsets.all(24.0),
                 child: Row(
                   children: [
                     Container(
-                      width: 60,
-                      height: 60,
+                      width: 70,
+                      height: 70,
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.white,
+                            Colors.white.withOpacity(0.9),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            blurRadius: 15,
-                            offset: const Offset(0, 4),
+                            color: Colors.black.withOpacity(0.4),
+                            blurRadius: 20,
+                            offset: const Offset(0, 8),
                           ),
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.all(14.0),
                         child: Image.asset(
                           AppAssets.appIcon,
                           fit: BoxFit.contain,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 20),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,19 +202,32 @@ class _HomeScreenState extends State<HomeScreen>
                           Text(
                             AppStrings.appName,
                             style: GoogleFonts.poppins(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w800,
+                              fontSize: 26,
+                              fontWeight: FontWeight.w900,
                               color: Colors.white,
-                              letterSpacing: 0.5,
+                              letterSpacing: 1,
+                              height: 1.1,
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Find your perfect home',
-                            style: GoogleFonts.poppins(
-                              fontSize: 12,
-                              color: Colors.white.withOpacity(0.9),
-                              fontWeight: FontWeight.w500,
+                          const SizedBox(height: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.3),
+                                width: 1,
+                              ),
+                            ),
+                            child: Text(
+                              'Find your perfect home',
+                              style: GoogleFonts.poppins(
+                                fontSize: 11,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.5,
+                              ),
                             ),
                           ),
                         ],
