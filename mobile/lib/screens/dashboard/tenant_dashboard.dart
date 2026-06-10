@@ -2246,13 +2246,6 @@ class _TenantDashboardState extends State<TenantDashboard> {
       ),
     );
   }
-              color: _isDarkMode ? Colors.white : Colors.black,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _sectionCard({required String title, required Widget child}) {
     return Container(
