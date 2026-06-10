@@ -196,7 +196,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        'Hakuna arifa bado',
+                        _t('Hakuna arifa bado', 'No notifications yet'),
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           color: Colors.grey[500],
@@ -205,7 +205,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Utapata arifa hapa ukipoa shughuli',
+                        _t('Utapata arifa hapa ukipoa shughuli', 'You will receive notifications here'),
                         style: GoogleFonts.poppins(
                           fontSize: 13,
                           color: Colors.grey[400],
