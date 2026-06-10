@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             ApplicationsSeeder::class,
             RentPaymentsSeeder::class,
             MaintenanceRequestsSeeder::class,
+            SampleDataSeeder::class,
         ]);
     }
 }
