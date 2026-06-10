@@ -2,637 +2,545 @@
 
 @section('title', 'Dashboard')
 
-@section('content')
+@push('styles')
 <style>
-    .kpi-card {
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        border: 1px solid #e5e7eb;
-        background: #fff;
-        border-radius: 12px;
-        padding: 16px;
+    .metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    @media (max-width: 1199px) { .metric-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 575px)  { .metric-grid { grid-template-columns: 1fr; } }
+
+    .metric-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
+        transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
         position: relative;
         overflow: hidden;
     }
-    .kpi-card::before {
+    .metric-card::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
+        top: 0; left: 0; right: 0;
         height: 3px;
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.4s ease;
+        background: var(--card-accent, var(--brand));
+        border-radius: 3px 3px 0 0;
     }
-    .kpi-card:hover::before {
-        transform: scaleX(1);
+    .metric-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+    .metric-icon {
+        width: 48px; height: 48px;
+        border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.4rem;
     }
-    .kpi-card:hover {
-        transform: translateY(-6px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
-        border-color: #3b82f6;
-    }
-    .kpi-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.25rem;
-        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .kpi-card:hover .kpi-icon {
-        transform: scale(1.2) rotate(10deg);
-    }
-    .kpi-value {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #111827;
-        transition: all 0.3s ease;
-    }
-    .kpi-card:hover .kpi-value {
-        color: #3b82f6;
-        transform: scale(1.05);
-    }
-    .kpi-label {
-        font-size: 0.75rem;
-        color: #6b7280;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    .kpi-trend {
-        font-size: 0.7rem;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-    }
-    .kpi-card:hover .kpi-trend {
-        transform: scale(1.1);
-    }
-    .chart-container {
-        position: relative;
-        height: 300px;
-    }
+    .metric-value { font-size: 1.8rem; font-weight: 800; color: var(--text-primary); line-height: 1.1; margin-top: 12px; }
+    .metric-label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 2px; }
+    .metric-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+    .metric-trend { display: inline-flex; align-items: center; gap: 3px; font-size: 0.78rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; }
+    .trend-up   { background: #dcfce7; color: #16a34a; }
+    .trend-down { background: #fee2e2; color: #dc2626; }
+    .trend-neu  { background: #f1f5f9; color: #64748b; }
+    .metric-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+    .chart-row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
+    @media (max-width: 991px) { .chart-row { grid-template-columns: 1fr; } }
+
+    .bottom-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    @media (max-width: 991px) { .bottom-row { grid-template-columns: 1fr; } }
+
+    .activity-list { max-height: 340px; overflow-y: auto; }
     .activity-item {
-        transition: all 0.3s ease;
-        border-left: 3px solid transparent;
+        display: flex; align-items: flex-start; gap: 12px;
+        padding: 12px 20px;
+        border-bottom: 1px solid var(--border);
+        transition: background 0.15s;
     }
-    .activity-item:hover {
-        background: #f9fafb;
-        border-left-color: #3b82f6;
-        transform: translateX(6px);
+    .activity-item:last-child { border-bottom: none; }
+    .activity-item:hover { background: #fafbfc; }
+    .activity-dot {
+        width: 38px; height: 38px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.95rem;
+        flex-shrink: 0;
     }
-    @keyframes slideInLeft {
-        from { opacity: 0; transform: translateX(-30px); }
-        to { opacity: 1; transform: translateX(0); }
+    .quick-action {
+        display: flex; align-items: center; gap: 12px;
+        padding: 13px 16px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--text-sub);
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: all 0.2s;
+        margin-bottom: 8px;
     }
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
+    .quick-action:last-child { margin-bottom: 0; }
+    .quick-action:hover { border-color: var(--brand); color: var(--brand); transform: translateX(4px); }
+    .quick-action .qa-icon {
+        width: 36px; height: 36px;
+        border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
     }
-    .animate-slide-in {
-        animation: slideInLeft 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        opacity: 0;
-    }
-    .delay-1 { animation-delay: 0.05s; }
-    .delay-2 { animation-delay: 0.1s; }
-    .delay-3 { animation-delay: 0.15s; }
-    .delay-4 { animation-delay: 0.2s; }
-    .delay-5 { animation-delay: 0.25s; }
-    .delay-6 { animation-delay: 0.3s; }
-    .delay-7 { animation-delay: 0.35s; }
-    .delay-8 { animation-delay: 0.4s; }
+    .quick-action .qa-label { flex: 1; }
+    .quick-action i.arrow { font-size: 0.8rem; color: var(--text-muted); }
 
-    /* Custom grid for 8 cards in one line */
-    @media (min-width: 1200px) {
-        .col-xl-1-5 {
-            flex: 0 0 12.5%;
-            max-width: 12.5%;
-            padding: 0 8px;
-        }
+    .period-btns { display: flex; gap: 4px; }
+    .period-btn {
+        padding: 6px 14px;
+        border: 1.5px solid var(--border);
+        border-radius: 20px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--text-sub);
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.15s;
+        text-decoration: none;
     }
-    @media (min-width: 992px) and (max-width: 1199.98px) {
-        .col-lg-1-5 {
-            flex: 0 0 20%;
-            max-width: 20%;
-            padding: 0 8px;
-        }
-    }
+    .period-btn:hover { border-color: var(--brand); color: var(--brand); }
+    .period-btn.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+    .txn-row td { font-size: 0.82rem; }
+    .txn-id { font-weight: 700; color: var(--brand); }
 </style>
+@endpush
 
-<!-- Period Filter -->
-<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2 animate-fade-in">
+@section('content')
+<!-- Page header -->
+<div class="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-3 fade-up">
     <div>
-        <h4 class="fw-bold mb-1" style="color: #1e293b; font-size: 1.75rem;">Admin Dashboard</h4>
-        <small class="text-muted">Real-time overview of the KODi platform</small>
+        <h1 class="page-title">Good {{ now()->format('H') < 12 ? 'morning' : (now()->format('H') < 18 ? 'afternoon' : 'evening') }}, {{ explode(' ', auth()->user()->name ?? 'Admin')[0] }} 👋</h1>
+        <p class="page-subtitle">Here's what's happening on KODI today — {{ now()->format('l, d F Y') }}</p>
     </div>
-    <div class="d-flex gap-2">
-        <a href="?period=7d" class="btn btn-sm {{ $period == '7d' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-pill px-3">7D</a>
-        <a href="?period=30d" class="btn btn-sm {{ $period == '30d' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-pill px-3">30D</a>
-        <a href="?period=90d" class="btn btn-sm {{ $period == '90d' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-pill px-3">90D</a>
-        <a href="?period=1y" class="btn btn-sm {{ $period == '1y' ? 'btn-primary' : 'btn-outline-secondary' }} rounded-pill px-3">1Y</a>
-        <button class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="location.reload()"><i class="bi bi-arrow-clockwise"></i></button>
+    <div class="period-btns">
+        <a href="?period=7d"  class="period-btn {{ $period=='7d'  ? 'active' : '' }}">7D</a>
+        <a href="?period=30d" class="period-btn {{ $period=='30d' ? 'active' : '' }}">30D</a>
+        <a href="?period=90d" class="period-btn {{ $period=='90d' ? 'active' : '' }}">90D</a>
+        <a href="?period=1y"  class="period-btn {{ $period=='1y'  ? 'active' : '' }}">1Y</a>
+        <button class="period-btn" onclick="location.reload()"><i class="ri-refresh-line"></i></button>
     </div>
 </div>
 
-<!-- Row 1: Key Stats (8 KPI Cards in one line) -->
-<div class="row g-2 mb-4">
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-1-5 animate-slide-in delay-1">
-        <div class="kpi-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Properties</div>
-                    <div class="kpi-value">{{ number_format($totalProperties) }}</div>
-                </div>
-                <div class="kpi-icon bg-primary bg-opacity-10 text-primary">
-                    <i class="bi bi-building"></i>
-                </div>
+<!-- KPI Metrics -->
+<div class="metric-grid">
+    <div class="metric-card fade-up delay-1" style="--card-accent:#B44040;">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <div class="metric-label">Total Properties</div>
+                <div class="metric-value">{{ number_format($totalProperties) }}</div>
             </div>
-            <div class="kpi-trend bg-{{ $propertiesGrowth >= 0 ? 'success' : 'danger' }} bg-opacity-10 text-{{ $propertiesGrowth >= 0 ? 'success' : 'danger' }} mt-2">
-                <i class="bi bi-arrow-{{ $propertiesGrowth >= 0 ? 'up' : 'down' }}"></i> {{ number_format(abs($propertiesGrowth), 1) }}%
+            <div class="metric-icon" style="background:#fdf0f0;color:#B44040;">
+                <i class="ri-building-2-line"></i>
             </div>
         </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-1-5 animate-slide-in delay-2">
-        <div class="kpi-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Tenants</div>
-                    <div class="kpi-value">{{ number_format($totalTenants) }}</div>
-                </div>
-                <div class="kpi-icon bg-success bg-opacity-10 text-success">
-                    <i class="bi bi-people"></i>
-                </div>
-            </div>
-            <div class="kpi-trend bg-{{ $tenantsGrowth >= 0 ? 'success' : 'danger' }} bg-opacity-10 text-{{ $tenantsGrowth >= 0 ? 'success' : 'danger' }} mt-2">
-                <i class="bi bi-arrow-{{ $tenantsGrowth >= 0 ? 'up' : 'down' }}"></i> {{ number_format(abs($tenantsGrowth), 1) }}%
-            </div>
+        <div class="metric-footer">
+            <span class="metric-trend {{ $propertiesGrowth >= 0 ? 'trend-up' : 'trend-down' }}">
+                <i class="ri-arrow-{{ $propertiesGrowth >= 0 ? 'up' : 'down' }}-line"></i>
+                {{ number_format(abs($propertiesGrowth), 1) }}%
+            </span>
+            <span class="metric-sub">vs last period</span>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-1-5 animate-slide-in delay-3">
-        <div class="kpi-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Revenue</div>
-                    <div class="kpi-value">{{ number_format($totalPayments / 1000000, 1) }}M</div>
-                </div>
-                <div class="kpi-icon bg-info bg-opacity-10 text-info">
-                    <i class="bi bi-cash-stack"></i>
-                </div>
+
+    <div class="metric-card fade-up delay-2" style="--card-accent:#16a34a;">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <div class="metric-label">Active Tenants</div>
+                <div class="metric-value">{{ number_format($totalTenants) }}</div>
             </div>
-            <div class="kpi-trend bg-{{ $revenueGrowth >= 0 ? 'success' : 'danger' }} bg-opacity-10 text-{{ $revenueGrowth >= 0 ? 'success' : 'danger' }} mt-2">
-                <i class="bi bi-arrow-{{ $revenueGrowth >= 0 ? 'up' : 'down' }}"></i> {{ number_format(abs($revenueGrowth), 1) }}%
+            <div class="metric-icon" style="background:#dcfce7;color:#16a34a;">
+                <i class="ri-group-line"></i>
             </div>
         </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-1-5 animate-slide-in delay-4">
-        <div class="kpi-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Occupancy</div>
-                    <div class="kpi-value">{{ $totalProperties > 0 ? number_format(($totalTenants / $totalProperties) * 100, 0) : 0 }}%</div>
-                </div>
-                <div class="kpi-icon" style="background: rgba(111, 66, 193, 0.1); color: #6f42c1;">
-                    <i class="bi bi-house-check"></i>
-                </div>
-            </div>
-            <div class="kpi-trend bg-secondary bg-opacity-10 text-secondary mt-2">
-                {{ number_format($totalTenants) }}/{{ number_format($totalProperties) }}
-            </div>
+        <div class="metric-footer">
+            <span class="metric-trend {{ $tenantsGrowth >= 0 ? 'trend-up' : 'trend-down' }}">
+                <i class="ri-arrow-{{ $tenantsGrowth >= 0 ? 'up' : 'down' }}-line"></i>
+                {{ number_format(abs($tenantsGrowth), 1) }}%
+            </span>
+            <span class="metric-sub">new this period</span>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-1-5 animate-slide-in delay-5">
-        <div class="kpi-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Maintenance</div>
-                    <div class="kpi-value">{{ number_format($totalRequests) }}</div>
-                </div>
-                <div class="kpi-icon bg-warning bg-opacity-10 text-warning">
-                    <i class="bi bi-tools"></i>
-                </div>
+
+    <div class="metric-card fade-up delay-3" style="--card-accent:#2563eb;">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <div class="metric-label">Revenue (TZS)</div>
+                <div class="metric-value">{{ number_format($totalPayments/1000000, 1) }}M</div>
             </div>
-            <div class="kpi-trend bg-warning bg-opacity-10 text-warning mt-2">
-                {{ number_format($pendingRequests) }} pending
+            <div class="metric-icon" style="background:#dbeafe;color:#2563eb;">
+                <i class="ri-money-dollar-circle-line"></i>
             </div>
         </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-1-5 animate-slide-in delay-6">
-        <div class="kpi-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Avg. Rent</div>
-                    <div class="kpi-value">{{ $totalTenants > 0 ? number_format($totalPayments / $totalTenants / 1000, 0) : 0 }}K</div>
-                </div>
-                <div class="kpi-icon bg-primary bg-opacity-10 text-primary">
-                    <i class="bi bi-currency-dollar"></i>
-                </div>
-            </div>
-            <div class="kpi-trend bg-secondary bg-opacity-10 text-secondary mt-2">
-                per tenant
-            </div>
+        <div class="metric-footer">
+            <span class="metric-trend {{ $revenueGrowth >= 0 ? 'trend-up' : 'trend-down' }}">
+                <i class="ri-arrow-{{ $revenueGrowth >= 0 ? 'up' : 'down' }}-line"></i>
+                {{ number_format(abs($revenueGrowth), 1) }}%
+            </span>
+            <span class="metric-sub">vs last period</span>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-1-5 animate-slide-in delay-7">
-        <div class="kpi-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Active Units</div>
-                    <div class="kpi-value">{{ number_format($totalTenants) }}</div>
-                </div>
-                <div class="kpi-icon bg-success bg-opacity-10 text-success">
-                    <i class="bi bi-door-open"></i>
-                </div>
+
+    <div class="metric-card fade-up delay-4" style="--card-accent:#ca8a04;">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <div class="metric-label">Maintenance</div>
+                <div class="metric-value">{{ number_format($totalRequests) }}</div>
             </div>
-            <div class="kpi-trend bg-success bg-opacity-10 text-success mt-2">
-                {{ $totalProperties > 0 ? number_format(($totalTenants / $totalProperties) * 100, 0) : 0 }}% occupied
+            <div class="metric-icon" style="background:#fef9c3;color:#ca8a04;">
+                <i class="ri-hammer-line"></i>
             </div>
         </div>
-    </div>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-1-5 animate-slide-in delay-8">
-        <div class="kpi-card">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <div class="kpi-label">Pending Apps</div>
-                    <div class="kpi-value">{{ number_format($pendingRequests) }}</div>
-                </div>
-                <div class="kpi-icon bg-danger bg-opacity-10 text-danger">
-                    <i class="bi bi-file-earmark-text"></i>
-                </div>
-            </div>
-            <div class="kpi-trend bg-danger bg-opacity-10 text-danger mt-2">
-                requires action
-            </div>
+        <div class="metric-footer">
+            <span class="metric-trend trend-neu">
+                <i class="ri-time-line"></i> {{ $pendingRequests }} pending
+            </span>
+            <span class="metric-sub">open requests</span>
         </div>
     </div>
 </div>
 
-<!-- Row 2: Charts -->
-<div class="row g-3 mb-4">
-    <div class="col-lg-8 animate-fade-in delay-1">
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold"><i class="bi bi-graph-up me-2 text-primary"></i>Platform Growth Overview</h5>
-                <div class="d-flex gap-3">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="chartMetric" id="chRevenue" value="revenue" checked>
-                        <label class="form-check-label small" for="chRevenue">Revenue</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="chartMetric" id="chTenants" value="tenants">
-                        <label class="form-check-label small" for="chTenants">Tenants</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="chartMetric" id="chRequests" value="requests">
-                        <label class="form-check-label small" for="chRequests">Requests</label>
-                    </div>
-                </div>
+<!-- Charts Row -->
+<div class="chart-row fade-up delay-2">
+    <!-- Main Revenue Chart -->
+    <div class="k-card">
+        <div class="k-card-header">
+            <div class="k-card-title">
+                <i class="ri-line-chart-line"></i>
+                Platform Growth
             </div>
-            <div class="card-body">
-                <div class="chart-container">
-                    <canvas id="mainChart"></canvas>
+            <div class="d-flex align-items-center gap-2">
+                <div class="d-flex gap-3" id="chartLegend" style="font-size:0.78rem; color: var(--text-muted);">
+                    <label class="d-flex align-items-center gap-1 cursor-pointer mb-0" style="cursor:pointer;">
+                        <input type="radio" name="chartMetric" value="revenue" checked style="accent-color:var(--brand);"> Revenue
+                    </label>
+                    <label class="d-flex align-items-center gap-1 mb-0" style="cursor:pointer;">
+                        <input type="radio" name="chartMetric" value="tenants" style="accent-color:#16a34a;"> Tenants
+                    </label>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-4 animate-fade-in delay-2">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom py-3">
-                <h5 class="mb-0 fw-bold"><i class="bi bi-credit-card me-2 text-primary"></i>Payment Methods</h5>
+        <div class="k-card-body" style="padding-top: 12px;">
+            <div style="height: 280px;">
+                <canvas id="revenueChart"></canvas>
             </div>
-            <div class="card-body d-flex flex-column">
-                <div class="chart-container" style="height: 200px;">
-                    <canvas id="paymentChart"></canvas>
-                </div>
-                <div class="mt-3 overflow-auto" style="max-height: 140px;">
-                    @foreach($paymentMethods as $pm)
-                    <div class="d-flex justify-content-between align-items-center mb-2 py-2 px-2 rounded" style="background: #f8fafc;">
-                        <div class="d-flex align-items-center gap-2">
-                            <div style="width: 8px; height: 8px; border-radius: 50%; background: {{ $loop->index % 2 == 0 ? '#0d6efd' : '#198754' }};"></div>
-                            <span class="small text-capitalize fw-semibold">{{ $pm->payment_method ?? 'Unknown' }}</span>
-                        </div>
-                        <span class="fw-semibold small">{{ number_format($pm->count) }} <span class="text-muted">({{ number_format($pm->total / 1000000, 1) }}M)</span></span>
+        </div>
+    </div>
+
+    <!-- Donut Chart -->
+    <div class="k-card">
+        <div class="k-card-header">
+            <div class="k-card-title"><i class="ri-pie-chart-2-line"></i> Payment Methods</div>
+        </div>
+        <div class="k-card-body">
+            <div style="height: 180px; display:flex; align-items:center; justify-content:center;">
+                <canvas id="paymentDonut"></canvas>
+            </div>
+            <div class="mt-3" style="max-height:120px; overflow-y:auto;">
+                @forelse($paymentMethods as $i => $pm)
+                <div class="d-flex align-items-center justify-content-between py-2" style="border-bottom: 1px solid var(--border); font-size:0.82rem;">
+                    <div class="d-flex align-items-center gap-2">
+                        <div style="width:8px;height:8px;border-radius:50%;background:{{ ['#B44040','#2563eb','#16a34a','#ca8a04','#9333ea'][$i % 5] }};"></div>
+                        <span class="text-capitalize fw-600" style="color:var(--text-sub);">{{ $pm->payment_method ?? 'Unknown' }}</span>
                     </div>
-                    @endforeach
-                    @if($paymentMethods->isEmpty())
-                    <p class="text-muted small text-center py-3">No payment data yet</p>
-                    @endif
+                    <div style="color:var(--text-primary);font-weight:700;">
+                        {{ number_format($pm->count) }} <span style="color:var(--text-muted);font-weight:400;">({{ number_format($pm->total/1000000,1) }}M)</span>
+                    </div>
                 </div>
+                @empty
+                <p style="color:var(--text-muted);text-align:center;font-size:0.82rem;padding:16px 0;">No payment data yet</p>
+                @endforelse
             </div>
         </div>
     </div>
 </div>
 
-<!-- Row 3: Additional Charts -->
-<div class="row g-3 mb-4">
-    <div class="col-lg-6 animate-fade-in delay-1">
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white border-bottom py-3">
-                <h5 class="mb-0 fw-bold"><i class="bi bi-bar-chart me-2 text-primary"></i>Monthly Revenue Comparison</h5>
-            </div>
-            <div class="card-body">
-                <div class="chart-container" style="height: 250px;">
-                    <canvas id="barChart"></canvas>
+<!-- Bottom Row -->
+<div class="bottom-row fade-up delay-3">
+    <!-- Recent Activity -->
+    <div class="k-card" style="grid-column: span 1;">
+        <div class="k-card-header">
+            <div class="k-card-title"><i class="ri-pulse-line"></i> Recent Activity</div>
+            <a href="#" style="font-size:0.78rem;color:var(--brand);font-weight:600;text-decoration:none;">View all</a>
+        </div>
+        <div class="activity-list">
+            @forelse($recentTenants as $t)
+            <div class="activity-item">
+                <div class="activity-dot" style="background:#dcfce7;color:#16a34a;">
+                    <i class="ri-user-add-line"></i>
                 </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:0.85rem;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ $t->name }}</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">New tenant registered</div>
+                </div>
+                <div style="font-size:0.72rem;color:var(--text-muted);white-space:nowrap;flex-shrink:0;">{{ $t->created_at?->diffForHumans() }}</div>
             </div>
+            @endforeach
+            @forelse($recentPayments as $p)
+            <div class="activity-item">
+                <div class="activity-dot" style="background:#dbeafe;color:#2563eb;">
+                    <i class="ri-bank-card-line"></i>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:0.85rem;font-weight:600;color:var(--text-primary);">TZS {{ number_format($p->amount) }}</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Payment via {{ ucfirst($p->payment_method ?? '—') }}</div>
+                </div>
+                <div style="font-size:0.72rem;color:var(--text-muted);white-space:nowrap;flex-shrink:0;">{{ $p->created_at?->diffForHumans() }}</div>
+            </div>
+            @endforeach
+            @forelse($recentRequests as $r)
+            <div class="activity-item">
+                <div class="activity-dot" style="background:#fef9c3;color:#ca8a04;">
+                    <i class="ri-tools-line"></i>
+                </div>
+                <div style="flex:1;min-width:0;">
+                    <div style="font-size:0.85rem;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ Str::limit($r->title ?? $r->description ?? 'Maintenance', 28) }}</div>
+                    <div style="font-size:0.75rem;color:var(--text-muted);">Maintenance request</div>
+                </div>
+                <div style="font-size:0.72rem;color:var(--text-muted);white-space:nowrap;flex-shrink:0;">{{ $r->created_at?->diffForHumans() }}</div>
+            </div>
+            @endforeach
+            @if($recentTenants->isEmpty() && $recentPayments->isEmpty() && $recentRequests->isEmpty())
+            <div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:0.85rem;">
+                <i class="ri-inbox-line" style="font-size:2rem;display:block;margin-bottom:8px;"></i>
+                No recent activity
+            </div>
+            @endif
         </div>
     </div>
-    <div class="col-lg-6 animate-fade-in delay-2">
-        <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white border-bottom py-3">
-                <h5 class="mb-0 fw-bold"><i class="bi bi-pie-chart me-2 text-primary"></i>Request Status Distribution</h5>
-            </div>
-            <div class="card-body">
-                <div class="chart-container" style="height: 250px;">
-                    <canvas id="statusChart"></canvas>
-                </div>
-            </div>
+
+    <!-- Quick Actions -->
+    <div class="k-card">
+        <div class="k-card-header">
+            <div class="k-card-title"><i class="ri-flashlight-line"></i> Quick Actions</div>
+        </div>
+        <div class="k-card-body">
+            <a href="{{ route('admin.users.index') }}" class="quick-action">
+                <div class="qa-icon" style="background:#dcfce7;color:#16a34a;"><i class="ri-group-line"></i></div>
+                <span class="qa-label">Manage Users</span>
+                <i class="ri-arrow-right-s-line arrow"></i>
+            </a>
+            <a href="{{ route('admin.properties.index') }}" class="quick-action">
+                <div class="qa-icon" style="background:#fdf0f0;color:#B44040;"><i class="ri-building-2-line"></i></div>
+                <span class="qa-label">Properties</span>
+                <i class="ri-arrow-right-s-line arrow"></i>
+            </a>
+            <a href="{{ route('admin.payments.index') }}" class="quick-action">
+                <div class="qa-icon" style="background:#dbeafe;color:#2563eb;"><i class="ri-bank-card-line"></i></div>
+                <span class="qa-label">Payments</span>
+                <i class="ri-arrow-right-s-line arrow"></i>
+            </a>
+            <a href="{{ route('admin.maintenance.index') }}" class="quick-action">
+                <div class="qa-icon" style="background:#fef9c3;color:#ca8a04;"><i class="ri-hammer-line"></i></div>
+                <span class="qa-label">Maintenance</span>
+                <i class="ri-arrow-right-s-line arrow"></i>
+            </a>
+            <a href="{{ route('admin.reports.index') }}" class="quick-action">
+                <div class="qa-icon" style="background:#f3e8ff;color:#9333ea;"><i class="ri-bar-chart-2-line"></i></div>
+                <span class="qa-label">View Reports</span>
+                <i class="ri-arrow-right-s-line arrow"></i>
+            </a>
+            <a href="{{ route('admin.announcements.create') }}" class="quick-action">
+                <div class="qa-icon" style="background:#fdf0f0;color:#B44040;"><i class="ri-megaphone-line"></i></div>
+                <span class="qa-label">New Announcement</span>
+                <i class="ri-arrow-right-s-line arrow"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="k-card">
+        <div class="k-card-header">
+            <div class="k-card-title"><i class="ri-exchange-line"></i> Recent Transactions</div>
+            <a href="{{ route('admin.payments.index') }}" style="font-size:0.78rem;color:var(--brand);font-weight:600;text-decoration:none;">View all</a>
+        </div>
+        <div style="overflow-x:auto;">
+            <table class="k-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Amount</th>
+                        <th>Method</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($recentPayments as $txn)
+                    <tr class="txn-row">
+                        <td class="txn-id">#{{ str_pad($txn->id, 4, '0', STR_PAD_LEFT) }}</td>
+                        <td style="font-weight:700;color:var(--text-primary);">{{ number_format($txn->amount) }}</td>
+                        <td><span class="k-badge badge-neutral text-capitalize">{{ $txn->payment_method ?? '—' }}</span></td>
+                        <td style="color:var(--text-muted);">{{ $txn->created_at?->diffForHumans() }}</td>
+                    </tr>
+                    @empty
+                    <tr><td colspan="4" style="text-align:center;padding:32px;color:var(--text-muted);">No transactions</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
-<!-- Row 4: Recent Activity & Quick Actions -->
-<div class="row g-3 mb-4">
-    <div class="col-lg-5 animate-fade-in delay-1">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold small"><i class="bi bi-clock-history me-2 text-primary"></i>Recent Activity</h5>
-                <a href="#" class="text-primary small text-decoration-none fw-semibold">View All</a>
-            </div>
-            <div class="card-body p-0">
-                <div class="list-group list-group-flush" style="max-height: 320px; overflow-y: auto;">
-                    @forelse($recentTenants as $tenant)
-                    <div class="activity-item list-group-item px-3 py-3 border-0 border-bottom">
-                        <div class="d-flex align-items-start gap-3">
-                            <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px;">
-                                <i class="bi bi-person text-primary"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="fw-semibold text-truncate">{{ $tenant->name ?? 'Unknown' }}</div>
-                                <small class="text-muted">New tenant registered</small>
-                                <div class="text-muted small mt-1"><i class="bi bi-clock me-1"></i>{{ $tenant->created_at?->diffForHumans() ?? 'N/A' }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                    @forelse($recentPayments as $payment)
-                    <div class="activity-item list-group-item px-3 py-3 border-0 border-bottom">
-                        <div class="d-flex align-items-start gap-3">
-                            <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px;">
-                                <i class="bi bi-cash text-success"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="fw-semibold">TZS {{ number_format($payment->amount) }}</div>
-                                <small class="text-muted">Payment received</small>
-                                <div class="text-muted small mt-1"><i class="bi bi-clock me-1"></i>{{ $payment->created_at?->diffForHumans() ?? 'N/A' }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                    @forelse($recentRequests as $request)
-                    <div class="activity-item list-group-item px-3 py-3 border-0 border-bottom">
-                        <div class="d-flex align-items-start gap-3">
-                            <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; min-width: 40px;">
-                                <i class="bi bi-exclamation-triangle text-warning"></i>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="fw-semibold text-truncate">{{ $request->description ?? 'Request' }}</div>
-                                <small class="text-muted">Maintenance request</small>
-                                <div class="text-muted small mt-1"><i class="bi bi-clock me-1"></i>{{ $request->created_at?->diffForHumans() ?? 'N/A' }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                    @if($recentTenants->isEmpty() && $recentPayments->isEmpty() && $recentRequests->isEmpty())
-                    <p class="text-muted small text-center py-4">No recent activity</p>
-                    @endif
-                </div>
-            </div>
-        </div>
+<!-- Bar Chart -->
+<div class="k-card fade-up delay-4">
+    <div class="k-card-header">
+        <div class="k-card-title"><i class="ri-bar-chart-grouped-line"></i> Monthly Revenue — {{ now()->format('Y') }}</div>
+        <a href="{{ route('admin.reports.index') }}" class="btn-ghost" style="font-size:0.78rem;padding:6px 12px;">Full Report <i class="ri-external-link-line"></i></a>
     </div>
-    <div class="col-lg-3 animate-fade-in delay-2">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom py-3">
-                <h5 class="mb-0 fw-bold small"><i class="bi bi-lightning me-2 text-warning"></i>Quick Actions</h5>
-            </div>
-            <div class="card-body">
-                <div class="d-grid gap-2">
-                    <a href="{{ route('admin.properties.index') }}" class="btn btn-outline-primary d-flex align-items-center gap-2 py-2.5">
-                        <i class="bi bi-building"></i>
-                        <span>Properties</span>
-                    </a>
-                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-success d-flex align-items-center gap-2 py-2.5">
-                        <i class="bi bi-people"></i>
-                        <span>Tenants</span>
-                    </a>
-                    <a href="{{ route('admin.payments.index') }}" class="btn btn-outline-info d-flex align-items-center gap-2 py-2.5">
-                        <i class="bi bi-cash-stack"></i>
-                        <span>Payments</span>
-                    </a>
-                    <a href="{{ route('admin.maintenance.index') }}" class="btn btn-outline-warning d-flex align-items-center gap-2 py-2.5">
-                        <i class="bi bi-tools"></i>
-                        <span>Maintenance</span>
-                    </a>
-                    <a href="{{ route('admin.reports.index') }}" class="btn btn-outline-secondary d-flex align-items-center gap-2 py-2.5">
-                        <i class="bi bi-graph-up"></i>
-                        <span>Reports</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 animate-fade-in delay-3">
-        <div class="card border-0 shadow-sm h-100">
-            <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
-                <h5 class="mb-0 fw-bold small"><i class="bi bi-list-ul me-2 text-primary"></i>Recent Transactions</h5>
-                <a href="{{ route('admin.payments.index') }}" class="text-primary small text-decoration-none fw-semibold">View All</a>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0" style="font-size: 0.85rem;">
-                        <thead class="table-light">
-                            <tr>
-                                <th class="ps-3">ID</th>
-                                <th>Amount</th>
-                                <th>Method</th>
-                                <th class="pe-3">Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($recentPayments as $txn)
-                            <tr>
-                                <td class="ps-3 fw-semibold text-primary">TXN-{{ str_pad($txn->id, 4, '0', STR_PAD_LEFT) }}</td>
-                                <td class="fw-semibold">TZS {{ number_format($txn->amount, 0) }}</td>
-                                <td><span class="badge bg-light text-dark text-capitalize">{{ $txn->payment_method ?? 'N/A' }}</span></td>
-                                <td class="pe-3 text-muted small">{{ $txn->created_at?->diffForHumans() ?? 'N/A' }}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" class="text-center text-muted py-4">No transactions yet</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="k-card-body" style="padding-top:12px;">
+        <div style="height:240px;">
+            <canvas id="barChart"></canvas>
         </div>
     </div>
 </div>
+@endsection
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-// Main multi-metric chart
-const mainCtx = document.getElementById('mainChart').getContext('2d');
-const mainChart = new Chart(mainCtx, {
+const brandRed   = '#B44040';
+const brandGreen = '#16a34a';
+const brandBlue  = '#2563eb';
+const gridColor  = 'rgba(0,0,0,0.04)';
+
+Chart.defaults.font.family = 'Inter, sans-serif';
+Chart.defaults.font.size   = 12;
+
+// ─── Revenue / Tenant line chart ───────────────────────────
+const revenueData = {!! json_encode($revenueData) !!};
+const tenantsData = {!! json_encode($tenantsData) !!};
+const labels      = {!! json_encode($monthLabels) !!};
+
+const revCtx = document.getElementById('revenueChart').getContext('2d');
+const revenueChart = new Chart(revCtx, {
     type: 'line',
     data: {
-        labels: {!! json_encode($monthLabels) !!},
+        labels,
         datasets: [{
             label: 'Revenue (TZS)',
-            data: {!! json_encode($revenueData) !!},
-            borderColor: '#0d6efd',
-            backgroundColor: 'rgba(13, 110, 253, 0.1)',
-            tension: 0.4,
+            data: revenueData,
+            borderColor: brandRed,
+            backgroundColor: 'rgba(180,64,64,0.08)',
+            tension: 0.45,
             fill: true,
-            yAxisID: 'y',
             pointRadius: 4,
-            pointHoverRadius: 6
-        }, {
-            label: 'New Tenants',
-            data: {!! json_encode($tenantsData) !!},
-            borderColor: '#198754',
-            backgroundColor: 'rgba(25, 135, 84, 0.1)',
-            tension: 0.4,
-            fill: true,
-            yAxisID: 'y1',
-            pointRadius: 4,
-            pointHoverRadius: 6
+            pointBackgroundColor: brandRed,
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointHoverRadius: 6,
         }]
     },
     options: {
-        responsive: true,
-        maintainAspectRatio: false,
+        responsive: true, maintainAspectRatio: false,
         interaction: { mode: 'index', intersect: false },
         plugins: {
-            legend: { display: true, position: 'top', labels: { boxWidth: 12, padding: 20, font: { size: 12, weight: '500' } } }
-        },
-        scales: {
-            y: {
-                type: 'linear', display: true, position: 'left',
-                ticks: { callback: function(v) { return 'TZS ' + (v/1000000).toFixed(1) + 'M'; }, font: { size: 11 } },
-                grid: { color: 'rgba(0,0,0,0.05)' }
-            },
-            y1: {
-                type: 'linear', display: true, position: 'right',
-                ticks: { font: { size: 11 } },
-                grid: { drawOnChartArea: false }
-            },
-            x: { ticks: { font: { size: 11 } } }
-        }
-    }
-});
-
-// Chart metric toggle
-document.querySelectorAll('input[name="chartMetric"]').forEach(radio => {
-    radio.addEventListener('change', function() {
-        let data, label, color;
-        switch(this.value) {
-            case 'revenue':
-                data = {!! json_encode($revenueData) !!}; label = 'Revenue (TZS)'; color = '#0d6efd'; break;
-            case 'tenants':
-                data = {!! json_encode($tenantsData) !!}; label = 'New Tenants'; color = '#198754'; break;
-            case 'requests':
-                data = {!! json_encode($requestsData) !!}; label = 'Requests'; color = '#ffc107'; break;
-        }
-        mainChart.data.datasets[0].data = data;
-        mainChart.data.datasets[0].label = label;
-        mainChart.data.datasets[0].borderColor = color;
-        mainChart.data.datasets[0].backgroundColor = color.replace(')', ', 0.1)').replace('rgb', 'rgba');
-        mainChart.update();
-    });
-});
-
-// Payment Methods Doughnut
-@if($paymentMethods->isNotEmpty())
-const payCtx = document.getElementById('paymentChart').getContext('2d');
-new Chart(payCtx, {
-    type: 'doughnut',
-    data: {
-        labels: {!! json_encode($paymentMethods->pluck('payment_method')->map(function($m) { return ucfirst($m ?? 'Unknown'); })) !!},
-        datasets: [{
-            data: {!! json_encode($paymentMethods->pluck('count')) !!},
-            backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#6f42c1', '#0dcaf0', '#fd7e14', '#20c997'],
-            borderWidth: 0,
-            hoverOffset: 10
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '70%',
-        plugins: { legend: { display: false } }
-    }
-});
-@endif
-
-// Bar Chart - Monthly Revenue
-const barCtx = document.getElementById('barChart').getContext('2d');
-new Chart(barCtx, {
-    type: 'bar',
-    data: {
-        labels: {!! json_encode($monthLabels) !!},
-        datasets: [{
-            label: 'Revenue (TZS)',
-            data: {!! json_encode($revenueData) !!},
-            backgroundColor: 'rgba(13, 110, 253, 0.8)',
-            borderColor: '#0d6efd',
-            borderWidth: 1,
-            borderRadius: 6
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: { display: false }
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#0f172a',
+                titleFont: { size: 12, weight: '700' },
+                bodyFont: { size: 11 },
+                padding: 12,
+                callbacks: {
+                    label: ctx => 'TZS ' + ctx.parsed.y.toLocaleString()
+                }
+            }
         },
         scales: {
             y: {
                 beginAtZero: true,
-                ticks: { callback: function(v) { return 'TZS ' + (v/1000000).toFixed(1) + 'M'; }, font: { size: 11 } },
-                grid: { color: 'rgba(0,0,0,0.05)' }
+                grid: { color: gridColor },
+                ticks: { callback: v => 'TZS ' + (v/1000000).toFixed(1) + 'M', color: '#94a3b8' }
             },
-            x: { ticks: { font: { size: 11 } } }
+            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
         }
     }
 });
 
-// Status Distribution Pie Chart
-const statusCtx = document.getElementById('statusChart').getContext('2d');
-new Chart(statusCtx, {
-    type: 'pie',
+// Toggle metric
+document.querySelectorAll('input[name="chartMetric"]').forEach(r => {
+    r.addEventListener('change', function() {
+        if (this.value === 'revenue') {
+            revenueChart.data.datasets[0].data = revenueData;
+            revenueChart.data.datasets[0].borderColor = brandRed;
+            revenueChart.data.datasets[0].backgroundColor = 'rgba(180,64,64,0.08)';
+            revenueChart.data.datasets[0].pointBackgroundColor = brandRed;
+            revenueChart.data.datasets[0].label = 'Revenue (TZS)';
+            revenueChart.options.scales.y.ticks.callback = v => 'TZS ' + (v/1000000).toFixed(1) + 'M';
+        } else {
+            revenueChart.data.datasets[0].data = tenantsData;
+            revenueChart.data.datasets[0].borderColor = brandGreen;
+            revenueChart.data.datasets[0].backgroundColor = 'rgba(22,163,74,0.08)';
+            revenueChart.data.datasets[0].pointBackgroundColor = brandGreen;
+            revenueChart.data.datasets[0].label = 'New Tenants';
+            revenueChart.options.scales.y.ticks.callback = v => v;
+        }
+        revenueChart.update();
+    });
+});
+
+// ─── Payment donut ─────────────────────────────────────────
+@if($paymentMethods->isNotEmpty())
+const donutCtx = document.getElementById('paymentDonut').getContext('2d');
+new Chart(donutCtx, {
+    type: 'doughnut',
     data: {
-        labels: ['Pending', 'In Progress', 'Completed', 'Cancelled'],
+        labels: {!! json_encode($paymentMethods->pluck('payment_method')->map(fn($m) => ucfirst($m ?? 'Unknown'))) !!},
         datasets: [{
-            data: [{{ $pendingRequests }}, {{ max(0, $totalRequests - $pendingRequests - 5) }}, {{ max(0, min(5, $totalRequests - $pendingRequests)) }}, {{ max(0, $totalRequests > 10 ? 2 : 0) }}],
-            backgroundColor: ['#ffc107', '#0d6efd', '#198754', '#dc3545'],
+            data: {!! json_encode($paymentMethods->pluck('count')) !!},
+            backgroundColor: ['#B44040','#2563eb','#16a34a','#ca8a04','#9333ea'],
             borderWidth: 0,
             hoverOffset: 8
         }]
     },
     options: {
-        responsive: true,
-        maintainAspectRatio: false,
+        responsive: true, maintainAspectRatio: false,
+        cutout: '72%',
         plugins: {
-            legend: { position: 'right', labels: { boxWidth: 12, padding: 15, font: { size: 11 } } }
+            legend: { display: false },
+            tooltip: { backgroundColor: '#0f172a', padding: 10 }
+        }
+    }
+});
+@else
+document.getElementById('paymentDonut').parentElement.innerHTML = '<p style="text-align:center;padding:40px 0;color:#94a3b8;font-size:0.82rem;">No data</p>';
+@endif
+
+// ─── Bar chart ─────────────────────────────────────────────
+const barCtx = document.getElementById('barChart').getContext('2d');
+new Chart(barCtx, {
+    type: 'bar',
+    data: {
+        labels,
+        datasets: [{
+            label: 'Revenue',
+            data: revenueData,
+            backgroundColor: labels.map((_, i) => i === labels.length-1 ? brandRed : 'rgba(180,64,64,0.2)'),
+            borderColor: brandRed,
+            borderWidth: 1.5,
+            borderRadius: 6,
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#0f172a',
+                callbacks: { label: ctx => 'TZS ' + ctx.parsed.y.toLocaleString() }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: { color: gridColor },
+                ticks: { callback: v => (v/1000000).toFixed(1) + 'M', color: '#94a3b8' }
+            },
+            x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
         }
     }
 });
 </script>
 @endpush
-@endsection
