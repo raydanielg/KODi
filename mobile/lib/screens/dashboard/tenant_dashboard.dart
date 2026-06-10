@@ -100,18 +100,16 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
     return Scaffold(
       drawer: RoleDrawer(authService: _authService),
-      backgroundColor: const Color(
-        0xFFF8FAFC,
-      ), // Premium Light Slate (Off-white)
+      backgroundColor: const Color(0xfff9fafb),
       body: _isLoading
           ? const Center(
-              child: CircularProgressIndicator(color: Color(0xFFFE5D37)),
+              child: CircularProgressIndicator(color: AppColors.primary),
             )
           : SafeArea(
               bottom: false,
               child: Column(
                 children: [
-                  // 1. Beautiful Premium White Header (Hidden in Profile tab)
+                  // 1. Standard Header (Hidden in Profile tab)
                   if (_currentTab != 3) _buildTopHeader(user),
 
                   // 2. Dynamic body content based on selected tab
@@ -125,34 +123,37 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
   Widget _buildTopHeader(UserModel user) {
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 48, bottom: 16),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          bottom: BorderSide(color: Color(0xffe5e7eb), width: 1),
+        ),
+      ),
       child: Row(
         children: [
-          // 1. Premium Avatar with Unsplash photo and gold border
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _currentTab = 3; // Switch directly to the Profile/Mimi tab
-              });
-            },
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: const Color(0xFFFE5D37), width: 1.5),
-              ),
-              child: const CircleAvatar(
-                radius: 20,
-                backgroundImage: NetworkImage(
-                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop',
+          // 1. Avatar with drawer trigger
+          Builder(
+            builder: (context) => GestureDetector(
+              onTap: () {
+                Scaffold.of(context).openDrawer();
+              },
+              child: CircleAvatar(
+                radius: 22,
+                backgroundColor: AppColors.primary.withOpacity(0.15),
+                child: Text(
+                  user.initials,
+                  style: GoogleFonts.poppins(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                  ),
                 ),
               ),
             ),
           ),
           const SizedBox(width: 12),
-
-          // 2. Greeting Column
+          // 2. Greeting and Name Column
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,18 +162,18 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 Text(
                   _getGreeting(),
                   style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    color: const Color(0xFF64748B),
-                    fontWeight: FontWeight.w500,
+                    fontSize: 11,
+                    color: Colors.grey[500],
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   user.name,
                   style: GoogleFonts.poppins(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w800,
-                    color: const Color(0xFF1E293B),
+                    color: const Color(0xff111827),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -180,8 +181,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ],
             ),
           ),
-
-          // 3. Right Notification Icon with custom Badge
+          // 3. Right Icons (Notification with badge)
           Stack(
             children: [
               IconButton(
@@ -194,33 +194,21 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     ),
                   );
                 },
-                icon: const Icon(
-                  Icons.notifications_none_rounded,
-                  color: Color(0xFF1E293B),
-                  size: 26,
-                ),
+                icon: const Icon(Icons.notifications_none_rounded, color: Color(0xff4b5563), size: 24),
                 style: IconButton.styleFrom(
-                  backgroundColor: const Color(0xFFF1F5F9),
-                  padding: const EdgeInsets.all(10),
-                  shape: const CircleBorder(),
+                  backgroundColor: const Color(0xfff3f4f6),
+                  padding: const EdgeInsets.all(8),
                 ),
               ),
               Positioned(
-                top: 4,
-                right: 4,
+                top: 6,
+                right: 6,
                 child: Container(
-                  padding: const EdgeInsets.all(4),
+                  width: 8,
+                  height: 8,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFFE5D37),
+                    color: Color(0xffef4444),
                     shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    '3',
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 8,
-                      fontWeight: FontWeight.bold,
-                    ),
                   ),
                 ),
               ),
