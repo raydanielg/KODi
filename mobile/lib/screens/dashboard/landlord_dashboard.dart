@@ -72,7 +72,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
 
     return Scaffold(
       drawer: RoleDrawer(authService: _authService),
-      backgroundColor: const Color(0xfff9fafb),
+      backgroundColor: const Color(0xff0a0a0a),
       body: Column(
         children: [
           // 1. Beautiful Custom Header
@@ -108,7 +108,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF0F172A),
+                            color: Colors.white,
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -122,7 +122,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF0F172A),
+                              color: Colors.white,
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -140,10 +140,17 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
   Widget _buildTopHeader(UserModel user) {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 48, bottom: 16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xff1a1a1a),
+            const Color(0xff2d2d2d),
+          ],
+        ),
         border: Border(
-          bottom: BorderSide(color: Color(0xffe5e7eb), width: 1),
+          bottom: BorderSide(color: Colors.white.withOpacity(0.1), width: 1),
         ),
       ),
       child: Row(
@@ -179,7 +186,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                   _getGreeting(),
                   style: GoogleFonts.poppins(
                     fontSize: 11,
-                    color: Colors.grey[500],
+                    color: Colors.white60,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -189,7 +196,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w800,
-                    color: const Color(0xff111827),
+                    color: Colors.white,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -207,9 +214,9 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                     onPressed: () {
                       Helpers.showSnackBar(context, 'Arifa (Notifications) zitafunguka hapa!');
                     },
-                    icon: const Icon(Icons.notifications_none_rounded, color: Color(0xff4b5563), size: 24),
+                    icon: const Icon(Icons.notifications_none_rounded, color: Colors.white, size: 24),
                     style: IconButton.styleFrom(
-                      backgroundColor: const Color(0xfff3f4f6),
+                      backgroundColor: Colors.white.withOpacity(0.1),
                       padding: const EdgeInsets.all(8),
                     ),
                   ),
@@ -232,9 +239,9 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 onPressed: () {
                   Helpers.showSnackBar(context, 'Mipangilio (Settings) itafunguka hapa!');
                 },
-                icon: const Icon(Icons.settings_outlined, color: Color(0xff4b5563), size: 24),
+                icon: const Icon(Icons.settings_outlined, color: Colors.white, size: 24),
                 style: IconButton.styleFrom(
-                  backgroundColor: const Color(0xfff3f4f6),
+                  backgroundColor: Colors.white.withOpacity(0.1),
                   padding: const EdgeInsets.all(8),
                 ),
               ),
@@ -249,15 +256,18 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xff10b981), Color(0xff059669)],
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
+          colors: [
+            const Color(0xff1a1a1a),
+            const Color(0xff2d2d2d),
+          ],
         ),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xff10b981).withOpacity(0.25),
+            color: Colors.black.withOpacity(0.3),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -274,20 +284,20 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 style: GoogleFonts.poppins(
                   fontSize: 10,
                   fontWeight: FontWeight.w800,
-                  color: Colors.white.withOpacity(0.85),
+                  color: AppColors.primary,
                   letterSpacing: 1.2,
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: AppColors.primary.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   user.roleLabel.toUpperCase(),
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.primary,
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                   ),
@@ -307,7 +317,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
           const SizedBox(height: 8),
           Row(
             children: [
-              const Icon(Icons.email_outlined, color: Colors.white70, size: 14),
+              const Icon(Icons.email_outlined, color: AppColors.primary, size: 14),
               const SizedBox(width: 8),
               Text(
                 user.email,
@@ -318,7 +328,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
           const SizedBox(height: 4),
           Row(
             children: [
-              const Icon(Icons.phone_outlined, color: Colors.white70, size: 14),
+              const Icon(Icons.phone_outlined, color: AppColors.primary, size: 14),
               const SizedBox(width: 8),
               Text(
                 user.phone,
@@ -345,14 +355,20 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xff1a1a1a),
+            const Color(0xff2d2d2d),
+          ],
+        ),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xff10b981).withOpacity(0.3)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.02),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -367,10 +383,10 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: const Color(0xff6366f1).withOpacity(0.1),
+                      color: AppColors.primary.withOpacity(0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.account_balance_wallet_rounded, color: Color(0xff6366f1), size: 20),
+                    child: const Icon(Icons.account_balance_wallet_rounded, color: AppColors.primary, size: 20),
                   ),
                   const SizedBox(width: 12),
                   Text(
@@ -378,7 +394,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      color: const Color(0xff1f2937),
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -392,12 +408,12 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
             children: [
               Text(
                 'Malipo ya Dipoziti',
-                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                style: TextStyle(color: Colors.white60, fontSize: 12),
               ),
               Text(
                 '$depositPercentage% Imelipwa',
                 style: GoogleFonts.poppins(
-                  color: const Color(0xff10b981),
+                  color: AppColors.primary,
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
                 ),
@@ -409,8 +425,8 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
               value: depositProgress,
-              backgroundColor: const Color(0xfff3f4f6),
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xff10b981)),
+              backgroundColor: Colors.white.withOpacity(0.1),
+              valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
               minHeight: 8,
             ),
           ),
@@ -425,7 +441,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 children: [
                   Text(
                     'Zilizolipwa ($depositPaidCount)',
-                    style: TextStyle(color: Colors.grey[500], fontSize: 11),
+                    style: TextStyle(color: Colors.white60, fontSize: 11),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -433,7 +449,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
-                      color: const Color(0xff10b981),
+                      color: AppColors.primary,
                     ),
                   ),
                 ],
@@ -443,7 +459,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 children: [
                   Text(
                     'Bado ($depositPendingCount)',
-                    style: TextStyle(color: Colors.grey[500], fontSize: 11),
+                    style: TextStyle(color: Colors.white60, fontSize: 11),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -478,7 +494,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF0F172A),
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 12),
@@ -578,13 +594,20 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xff1a1a1a),
+            const Color(0xff2d2d2d),
+          ],
+        ),
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 6,
-            offset: const Offset(0, 1),
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -593,7 +616,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withOpacity(0.2),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(Icons.history, color: AppColors.primary, size: 18),
@@ -605,13 +628,13 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF0F172A),
+                color: Colors.white,
               ),
             ),
           ),
           Text(
             map['time'] ?? map['created_at'] ?? '',
-            style: TextStyle(fontSize: 11, color: Colors.grey[400]),
+            style: TextStyle(fontSize: 11, color: Colors.white60),
           ),
         ],
       ),
