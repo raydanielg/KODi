@@ -16,6 +16,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   List<Map<String, dynamic>> _notifications = [];
   bool _isLoading = true;
   int _unreadCount = 0;
+  bool _isEnglish = false;
+
+  String _t(String sw, String en) {
+    return _isEnglish ? en : sw;
+  }
 
   @override
   void initState() {
@@ -36,7 +41,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     } catch (e) {
       setState(() => _isLoading = false);
       if (mounted) {
-        Helpers.showSnackBar(context, 'Imeshindikana kupata arifa. Tafadhali jaribu tena.');
+        Helpers.showSnackBar(context, _t('Imeshindikana kupata arifa. Tafadhali jaribu tena.', 'Failed to fetch notifications. Please try again.'));
       }
     }
   }
@@ -56,7 +61,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       });
     } catch (e) {
       if (mounted) {
-        Helpers.showSnackBar(context, 'Imeshindikana kuweka arifa kama imesomwa.');
+        Helpers.showSnackBar(context, _t('Imeshindikana kuweka arifa kama imesomwa.', 'Failed to mark notification as read.'));
       }
     }
   }
@@ -73,11 +78,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         _unreadCount = 0;
       });
       if (mounted) {
-        Helpers.showSnackBar(context, 'Arifa zote zimewekwa kama zimesomwa.', isError: false);
+        Helpers.showSnackBar(context, _t('Arifa zote zimewekwa kama zimesomwa.', 'All notifications marked as read.'), isError: false);
       }
     } catch (e) {
       if (mounted) {
-        Helpers.showSnackBar(context, 'Imeshindikana kuweka arifa zote kama zimesomwa.');
+        Helpers.showSnackBar(context, _t('Imeshindikana kuweka arifa zote kama zimesomwa.', 'Failed to mark all notifications as read.'));
       }
     }
   }
@@ -94,7 +99,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Arifa Zote (All Notifications)',
+          _t('Arifa Zote', 'All Notifications'),
           style: GoogleFonts.poppins(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -102,11 +107,70 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           ),
         ),
         actions: [
+          // Language toggle
+          Container(
+            margin: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: const Color(0xfff3f4f6),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = false;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: !_isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'SW',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        fontWeight: !_isEnglish ? FontWeight.bold : FontWeight.w500,
+                        color: !_isEnglish ? Colors.black : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = true;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'EN',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        fontWeight: _isEnglish ? FontWeight.bold : FontWeight.w500,
+                        color: _isEnglish ? Colors.black : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           if (_unreadCount > 0)
             TextButton(
               onPressed: _markAllAsRead,
               child: Text(
-                'Wote Zisome',
+                _t('Wote Zisome', 'Mark All Read'),
                 style: GoogleFonts.poppins(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
