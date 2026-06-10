@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -41,6 +42,25 @@ class UserController extends Controller
         ];
 
         return view('admin.users.index', compact('users', 'stats'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'role'     => 'required|in:tenant,landlord,agent,admin',
+        ]);
+        User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'phone'    => $request->phone,
+            'role'     => $request->role,
+            'password' => Hash::make($request->password),
+            'email_verified_at' => now(),
+        ]);
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
 
     public function show($id)
