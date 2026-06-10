@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     return Scaffold(
       drawer: Drawer(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xff0a0a0a),
         child: SafeArea(
           child: Column(
             children: [
@@ -143,7 +143,8 @@ class _HomeScreenState extends State<HomeScreen>
                     end: Alignment.bottomRight,
                     colors: [
                       AppColors.primary,
-                      AppColors.primary.withOpacity(0.8),
+                      const Color(0xffd4a017),
+                      const Color(0xffb8860b),
                     ],
                   ),
                 ),
@@ -158,8 +159,8 @@ class _HomeScreenState extends State<HomeScreen>
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 10,
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 15,
                             offset: const Offset(0, 4),
                           ),
                         ],
@@ -180,9 +181,10 @@ class _HomeScreenState extends State<HomeScreen>
                           Text(
                             AppStrings.appName,
                             style: GoogleFonts.poppins(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w800,
                               color: Colors.white,
+                              letterSpacing: 0.5,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -190,7 +192,8 @@ class _HomeScreenState extends State<HomeScreen>
                             'Find your perfect home',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
-                              color: Colors.white.withOpacity(0.8),
+                              color: Colors.white.withOpacity(0.9),
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
