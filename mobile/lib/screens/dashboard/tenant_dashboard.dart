@@ -2038,9 +2038,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: _statCard(
-                    _t('Salio', 'Balance'),
-                    'TZS ${Helpers.formatMoney(balance)}',
-                    Icons.account_balance_wallet_outlined,
+                    _t('Kodi Iliyolipwa', 'Paid Rent'),
+                    'TZS ${Helpers.formatMoney(monthlyRent)}',
+                    Icons.check_circle_outlined,
                   ),
                 ),
               ],
