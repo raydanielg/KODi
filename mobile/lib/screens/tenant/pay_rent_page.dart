@@ -236,11 +236,23 @@ class _PayRentPageState extends State<PayRentPage> {
               title: _t('Njia ya Malipo', 'Payment Method'),
               child: Column(
                 children: [
-                  _paymentMethodOption(_t('Transfer', 'Transfer'), Icons.account_balance_outlined),
+                  _paymentMethodOption(
+                    _t('Transfer', 'Transfer'),
+                    Icons.account_balance_outlined,
+                    _t('Benki', 'Bank'),
+                  ),
                   const SizedBox(height: 12),
-                  _paymentMethodOption(_t('Cash', 'Cash'), Icons.money_outlined),
+                  _paymentMethodOption(
+                    _t('Cash', 'Cash'),
+                    Icons.money_outlined,
+                    _t('Fedha Taslimu', 'Cash'),
+                  ),
                   const SizedBox(height: 12),
-                  _paymentMethodOption(_t('Mobile Money', 'Mobile Money'), Icons.phone_android_outlined),
+                  _paymentMethodOption(
+                    _t('Mobile Money', 'Mobile Money'),
+                    Icons.phone_android_outlined,
+                    _t('M-Pesa / Tigo Pesa', 'M-Pesa / Tigo Pesa'),
+                  ),
                 ],
               ),
             ),
@@ -472,7 +484,7 @@ class _PayRentPageState extends State<PayRentPage> {
     );
   }
 
-  Widget _paymentMethodOption(String method, IconData icon) {
+  Widget _paymentMethodOption(String method, IconData icon, String subtitle) {
     final isSelected = _selectedMethod == method;
     return GestureDetector(
       onTap: () {
@@ -498,15 +510,30 @@ class _PayRentPageState extends State<PayRentPage> {
               size: 24,
             ),
             const SizedBox(width: 12),
-            Text(
-              method,
-              style: GoogleFonts.poppins(
-                fontSize: 15,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: isSelected ? AppColors.primary : Colors.black87,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    method,
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                      color: isSelected ? AppColors.primary : Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle,
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                ],
               ),
             ),
-            const Spacer(),
+            const SizedBox(width: 12),
             if (isSelected)
               Icon(
                 Icons.check_circle,
