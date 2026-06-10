@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_colors.dart';
 import '../../services/auth_service.dart';
+import '../../services/payment_service.dart';
 import '../../utils/helpers.dart';
 
 class PayRentPage extends StatefulWidget {
@@ -13,13 +14,42 @@ class PayRentPage extends StatefulWidget {
 
 class _PayRentPageState extends State<PayRentPage> {
   final AuthService _authService = AuthService();
+  final PaymentService _paymentService = PaymentService();
+  final _transactionIdController = TextEditingController();
   int _selectedMonths = 1;
   String _selectedMethod = 'Transfer';
   bool _isProcessing = false;
   bool _isEnglish = false;
+  bool _isLoading = true;
+  List<Map<String, dynamic>> _paymentHistory = [];
 
   String _t(String sw, String en) {
     return _isEnglish ? en : sw;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPaymentHistory();
+  }
+
+  Future<void> _loadPaymentHistory() async {
+    setState(() => _isLoading = true);
+    try {
+      final history = await _paymentService.getPaymentHistory();
+      setState(() {
+        _paymentHistory = history;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  @override
+  void dispose() {
+    _transactionIdController.dispose();
+    super.dispose();
   }
 
   @override
