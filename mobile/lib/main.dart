@@ -14,6 +14,11 @@ import 'screens/navigation/navigation_page.dart';
 import 'screens/tenant/pay_rent_page.dart';
 import 'screens/tenant/maintenance_page.dart';
 import 'screens/tenant/tenant_profile_page.dart';
+import 'screens/tenant/search_homes_page.dart';
+import 'screens/tenant/my_home_page.dart';
+import 'screens/tenant/favorites_page.dart';
+import 'screens/common/messages_page.dart';
+import 'screens/common/settings_page.dart';
 import 'constants/app_theme.dart';
 import 'constants/app_routes.dart';
 
@@ -48,6 +53,10 @@ class MannaApp extends StatelessWidget {
         AppRoutes.payRent: (context) => const PayRentPage(),
         AppRoutes.tenantMaintenance: (context) => const MaintenancePage(),
         AppRoutes.tenantProfile: (context) => const TenantProfilePage(),
+        AppRoutes.searchHomes: (context) => const SearchHomesPage(),
+        AppRoutes.myHome: (context) => const MyHomePage(),
+        AppRoutes.favorites: (context) => const FavoritesPage(),
+        AppRoutes.settings: (context) => const SettingsPage(),
       },
     );
   }
