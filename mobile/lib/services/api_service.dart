@@ -37,6 +37,11 @@ class ApiService {
     final response = await http.get(
       Uri.parse('$_baseUrl/$endpoint'),
       headers: _headers,
+    ).timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw Exception('Request timed out. Please check your internet connection.');
+      },
     );
     return _handleResponse(response);
   }
@@ -48,6 +53,11 @@ class ApiService {
       Uri.parse('$_baseUrl/$endpoint'),
       headers: _headers,
       body: body != null ? jsonEncode(body) : null,
+    ).timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw Exception('Request timed out. Please check your internet connection.');
+      },
     );
     return _handleResponse(response);
   }
@@ -59,6 +69,11 @@ class ApiService {
       Uri.parse('$_baseUrl/$endpoint'),
       headers: _headers,
       body: body != null ? jsonEncode(body) : null,
+    ).timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw Exception('Request timed out. Please check your internet connection.');
+      },
     );
     return _handleResponse(response);
   }
@@ -67,6 +82,11 @@ class ApiService {
     final response = await http.delete(
       Uri.parse('$_baseUrl/$endpoint'),
       headers: _headers,
+    ).timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw Exception('Request timed out. Please check your internet connection.');
+      },
     );
     return _handleResponse(response);
   }
