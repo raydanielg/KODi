@@ -3,14 +3,25 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 import '../services/auth_service.dart';
 
-class RoleDrawer extends StatelessWidget {
+class RoleDrawer extends StatefulWidget {
   final AuthService authService;
 
   const RoleDrawer({super.key, required this.authService});
 
   @override
+  State<RoleDrawer> createState() => _RoleDrawerState();
+}
+
+class _RoleDrawerState extends State<RoleDrawer> {
+  bool _isEnglish = false;
+
+  String _t(String sw, String en) {
+    return _isEnglish ? en : sw;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final user = authService.currentUser;
+    final user = widget.authService.currentUser;
     final role = user?.role ?? 'tenant';
 
     return Drawer(
@@ -29,7 +40,7 @@ class RoleDrawer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Menu',
+                _t('Menu', 'Menu'),
                 style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -41,6 +52,67 @@ class RoleDrawer extends StatelessWidget {
                 onPressed: () => Navigator.pop(context),
               ),
             ],
+          ),
+        ),
+        // Language Toggle
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: const Color(0xfff3f4f6),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = false;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: !_isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'SW',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        fontWeight: !_isEnglish ? FontWeight.bold : FontWeight.w500,
+                        color: !_isEnglish ? Colors.black : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = true;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'EN',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        fontWeight: _isEnglish ? FontWeight.bold : FontWeight.w500,
+                        color: _isEnglish ? Colors.black : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         // Menu Items
@@ -63,7 +135,7 @@ class RoleDrawer extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () async {
-                await authService.logout();
+                await widget.authService.logout();
                 Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
               },
               borderRadius: BorderRadius.circular(12),
@@ -73,7 +145,7 @@ class RoleDrawer extends StatelessWidget {
                   const Icon(Icons.logout, color: Colors.red, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    'Toka',
+                    _t('Toka', 'Logout'),
                     style: GoogleFonts.poppins(
                       color: Colors.red,
                       fontSize: 14,
@@ -92,75 +164,75 @@ class RoleDrawer extends StatelessWidget {
   List<Widget> _getMenuItems(BuildContext context, String role) {
     final items = <_MenuItem>[];
 
-    items.add(_MenuItem(Icons.dashboard_rounded, 'Dashboard', '/dashboard'));
+    items.add(_MenuItem(Icons.dashboard_rounded, _t('Dashboard', 'Dashboard'), '/dashboard'));
 
     switch (role) {
       case 'super_admin':
       case 'admin':
         items.addAll([
-          _MenuItem(Icons.people_rounded, 'Watumiaji', '/users'),
-          _MenuItem(Icons.home_work_rounded, 'Mali', '/properties'),
-          _MenuItem(Icons.receipt_long_rounded, 'Malipo', '/payments'),
-          _MenuItem(Icons.assessment_rounded, 'Ripoti', '/reports'),
+          _MenuItem(Icons.people_rounded, _t('Watumiaji', 'Users'), '/users'),
+          _MenuItem(Icons.home_work_rounded, _t('Mali', 'Properties'), '/properties'),
+          _MenuItem(Icons.receipt_long_rounded, _t('Malipo', 'Payments'), '/payments'),
+          _MenuItem(Icons.assessment_rounded, _t('Ripoti', 'Reports'), '/reports'),
         ]);
       case 'landlord':
         items.addAll([
-          _MenuItem(Icons.home_work_rounded, 'Mali Zangu', '/properties'),
-          _MenuItem(Icons.people_rounded, 'Wapangaji', '/tenants'),
-          _MenuItem(Icons.monetization_on_rounded, 'Kodi', '/rent-collection'),
-          _MenuItem(Icons.receipt_rounded, 'Malipo', '/payments'),
-          _MenuItem(Icons.build_rounded, 'Matengenezo', '/maintenance'),
-          _MenuItem(Icons.message_rounded, 'Ujumbe', '/messages'),
-          _MenuItem(Icons.assessment_rounded, 'Ripoti', '/reports'),
+          _MenuItem(Icons.home_work_rounded, _t('Mali Zangu', 'My Properties'), '/properties'),
+          _MenuItem(Icons.people_rounded, _t('Wapangaji', 'Tenants'), '/tenants'),
+          _MenuItem(Icons.monetization_on_rounded, _t('Kodi', 'Rent'), '/rent-collection'),
+          _MenuItem(Icons.receipt_rounded, _t('Malipo', 'Payments'), '/payments'),
+          _MenuItem(Icons.build_rounded, _t('Matengenezo', 'Maintenance'), '/maintenance'),
+          _MenuItem(Icons.message_rounded, _t('Ujumbe', 'Messages'), '/messages'),
+          _MenuItem(Icons.assessment_rounded, _t('Ripoti', 'Reports'), '/reports'),
         ]);
       case 'agent':
         items.addAll([
-          _MenuItem(Icons.home_work_rounded, 'Mali', '/properties'),
-          _MenuItem(Icons.people_rounded, 'Wateja', '/clients'),
-          _MenuItem(Icons.monetization_on_rounded, 'Commission', '/commission'),
-          _MenuItem(Icons.receipt_rounded, 'Malipo', '/payouts'),
-          _MenuItem(Icons.message_rounded, 'Ujumbe', '/messages'),
+          _MenuItem(Icons.home_work_rounded, _t('Mali', 'Properties'), '/properties'),
+          _MenuItem(Icons.people_rounded, _t('Wateja', 'Clients'), '/clients'),
+          _MenuItem(Icons.monetization_on_rounded, _t('Commission', 'Commission'), '/commission'),
+          _MenuItem(Icons.receipt_rounded, _t('Malipo', 'Payouts'), '/payouts'),
+          _MenuItem(Icons.message_rounded, _t('Ujumbe', 'Messages'), '/messages'),
         ]);
       case 'tenant':
         items.addAll([
-          _MenuItem(Icons.search_rounded, 'Tafuta Nyumba', '/search'),
-          _MenuItem(Icons.home_rounded, 'Nyumba Yangu', '/my-rental'),
-          _MenuItem(Icons.payment_rounded, 'Malipo', '/payments'),
-          _MenuItem(Icons.build_rounded, 'Matengenezo', '/maintenance'),
-          _MenuItem(Icons.message_rounded, 'Ujumbe', '/messages'),
-          _MenuItem(Icons.favorite_rounded, 'Zinazopendwa', '/favorites'),
+          _MenuItem(Icons.search_rounded, _t('Tafuta Nyumba', 'Search Homes'), '/search'),
+          _MenuItem(Icons.home_rounded, _t('Nyumba Yangu', 'My Home'), '/my-rental'),
+          _MenuItem(Icons.payment_rounded, _t('Malipo', 'Payments'), '/payments'),
+          _MenuItem(Icons.build_rounded, _t('Matengenezo', 'Maintenance'), '/maintenance'),
+          _MenuItem(Icons.message_rounded, _t('Ujumbe', 'Messages'), '/messages'),
+          _MenuItem(Icons.favorite_rounded, _t('Zinazopendwa', 'Favorites'), '/favorites'),
         ]);
       case 'support':
         items.addAll([
-          _MenuItem(Icons.confirmation_number_rounded, 'Tiketi', '/tickets'),
-          _MenuItem(Icons.chat_rounded, 'Mazungumzo', '/chat'),
-          _MenuItem(Icons.message_rounded, 'Ujumbe', '/messages'),
-          _MenuItem(Icons.assessment_rounded, 'Ripoti', '/reports'),
+          _MenuItem(Icons.confirmation_number_rounded, _t('Tiketi', 'Tickets'), '/tickets'),
+          _MenuItem(Icons.chat_rounded, _t('Mazungumzo', 'Chat'), '/chat'),
+          _MenuItem(Icons.message_rounded, _t('Ujumbe', 'Messages'), '/messages'),
+          _MenuItem(Icons.assessment_rounded, _t('Ripoti', 'Reports'), '/reports'),
         ]);
       case 'maintenance':
         items.addAll([
-          _MenuItem(Icons.assignment_rounded, 'Kazi', '/tasks'),
-          _MenuItem(Icons.schedule_rounded, 'Ratiba', '/schedule'),
-          _MenuItem(Icons.message_rounded, 'Ujumbe', '/messages'),
+          _MenuItem(Icons.assignment_rounded, _t('Kazi', 'Tasks'), '/tasks'),
+          _MenuItem(Icons.schedule_rounded, _t('Ratiba', 'Schedule'), '/schedule'),
+          _MenuItem(Icons.message_rounded, _t('Ujumbe', 'Messages'), '/messages'),
         ]);
       case 'accountant':
         items.addAll([
-          _MenuItem(Icons.payment_rounded, 'Malipo', '/payments'),
-          _MenuItem(Icons.account_balance_rounded, 'Payouts', '/payouts'),
-          _MenuItem(Icons.trending_up_rounded, 'Mapato', '/revenue'),
-          _MenuItem(Icons.assessment_rounded, 'Ripoti', '/reports'),
+          _MenuItem(Icons.payment_rounded, _t('Malipo', 'Payments'), '/payments'),
+          _MenuItem(Icons.account_balance_rounded, _t('Payouts', 'Payouts'), '/payouts'),
+          _MenuItem(Icons.trending_up_rounded, _t('Mapato', 'Revenue'), '/revenue'),
+          _MenuItem(Icons.assessment_rounded, _t('Ripoti', 'Reports'), '/reports'),
         ]);
       case 'investor':
         items.addAll([
-          _MenuItem(Icons.account_balance_rounded, 'Fedha', '/financial'),
-          _MenuItem(Icons.bar_chart_rounded, 'Vipimo', '/metrics'),
-          _MenuItem(Icons.trending_up_rounded, 'Ukuaji', '/growth'),
-          _MenuItem(Icons.assessment_rounded, 'Ripoti', '/reports'),
+          _MenuItem(Icons.account_balance_rounded, _t('Fedha', 'Financial'), '/financial'),
+          _MenuItem(Icons.bar_chart_rounded, _t('Vipimo', 'Metrics'), '/metrics'),
+          _MenuItem(Icons.trending_up_rounded, _t('Ukuaji', 'Growth'), '/growth'),
+          _MenuItem(Icons.assessment_rounded, _t('Ripoti', 'Reports'), '/reports'),
         ]);
     }
 
-    items.add(_MenuItem(Icons.person_rounded, 'Wasifu', '/profile'));
-    items.add(_MenuItem(Icons.settings_rounded, 'Mipangilio', '/settings'));
+    items.add(_MenuItem(Icons.person_rounded, _t('Wasifu', 'Profile'), '/profile'));
+    items.add(_MenuItem(Icons.settings_rounded, _t('Mipangilio', 'Settings'), '/settings'));
 
     return items
         .map((item) => Container(
