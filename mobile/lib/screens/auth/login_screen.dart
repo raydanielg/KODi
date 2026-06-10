@@ -53,15 +53,17 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } catch (e) {
       if (mounted) {
-        // Extract the error message from ApiException if available
-        String errorMessage = 'Imeshindikana kuingia. Tafadhali jaribu tena.';
-        if (e.toString().contains('Tafadhali angalia mtandao wako')) {
-          errorMessage = e.toString();
-        } else if (e.toString().contains('Imeshindikana kuunganisha')) {
-          errorMessage = e.toString();
-        } else if (e.toString().contains('Muunganisho umechukua')) {
-          errorMessage = e.toString();
+        print('❌ Login Error: $e');
+        // Extract the error message - it should already be formatted by _handleException
+        String errorMessage = e.toString();
+        
+        // If it's not already a user-friendly message, provide a default
+        if (!errorMessage.contains('Tafadhali') && 
+            !errorMessage.contains('Imeshindikana') && 
+            !errorMessage.contains('Muunganisho')) {
+          errorMessage = 'Imeshindikana kuingia. Tafadhali angalia mtandao wako na jaribu tena.';
         }
+        
         Helpers.showSnackBar(context, errorMessage, isError: true);
       }
     } finally {
