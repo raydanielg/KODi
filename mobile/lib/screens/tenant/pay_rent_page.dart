@@ -282,7 +282,7 @@ class _PayRentPageState extends State<PayRentPage> {
             ),
             const SizedBox(height: 32),
 
-            // Pay Button
+            // Submit Request Button
             SizedBox(
               width: double.infinity,
               height: 56,
@@ -307,7 +307,7 @@ class _PayRentPageState extends State<PayRentPage> {
                         ),
                       )
                     : Text(
-                        _t('Lipa Sasa', 'Pay Now'),
+                        _t('Tuma Ombi', 'Submit Request'),
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
