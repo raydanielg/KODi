@@ -25,7 +25,12 @@ class AuthService {
       return {'user': user, 'token': token};
     } catch (e) {
       print('❌ Login Error: $e');
-      rethrow;
+      // If it's already an ApiException, rethrow it
+      // Otherwise, wrap it in a user-friendly message
+      if (e is ApiException) {
+        rethrow;
+      }
+      throw ApiException('Tafadhali angalia mtandao wako. Hakuna muunganisho wa internet.', 0);
     }
   }
 
