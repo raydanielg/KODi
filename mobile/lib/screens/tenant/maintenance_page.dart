@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_colors.dart';
 import '../../services/auth_service.dart';
+import '../../services/maintenance_service.dart';
 import '../../utils/helpers.dart';
 
 class MaintenancePage extends StatefulWidget {
@@ -13,11 +14,15 @@ class MaintenancePage extends StatefulWidget {
 
 class _MaintenancePageState extends State<MaintenancePage> {
   final AuthService _authService = AuthService();
+  final MaintenanceService _maintenanceService = MaintenanceService();
   final _issueController = TextEditingController();
   final _descriptionController = TextEditingController();
   String _selectedCategory = 'Plumbing';
   bool _isSubmitting = false;
   bool _isEnglish = false;
+  bool _isLoading = true;
+  List<Map<String, dynamic>> _activeRequests = [];
+  List<Map<String, dynamic>> _requestHistory = [];
 
   String _t(String sw, String en) {
     return _isEnglish ? en : sw;
@@ -30,6 +35,37 @@ class _MaintenancePageState extends State<MaintenancePage> {
     'Carpentry',
     'General',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMaintenanceData();
+  }
+
+  Future<void> _loadMaintenanceData() async {
+    setState(() => _isLoading = true);
+    
+    try {
+      final requests = await _maintenanceService.fetchMaintenanceRequests();
+      final history = await _maintenanceService.getRequestHistory();
+      
+      setState(() {
+        _activeRequests = requests.where((r) => 
+          r['status'] == 'pending' || r['status'] == 'in_progress'
+        ).toList();
+        _requestHistory = history;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() => _isLoading = false);
+      if (mounted) {
+        Helpers.showSnackBar(
+          context,
+          _t('Imeshindikana kupata data ya matengenezo', 'Failed to load maintenance data'),
+        );
+      }
+    }
+  }
 
   @override
   void dispose() {
