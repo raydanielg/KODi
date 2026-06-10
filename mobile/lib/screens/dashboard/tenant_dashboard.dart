@@ -2103,45 +2103,21 @@ class _TenantDashboardState extends State<TenantDashboard> {
               child: _paymentHistory.isEmpty
                   ? Container(
                       padding: const EdgeInsets.all(32),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            const Color(0xff1a1a1a),
-                            const Color(0xff2d2d2d),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
                       child: Column(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: AppColors.primary.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Icon(
-                              Icons.receipt_long_outlined,
-                              size: 48,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
                           Text(
                             _t('Hakuna Malipo Bado', 'No Payments Yet'),
                             style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[600],
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 8),
                           Text(
                             _t('Anza kulipia kodi yako sasa hivi', 'Start paying your rent now'),
                             style: GoogleFonts.poppins(
-                              color: Colors.white60,
+                              color: Colors.grey[400],
                               fontSize: 13,
                             ),
                           ),
