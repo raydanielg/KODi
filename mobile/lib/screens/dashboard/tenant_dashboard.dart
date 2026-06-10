@@ -103,7 +103,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
     final user = _authService.currentUser!;
 
     return Scaffold(
+      key: _scaffoldKey,
       drawer: RoleDrawer(authService: _authService),
+      endDrawer: NotificationDrawer(notificationService: _notificationService),
       backgroundColor: const Color(0xfff9fafb),
       body: _isLoading
           ? const Center(
@@ -136,22 +138,20 @@ class _TenantDashboardState extends State<TenantDashboard> {
       ),
       child: Row(
         children: [
-          // 1. Avatar with drawer trigger
-          Builder(
-            builder: (context) => GestureDetector(
-              onTap: () {
-                Scaffold.of(context).openDrawer();
-              },
-              child: CircleAvatar(
-                radius: 22,
-                backgroundColor: AppColors.primary.withOpacity(0.15),
-                child: Text(
-                  user.initials,
-                  style: GoogleFonts.poppins(
-                    color: AppColors.primary,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                  ),
+          // 1. Avatar with notification drawer trigger
+          GestureDetector(
+            onTap: () {
+              _scaffoldKey.currentState?.openEndDrawer();
+            },
+            child: CircleAvatar(
+              radius: 22,
+              backgroundColor: AppColors.primary.withOpacity(0.15),
+              child: Text(
+                user.initials,
+                style: GoogleFonts.poppins(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
                 ),
               ),
             ),
@@ -185,38 +185,16 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ],
             ),
           ),
-          // 3. Right Icons (Notification with badge)
-          Stack(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Helpers.showSnackBar(
-                    context,
-                    _t(
-                      'Arifa zitafunguka hapa!',
-                      'Notifications will open here!',
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.notifications_none_rounded, color: Color(0xff4b5563), size: 24),
-                style: IconButton.styleFrom(
-                  backgroundColor: const Color(0xfff3f4f6),
-                  padding: const EdgeInsets.all(8),
-                ),
-              ),
-              Positioned(
-                top: 6,
-                right: 6,
-                child: Container(
-                  width: 8,
-                  height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffef4444),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ),
-            ],
+          // 3. Menu icon for main drawer
+          IconButton(
+            onPressed: () {
+              _scaffoldKey.currentState?.openDrawer();
+            },
+            icon: const Icon(Icons.menu_rounded, color: Color(0xff4b5563), size: 24),
+            style: IconButton.styleFrom(
+              backgroundColor: const Color(0xfff3f4f6),
+              padding: const EdgeInsets.all(8),
+            ),
           ),
         ],
       ),
