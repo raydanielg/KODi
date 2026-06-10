@@ -33,10 +33,11 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> get(String endpoint) async {
-    print('📡 GET Request: $_baseUrl/$endpoint');
+    final cleanEndpoint = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
+    print('📡 GET Request: $_baseUrl/$cleanEndpoint');
     try {
       final response = await http.get(
-        Uri.parse('$_baseUrl/$endpoint'),
+        Uri.parse('$_baseUrl/$cleanEndpoint'),
         headers: _headers,
       ).timeout(
         const Duration(seconds: 10),
