@@ -96,103 +96,87 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(color: Colors.white),
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: CustomPaint(
-                painter: PremiumAuthBackgroundPainter(),
-              ),
-            ),
-            SafeArea(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              const Color(0xff1a1a1a),
+              const Color(0xff2d2d2d),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_back, color: Colors.white),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          AppStrings.welcomeBack,
+                          style: GoogleFonts.poppins(
+                            fontSize: 32,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Sign in to your account to continue your journey with us.',
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: Colors.white60,
+                          ),
+                        ),
+                        const SizedBox(height: 32),
+                        // Email Field
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: IconButton(
-                                icon: const Icon(Icons.arrow_back, color: Colors.black),
-                                onPressed: () => Navigator.pop(context),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              children: [
-                                Text(
-                                  '\u{1F44B}',
-                                  style: GoogleFonts.poppins(fontSize: 40),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Text(
-                                    AppStrings.welcomeBack,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Sign in to your account to continue your journey with us.',
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                            const SizedBox(height: 32),
-                            // Email Field
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
                                 Text(
                                   AppStrings.emailAddress,
                                   style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
+                                    color: Colors.white70,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: const Color(0xfff3f4f6),
-                                    borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(color: const Color(0xffd1d5db)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.05),
-                                        blurRadius: 4,
-                                        offset: const Offset(0, 1),
-                                      ),
-                                    ],
+                                    color: Colors.white.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: Colors.white.withOpacity(0.2)),
                                   ),
                                   child: TextFormField(
                                     controller: _emailController,
                                     keyboardType: TextInputType.emailAddress,
                                     validator: Validators.validateEmail,
                                     style: GoogleFonts.poppins(
-                                      color: const Color(0xff1f2937),
+                                      color: Colors.white,
                                       fontSize: 15,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: 'name@company.com',
                                       hintStyle: GoogleFonts.poppins(
-                                        color: const Color(0xff6b7280),
+                                        color: Colors.white40,
                                       ),
                                       prefixIcon: const Icon(
                                         Icons.email_outlined,
-                                        color: Colors.grey,
+                                        color: AppColors.primary,
                                         size: 20,
                                       ),
                                       border: InputBorder.none,
@@ -215,39 +199,32 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
+                                    color: Colors.white70,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: const Color(0xfff3f4f6),
-                                    borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(color: const Color(0xffd1d5db)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.05),
-                                        blurRadius: 4,
-                                        offset: const Offset(0, 1),
-                                      ),
-                                    ],
+                                    color: Colors.white.withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: Colors.white.withOpacity(0.2)),
                                   ),
                                   child: TextFormField(
                                     controller: _passwordController,
                                     obscureText: _obscurePassword,
                                     validator: Validators.validatePassword,
                                     style: GoogleFonts.poppins(
-                                      color: const Color(0xff1f2937),
+                                      color: Colors.white,
                                       fontSize: 15,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: '••••••••',
                                       hintStyle: GoogleFonts.poppins(
-                                        color: const Color(0xff6b7280),
+                                        color: Colors.white40,
                                       ),
                                       prefixIcon: const Icon(
                                         Icons.lock_outlined,
-                                        color: Colors.grey,
+                                        color: AppColors.primary,
                                         size: 20,
                                       ),
                                       suffixIcon: IconButton(
@@ -255,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           _obscurePassword
                                               ? Icons.visibility_outlined
                                               : Icons.visibility_off_outlined,
-                                          color: Colors.grey,
+                                          color: Colors.white60,
                                           size: 20,
                                         ),
                                         onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
@@ -280,12 +257,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       value: _rememberMe,
                                       onChanged: (value) => setState(() => _rememberMe = value!),
                                       activeColor: AppColors.primary,
+                                      checkColor: Colors.black,
                                     ),
                                     Text(
                                       'Remember me',
                                       style: GoogleFonts.poppins(
                                         fontSize: 14,
-                                        color: Colors.grey[700],
+                                        color: Colors.white70,
                                       ),
                                     ),
                                   ],
@@ -315,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onPressed: _isLoading ? null : _handleLogin,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.primary,
-                                  foregroundColor: Colors.white,
+                                  foregroundColor: Colors.black,
                                   disabledBackgroundColor: AppColors.primary.withOpacity(0.6),
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
@@ -328,7 +306,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         width: 24,
                                         child: CircularProgressIndicator(
                                           strokeWidth: 3,
-                                          color: Colors.white,
+                                          color: Colors.black,
                                         ),
                                       )
                                     : Text(
@@ -336,6 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16,
+                                          color: Colors.black,
                                         ),
                                       ),
                               ),
@@ -346,7 +325,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Text(
                                   AppStrings.dontHaveAccount,
-                                  style: GoogleFonts.poppins(color: Colors.grey[600]),
+                                  style: GoogleFonts.poppins(color: Colors.white60),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pushNamed(context, '/register'),
@@ -375,61 +354,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-}
-
-class PremiumAuthBackgroundPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    // 1. Draw a soft premium gradient background
-    final rect = Offset.zero & size;
-    final gradient = LinearGradient(
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-      colors: [
-        Colors.white,
-        const Color(0xfff0fdf4), // Extremely light emerald/teal
-        const Color(0xffecfdf5), // Slightly darker soft emerald/teal
-      ],
-      stops: const [0.0, 0.7, 1.0],
-    );
-    final bgPaint = Paint()..shader = gradient.createShader(rect);
-    canvas.drawRect(rect, bgPaint);
-
-    // 2. Draw beautiful faint abstract circular rings/waves
-    final wavePaint = Paint()
-      ..color = const Color(0xff10b981).withOpacity(0.04) // Faint AppColors.primary
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5;
-
-    // Top Right Ring
-    canvas.drawCircle(Offset(size.width * 0.9, size.height * 0.05), 120, wavePaint);
-    canvas.drawCircle(Offset(size.width * 0.9, size.height * 0.05), 180, wavePaint);
-    canvas.drawCircle(Offset(size.width * 0.9, size.height * 0.05), 240, wavePaint);
-
-    // Bottom Left Ring
-    canvas.drawCircle(Offset(size.width * 0.1, size.height * 0.85), 150, wavePaint);
-    canvas.drawCircle(Offset(size.width * 0.1, size.height * 0.85), 220, wavePaint);
-    canvas.drawCircle(Offset(size.width * 0.1, size.height * 0.85), 290, wavePaint);
-
-    // 3. Draw very faint, elegant dots
-    final dotPaint = Paint()
-      ..color = const Color(0xff10b981).withOpacity(0.035)
-      ..style = PaintingStyle.fill;
-
-    const dotRadius = 1.5;
-    const spacing = 24.0;
-
-    for (double x = 12; x < size.width; x += spacing) {
-      for (double y = 12; y < size.height; y += spacing) {
-        // Skip dots near the middle-top where main text headers are to keep it clean
-        if (y > size.height * 0.15 && y < size.height * 0.45) {
-          continue;
-        }
-        canvas.drawCircle(Offset(x, y), dotRadius, dotPaint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
