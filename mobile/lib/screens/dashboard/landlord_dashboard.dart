@@ -509,13 +509,19 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 width: MediaQuery.of(context).size.width * 0.27,
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      const Color(0xff1a1a1a),
+                      const Color(0xff2d2d2d),
+                    ],
+                  ),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: const Color(0xffe5e7eb)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.02),
-                      blurRadius: 4,
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
                   ],
@@ -529,7 +535,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                       style: GoogleFonts.poppins(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xff374151),
+                        color: Colors.white,
                       ),
                       textAlign: TextAlign.center,
                     ),
