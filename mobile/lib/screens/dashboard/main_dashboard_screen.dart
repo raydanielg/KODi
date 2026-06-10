@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
+import '../landlord/landlord_main_screen.dart';
 import 'tenant_dashboard.dart';
-import 'landlord_dashboard.dart';
 import 'agent_dashboard.dart';
 
 class MainDashboardScreen extends StatelessWidget {
@@ -25,7 +25,7 @@ class MainDashboardScreen extends StatelessWidget {
     if (role == 'tenant') {
       return const TenantDashboard();
     } else if (role == 'landlord') {
-      return const LandlordDashboard();
+      return const LandlordMainScreen();
     } else {
       return const AgentDashboard();
     }
