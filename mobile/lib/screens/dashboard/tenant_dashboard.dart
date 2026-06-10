@@ -2446,10 +2446,31 @@ class _TenantDashboardState extends State<TenantDashboard> {
                   builder: (context, animValue, child) {
                     return Transform.rotate(
                       angle: animValue * 0.1,
-                      child: Icon(
-                        icon,
-                        color: AppColors.primary,
-                        size: 32,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              AppColors.primary.withOpacity(0.3),
+                              AppColors.primary.withOpacity(0.1),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withOpacity(0.2),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          icon,
+                          color: AppColors.primary,
+                          size: 36,
+                        ),
                       ),
                     );
                   },
