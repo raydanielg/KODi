@@ -9,6 +9,7 @@ import 'screens/payments/payment_screen.dart';
 import 'screens/maintenance/maintenance_screen.dart';
 import 'screens/messages/message_screen.dart';
 import 'screens/profile/profile_screen.dart';
+import 'screens/notifications/notifications_screen.dart';
 import 'constants/app_theme.dart';
 import 'constants/app_routes.dart';
 
