@@ -1,586 +1,156 @@
 @extends('layouts.admin')
-
 @section('title', 'Payments')
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-    .page-header { margin-bottom: 1.5rem; }
-    .page-header h1 { font-size: 1.75rem; font-weight: 800; color: #111827; margin-bottom: 0.5rem; }
-    .page-header p { color: #6b7280; font-size: 0.95rem; }
-    
-    .stat-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e5e7eb;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .stat-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.1);
-        border-color: #3b82f6;
-    }
-    .stat-icon {
-        width: 48px;
-        height: 48px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-    }
-    .stat-value {
-        font-size: 1.75rem;
-        font-weight: 800;
-        color: #111827;
-    }
-    .stat-label {
-        font-size: 0.875rem;
-        color: #6b7280;
-        font-weight: 500;
-    }
-    
-    .filter-card {
-        background: #fff;
-        border-radius: 12px;
-        padding: 20px;
-        border: 1px solid #e5e7eb;
-        margin-bottom: 1.5rem;
-    }
-    .search-input {
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        padding: 10px 16px;
-        font-size: 0.875rem;
-        transition: all 0.2s;
-    }
-    .search-input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-    .filter-btn {
-        padding: 10px 16px;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        background: #fff;
-        font-size: 0.875rem;
-        color: #374151;
-        transition: all 0.2s;
-    }
-    .filter-btn:hover {
-        background: #f3f4f6;
-        border-color: #9ca3af;
-    }
-    .filter-btn.active {
-        background: #3b82f6;
-        border-color: #3b82f6;
-        color: #fff;
-    }
-    
-    .table-card {
-        background: #fff;
-        border-radius: 12px;
-        border: 1px solid #e5e7eb;
-        overflow: hidden;
-    }
-    .custom-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    .custom-table th {
-        background: #f9fafb;
-        padding: 16px;
-        text-align: left;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #6b7280;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-bottom: 1px solid #e5e7eb;
-    }
-    .custom-table td {
-        padding: 16px;
-        border-bottom: 1px solid #e5e7eb;
-        vertical-align: middle;
-    }
-    .custom-table tr:hover td {
-        background: #f9fafb;
-    }
-    .payment-amount {
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: #111827;
-    }
-    .payment-tenant {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #111827;
-    }
-    .payment-property {
-        font-size: 0.8rem;
-        color: #6b7280;
-    }
-    .payment-date {
-        font-size: 0.8rem;
-        color: #9ca3af;
-    }
-    .status-badge {
-        font-size: 0.75rem;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 20px;
-        display: inline-block;
-    }
-    .action-btn {
-        padding: 6px 12px;
-        border: 1px solid #d1d5db;
-        border-radius: 6px;
-        background: #fff;
-        font-size: 0.75rem;
-        color: #374151;
-        transition: all 0.2s;
-        margin-right: 4px;
-    }
-    .action-btn:hover {
-        background: #f3f4f6;
-        border-color: #9ca3af;
-    }
-    .action-btn.approve {
-        background: #10b981;
-        border-color: #10b981;
-        color: #fff;
-    }
-    .action-btn.approve:hover {
-        background: #059669;
-    }
-    .action-btn.delete {
-        background: #ef4444;
-        border-color: #ef4444;
-        color: #fff;
-    }
-    .action-btn.delete:hover {
-        background: #dc2626;
-    }
-    .bulk-actions {
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        border-radius: 8px;
-        padding: 12px 16px;
-        display: none;
-    }
-    .bulk-actions.show {
-        display: flex;
-        align-items: center;
-        gap-2;
-    }
-    
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-        animation: fadeInUp 0.5s ease forwards;
-        opacity: 0;
-    }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-</style>
-
-<div class="page-header animate-fade-in">
-    <h1>Payments</h1>
-    <p>Track and manage all rental payments</p>
+<div class="d-flex align-items-start justify-content-between mb-4 flex-wrap gap-3 fade-up">
+    <div>
+        <h1 class="page-title">Payments</h1>
+        <p class="page-subtitle">Track all rent payments across the platform</p>
+    </div>
+    <button class="btn-ghost" onclick="Swal.fire('Export','Choose format: CSV or Excel','info')">
+        <i class="ri-download-2-line"></i> Export
+    </button>
 </div>
 
-<!-- Stats Row -->
-<div class="row g-3 mb-4">
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-1">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
+<!-- Stats -->
+<div class="row g-3 mb-4 fade-up delay-1">
+    <div class="col-6 col-lg-3">
+        <div class="kpi-card" style="--accent:#16a34a;">
+            <div class="d-flex justify-content-between align-items-start">
                 <div>
-                    <div class="stat-value">TZS 45.2M</div>
-                    <div class="stat-label">Total Revenue</div>
+                    <div class="kpi-label">Total Collected</div>
+                    <div class="kpi-value">{{ number_format($stats['total_amount']/1000000,1) }}M</div>
                 </div>
-                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
-                    <i class="bi bi-cash-stack"></i>
-                </div>
+                <div class="kpi-icon" style="background:#dcfce7;color:#16a34a;"><i class="ri-money-dollar-circle-line"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-1">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
+    <div class="col-6 col-lg-3">
+        <div class="kpi-card" style="--accent:#2563eb;">
+            <div class="d-flex justify-content-between align-items-start">
                 <div>
-                    <div class="stat-value">TZS 8.5M</div>
-                    <div class="stat-label">This Month</div>
+                    <div class="kpi-label">This Month</div>
+                    <div class="kpi-value">{{ number_format($stats['this_month']/1000000,1) }}M</div>
                 </div>
-                <div class="stat-icon bg-success bg-opacity-10 text-success">
-                    <i class="bi bi-graph-up-arrow"></i>
-                </div>
+                <div class="kpi-icon" style="background:#dbeafe;color:#2563eb;"><i class="ri-calendar-check-line"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-2">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
+    <div class="col-6 col-lg-3">
+        <div class="kpi-card" style="--accent:#B44040;">
+            <div class="d-flex justify-content-between align-items-start">
                 <div>
-                    <div class="stat-value">12</div>
-                    <div class="stat-label">Pending</div>
+                    <div class="kpi-label">Transactions</div>
+                    <div class="kpi-value">{{ number_format($stats['count']) }}</div>
                 </div>
-                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
-                    <i class="bi bi-clock-history"></i>
-                </div>
+                <div class="kpi-icon" style="background:#fdf0f0;color:#B44040;"><i class="ri-exchange-line"></i></div>
             </div>
         </div>
     </div>
-    <div class="col-12 col-sm-6 col-lg-3 animate-fade-in delay-2">
-        <div class="stat-card">
-            <div class="d-flex align-items-center justify-content-between">
+    <div class="col-6 col-lg-3">
+        <div class="kpi-card" style="--accent:#9333ea;">
+            <div class="d-flex justify-content-between align-items-start">
                 <div>
-                    <div class="stat-value">3</div>
-                    <div class="stat-label">Overdue</div>
+                    <div class="kpi-label">Completed</div>
+                    <div class="kpi-value">{{ number_format($stats['completed']) }}</div>
                 </div>
-                <div class="stat-icon bg-danger bg-opacity-10 text-danger">
-                    <i class="bi bi-exclamation-triangle"></i>
-                </div>
+                <div class="kpi-icon" style="background:#f3e8ff;color:#9333ea;"><i class="ri-checkbox-circle-line"></i></div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Filters -->
-<div class="filter-card animate-fade-in delay-2">
-    <div class="row g-3 align-items-center">
-        <div class="col-12 col-md-4">
-            <input type="text" class="search-input w-100" placeholder="Search payments...">
-        </div>
-        <div class="col-12 col-md-8">
-            <div class="d-flex gap-2 flex-wrap align-items-center">
-                <button class="filter-btn active">All</button>
-                <button class="filter-btn">Completed</button>
-                <button class="filter-btn">Pending</button>
-                <button class="filter-btn">Overdue</button>
-                <button class="filter-btn ms-auto">
-                    <i class="bi bi-download me-1"></i> Export
-                </button>
+<div class="k-card mb-4 fade-up delay-2">
+    <div class="k-card-body" style="padding:16px 20px;">
+        <form method="GET" class="d-flex align-items-center gap-3 flex-wrap">
+            <div style="position:relative;flex:1;min-width:200px;">
+                <i class="ri-search-line" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:0.9rem;"></i>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search tenant name..."
+                    style="width:100%;padding:9px 12px 9px 34px;border:1.5px solid var(--border);border-radius:8px;font-size:0.875rem;background:var(--body-bg);"
+                    onfocus="this.style.borderColor='var(--brand)'" onblur="this.style.borderColor='var(--border)'">
             </div>
-        </div>
-    </div>
-    <div class="bulk-actions mt-3" id="bulkActions">
-        <span class="text-sm text-primary fw-semibold me-3"><span id="selectedCount">0</span> selected</span>
-        <button class="action-btn approve" onclick="bulkApprove()">
-            <i class="bi bi-check-lg me-1"></i> Mark Complete
-        </button>
-        <button class="action-btn delete" onclick="bulkDelete()">
-            <i class="bi bi-trash me-1"></i> Delete All
-        </button>
-        <button class="action-btn" onclick="clearSelection()">
-            <i class="bi bi-x-lg me-1"></i> Clear
-        </button>
+            <select name="method" onchange="this.form.submit()"
+                style="padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:0.82rem;background:#fff;">
+                <option value="">All Methods</option>
+                @foreach($methods as $m)
+                <option value="{{ $m }}" {{ request('method')==$m?'selected':'' }}>{{ ucfirst($m) }}</option>
+                @endforeach
+            </select>
+            <div class="filter-bar">
+                <a href="?"                  class="filter-chip {{ !request('status') ? 'active' : '' }}">All</a>
+                <a href="?status=completed"  class="filter-chip {{ request('status')=='completed' ? 'active' : '' }}">Completed</a>
+                <a href="?status=pending"    class="filter-chip {{ request('status')=='pending' ? 'active' : '' }}">Pending</a>
+                <a href="?status=failed"     class="filter-chip {{ request('status')=='failed' ? 'active' : '' }}">Failed</a>
+            </div>
+        </form>
     </div>
 </div>
 
-<!-- Payments Table -->
-<div class="table-card animate-fade-in delay-2">
-    <table class="custom-table">
-        <thead>
-            <tr>
-                <th style="width: 40px;"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
-                <th>Tenant</th>
-                <th>Property</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><input type="checkbox" class="payment-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="payment-tenant">John Doe</div>
-                    <div class="payment-property">john@example.com</div>
-                </td>
-                <td>
-                    <div class="payment-property">Sunset Apartments - Unit 2A</div>
-                </td>
-                <td>
-                    <div class="payment-amount">TZS 450,000</div>
-                </td>
-                <td>
-                    <div class="payment-date">Jan 15, 2026</div>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Completed</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(1)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editPayment(1)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn" onclick="downloadReceipt(1)"><i class="bi bi-download"></i></button>
-                    <button class="action-btn delete" onclick="deletePayment(1)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="payment-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="payment-tenant">Sarah Miller</div>
-                    <div class="payment-property">sarah@example.com</div>
-                </td>
-                <td>
-                    <div class="payment-property">Green Valley Estate - Unit 5B</div>
-                </td>
-                <td>
-                    <div class="payment-amount">TZS 320,000</div>
-                </td>
-                <td>
-                    <div class="payment-date">Jan 14, 2026</div>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Completed</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(2)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editPayment(2)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn" onclick="downloadReceipt(2)"><i class="bi bi-download"></i></button>
-                    <button class="action-btn delete" onclick="deletePayment(2)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="payment-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="payment-tenant">Michael Johnson</div>
-                    <div class="payment-property">michael@example.com</div>
-                </td>
-                <td>
-                    <div class="payment-property">Ocean View Towers - Unit 3C</div>
-                </td>
-                <td>
-                    <div class="payment-amount">TZS 580,000</div>
-                </td>
-                <td>
-                    <div class="payment-date">Jan 13, 2026</div>
-                </td>
-                <td>
-                    <span class="status-badge bg-warning bg-opacity-10 text-warning">Pending</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(3)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn approve" onclick="markComplete(3)"><i class="bi bi-check"></i></button>
-                    <button class="action-btn delete" onclick="deletePayment(3)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="payment-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="payment-tenant">Emily Wilson</div>
-                    <div class="payment-property">emily@example.com</div>
-                </td>
-                <td>
-                    <div class="payment-property">Safari Heights - Unit 1A</div>
-                </td>
-                <td>
-                    <div class="payment-amount">TZS 280,000</div>
-                </td>
-                <td>
-                    <div class="payment-date">Jan 10, 2026</div>
-                </td>
-                <td>
-                    <span class="status-badge bg-danger bg-opacity-10 text-danger">Overdue</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(4)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="sendReminder(4)"><i class="bi bi-bell"></i></button>
-                    <button class="action-btn delete" onclick="deletePayment(4)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" class="payment-checkbox" onchange="updateBulkActions()"></td>
-                <td>
-                    <div class="payment-tenant">Robert Brown</div>
-                    <div class="payment-property">robert@example.com</div>
-                </td>
-                <td>
-                    <div class="payment-property">City Center Apartments - Unit 4D</div>
-                </td>
-                <td>
-                    <div class="payment-amount">TZS 520,000</div>
-                </td>
-                <td>
-                    <div class="payment-date">Jan 12, 2026</div>
-                </td>
-                <td>
-                    <span class="status-badge bg-success bg-opacity-10 text-success">Completed</span>
-                </td>
-                <td>
-                    <button class="action-btn" onclick="viewDetails(5)"><i class="bi bi-eye"></i></button>
-                    <button class="action-btn" onclick="editPayment(5)"><i class="bi bi-pencil"></i></button>
-                    <button class="action-btn" onclick="downloadReceipt(5)"><i class="bi bi-download"></i></button>
-                    <button class="action-btn delete" onclick="deletePayment(5)"><i class="bi bi-trash"></i></button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<!-- Table -->
+<div class="k-card fade-up delay-3">
+    <div class="k-card-header">
+        <div class="k-card-title"><i class="ri-bank-card-line"></i> Payment History</div>
+        <span style="font-size:0.8rem;color:var(--text-muted);">{{ $payments->total() }} records</span>
+    </div>
+    <div style="overflow-x:auto;">
+        <table class="k-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tenant</th>
+                    <th>Property</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Period</th>
+                    <th>Paid At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($payments as $pay)
+                <tr>
+                    <td style="font-weight:700;color:var(--brand);">#{{ str_pad($pay->id,5,'0',STR_PAD_LEFT) }}</td>
+                    <td>
+                        <div style="font-weight:600;font-size:0.875rem;color:var(--text-primary);">{{ $pay->tenant?->name ?? '—' }}</div>
+                        <div style="font-size:0.72rem;color:var(--text-muted);">{{ $pay->tenant?->email }}</div>
+                    </td>
+                    <td style="font-size:0.82rem;color:var(--text-sub);max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                        {{ $pay->property?->title ?? '—' }}
+                    </td>
+                    <td style="font-weight:800;color:var(--text-primary);">TZS {{ number_format($pay->amount) }}</td>
+                    <td><span class="k-badge badge-neutral text-capitalize">{{ $pay->payment_method ?? '—' }}</span></td>
+                    <td>
+                        @php $sb = match($pay->status) { 'completed'=>'badge-success', 'pending'=>'badge-warning', 'failed'=>'badge-danger', default=>'badge-neutral' }; @endphp
+                        <span class="k-badge {{ $sb }} text-capitalize">{{ $pay->status }}</span>
+                    </td>
+                    <td style="font-size:0.78rem;color:var(--text-muted);">
+                        {{ $pay->period_start ? \Carbon\Carbon::parse($pay->period_start)->format('M Y') : '—' }}
+                    </td>
+                    <td style="font-size:0.8rem;color:var(--text-muted);">
+                        {{ $pay->paid_at?->format('d M Y') ?? '—' }}
+                    </td>
+                    <td>
+                        <a href="{{ route('admin.payments.show', $pay->id) }}" class="icon-btn" title="View receipt"><i class="ri-eye-line"></i></a>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="9" style="text-align:center;padding:60px 20px;color:var(--text-muted);">
+                        <i class="ri-bank-card-line" style="font-size:2.5rem;display:block;margin-bottom:10px;"></i>
+                        No payments found.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+    @if($payments->hasPages())
+    <div style="padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:0.8rem;color:var(--text-muted);">Showing {{ $payments->firstItem() }}–{{ $payments->lastItem() }} of {{ $payments->total() }}</div>
+        {{ $payments->links() }}
+    </div>
+    @endif
 </div>
-
-<script>
-function toggleSelectAll() {
-    const selectAll = document.getElementById('selectAll');
-    const checkboxes = document.querySelectorAll('.payment-checkbox');
-    checkboxes.forEach(cb => cb.checked = selectAll.checked);
-    updateBulkActions();
-}
-
-function updateBulkActions() {
-    const checkboxes = document.querySelectorAll('.payment-checkbox:checked');
-    const bulkActions = document.getElementById('bulkActions');
-    const selectedCount = document.getElementById('selectedCount');
-    
-    if (checkboxes.length > 0) {
-        bulkActions.classList.add('show');
-        selectedCount.textContent = checkboxes.length;
-    } else {
-        bulkActions.classList.remove('show');
-    }
-}
-
-function clearSelection() {
-    const checkboxes = document.querySelectorAll('.payment-checkbox');
-    const selectAll = document.getElementById('selectAll');
-    checkboxes.forEach(cb => cb.checked = false);
-    selectAll.checked = false;
-    updateBulkActions();
-}
-
-function bulkApprove() {
-    const checkboxes = document.querySelectorAll('.payment-checkbox:checked');
-    Swal.fire({
-        title: 'Mark Payments Complete?',
-        text: `Are you sure you want to mark ${checkboxes.length} payments as complete?`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#10b981',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, mark complete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Completed!',
-                text: `${checkboxes.length} payments have been marked as complete.`,
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-            clearSelection();
-        }
-    });
-}
-
-function bulkDelete() {
-    const checkboxes = document.querySelectorAll('.payment-checkbox:checked');
-    Swal.fire({
-        title: 'Delete Payments?',
-        text: `Are you sure you want to delete ${checkboxes.length} payments? This action cannot be undone.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, delete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Deleted!',
-                text: `${checkboxes.length} payments have been deleted.`,
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-            clearSelection();
-        }
-    });
-}
-
-function viewDetails(id) {
-    window.location.href = `/admin/payments/${id}`;
-}
-
-function editPayment(id) {
-    window.location.href = `/admin/payments/${id}/edit`;
-}
-
-function downloadReceipt(id) {
-    Swal.fire({
-        title: 'Downloading Receipt',
-        text: 'Receipt is being downloaded...',
-        icon: 'info',
-        confirmButtonColor: '#3b82f6'
-    });
-}
-
-function markComplete(id) {
-    Swal.fire({
-        title: 'Mark Payment Complete?',
-        text: 'Are you sure you want to mark this payment as complete?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#10b981',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, mark complete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Completed!',
-                text: 'Payment has been marked as complete.',
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-        }
-    });
-}
-
-function sendReminder(id) {
-    Swal.fire({
-        title: 'Send Reminder?',
-        text: 'Are you sure you want to send a payment reminder?',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3b82f6',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, send!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Reminder Sent!',
-                text: 'Payment reminder has been sent.',
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-        }
-    });
-}
-
-function deletePayment(id) {
-    Swal.fire({
-        title: 'Delete Payment?',
-        text: 'Are you sure you want to delete this payment? This action cannot be undone.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ef4444',
-        cancelButtonColor: '#6b7280',
-        confirmButtonText: 'Yes, delete!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Deleted!',
-                text: 'Payment has been deleted.',
-                icon: 'success',
-                confirmButtonColor: '#3b82f6'
-            });
-        }
-    });
-}
-</script>
 @endsection
