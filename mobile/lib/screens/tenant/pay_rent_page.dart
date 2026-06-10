@@ -246,6 +246,38 @@ class _PayRentPageState extends State<PayRentPage> {
             ),
             const SizedBox(height: 20),
 
+            // Transaction ID
+            _buildSectionCard(
+              title: _t('Namba ya Muamala', 'Transaction ID'),
+              child: TextField(
+                controller: _transactionIdController,
+                decoration: InputDecoration(
+                  hintText: _t('Weka namba ya muamala', 'Enter transaction ID'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: Color(0xffe5e7eb)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: Color(0xffe5e7eb)),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: AppColors.primary, width: 2),
+                  ),
+                  hintStyle: GoogleFonts.poppins(
+                    color: Colors.grey[400],
+                    fontSize: 14,
+                  ),
+                ),
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  color: const Color(0xff111827),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
             // Summary
             _buildSectionCard(
               title: _t('Muhtasari', 'Summary'),
@@ -412,19 +444,75 @@ class _PayRentPageState extends State<PayRentPage> {
   }
 
   Future<void> _handlePayment() async {
-    setState(() => _isProcessing = true);
-    
-    // Simulate payment processing
-    await Future.delayed(const Duration(seconds: 2));
-    
-    setState(() => _isProcessing = false);
-    
-    if (mounted) {
+    if (_transactionIdController.text.trim().isEmpty) {
       Helpers.showSnackBar(
         context,
-        'Malipo yamekamilika! (Payment completed)',
-        isError: false,
+        _t('Tafadhali weka namba ya muamala', 'Please enter transaction ID'),
       );
+      return;
+    }
+
+    setState(() => _isProcessing = true);
+
+    try {
+      final response = await _paymentService.submitPaymentRequest(
+        amount: (450000 * _selectedMonths).toString(),
+        paymentMethod: _selectedMethod,
+        transactionId: _transactionIdController.text.trim(),
+      );
+
+      setState(() => _isProcessing = false);
+
+      if (mounted) {
+        if (response['success'] == true) {
+          Helpers.showSnackBar(
+            context,
+            _t('Ombi la malipo limetumwa! Subiri mwenye nyumba kukubali.', 'Payment request submitted! Wait for landlord approval.'),
+            isError: false,
+          );
+          _transactionIdController.clear();
+          _loadPaymentHistory(); // Refresh payment history
+        } else {
+          Helpers.showSnackBar(
+            context,
+            response['message'] ?? _t('Imeshindikana kutuma ombi la malipo', 'Failed to submit payment request'),
+          );
+        }
+      }
+    } catch (e) {
+      setState(() => _isProcessing = false);
+      if (mounted) {
+        Helpers.showSnackBar(
+          context,
+          _t('Imeshindikana kutuma ombi la malipo', 'Failed to submit payment request'),
+        );
+      }
+    }
+  }
+
+  String _getPaymentStatusText(String? status) {
+    switch (status?.toLowerCase()) {
+      case 'pending':
+        return _t('Inasubiri', 'Pending');
+      case 'approved':
+        return _t('Imekubaliwa', 'Approved');
+      case 'rejected':
+        return _t('Imekataliwa', 'Rejected');
+      default:
+        return _t('Haijulikani', 'Unknown');
+    }
+  }
+
+  Color _getPaymentStatusColor(String? status) {
+    switch (status?.toLowerCase()) {
+      case 'pending':
+        return Colors.orange;
+      case 'approved':
+        return Colors.green;
+      case 'rejected':
+        return Colors.red;
+      default:
+        return Colors.grey;
     }
   }
 }
