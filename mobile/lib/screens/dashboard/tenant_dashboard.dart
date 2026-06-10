@@ -5,8 +5,10 @@ import '../../models/user_model.dart';
 import '../../models/dashboard_stats_model.dart';
 import '../../services/auth_service.dart';
 import '../../services/dashboard_service.dart';
+import '../../services/notification_service.dart';
 import '../../utils/helpers.dart';
 import '../../widgets/dashboard_card.dart';
+import '../../widgets/notification_drawer.dart';
 import '../../widgets/role_drawer.dart';
 
 class TenantDashboard extends StatefulWidget {
@@ -19,7 +21,9 @@ class TenantDashboard extends StatefulWidget {
 class _TenantDashboardState extends State<TenantDashboard> {
   final AuthService _authService = AuthService();
   final DashboardService _dashboardService = DashboardService();
+  final NotificationService _notificationService = NotificationService();
   final TextEditingController _phoneInputController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   DashboardStatsModel? _stats;
   bool _isLoading = true;
