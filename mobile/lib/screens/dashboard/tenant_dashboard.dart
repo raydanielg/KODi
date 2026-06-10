@@ -2205,13 +2205,20 @@ class _TenantDashboardState extends State<TenantDashboard> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _isDarkMode ? const Color(0xff1f2937) : Colors.white,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xff1a1a1a),
+            const Color(0xff2d2d2d),
+          ],
+        ),
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -2223,7 +2230,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             title,
             style: GoogleFonts.poppins(
               fontSize: 12,
-              color: _isDarkMode ? Colors.grey[400] : Colors.grey[600],
+              color: Colors.white70,
             ),
           ),
           const SizedBox(height: 5),
@@ -2232,6 +2239,13 @@ class _TenantDashboardState extends State<TenantDashboard> {
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.bold,
               fontSize: 14,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
               color: _isDarkMode ? Colors.white : Colors.black,
             ),
           ),
