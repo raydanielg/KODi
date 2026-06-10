@@ -273,6 +273,91 @@ class _MyHomePageState extends State<MyHomePage> {
                         _detailRow(_t('Tarehe ya Mwisho', 'Lease End'), _stats?.stats['lease_end'] ?? 'N/A'),
                         const Divider(color: Color(0xffe5e7eb)),
                         _detailRow(_t('Namba ya Chumba', 'Unit Number'), _stats?.stats['unit_number'] ?? 'N/A'),
+                        const SizedBox(height: 16),
+                        // Payment Progress
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                const Color(0xff1a1a1a),
+                                const Color(0xff2d2d2d),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                blurRadius: 12,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    _t('Maendeleo ya Malipo', 'Payment Progress'),
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white70,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  Text(
+                                    '3/6 ' + _t('Miezi', 'Months'),
+                                    style: GoogleFonts.poppins(
+                                      color: AppColors.primary,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 12),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: LinearProgressIndicator(
+                                  value: 0.5,
+                                  backgroundColor: Colors.white.withOpacity(0.1),
+                                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                                  minHeight: 8,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle_outlined,
+                                    color: AppColors.primary,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    _t('Imelipwa hadi', 'Paid until'),
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white60,
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '30 Jun 2026',
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
