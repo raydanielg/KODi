@@ -128,7 +128,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
               children: [
                 Expanded(
                   child: _quickActionCard(
-                    'Ripoti Tatizo',
+                    _t('Ripoti Tatizo', 'Report Issue'),
                     Icons.report_problem_outlined,
                     () => _showReportDialog(),
                   ),
@@ -136,7 +136,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: _quickActionCard(
-                    'Ombi Zangu',
+                    _t('Ombi Zangu', 'My Requests'),
                     Icons.list_alt_outlined,
                     () {},
                   ),
@@ -147,20 +147,20 @@ class _MaintenancePageState extends State<MaintenancePage> {
 
             // Active Requests
             _buildSectionCard(
-              title: 'Ombi Linalofanya Kazi',
+              title: _t('Ombi Linalofanya Kazi', 'Active Requests'),
               child: Column(
                 children: [
                   _requestCard(
                     'Plumbing Issue',
                     'Sink not draining',
-                    'Inaendelea',
+                    _t('Inaendelea', 'In Progress'),
                     Colors.orange,
                   ),
                   const SizedBox(height: 12),
                   _requestCard(
                     'Electrical',
                     'Light fixture broken',
-                    'Inasubiri',
+                    _t('Inasubiri', 'Pending'),
                     Colors.grey,
                   ),
                 ],
@@ -170,20 +170,20 @@ class _MaintenancePageState extends State<MaintenancePage> {
 
             // Recent History
             _buildSectionCard(
-              title: 'Historia ya Karibuni',
+              title: _t('Historia ya Karibuni', 'Recent History'),
               child: Column(
                 children: [
                   _requestCard(
                     'Painting',
                     'Wall repaint',
-                    'Imekamilika',
+                    _t('Imekamilika', 'Completed'),
                     Colors.green,
                   ),
                   const SizedBox(height: 12),
                   _requestCard(
                     'Carpentry',
                     'Door repair',
-                    'Imekamilika',
+                    _t('Imekamilika', 'Completed'),
                     Colors.green,
                   ),
                 ],
@@ -334,7 +334,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'Ripoti Tatizo',
+          _t('Ripoti Tatizo', 'Report Issue'),
           style: GoogleFonts.poppins(
             fontWeight: FontWeight.bold,
           ),
@@ -345,7 +345,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Kundi',
+                _t('Kundi', 'Category'),
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -385,7 +385,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Kichwa cha Tatizo',
+                _t('Kichwa cha Tatizo', 'Issue Title'),
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -395,7 +395,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
               TextField(
                 controller: _issueController,
                 decoration: InputDecoration(
-                  hintText: 'Weka kichwa cha tatizo',
+                  hintText: _t('Weka kichwa cha tatizo', 'Enter issue title'),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -403,7 +403,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Maelezo',
+                _t('Maelezo', 'Description'),
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
@@ -414,7 +414,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
                 controller: _descriptionController,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  hintText: 'Elezea tatizo',
+                  hintText: _t('Elezea tatizo', 'Describe the issue'),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -427,7 +427,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(
-              'Ghairi',
+              _t('Ghairi', 'Cancel'),
               style: GoogleFonts.poppins(),
             ),
           ),
@@ -447,7 +447,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
                     ),
                   )
                 : Text(
-                    'Tuma',
+                    _t('Tuma', 'Submit'),
                     style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
                   ),
           ),
@@ -458,7 +458,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
 
   Future<void> _submitRequest() async {
     if (_issueController.text.trim().isEmpty) {
-      Helpers.showSnackBar(context, 'Tafadhali weka kichwa cha tatizo');
+      Helpers.showSnackBar(context, _t('Tafadhali weka kichwa cha tatizo', 'Please enter issue title'));
       return;
     }
 
@@ -473,7 +473,7 @@ class _MaintenancePageState extends State<MaintenancePage> {
     if (mounted) {
       Helpers.showSnackBar(
         context,
-        'Ombi limetumwa!',
+        _t('Ombi limetumwa!', 'Request submitted!'),
         isError: false,
       );
       _issueController.clear();
