@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants/app_colors.dart';
 import '../../services/auth_service.dart';
+import '../../services/dashboard_service.dart';
+import '../../models/dashboard_stats_model.dart';
+import '../../utils/helpers.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -12,10 +15,43 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final AuthService _authService = AuthService();
+  final DashboardService _dashboardService = DashboardService();
   bool _isEnglish = false;
+  bool _isLoading = true;
+  DashboardStatsModel? _stats;
 
   String _t(String sw, String en) {
     return _isEnglish ? en : sw;
+  }
+
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) {
+      return _t('Habari za Asubuhi', 'Good Morning');
+    } else if (hour < 17) {
+      return _t('Habari za Mchana', 'Good Afternoon');
+    } else {
+      return _t('Habari za Jioni', 'Good Evening');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() => _isLoading = true);
+    try {
+      final stats = await _dashboardService.fetchDashboardStats();
+      setState(() {
+        _stats = stats;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
