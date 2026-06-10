@@ -78,6 +78,10 @@ class AuthService {
   }
 
   Future<bool> isLoggedIn() async {
+    if (_api.token != null && _api.token!.isNotEmpty) {
+      return true;
+    }
+
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString(_tokenKey);
@@ -88,7 +92,7 @@ class AuthService {
     }
   }
 
-  Future<void> loadSavedAuth() async {
+  Future<bool> loadSavedAuth() async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString(_tokenKey);
@@ -98,12 +102,38 @@ class AuthService {
         final userMap = jsonDecode(userJson) as Map<String, dynamic>;
         final user = UserModel.fromJson(userMap);
         _api.setAuth(token, user);
-        print('✅ Auto-login successful for user: ${user.email}');
+        print('🔄 Found saved auth token for ${user.email}. Validating session...');
+
+        final valid = await _validateToken();
+        if (valid) {
+          print('✅ Saved auth token is valid for ${user.email}');
+          return true;
+        }
+
+        print('⚠️ Saved auth token is invalid or expired. Clearing saved auth data.');
+        await _clearAuthData();
       }
     } catch (e) {
       print('❌ Failed to load saved auth: $e');
-      // Don't clear auth data on platform errors, just log it
     }
+
+    return false;
+  }
+
+  Future<bool> _validateToken() async {
+    try {
+      final response = await _api.get('auth/user');
+      if (response.containsKey('data')) {
+        final userMap = response['data'] as Map<String, dynamic>;
+        final user = UserModel.fromJson(userMap);
+        _api.setAuth(_api.token ?? '', user);
+        return true;
+      }
+    } catch (e) {
+      print('❌ Token validation failed: $e');
+    }
+
+    return false;
   }
 
   Future<void> _saveAuthData(String token, UserModel user) async {
