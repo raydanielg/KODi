@@ -38,10 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
+      print('🔐 Starting login process...');
       final result = await _authService.login(
         _emailController.text.trim(),
         _passwordController.text,
       );
+      print('✅ Login successful, navigating to dashboard');
       if (mounted) {
         final user = result['user'] as UserModel;
         Helpers.showSnackBar(
@@ -50,24 +52,43 @@ class _LoginScreenState extends State<LoginScreen> {
           isError: false,
         );
         Navigator.pushNamedAndRemoveUntil(context, '/dashboard', (route) => false);
+      } else {
+        print('⚠️ Widget not mounted after login');
+        setState(() => _isLoading = false);
       }
     } catch (e) {
-      if (mounted) {
-        print('❌ Login Error: $e');
-        // Extract the error message - it should already be formatted by _handleException
-        String errorMessage = e.toString();
+      print('❌ Login Error caught: $e');
+      print('❌ Error type: ${e.runtimeType}');
+      
+      String errorMessage = 'Imeshindikana kuingia. Tafadhali jaribu tena.';
+      
+      // Extract the error message
+      if (e is ApiException) {
+        errorMessage = e.message;
+        print('✅ Using ApiException message: $errorMessage');
+      } else {
+        // If it's not an ApiException, check the error string
+        final errorString = e.toString();
+        print('❌ Raw error string: $errorString');
         
-        // If it's not already a user-friendly message, provide a default
-        if (!errorMessage.contains('Tafadhali') && 
-            !errorMessage.contains('Imeshindikana') && 
-            !errorMessage.contains('Muunganisho')) {
+        if (errorString.contains('Tafadhali') || 
+            errorString.contains('Imeshindikana') || 
+            errorString.contains('Muunganisho')) {
+          errorMessage = errorString;
+        } else {
           errorMessage = 'Imeshindikana kuingia. Tafadhali angalia mtandao wako na jaribu tena.';
         }
-        
-        Helpers.showSnackBar(context, errorMessage, isError: true);
       }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
+      
+      print('📢 Showing error message: $errorMessage');
+      
+      if (mounted) {
+        Helpers.showSnackBar(context, errorMessage, isError: true);
+      } else {
+        print('⚠️ Widget not mounted, cannot show snackbar');
+      }
+      
+      setState(() => _isLoading = false);
     }
   }
 

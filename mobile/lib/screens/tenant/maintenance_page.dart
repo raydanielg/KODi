@@ -1,0 +1,483 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../../constants/app_colors.dart';
+import '../../services/auth_service.dart';
+import '../../utils/helpers.dart';
+
+class MaintenancePage extends StatefulWidget {
+  const MaintenancePage({super.key});
+
+  @override
+  State<MaintenancePage> createState() => _MaintenancePageState();
+}
+
+class _MaintenancePageState extends State<MaintenancePage> {
+  final AuthService _authService = AuthService();
+  final _issueController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  String _selectedCategory = 'Plumbing';
+  bool _isSubmitting = false;
+  bool _isEnglish = false;
+
+  String _t(String sw, String en) {
+    return _isEnglish ? en : sw;
+  }
+
+  final List<String> _categories = [
+    'Plumbing',
+    'Electrical',
+    'Painting',
+    'Carpentry',
+    'General',
+  ];
+
+  @override
+  void dispose() {
+    _issueController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xfff9fafb),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Color(0xff111827)),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          _t('Matengenezo', 'Maintenance'),
+          style: GoogleFonts.poppins(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xff111827),
+          ),
+        ),
+        actions: [
+          // Language toggle
+          Container(
+            margin: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: const Color(0xfff3f4f6),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = false;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: !_isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'SW',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        fontWeight: !_isEnglish ? FontWeight.bold : FontWeight.w500,
+                        color: !_isEnglish ? Colors.black : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = true;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'EN',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        fontWeight: _isEnglish ? FontWeight.bold : FontWeight.w500,
+                        color: _isEnglish ? Colors.black : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            // Quick Actions
+            Row(
+              children: [
+                Expanded(
+                  child: _quickActionCard(
+                    'Ripoti Tatizo',
+                    Icons.report_problem_outlined,
+                    () => _showReportDialog(),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _quickActionCard(
+                    'Ombi Zangu',
+                    Icons.list_alt_outlined,
+                    () {},
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
+
+            // Active Requests
+            _buildSectionCard(
+              title: 'Ombi Linalofanya Kazi',
+              child: Column(
+                children: [
+                  _requestCard(
+                    'Plumbing Issue',
+                    'Sink not draining',
+                    'Inaendelea',
+                    Colors.orange,
+                  ),
+                  const SizedBox(height: 12),
+                  _requestCard(
+                    'Electrical',
+                    'Light fixture broken',
+                    'Inasubiri',
+                    Colors.grey,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Recent History
+            _buildSectionCard(
+              title: 'Historia ya Karibuni',
+              child: Column(
+                children: [
+                  _requestCard(
+                    'Painting',
+                    'Wall repaint',
+                    'Imekamilika',
+                    Colors.green,
+                  ),
+                  const SizedBox(height: 12),
+                  _requestCard(
+                    'Carpentry',
+                    'Door repair',
+                    'Imekamilika',
+                    Colors.green,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _quickActionCard(String title, IconData icon, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Icon(icon, color: AppColors.primary, size: 32),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: const Color(0xff111827),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSectionCard({required String title, required Widget child}) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: const Color(0xff111827),
+            ),
+          ),
+          const SizedBox(height: 16),
+          child,
+        ],
+      ),
+    );
+  }
+
+  Widget _requestCard(String title, String description, String status, Color statusColor) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xffe5e7eb)),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(
+              Icons.build_outlined,
+              color: AppColors.primary,
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xff111827),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  description,
+                  style: GoogleFonts.poppins(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: statusColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              status,
+              style: GoogleFonts.poppins(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: statusColor,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showReportDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Ripoti Tatizo',
+          style: GoogleFonts.poppins(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Kundi',
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: _categories.map((category) {
+                  final isSelected = _selectedCategory == category;
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedCategory = category;
+                      });
+                      Navigator.pop(context);
+                      _showReportDialog();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: isSelected ? AppColors.primary : Colors.grey[200],
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        category,
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          color: isSelected ? Colors.black : Colors.black87,
+                          fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Kichwa cha Tatizo',
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _issueController,
+                decoration: InputDecoration(
+                  hintText: 'Weka kichwa cha tatizo',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Maelezo',
+                style: GoogleFonts.poppins(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: _descriptionController,
+                maxLines: 3,
+                decoration: InputDecoration(
+                  hintText: 'Elezea tatizo',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Ghairi',
+              style: GoogleFonts.poppins(),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: _isSubmitting ? null : _submitRequest,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.black,
+            ),
+            child: _isSubmitting
+                ? const SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.black,
+                    ),
+                  )
+                : Text(
+                    'Tuma',
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _submitRequest() async {
+    if (_issueController.text.trim().isEmpty) {
+      Helpers.showSnackBar(context, 'Tafadhali weka kichwa cha tatizo');
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+    Navigator.pop(context);
+
+    // Simulate submission
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() => _isSubmitting = false);
+
+    if (mounted) {
+      Helpers.showSnackBar(
+        context,
+        'Ombi limetumwa!',
+        isError: false,
+      );
+      _issueController.clear();
+      _descriptionController.clear();
+    }
+  }
+}

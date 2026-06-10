@@ -39,7 +39,7 @@ class ApiService {
         Uri.parse('$_baseUrl/$endpoint'),
         headers: _headers,
       ).timeout(
-        const Duration(seconds: 30),
+        const Duration(seconds: 10),
         onTimeout: () {
           throw Exception('Request timed out. Please check your internet connection.');
         },
@@ -51,21 +51,33 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> post(String endpoint, {Map<String, dynamic>? body}) async {
-    print('📡 POST Request: $_baseUrl/$endpoint');
+    final url = '$_baseUrl/$endpoint';
+    print('📡 POST Request: $url');
     print('📡 POST Body: ${body != null ? jsonEncode(body) : "null"}');
+    print('📡 Headers: $_headers');
+    
     try {
+      print('🌐 Starting HTTP POST request...');
+      final uri = Uri.parse(url);
+      print('🌐 Parsed URI: $uri');
+      
       final response = await http.post(
-        Uri.parse('$_baseUrl/$endpoint'),
+        uri,
         headers: _headers,
         body: body != null ? jsonEncode(body) : null,
       ).timeout(
-        const Duration(seconds: 30),
+        const Duration(seconds: 10),
         onTimeout: () {
+          print('⏰ Request timed out after 10 seconds');
           throw Exception('Request timed out. Please check your internet connection.');
         },
       );
+      
+      print('✅ HTTP Response received: ${response.statusCode}');
       return _handleResponse(response);
     } catch (e) {
+      print('❌ POST Request failed: $e');
+      print('❌ Error type: ${e.runtimeType}');
       throw ApiException(_handleException(e), 0);
     }
   }
@@ -79,7 +91,7 @@ class ApiService {
         headers: _headers,
         body: body != null ? jsonEncode(body) : null,
       ).timeout(
-        const Duration(seconds: 30),
+        const Duration(seconds: 10),
         onTimeout: () {
           throw Exception('Request timed out. Please check your internet connection.');
         },
@@ -96,7 +108,7 @@ class ApiService {
         Uri.parse('$_baseUrl/$endpoint'),
         headers: _headers,
       ).timeout(
-        const Duration(seconds: 30),
+        const Duration(seconds: 10),
         onTimeout: () {
           throw Exception('Request timed out. Please check your internet connection.');
         },

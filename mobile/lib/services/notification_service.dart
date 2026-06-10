@@ -8,7 +8,7 @@ class NotificationService {
 
   Future<List<Map<String, dynamic>>> fetchNotifications({int limit = 10}) async {
     try {
-      final response = await _apiService.get('/notifications?limit=$limit');
+      final response = await _apiService.get('notifications?limit=$limit');
       
       if (response['success'] == true) {
         final List<dynamic> data = response['data'] ?? [];
@@ -22,7 +22,7 @@ class NotificationService {
 
   Future<int> fetchUnreadCount() async {
     try {
-      final response = await _apiService.get('/notifications/unread-count');
+      final response = await _apiService.get('notifications/unread-count');
       
       if (response['success'] == true) {
         return response['data']['unread_count'] ?? 0;
@@ -35,7 +35,7 @@ class NotificationService {
 
   Future<void> markAsRead(String notificationId) async {
     try {
-      await _apiService.put('/notifications/$notificationId/read', body: {});
+      await _apiService.put('notifications/$notificationId/read', body: {});
     } catch (e) {
       throw Exception('Failed to mark notification as read: $e');
     }
@@ -43,7 +43,7 @@ class NotificationService {
 
   Future<void> markAllAsRead() async {
     try {
-      await _apiService.post('/notifications/mark-all-read', body: {});
+      await _apiService.post('notifications/mark-all-read', body: {});
     } catch (e) {
       throw Exception('Failed to mark all notifications as read: $e');
     }

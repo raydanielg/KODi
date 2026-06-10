@@ -106,17 +106,17 @@ class _TenantDashboardState extends State<TenantDashboard> {
       key: _scaffoldKey,
       drawer: RoleDrawer(authService: _authService),
       endDrawer: NotificationDrawer(notificationService: _notificationService),
-      backgroundColor: const Color(0xfff9fafb),
+      backgroundColor: _isDarkMode ? const Color(0xff111827) : const Color(0xfff9fafb),
       body: _isLoading
-          ? const Center(
+          ? Center(
               child: CircularProgressIndicator(color: AppColors.primary),
             )
           : SafeArea(
               bottom: false,
               child: Column(
                 children: [
-                  // 1. Standard Header (Hidden in Profile tab)
-                  if (_currentTab != 3) _buildTopHeader(user),
+                  // 1. Simple top bar with icons only (no header card)
+                  if (_currentTab != 3) _buildSimpleTopBar(),
 
                   // 2. Dynamic body content based on selected tab
                   Expanded(child: _buildBodyContent(user)),
@@ -127,14 +127,161 @@ class _TenantDashboardState extends State<TenantDashboard> {
     );
   }
 
+  Widget _buildSimpleTopBar() {
+    return Container(
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 16, bottom: 16),
+      decoration: BoxDecoration(
+        color: _isDarkMode ? const Color(0xff1f2937) : Colors.white,
+        border: Border(
+          bottom: BorderSide(color: _isDarkMode ? const Color(0xff374151) : const Color(0xffe5e7eb), width: 1),
+        ),
+      ),
+      child: Row(
+        children: [
+          // Notification icon
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  _scaffoldKey.currentState?.openEndDrawer();
+                },
+                icon: Icon(
+                  Icons.notifications_outlined,
+                  color: _isDarkMode ? Colors.white : const Color(0xff4b5563),
+                  size: 24,
+                ),
+                style: IconButton.styleFrom(
+                  backgroundColor: _isDarkMode ? const Color(0xff374151) : const Color(0xfff3f4f6),
+                  padding: const EdgeInsets.all(10),
+                ),
+              ),
+              Positioned(
+                right: 8,
+                top: 8,
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          // Language toggle
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: _isDarkMode ? const Color(0xff374151) : const Color(0xfff3f4f6),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = false;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: !_isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'SW',
+                      style: GoogleFonts.poppins(
+                    fontSize: 11,
+                    fontWeight: !_isEnglish ? FontWeight.bold : FontWeight.w500,
+                    color: !_isEnglish ? Colors.black : (_isDarkMode ? Colors.grey[400] : Colors.grey[600]),
+                  ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isEnglish = true;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _isEnglish ? AppColors.primary : Colors.transparent,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'EN',
+                      style: GoogleFonts.poppins(
+                    fontSize: 11,
+                    fontWeight: _isEnglish ? FontWeight.bold : FontWeight.w500,
+                    color: _isEnglish ? Colors.black : (_isDarkMode ? Colors.grey[400] : Colors.grey[600]),
+                  ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+          // Dark/Light mode toggle
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _isDarkMode = !_isDarkMode;
+              });
+            },
+            icon: Icon(
+              _isDarkMode ? Icons.light_mode : Icons.dark_mode,
+              color: _isDarkMode ? Colors.white : const Color(0xff4b5563),
+              size: 24,
+            ),
+            style: IconButton.styleFrom(
+              backgroundColor: _isDarkMode ? const Color(0xff374151) : const Color(0xfff3f4f6),
+              padding: const EdgeInsets.all(10),
+            ),
+          ),
+          const SizedBox(width: 8),
+          // Menu icon for main drawer
+          IconButton(
+            onPressed: () {
+              _scaffoldKey.currentState?.openDrawer();
+            },
+            icon: Icon(
+              Icons.menu_rounded,
+              color: _isDarkMode ? Colors.white : const Color(0xff4b5563),
+              size: 24,
+            ),
+            style: IconButton.styleFrom(
+              backgroundColor: _isDarkMode ? const Color(0xff374151) : const Color(0xfff3f4f6),
+              padding: const EdgeInsets.all(10),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildTopHeader(UserModel user) {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 48, bottom: 16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: _isDarkMode ? const Color(0xff1f2937) : Colors.white,
         border: Border(
-          bottom: BorderSide(color: Color(0xffe5e7eb), width: 1),
+          bottom: BorderSide(color: _isDarkMode ? const Color(0xff374151) : const Color(0xffe5e7eb), width: 1),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -144,14 +291,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
               _scaffoldKey.currentState?.openEndDrawer();
             },
             child: CircleAvatar(
-              radius: 22,
-              backgroundColor: AppColors.primary.withOpacity(0.15),
+              radius: 24,
+              backgroundColor: AppColors.primary.withOpacity(0.2),
               child: Text(
                 user.initials,
                 style: GoogleFonts.poppins(
                   color: AppColors.primary,
                   fontWeight: FontWeight.w700,
-                  fontSize: 14,
+                  fontSize: 15,
                 ),
               ),
             ),
@@ -166,8 +313,8 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 Text(
                   _getGreeting(),
                   style: GoogleFonts.poppins(
-                    fontSize: 11,
-                    color: Colors.grey[500],
+                    fontSize: 12,
+                    color: _isDarkMode ? Colors.grey[400] : Colors.grey[600],
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -175,9 +322,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 Text(
                   user.name,
                   style: GoogleFonts.poppins(
-                    fontSize: 15,
+                    fontSize: 16,
                     fontWeight: FontWeight.w800,
-                    color: const Color(0xff111827),
+                    color: _isDarkMode ? Colors.white : const Color(0xff111827),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -185,15 +332,70 @@ class _TenantDashboardState extends State<TenantDashboard> {
               ],
             ),
           ),
-          // 3. Menu icon for main drawer
+          // 3. Notification icon
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  _scaffoldKey.currentState?.openEndDrawer();
+                },
+                icon: Icon(
+                  Icons.notifications_outlined,
+                  color: _isDarkMode ? Colors.white : const Color(0xff4b5563),
+                  size: 24,
+                ),
+                style: IconButton.styleFrom(
+                  backgroundColor: _isDarkMode ? const Color(0xff374151) : const Color(0xfff3f4f6),
+                  padding: const EdgeInsets.all(10),
+                ),
+              ),
+              // Notification badge (static for now)
+              Positioned(
+                right: 8,
+                top: 8,
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(width: 8),
+          // 4. Dark/Light mode toggle
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _isDarkMode = !_isDarkMode;
+              });
+            },
+            icon: Icon(
+              _isDarkMode ? Icons.light_mode : Icons.dark_mode,
+              color: _isDarkMode ? Colors.white : const Color(0xff4b5563),
+              size: 24,
+            ),
+            style: IconButton.styleFrom(
+              backgroundColor: _isDarkMode ? const Color(0xff374151) : const Color(0xfff3f4f6),
+              padding: const EdgeInsets.all(10),
+            ),
+          ),
+          const SizedBox(width: 8),
+          // 5. Menu icon for main drawer
           IconButton(
             onPressed: () {
               _scaffoldKey.currentState?.openDrawer();
             },
-            icon: const Icon(Icons.menu_rounded, color: Color(0xff4b5563), size: 24),
+            icon: Icon(
+              Icons.menu_rounded,
+              color: _isDarkMode ? Colors.white : const Color(0xff4b5563),
+              size: 24,
+            ),
             style: IconButton.styleFrom(
-              backgroundColor: const Color(0xfff3f4f6),
-              padding: const EdgeInsets.all(8),
+              backgroundColor: _isDarkMode ? const Color(0xff374151) : const Color(0xfff3f4f6),
+              padding: const EdgeInsets.all(10),
             ),
           ),
         ],
@@ -202,7 +404,10 @@ class _TenantDashboardState extends State<TenantDashboard> {
   }
 
   Widget _buildHeroBalanceSection() {
-    final monthlyRent = _stats?.stats['monthly_rent'] ?? 0.0;
+    final monthlyRentRaw = _stats?.stats['monthly_rent'] ?? 0.0;
+    final monthlyRent = monthlyRentRaw is String 
+        ? double.tryParse(monthlyRentRaw) ?? 0.0 
+        : (monthlyRentRaw is double ? monthlyRentRaw : monthlyRentRaw is int ? monthlyRentRaw.toDouble() : 0.0);
     final propertyName = _stats?.stats['property_name'] ?? 'N/A';
     
     return Padding(
@@ -1586,16 +1791,16 @@ class _TenantDashboardState extends State<TenantDashboard> {
 
   Widget _buildBottomNavigationBar() {
     final items = [
-      {'icon': Icons.home_rounded, 'label': _t('Nyumbani', 'Home')},
-      {'icon': Icons.swap_horiz_rounded, 'label': _t('Maombi', 'Requests')},
-      {'icon': Icons.receipt_long_rounded, 'label': _t('Malipo', 'Payments')},
-      {'icon': Icons.settings_rounded, 'label': _t('Mipangilio', 'Settings')},
+      {'icon': Icons.home_rounded, 'label': _t('Nyumbani', 'Home'), 'route': null},
+      {'icon': Icons.payment_rounded, 'label': _t('Lipa Kodi', 'Pay Rent'), 'route': '/pay-rent'},
+      {'icon': Icons.build_rounded, 'label': _t('Matengenezo', 'Maintenance'), 'route': '/tenant-maintenance'},
+      {'icon': Icons.person_rounded, 'label': _t('Wasifu', 'Profile'), 'route': '/tenant-profile'},
     ];
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF0D0F12), // Sleek Dark Floating Bar from Mockup
+        color: _isDarkMode ? const Color(0xFF1f2937) : const Color(0xFF0D0F12),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -1612,9 +1817,14 @@ class _TenantDashboardState extends State<TenantDashboard> {
           final isSelected = _currentTab == index;
           return GestureDetector(
             onTap: () {
-              setState(() {
-                _currentTab = index;
-              });
+              final route = items[index]['route'] as String?;
+              if (route != null) {
+                Navigator.pushNamed(context, route);
+              } else {
+                setState(() {
+                  _currentTab = index;
+                });
+              }
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 250),
@@ -1622,8 +1832,8 @@ class _TenantDashboardState extends State<TenantDashboard> {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? const Color(0xFFFE5D37)
-                    : Colors.transparent, // sliding capsule
+                    ? AppColors.primary
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -1631,7 +1841,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 children: [
                   Icon(
                     items[index]['icon'] as IconData,
-                    color: isSelected ? Colors.white : const Color(0xFF8E929B),
+                    color: isSelected 
+                        ? Colors.black 
+                        : (_isDarkMode ? Colors.grey[400] : const Color(0xFF8E929B)),
                     size: 20,
                   ),
                   if (isSelected) ...[
@@ -1639,7 +1851,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                     Text(
                       items[index]['label'] as String,
                       style: GoogleFonts.poppins(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
                       ),
@@ -1659,27 +1871,352 @@ class _TenantDashboardState extends State<TenantDashboard> {
       return _buildUnconnectedPlaceholder();
     }
 
+    final user = _authService.currentUser!;
+    final monthlyRentRaw = _stats?.stats['monthly_rent'] ?? 0.0;
+    final monthlyRent = monthlyRentRaw is String 
+        ? double.tryParse(monthlyRentRaw) ?? 0.0 
+        : (monthlyRentRaw is double ? monthlyRentRaw : monthlyRentRaw is int ? monthlyRentRaw.toDouble() : 0.0);
+    final propertyName = _stats?.stats['property_name'] ?? 'N/A';
+    final balanceRaw = _stats?.stats['balance'] ?? 0.0;
+    final balance = balanceRaw is String 
+        ? double.tryParse(balanceRaw) ?? 0.0 
+        : (balanceRaw is double ? balanceRaw : balanceRaw is int ? balanceRaw.toDouble() : 0.0);
+
     return RefreshIndicator(
       onRefresh: _loadDashboard,
-      color: const Color(0xFFFE5D37),
-      child: ListView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(vertical: 24),
+      color: AppColors.primary,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            /// Welcome Card
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    AppColors.primary,
+                    AppColors.primaryDark,
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.3),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _getGreeting(),
+                    style: GoogleFonts.poppins(
+                      color: Colors.white70,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    user.name,
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    propertyName,
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            Row(
+              children: [
+                Expanded(
+                  child: _statCard(
+                    _t('Kodi Inayolipwa', 'Rent Due'),
+                    'TZS ${Helpers.formatMoney(monthlyRent)}',
+                    Icons.payments_outlined,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _statCard(
+                    _t('Salio', 'Balance'),
+                    'TZS ${Helpers.formatMoney(balance)}',
+                    Icons.account_balance_wallet_outlined,
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
+            /// Lease Details
+            _sectionCard(
+              title: _t('Maelezo ya Mkataba', 'Lease Information'),
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      _t('Tarehe ya Kuanza', 'Lease Start'),
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white : Colors.black87,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: Text(
+                      _stats?.stats['lease_start'] ?? 'N/A',
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white70 : Colors.black54,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                  Divider(color: _isDarkMode ? const Color(0xff374151) : Colors.grey[300]),
+                  ListTile(
+                    title: Text(
+                      _t('Tarehe ya Mwisho', 'Lease End'),
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white : Colors.black87,
+                        fontSize: 14,
+                      ),
+                    ),
+                    trailing: Text(
+                      _stats?.stats['lease_end'] ?? 'N/A',
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white70 : Colors.black54,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            /// Recent Payments
+            _sectionCard(
+              title: _t('Malipo ya Karibuni', 'Recent Payments'),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.check_circle, color: Colors.green),
+                    title: Text(
+                      _t('Malipo ya Kodi', 'Rent Payment'),
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white : Colors.black87,
+                        fontSize: 14,
+                      ),
+                    ),
+                    subtitle: Text(
+                      _t('Machi 2025', 'March 2025'),
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white70 : Colors.black54,
+                        fontSize: 12,
+                      ),
+                    ),
+                    trailing: Text(
+                      'TZS ${Helpers.formatMoney(monthlyRent)}',
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white : Colors.black87,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Divider(color: _isDarkMode ? const Color(0xff374151) : Colors.grey[300]),
+                  ListTile(
+                    leading: Icon(Icons.check_circle, color: Colors.green),
+                    title: Text(
+                      _t('Malipo ya Kodi', 'Rent Payment'),
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white : Colors.black87,
+                        fontSize: 14,
+                      ),
+                    ),
+                    subtitle: Text(
+                      _t('Februari 2025', 'February 2025'),
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white70 : Colors.black54,
+                        fontSize: 12,
+                      ),
+                    ),
+                    trailing: Text(
+                      'TZS ${Helpers.formatMoney(monthlyRent)}',
+                      style: GoogleFonts.poppins(
+                        color: _isDarkMode ? Colors.white : Colors.black87,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            /// Quick Actions
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                _t('Vitendo vya Haraka', 'Quick Actions'),
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: _isDarkMode ? Colors.white : Colors.black,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 1.6,
+              children: [
+                _actionCard(
+                  Icons.payments,
+                  _t('Lipa Kodi', 'Pay Rent'),
+                ),
+                _actionCard(
+                  Icons.build_outlined,
+                  _t('Ripoti Tatizo', 'Report Issue'),
+                ),
+                _actionCard(
+                  Icons.receipt_long_outlined,
+                  _t('Risiti', 'Receipts'),
+                ),
+                _actionCard(
+                  Icons.message_outlined,
+                  _t('Ujumbe', 'Messages'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _statCard(String title, String value, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: _isDarkMode ? const Color(0xff1f2937) : Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
         children: [
-          // Your Balance / Rent Due
-          _buildHeroBalanceSection(),
-          const SizedBox(height: 24),
+          Icon(icon, color: AppColors.primary, size: 28),
+          const SizedBox(height: 10),
+          Text(
+            title,
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              color: _isDarkMode ? Colors.grey[400] : Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            value,
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              color: _isDarkMode ? Colors.white : Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-          // Quick Actions
-          _buildQuickActionsRow(context),
-          const SizedBox(height: 32),
+  Widget _sectionCard({required String title, required Widget child}) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: _isDarkMode ? const Color(0xff1f2937) : Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                title,
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: _isDarkMode ? Colors.white : Colors.black,
+                ),
+              ),
+            ),
+          ),
+          child,
+        ],
+      ),
+    );
+  }
 
-          // Scrollable Services
-          _buildQuickServicesSection(context),
-          const SizedBox(height: 32),
-
-          // Recent Activity Sheet
-          _buildWhiteBottomSheet(context),
+  Widget _actionCard(IconData icon, String title) {
+    return Container(
+      decoration: BoxDecoration(
+        color: _isDarkMode ? const Color(0xff1f2937) : Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: AppColors.primary, size: 28),
+          const SizedBox(height: 10),
+          Text(
+            title,
+            style: GoogleFonts.poppins(
+              fontSize: 13,
+              color: _isDarkMode ? Colors.white : Colors.black,
+            ),
+          ),
         ],
       ),
     );

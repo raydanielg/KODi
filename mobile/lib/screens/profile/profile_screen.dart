@@ -160,80 +160,132 @@ class _ProfileScreenState extends State<ProfileScreen> {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  // Avatar Section
-                  Center(
-                    child: Stack(
+                  // Avatar Section with Card
+                  Container(
+                    padding: const EdgeInsets.all(24),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Column(
                       children: [
-                        Container(
-                          width: 120,
-                          height: 120,
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withOpacity(0.1),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.primary,
-                              width: 2,
-                            ),
-                          ),
-                          child: _avatarFile != null
-                              ? ClipOval(
-                                  child: Image.file(
-                                    _avatarFile!,
-                                    fit: BoxFit.cover,
-                                    width: 120,
-                                    height: 120,
+                        Center(
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: 120,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      AppColors.primary.withOpacity(0.2),
+                                      AppColors.primaryDark.withOpacity(0.2),
+                                    ],
                                   ),
-                                )
-                              : user?.avatar != null && user!.avatar!.isNotEmpty
-                                  ? ClipOval(
-                                      child: Image.network(
-                                        user.avatar!,
-                                        fit: BoxFit.cover,
-                                        width: 120,
-                                        height: 120,
-                                        errorBuilder: (context, error, stackTrace) {
-                                          return Center(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: AppColors.primary,
+                                    width: 3,
+                                  ),
+                                ),
+                                child: _avatarFile != null
+                                    ? ClipOval(
+                                        child: Image.file(
+                                          _avatarFile!,
+                                          fit: BoxFit.cover,
+                                          width: 120,
+                                          height: 120,
+                                        ),
+                                      )
+                                    : user?.avatar != null && user!.avatar!.isNotEmpty
+                                        ? ClipOval(
+                                            child: Image.network(
+                                              user.avatar!,
+                                              fit: BoxFit.cover,
+                                              width: 120,
+                                              height: 120,
+                                              errorBuilder: (context, error, stackTrace) {
+                                                return Center(
+                                                  child: Text(
+                                                    user.initials,
+                                                    style: GoogleFonts.poppins(
+                                                      color: AppColors.primary,
+                                                      fontWeight: FontWeight.w700,
+                                                      fontSize: 32,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          )
+                                        : Center(
                                             child: Text(
-                                              user.initials,
+                                              user?.initials ?? 'U',
                                               style: GoogleFonts.poppins(
                                                 color: AppColors.primary,
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 32,
                                               ),
                                             ),
-                                          );
-                                        },
+                                          ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: GestureDetector(
+                                  onTap: _pickAvatar,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          AppColors.primary,
+                                          AppColors.primaryDark,
+                                        ],
                                       ),
-                                    )
-                                  : Center(
-                                      child: Text(
-                                        user?.initials ?? 'U',
-                                        style: GoogleFonts.poppins(
-                                          color: AppColors.primary,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 32,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: Colors.white, width: 3),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.2),
+                                          blurRadius: 8,
+                                          offset: const Offset(0, 2),
                                         ),
-                                      ),
+                                      ],
                                     ),
+                                    child: const Icon(
+                                      Icons.camera_alt_rounded,
+                                      color: Colors.white,
+                                      size: 22,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: GestureDetector(
-                            onTap: _pickAvatar,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: AppColors.primary,
-                                shape: BoxShape.circle,
-                                border: Border.all(color: Colors.white, width: 2),
-                              ),
-                              child: const Icon(
-                                Icons.camera_alt_rounded,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                            ),
+                        const SizedBox(height: 16),
+                        Text(
+                          user?.name ?? 'User',
+                          style: GoogleFonts.poppins(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xff111827),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          user?.roleLabel ?? '',
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: Colors.grey[600],
                           ),
                         ),
                       ],
@@ -241,158 +293,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 24),
                   
+                  // Info Cards Row
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _infoCard(
+                          'Barua Pepe',
+                          user?.email ?? 'N/A',
+                          Icons.email_outlined,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _infoCard(
+                          'Jukumu',
+                          user?.roleLabel ?? 'N/A',
+                          Icons.badge_outlined,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  
                   // Name Field
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xffe5e7eb)),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Jina Kamili (Full Name)',
-                          style: GoogleFonts.poppins(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        TextField(
-                          controller: _nameController,
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            color: const Color(0xff111827),
-                          ),
-                          decoration: InputDecoration(
-                            hintText: 'Weka jina lako',
-                            hintStyle: GoogleFonts.poppins(
-                              color: Colors.grey[400],
-                            ),
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ],
-                    ),
+                  _inputCard(
+                    'Jina Kamili (Full Name)',
+                    'Weka jina lako',
+                    _nameController,
+                    TextInputType.text,
+                    false,
                   ),
                   const SizedBox(height: 16),
                   
                   // Phone Field
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xffe5e7eb)),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Namba ya Simu (Phone)',
-                          style: GoogleFonts.poppins(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        TextField(
-                          controller: _phoneController,
-                          keyboardType: TextInputType.phone,
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            color: const Color(0xff111827),
-                          ),
-                          decoration: InputDecoration(
-                            hintText: 'Weka namba ya simu',
-                            hintStyle: GoogleFonts.poppins(
-                              color: Colors.grey[400],
-                            ),
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  
-                  // Email (Read-only)
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Barua Pepe (Email)',
-                          style: GoogleFonts.poppins(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          user?.email ?? '',
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  
-                  // Role (Read-only)
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Jukumu (Role): ',
-                          style: GoogleFonts.poppins(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                        Text(
-                          user?.roleLabel ?? '',
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.primary,
-                          ),
-                        ),
-                      ],
-                    ),
+                  _inputCard(
+                    'Namba ya Simu (Phone)',
+                    'Weka namba ya simu',
+                    _phoneController,
+                    TextInputType.phone,
+                    false,
                   ),
                   const SizedBox(height: 32),
                   
                   // Update Button
                   SizedBox(
                     width: double.infinity,
-                    height: 54,
+                    height: 56,
                     child: ElevatedButton(
                       onPressed: _isUploading ? null : _updateProfile,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
+                        foregroundColor: Colors.black,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(16),
                         ),
+                        elevation: 0,
+                        shadowColor: AppColors.primary.withOpacity(0.3),
                       ),
                       child: _isUploading
                           ? const SizedBox(
@@ -400,21 +356,130 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               width: 24,
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                             )
                           : Text(
                               'Sasisha Wasifu (Update Profile)',
                               style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 15,
+                                fontSize: 16,
                               ),
                             ),
                     ),
                   ),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),
+    );
+  }
+
+  Widget _infoCard(String title, String value, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: AppColors.primary, size: 20),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            style: GoogleFonts.poppins(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: GoogleFonts.poppins(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xff111827),
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _inputCard(
+    String label,
+    String hint,
+    TextEditingController controller,
+    TextInputType keyboardType,
+    bool readOnly,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[700],
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: controller,
+            keyboardType: keyboardType,
+            readOnly: readOnly,
+            style: GoogleFonts.poppins(
+              fontSize: 15,
+              color: const Color(0xff111827),
+            ),
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: GoogleFonts.poppins(
+                color: Colors.grey[400],
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
