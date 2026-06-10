@@ -220,6 +220,9 @@ class _TenantDashboardState extends State<TenantDashboard> {
   }
 
   Widget _buildHeroBalanceSection() {
+    final monthlyRent = _stats?.stats['monthly_rent'] ?? 0.0;
+    final propertyName = _stats?.stats['property_name'] ?? 'N/A';
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -229,7 +232,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
             _t('Kodi ya Mwezi Huu', 'Monthly Rent'),
             style: GoogleFonts.poppins(
               fontSize: 13,
-              color: const Color(0xFF64748B),
+              color: Colors.grey[600],
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -239,20 +242,19 @@ class _TenantDashboardState extends State<TenantDashboard> {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                'TSh 450,000',
-                style: GoogleFonts.spaceGrotesk(
-                  fontSize: 34,
+                'TSh ${Helpers.formatMoney(monthlyRent)}',
+                style: GoogleFonts.poppins(
+                  fontSize: 28,
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFF1E293B),
-                  letterSpacing: -1,
+                  color: const Color(0xff111827),
                 ),
               ),
               const SizedBox(width: 8),
               Text(
-                'Apt A4',
+                propertyName,
                 style: GoogleFonts.poppins(
                   fontSize: 14,
-                  color: const Color(0xFFFE5D37),
+                  color: AppColors.primary,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -268,7 +270,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          // Action 1: Lipa Sasa (Send/Coral Background)
+          // Action 1: Lipa Sasa
           Expanded(
             child: ElevatedButton.icon(
               onPressed: () {
@@ -283,7 +285,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFE5D37),
+                backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
@@ -295,7 +297,7 @@ class _TenantDashboardState extends State<TenantDashboard> {
           ),
           const SizedBox(width: 12),
 
-          // Action 2: Omba Fundi (Request / Light Background)
+          // Action 2: Omba Fundi
           Expanded(
             child: ElevatedButton.icon(
               onPressed: () {
