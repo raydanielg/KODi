@@ -10,7 +10,7 @@ class PropertyController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Property::with('user');
+        $query = Property::with('landlord');
 
         if ($search = $request->get('search')) {
             $query->where(function ($q) use ($search) {
@@ -40,7 +40,7 @@ class PropertyController extends Controller
 
     public function show($id)
     {
-        $property = Property::with('user')->findOrFail($id);
+        $property = Property::with('landlord')->findOrFail($id);
         return view('admin.properties.show', compact('property'));
     }
 
