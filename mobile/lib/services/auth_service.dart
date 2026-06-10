@@ -67,9 +67,9 @@ class AuthService {
     await _clearAuthData();
   }
 
-  void updateUser(UserModel updatedUser) {
+  Future<void> updateUser(UserModel updatedUser) async {
     _api.setAuth(_api.token ?? '', updatedUser);
-    _saveAuthData(_api.token ?? '', updatedUser);
+    await _saveAuthData(_api.token ?? '', updatedUser);
   }
 
   Future<bool> isLoggedIn() async {
