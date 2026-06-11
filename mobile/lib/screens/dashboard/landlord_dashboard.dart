@@ -21,9 +21,12 @@ class LandlordDashboard extends StatefulWidget {
 class _LandlordDashboardState extends State<LandlordDashboard> {
   final AuthService _authService = AuthService();
   final DashboardService _dashboardService = DashboardService();
+  final PropertyService _propertyService = PropertyService(ApiService());
 
   DashboardStatsModel? _stats;
+  List<PropertyModel> _properties = [];
   bool _isLoading = true;
+  bool _isLoadingProperties = true;
   String? _error;
 
   @override
