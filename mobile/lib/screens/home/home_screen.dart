@@ -344,10 +344,10 @@ class _HomeScreenState extends State<HomeScreen>
           color: Color(0xff0a0a0a),
         ),
         child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                children: [
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Row(
