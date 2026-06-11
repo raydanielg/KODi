@@ -118,11 +118,20 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
   // ─── Sliver Header ────────────────────────────────────────────────────────
 
   Widget _buildSliverHeader(BuildContext context, String name, String? avatar) {
+    final isDark = AppSettings.instance.isDark;
+    final settings = AppSettings.instance;
+    final bgColor = isDark ? const Color(0xFF141414) : Colors.white;
+    final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
+    final subColor = isDark ? const Color(0xFF9CA3AF) : const Color(0xFF9CA3AF);
+    final btnBg = isDark ? const Color(0xFF1E1E1E) : const Color(0xFFF4F6F8);
+    final btnBorder = isDark ? const Color(0xFF2A2A2A) : const Color(0xFFE2E8F0);
+    final btnIcon = isDark ? const Color(0xFFD1D5DB) : const Color(0xFF374151);
+
     return SliverAppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: bgColor,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
-      shadowColor: Colors.black.withValues(alpha: 0.06),
+      shadowColor: Colors.black.withValues(alpha: 0.08),
       forceElevated: true,
       floating: true,
       snap: true,
@@ -130,36 +139,124 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
       toolbarHeight: 70,
       title: Row(
         children: [
+          // Avatar → goes to profile
           GestureDetector(
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LandlordProfilePage())),
-            child: _buildAvatar(name, avatar),
+            child: _buildAvatar(name, avatar, isDark),
           ),
           const SizedBox(width: 12),
+          // Greeting + Name (tapping name also opens profile)
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(_greeting(),
-                    style: const TextStyle(fontSize: 11, color: Color(0xFF9CA3AF), fontWeight: FontWeight.w500)),
-                const SizedBox(height: 2),
-                Text(name.split(' ').first,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: Color(0xFF0F172A)),
-                    overflow: TextOverflow.ellipsis),
-              ],
+            child: GestureDetector(
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LandlordProfilePage())),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(_greeting(), style: TextStyle(fontSize: 11, color: subColor, fontWeight: FontWeight.w500)),
+                  const SizedBox(height: 2),
+                  Row(mainAxisSize: MainAxisSize.min, children: [
+                    Text(name.split(' ').first,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: textColor),
+                        overflow: TextOverflow.ellipsis),
+                    const SizedBox(width: 4),
+                    Icon(Icons.chevron_right_rounded, size: 16, color: subColor),
+                  ]),
+                ],
+              ),
             ),
           ),
-          _headerIconBtn(Icons.notifications_outlined,
-              () => Helpers.showSnackBar(context, 'Arifa zako hapa'), badge: true),
+          // Language toggle
+          _headerBtn(
+            child: Text(settings.isEnglish ? 'EN' : 'SW',
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppColors.primary)),
+            bg: btnBg, border: btnBorder,
+            onTap: () async {
+              HapticFeedback.selectionClick();
+              await settings.toggleLocale();
+              if (mounted) {
+                Helpers.showSnackBar(context,
+                    settings.isEnglish ? '🌐 Language: English' : '🌐 Lugha: Kiswahili');
+              }
+            },
+          ),
           const SizedBox(width: 8),
-          _headerIconBtn(Icons.person_outline_rounded,
-              () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LandlordProfilePage()))),
+          // Dark mode toggle
+          _headerBtn(
+            child: Icon(isDark ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+                color: isDark ? const Color(0xFFFBBF24) : const Color(0xFF374151), size: 18),
+            bg: btnBg, border: btnBorder,
+            onTap: () async {
+              HapticFeedback.selectionClick();
+              await settings.toggleTheme();
+            },
+          ),
+          const SizedBox(width: 8),
+          // Notifications with real count
+          _notificationBtn(context, btnBg, btnBorder, btnIcon),
         ],
       ),
     );
   }
 
-  Widget _buildAvatar(String name, String? avatarUrl) {
+  Widget _headerBtn({required Widget child, required Color bg, required Color border, required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 40, height: 40,
+        decoration: BoxDecoration(
+          color: bg, borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: border),
+        ),
+        child: Center(child: child),
+      ),
+    );
+  }
+
+  Widget _notificationBtn(BuildContext context, Color bg, Color border, Color iconColor) {
+    return GestureDetector(
+      onTap: () async {
+        HapticFeedback.lightImpact();
+        await Navigator.push(context, MaterialPageRoute(builder: (_) => const NotificationsScreen()));
+        _loadNotifCount(); // refresh count after returning
+      },
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            width: 40, height: 40,
+            decoration: BoxDecoration(
+              color: bg, borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: border),
+            ),
+            child: Icon(
+              _unreadNotifications > 0 ? Icons.notifications_rounded : Icons.notifications_outlined,
+              color: _unreadNotifications > 0 ? AppColors.primary : iconColor,
+              size: 20,
+            ),
+          ),
+          if (_unreadNotifications > 0)
+            Positioned(
+              top: -4, right: -4,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.white, width: 1.5),
+                ),
+                child: Text(
+                  _unreadNotifications > 99 ? '99+' : '$_unreadNotifications',
+                  style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.w800),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAvatar(String name, String? avatarUrl, bool isDark) {
     final initials = name.isNotEmpty
         ? name.split(' ').take(2).map((w) => w.isNotEmpty ? w[0] : '').join().toUpperCase()
         : 'L';
@@ -167,7 +264,7 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
       width: 44, height: 44,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3), width: 2),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.35), width: 2),
         color: AppColors.primaryLight,
       ),
       child: ClipRRect(
@@ -179,27 +276,6 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
             : Center(child: Text(initials,
                 style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w800, fontSize: 16))),
       ),
-    );
-  }
-
-  Widget _headerIconBtn(IconData icon, VoidCallback onTap, {bool badge = false}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Stack(children: [
-        Container(
-          width: 40, height: 40,
-          decoration: BoxDecoration(
-            color: const Color(0xFFF4F6F8),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
-          ),
-          child: Icon(icon, color: const Color(0xFF374151), size: 20),
-        ),
-        if (badge)
-          Positioned(top: 8, right: 8,
-            child: Container(width: 7, height: 7,
-              decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle))),
-      ]),
     );
   }
 
