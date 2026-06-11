@@ -845,7 +845,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                 ),
                           ),
-                        ),
                         const SizedBox(height: 24),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
