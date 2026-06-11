@@ -272,62 +272,70 @@
     <div class="col-lg-6 animate-fade-in delay-3">
         <div class="info-card">
             <h3><i class="bi bi-person-check me-2"></i>Property Owner</h3>
+            @if($property->landlord)
             <div class="person-card">
                 <div class="person-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    SM
+                    {{ strtoupper(substr($property->landlord->name, 0, 2)) }}
                 </div>
                 <div>
-                    <div class="person-name">Sarah Miller</div>
+                    <div class="person-name">{{ $property->landlord->name }}</div>
                     <div class="person-role">Landlord</div>
                     <div class="person-contact">
-                        <i class="bi bi-envelope me-1"></i> sarah@example.com<br>
-                        <i class="bi bi-phone me-1"></i> +255 712 345 678
+                        <i class="bi bi-envelope me-1"></i> {{ $property->landlord->email }}<br>
+                        <i class="bi bi-phone me-1"></i> {{ $property->landlord->phone }}
                     </div>
                 </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Owner Since</span>
-                <span class="info-value">Jan 2020</span>
+            @else
+            <div class="person-card">
+                <div class="person-avatar" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    —
+                </div>
+                <div>
+                    <div class="person-name">No Owner</div>
+                    <div class="person-role">—</div>
+                    <div class="person-contact">
+                        <i class="bi bi-envelope me-1"></i> —<br>
+                        <i class="bi bi-phone me-1"></i> —
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Total Properties</span>
-                <span class="info-value">5</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Verification</span>
-                <span class="status-badge bg-success bg-opacity-10 text-success">Verified</span>
-            </div>
+            @endif
         </div>
     </div>
     
     <div class="col-lg-6 animate-fade-in delay-3">
         <div class="info-card">
             <h3><i class="bi bi-person-badge me-2"></i>Agent Information</h3>
+            @if($property->agent)
             <div class="person-card">
                 <div class="person-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                    MJ
+                    {{ strtoupper(substr($property->agent->name, 0, 2)) }}
                 </div>
                 <div>
-                    <div class="person-name">Michael Johnson</div>
+                    <div class="person-name">{{ $property->agent->name }}</div>
                     <div class="person-role">Real Estate Agent</div>
                     <div class="person-contact">
-                        <i class="bi bi-envelope me-1"></i> michael@agent.com<br>
-                        <i class="bi bi-phone me-1"></i> +255 765 432 109
+                        <i class="bi bi-envelope me-1"></i> {{ $property->agent->email }}<br>
+                        <i class="bi bi-phone me-1"></i> {{ $property->agent->phone }}
                     </div>
                 </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Agency</span>
-                <span class="info-value">Premium Properties Ltd</span>
+            @else
+            <div class="person-card">
+                <div class="person-avatar" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    —
+                </div>
+                <div>
+                    <div class="person-name">No Agent</div>
+                    <div class="person-role">—</div>
+                    <div class="person-contact">
+                        <i class="bi bi-envelope me-1"></i> —<br>
+                        <i class="bi bi-phone me-1"></i> —
+                    </div>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-label">Commission</span>
-                <span class="info-value">5%</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">License</span>
-                <span class="status-badge bg-success bg-opacity-10 text-success">Licensed</span>
-            </div>
+            @endif
         </div>
     </div>
 </div>
