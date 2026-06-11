@@ -23,7 +23,6 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
   final NotificationService _notifService = NotificationService();
   Map<String, dynamic> _stats = {};
   bool _isLoading = true;
-  String? _error;
   int _unreadNotifications = 0;
 
   @override
@@ -50,7 +49,7 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
   }
 
   Future<void> _load() async {
-    setState(() { _isLoading = true; _error = null; });
+    setState(() => _isLoading = true);
     try {
       final res = await _service.getDashboard();
       if (res['success'] == true && res['data'] != null) {
@@ -270,7 +269,7 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
         borderRadius: BorderRadius.circular(12),
         child: avatarUrl != null && avatarUrl.isNotEmpty
             ? Image.network(avatarUrl, fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Center(child: Text(initials,
+                errorBuilder: (_, e, __) => Center(child: Text(initials,
                     style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w800, fontSize: 16))))
             : Center(child: Text(initials,
                 style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w800, fontSize: 16))),
