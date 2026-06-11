@@ -1,3 +1,6 @@
+double? _d(dynamic v) =>
+    v == null ? null : double.tryParse(v.toString());
+
 class TenantModel {
   final int id;
   final String firstName;
