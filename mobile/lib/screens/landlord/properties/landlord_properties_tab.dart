@@ -56,7 +56,7 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F5F9),
+      backgroundColor: const Color(0xff0a0a0a),
       body: SafeArea(
         child: Column(
           children: [
@@ -98,25 +98,26 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
     final name = user?.name ?? 'Mwenye Nyumba';
 
     return Container(
-      color: Colors.white,
+      color: const Color(0xff0a0a0a),
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryDark]),
+              color: AppColors.primary.withOpacity(0.15),
               borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColors.primary.withOpacity(0.2)),
             ),
-            child: const Icon(Icons.apartment_rounded, color: Colors.white, size: 20),
+            child: const Icon(Icons.apartment_rounded, color: AppColors.primary, size: 20),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const Text('Mali Zangu',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Color(0xFF0F172A))),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white)),
               Text('${_properties.length} mali kwenye portfolio ya $name',
-                  style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 11),
+                  style: const TextStyle(color: Colors.white60, fontSize: 11),
                   overflow: TextOverflow.ellipsis),
             ]),
           ),
@@ -125,10 +126,10 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
             child: Container(
               width: 38, height: 38,
               decoration: BoxDecoration(
-                color: const Color(0xFFF4F6F8), borderRadius: BorderRadius.circular(11),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                color: const Color(0xff1e1e1e), borderRadius: BorderRadius.circular(11),
+                border: Border.all(color: Colors.white.withOpacity(0.08)),
               ),
-              child: const Icon(Icons.refresh_rounded, color: Color(0xFF64748B), size: 18),
+              child: const Icon(Icons.refresh_rounded, color: Colors.white60, size: 18),
             ),
           ),
         ],
