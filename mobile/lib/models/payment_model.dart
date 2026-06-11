@@ -1,3 +1,6 @@
+double _pd(dynamic v, [double def = 0.0]) =>
+    v == null ? def : double.tryParse(v.toString()) ?? def;
+
 class PaymentModel {
   final int id;
   final int leaseId;

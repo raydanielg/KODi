@@ -54,13 +54,11 @@ class TenantModel {
       avatar: json['avatar'],
       propertyTitle: json['property'] != null ? json['property']['title'] : json['property_title'],
       leaseStatus: json['lease_status'] ?? (json['lease'] != null ? json['lease']['status'] : null),
-      rentAmount: json['rent_amount'] != null ? (json['rent_amount']).toDouble() :
-          (json['lease'] != null && json['lease']['rent_amount'] != null
-              ? (json['lease']['rent_amount']).toDouble()
-              : null),
+      rentAmount: _d(json['rent_amount']) ??
+          _d(json['lease'] != null ? json['lease']['rent_amount'] : null),
       leaseEnd: json['lease_end'] ?? (json['lease'] != null ? json['lease']['end_date'] : null),
       hasPaidThisMonth: json['has_paid_this_month'] ?? false,
-      outstandingBalance: json['outstanding_balance']?.toDouble(),
+      outstandingBalance: _d(json['outstanding_balance']),
       createdAt: json['created_at'],
     );
   }
