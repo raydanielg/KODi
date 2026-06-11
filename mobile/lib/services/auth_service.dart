@@ -16,7 +16,7 @@ class AuthService {
       final response = await _api.post('auth/login', body: {
         'email': email,
         'password': password,
-      });
+      }, timeoutSeconds: 30);
       print('✅ Login Response: $response');
       final user = UserModel.fromJson(response['data']['user']);
       final token = response['data']['token'] as String;
