@@ -343,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen>
         decoration: const BoxDecoration(
           color: Color(0xff0a0a0a),
         ),
-          child: SafeArea(
+        child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
