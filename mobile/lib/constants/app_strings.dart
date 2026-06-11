@@ -1,3 +1,5 @@
+import '../utils/app_settings.dart';
+
 class AppStrings {
   AppStrings._();
 
