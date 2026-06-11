@@ -42,11 +42,14 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
     });
     try {
       final stats = await _dashboardService.fetchDashboardStats(role: 'landlord');
+      print('📊 Dashboard stats loaded: ${stats.stats}');
+      print('📊 My properties count: ${stats.myProperties?.length}');
       setState(() {
         _stats = stats;
         _isLoading = false;
       });
     } catch (e) {
+      print('❌ Dashboard load error: $e');
       setState(() {
         _isLoading = false;
         _error = e.toString();
@@ -516,6 +519,8 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
 
   Widget _buildPortfolioHighlightCard(BuildContext context) {
     final stats = _stats?.stats ?? {};
+    print('📊 Building portfolio card with stats: $stats');
+    
     final myProperties = _toInt(stats['my_properties']);
     final activeLeases = _toInt(stats['active_leases']);
     final pendingPayments = _toInt(stats['pending_payments']);
@@ -527,6 +532,8 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
     final collectedRevenue = _toDouble(stats['collected_revenue']);
     final outstandingRevenue = _toDouble(stats['outstanding_revenue']);
     final expectedRent = _toDouble(stats['expected_rent']);
+
+    print('📊 Parsed values: myProperties=$myProperties, activeLeases=$activeLeases, collectedRevenue=$collectedRevenue');
 
     final revenueProgress = expectedRent > 0 ? (collectedRevenue / expectedRent).clamp(0.0, 1.0) : 0.0;
     final revenuePercentage = (revenueProgress * 100).toInt();
