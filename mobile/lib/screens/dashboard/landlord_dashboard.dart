@@ -217,9 +217,15 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                                 ? Container(
                                     padding: const EdgeInsets.all(32),
                                     decoration: BoxDecoration(
-                                      color: const Color(0xff1e1e1e),
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          const Color(0xff1a1a1a),
+                                          const Color(0xff2d2d2d),
+                                        ],
+                                      ),
                                       borderRadius: BorderRadius.circular(16),
-                                      border: Border.all(color: Colors.white.withOpacity(0.08)),
                                     ),
                                     child: Column(
                                       children: [
@@ -264,9 +270,16 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
     return Container(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 48, bottom: 16),
       decoration: BoxDecoration(
-        color: const Color(0xff0a0a0a),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xff1a1a1a),
+            const Color(0xff2d2d2d),
+          ],
+        ),
         border: Border(
-          bottom: BorderSide(color: Colors.white.withOpacity(0.08), width: 1),
+          bottom: BorderSide(color: Colors.white.withOpacity(0.1), width: 1),
         ),
       ),
       child: Row(
@@ -699,12 +712,18 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 width: MediaQuery.of(context).size.width * 0.27,
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 decoration: BoxDecoration(
-                  color: const Color(0xff1e1e1e),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      const Color(0xff1a1a1a),
+                      const Color(0xff2d2d2d),
+                    ],
+                  ),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.white.withOpacity(0.08)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withOpacity(0.2),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -795,12 +814,18 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xff1e1e1e),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            const Color(0xff1a1a1a),
+            const Color(0xff2d2d2d),
+          ],
+        ),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white.withOpacity(0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.15),
+            color: Colors.black.withOpacity(0.2),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
