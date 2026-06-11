@@ -57,9 +57,7 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
         final stats = data['stats'] ?? data;
         setState(() => _stats = Map<String, dynamic>.from(stats));
       }
-    } catch (e) {
-      setState(() => _error = e.toString());
-    }
+    } catch (_) {}
     if (mounted) setState(() => _isLoading = false);
   }
 
@@ -749,9 +747,7 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
   // Returns the surface card color based on theme
   Color get _cardBg => AppSettings.instance.isDark ? const Color(0xFF1C1C1C) : Colors.white;
   Color get _cardBorder => AppSettings.instance.isDark ? const Color(0xFF2A2A2A) : const Color(0xFFE2E8F0);
-  Color get _textPrimary => AppSettings.instance.isDark ? Colors.white : const Color(0xFF0F172A);
   Color get _textSecondary => AppSettings.instance.isDark ? const Color(0xFF9CA3AF) : const Color(0xFF64748B);
-  Color get _dividerColor => AppSettings.instance.isDark ? const Color(0xFF2A2A2A) : const Color(0xFFF1F5F9);
 
   String _greeting() {
     final h = DateTime.now().hour;
