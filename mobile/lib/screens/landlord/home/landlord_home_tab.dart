@@ -168,12 +168,13 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
             child: Text(settings.isEnglish ? 'EN' : 'SW',
                 style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: AppColors.primary)),
             bg: btnBg, border: btnBorder,
-            onTap: () async {
+            onTap: () {
               HapticFeedback.selectionClick();
-              await settings.toggleLocale();
-              if (!mounted) return;
-              Helpers.showSnackBar(context,
-                  settings.isEnglish ? '🌐 Language: English' : '🌐 Lugha: Kiswahili');
+              settings.toggleLocale().then((_) {
+                if (!mounted) return;
+                Helpers.showSnackBar(context,
+                    settings.isEnglish ? '🌐 Language: English' : '🌐 Lugha: Kiswahili');
+              });
             },
           ),
           const SizedBox(width: 8),
