@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Helpers {
   Helpers._();
 
-  static void showSnackBar(BuildContext context, String message, {bool isError = false}) {
+  static bool _isNetworkError(String msg) {
+    final m = msg.toLowerCase();
+    return m.contains('internet') || m.contains('mtandao') ||
+        m.contains('socketexception') || m.contains('muunganisho') ||
+        m.contains('failed host') || m.contains('timeout') ||
+        m.contains('timed out') || m.contains('connection');
+  }
+
+  static void showSnackBar(BuildContext context, String message,
+      {bool isError = false, VoidCallback? onRetry}) {
+    // For network errors, show the beautiful dialog instead
+    if (isError && _isNetworkError(message)) {
+      showNetworkError(context, message: message, onRetry: onRetry);
+      return;
+    }
+
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -19,7 +35,6 @@ class Helpers {
               child: Text(
                 message,
                 style: const TextStyle(
-                  fontFamily: 'Inter',
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -33,10 +48,22 @@ class Helpers {
         elevation: 6,
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         duration: const Duration(seconds: 4),
+      ),
+    );
+  }
+
+  static void showNetworkError(BuildContext context,
+      {String? message, VoidCallback? onRetry}) {
+    HapticFeedback.mediumImpact();
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isDismissible: true,
+      builder: (_) => _NetworkErrorSheet(
+        message: message,
+        onRetry: onRetry,
       ),
     );
   }
