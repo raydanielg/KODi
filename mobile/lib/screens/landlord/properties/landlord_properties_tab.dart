@@ -317,11 +317,9 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
                 Container(
                   width: 48, height: 48,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [AppColors.primaryLight, AppColors.primaryLight.withValues(alpha: 0.5)],
-                    ),
-                    borderRadius: BorderRadius.circular(13),
-                    border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+                    color: AppColors.primary.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: AppColors.primary.withOpacity(0.2)),
                   ),
                   child: Icon(typeIcon, color: AppColors.primary, size: 22),
                 ),
@@ -329,15 +327,15 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     // Property title
-                    Text(p.title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15, color: Color(0xFF0F172A)),
+                    Text(p.title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: Colors.white),
                         overflow: TextOverflow.ellipsis),
                     const SizedBox(height: 3),
                     // Location
                     Row(children: [
-                      const Icon(Icons.location_on_rounded, color: Color(0xFF9CA3AF), size: 12),
+                      const Icon(Icons.location_on_rounded, color: Colors.white60, size: 12),
                       const SizedBox(width: 3),
                       Flexible(child: Text(p.fullLocation,
-                          style: const TextStyle(color: Color(0xFF64748B), fontSize: 12),
+                          style: const TextStyle(color: Colors.white60, fontSize: 12),
                           overflow: TextOverflow.ellipsis)),
                     ]),
                     const SizedBox(height: 5),
@@ -393,9 +391,9 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
             child: Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: const Color(0xff2a2a2a),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: Colors.white.withOpacity(0.08)),
               ),
               child: Row(
                 children: [
@@ -407,8 +405,8 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
                   const Spacer(),
                   Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                     Text(p.formattedPrice,
-                        style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w900, fontSize: 15)),
-                    const Text('/mwezi', style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 10)),
+                        style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 15)),
+                    const Text('/mwezi', style: TextStyle(color: Colors.white60, fontSize: 10)),
                   ]),
                 ],
               ),
