@@ -320,14 +320,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                       builder: (context) => const ForgotPasswordScreen(),
                                     ),
                                   ),
-                                  child: Text(
-                                    AppStrings.t(AppStrings.forgotPassword),
-                                    style: GoogleFonts.poppins(
-                                      color: AppColors.primary,
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: AppColors.primary,
+                                    textStyle: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 14,
                                     ),
                                   ),
+                                  child: Text(AppStrings.t(AppStrings.forgotPassword)),
                                 ),
                               ],
                             ),
@@ -374,13 +374,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pushNamed(context, '/register'),
-                                  child: Text(
-                                    AppStrings.t(AppStrings.createAccount),
-                                    style: GoogleFonts.poppins(
-                                      color: AppColors.primary,
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: AppColors.primary,
+                                    textStyle: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
+                                  child: Text(AppStrings.t(AppStrings.createAccount)),
                                 ),
                               ],
                             ),
