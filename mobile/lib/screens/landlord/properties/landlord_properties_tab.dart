@@ -51,7 +51,6 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
 
   int get _verifiedCount  => _properties.where((p) => p.approvedAt != null).length;
   int get _pendingCount   => _properties.where((p) => p.approvedAt == null).length;
-  int get _availableCount => _properties.where((p) => p.status == 'available').length;
   int get _rentedCount    => _properties.where((p) => p.status == 'rented').length;
 
   @override
