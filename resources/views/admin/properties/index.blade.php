@@ -97,8 +97,8 @@
                     </td>
                     <td style="font-size:0.82rem;color:var(--text-sub);">{{ $prop->location_area }}, {{ $prop->location_city }}</td>
                     <td>
-                        <div style="font-size:0.82rem;font-weight:600;color:var(--text-primary);">{{ $prop->user?->name ?? '—' }}</div>
-                        <div style="font-size:0.72rem;color:var(--text-muted);">{{ $prop->user?->email }}</div>
+                        <div style="font-size:0.82rem;font-weight:600;color:var(--text-primary);">{{ $prop->landlord?->name ?? '—' }}</div>
+                        <div style="font-size:0.72rem;color:var(--text-muted);">{{ $prop->landlord?->email }}</div>
                     </td>
                     <td style="font-weight:700;color:var(--text-primary);">TZS {{ number_format($prop->price) }}</td>
                     <td>
