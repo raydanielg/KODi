@@ -292,6 +292,10 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
       default:          typeIcon = Icons.home_rounded;
     }
 
+    // Get first image or use placeholder
+    final firstImage = p.images.isNotEmpty ? p.images.first : p.mainImage;
+    final hasImage = firstImage != null && firstImage.isNotEmpty;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
       decoration: BoxDecoration(
@@ -309,54 +313,188 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // ── Property Image
+          GestureDetector(
+            onTap: () => _showPropertyDetails(context, p),
+            child: Container(
+              height: 160,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color(0xff2a2a2a),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+              ),
+              child: hasImage
+                  ? ClipRRect(
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                      child: Image.network(
+                        firstImage,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return _buildImagePlaceholder(typeIcon);
+                        },
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  : null,
+                              color: AppColors.primary,
+                            ),
+                          );
+                        },
+                      ),
+                    )
+                  : _buildImagePlaceholder(typeIcon),
+            ),
+          ),
 
-          // ── Top row: icon + title + status badge
+          // ── Image count badge
+          if (p.images.isNotEmpty)
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.image, color: Colors.white, size: 12),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${p.images.length}',
+                      style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+          // ── Content
           Padding(
-            padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
-            child: Row(
+            padding: const EdgeInsets.all(14),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // ── Title and status row
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        p.title,
+                        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.white),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    // Status badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: statusBg.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: statusColor.withValues(alpha: 0.3)),
+                      ),
+                      child: Row(mainAxisSize: MainAxisSize.min, children: [
+                        Icon(statusIcon, size: 10, color: statusColor),
+                        const SizedBox(width: 4),
+                        Text(statusLabel, style: TextStyle(color: statusColor, fontSize: 10, fontWeight: FontWeight.w800)),
+                      ]),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 8),
+
+                // ── Location
+                Row(children: [
+                  const Icon(Icons.location_on_rounded, color: Colors.white60, size: 12),
+                  const SizedBox(width: 3),
+                  Flexible(child: Text(p.fullLocation,
+                      style: const TextStyle(color: Colors.white60, fontSize: 12),
+                      overflow: TextOverflow.ellipsis)),
+                ]),
+
+                const SizedBox(height: 12),
+
+                // ── Info chips row
                 Container(
-                  width: 48, height: 48,
+                  padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.15),
+                    color: const Color(0xff2a2a2a),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+                    border: Border.all(color: Colors.white.withOpacity(0.08)),
                   ),
-                  child: Icon(typeIcon, color: AppColors.primary, size: 22),
+                  child: Row(
+                    children: [
+                      _infoChip(Icons.home_rounded, p.typeLabel),
+                      _infoChip(Icons.bed_rounded, '${p.bedrooms} Bed'),
+                      _infoChip(Icons.bathtub_rounded, '${p.bathrooms} Bath'),
+                      if (p.hasWater) _infoChip(Icons.water_drop_rounded, 'Maji'),
+                      if (p.hasElectricity) _infoChip(Icons.bolt_rounded, 'Umeme'),
+                      const Spacer(),
+                      Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                        Text(p.formattedPrice,
+                            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w700, fontSize: 15)),
+                        const Text('/mwezi', style: TextStyle(color: Colors.white60, fontSize: 10)),
+                      ]),
+                    ],
+                  ),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    // Property title
-                    Text(p.title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15, color: Colors.white),
-                        overflow: TextOverflow.ellipsis),
-                    const SizedBox(height: 3),
-                    // Location
-                    Row(children: [
-                      const Icon(Icons.location_on_rounded, color: Colors.white60, size: 12),
-                      const SizedBox(width: 3),
-                      Flexible(child: Text(p.fullLocation,
-                          style: const TextStyle(color: Colors.white60, fontSize: 12),
-                          overflow: TextOverflow.ellipsis)),
-                    ]),
-                    const SizedBox(height: 5),
-                    // Owner row
-                    if (p.landlordName != null) _ownerRow(p.landlordName!, p.landlordPhone),
-                  ]),
+
+                // ── Action buttons
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(child: _actionBtn(
+                      Icons.visibility_rounded, 'Angalia',
+                      const Color(0xFF3B82F6), const Color(0xFF3B82F6),
+                      () => _showPropertyDetails(context, p),
+                    )),
+                    const SizedBox(width: 8),
+                    Expanded(child: _actionBtn(
+                      Icons.edit_rounded, 'Hariri',
+                      const Color(0xFF8B5CF6), const Color(0xFF8B5CF6),
+                      () => _showSuccess(context, '✏️ Hariri mali inaendelea hivi karibuni!'),
+                    )),
+                    const SizedBox(width: 8),
+                    Expanded(child: _actionBtn(
+                      Icons.sms_rounded, 'SMS',
+                      const Color(0xFF10B981), const Color(0xFF10B981),
+                      () => _shareViaSMS(context, p),
+                    )),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                  // Status badge
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
-                    decoration: BoxDecoration(color: statusBg, borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: statusColor.withValues(alpha: 0.3))),
-                    child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      Icon(statusIcon, size: 10, color: statusColor),
-                      const SizedBox(width: 4),
-                      Text(statusLabel, style: TextStyle(color: statusColor, fontSize: 10, fontWeight: FontWeight.w800)),
-                    ]),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildImagePlaceholder(IconData icon) {
+    return Container(
+      color: const Color(0xff2a2a2a),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: Colors.white24, size: 48),
+            const SizedBox(height: 8),
+            const Text(
+              'Hakuna Picha',
+              style: TextStyle(color: Colors.white38, fontSize: 12),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
                   ),
                   const SizedBox(height: 5),
                   // Verified / Pending badge
