@@ -21,7 +21,7 @@ class LandlordDashboard extends StatefulWidget {
 class _LandlordDashboardState extends State<LandlordDashboard> {
   final AuthService _authService = AuthService();
   final DashboardService _dashboardService = DashboardService();
-  final PropertyService _propertyService = PropertyService(ApiService());
+  final LandlordService _landlordService = LandlordService();
 
   DashboardStatsModel? _stats;
   List<PropertyModel> _properties = [];
@@ -66,14 +66,17 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       _isLoadingProperties = true;
     });
     try {
-      final user = _authService.currentUser;
-      final result = await _propertyService.getProperties();
-      if (result['success'] == true) {
-        final allProperties = result['properties'] as List<PropertyModel>;
-        // Filter properties belonging to current landlord
-        final myProperties = allProperties.where((p) => p.userId == user.id).toList();
+      final result = await _landlordService.getProperties();
+      if (result['success'] == true && result['data'] != null) {
+        final data = result['data'];
+        final List<dynamic> propertiesData = data is Map && data.containsKey('data') 
+            ? data['data'] as List<dynamic>
+            : data is List 
+                ? data as List<dynamic>
+                : [];
+        final properties = propertiesData.map((json) => PropertyModel.fromJson(json)).toList();
         setState(() {
-          _properties = myProperties;
+          _properties = properties;
           _isLoadingProperties = false;
         });
       } else {
