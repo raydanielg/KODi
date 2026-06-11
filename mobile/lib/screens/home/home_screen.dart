@@ -348,11 +348,11 @@ class _HomeScreenState extends State<HomeScreen>
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
