@@ -34,7 +34,7 @@ class PaymentModel {
       id: json['id'], leaseId: json['lease_id'], tenantId: json['tenant_id'],
       landlordId: json['landlord_id'], propertyId: json['property_id'],
       paymentNumber: json['payment_number'] ?? '',
-      amount: (json['amount'] ?? 0).toDouble(),
+      amount: _pd(json['amount']),
       status: json['status'] ?? 'pending',
       paymentMethod: json['payment_method'] ?? '',
       periodStart: json['period_start'] ?? '',

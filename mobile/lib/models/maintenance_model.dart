@@ -1,3 +1,6 @@
+double? _md(dynamic v) =>
+    v == null ? null : double.tryParse(v.toString());
+
 class MaintenanceModel {
   final int id;
   final int propertyId;
@@ -39,8 +42,8 @@ class MaintenanceModel {
       priority: json['priority'] ?? 'medium',
       status: json['status'] ?? 'pending',
       scheduledAt: json['scheduled_at'], completedAt: json['completed_at'],
-      estimatedCost: json['estimated_cost']?.toDouble(),
-      actualCost: json['actual_cost']?.toDouble(),
+      estimatedCost: _md(json['estimated_cost']),
+      actualCost: _md(json['actual_cost']),
       notes: json['notes'], createdAt: json['created_at'], updatedAt: json['updated_at'],
       propertyTitle: json['property'] != null ? json['property']['title'] : null,
       tenantName: json['tenant'] != null ? json['tenant']['name'] : null,
