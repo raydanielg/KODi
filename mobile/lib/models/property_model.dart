@@ -1,3 +1,6 @@
+double _d(dynamic v, [double def = 0.0]) =>
+    v == null ? def : double.tryParse(v.toString()) ?? def;
+
 class PropertyModel {
   final int id;
   final int userId;
