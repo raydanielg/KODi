@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 30),
                         Text(
-                          AppStrings.welcomeBack,
+                          AppStrings.t(AppStrings.welcomeBack),
                           style: GoogleFonts.poppins(
                             fontSize: 32,
                             fontWeight: FontWeight.w700,
@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          'Sign in to your account to continue your journey with us.',
+                          AppStrings.t(AppStrings.signInSubtitle),
                           style: GoogleFonts.poppins(
                             fontSize: 14,
                             color: isDark ? Colors.white60 : Colors.grey,
@@ -192,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                                 Text(
-                                  AppStrings.emailAddress,
+                                  AppStrings.t(AppStrings.emailAddress),
                                   style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -240,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  AppStrings.password,
+                                  AppStrings.t(AppStrings.password),
                                   style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -305,7 +305,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       checkColor: Colors.black,
                                     ),
                                     Text(
-                                      'Remember me',
+                                      AppStrings.t(AppStrings.rememberMe),
                                       style: GoogleFonts.poppins(
                                         fontSize: 14,
                                         color: isDark ? Colors.white70 : Colors.black87,
@@ -321,7 +321,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   child: Text(
-                                    'Forgot Password?',
+                                    AppStrings.t(AppStrings.forgotPassword),
                                     style: GoogleFonts.poppins(
                                       color: AppColors.primary,
                                       fontWeight: FontWeight.w600,
@@ -355,7 +355,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                       )
                                     : Text(
-                                        AppStrings.signIn,
+                                        AppStrings.t(AppStrings.signIn),
                                         style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16,
@@ -369,13 +369,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  AppStrings.dontHaveAccount,
+                                  AppStrings.t(AppStrings.dontHaveAccount),
                                   style: GoogleFonts.poppins(color: isDark ? Colors.white60 : Colors.grey),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pushNamed(context, '/register'),
                                   child: Text(
-                                    'Create account',
+                                    AppStrings.t(AppStrings.createAccount),
                                     style: GoogleFonts.poppins(
                                       color: AppColors.primary,
                                       fontWeight: FontWeight.w600,
