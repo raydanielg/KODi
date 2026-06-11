@@ -690,7 +690,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ],
                         ),
-                            const SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         // Confirm Password Field
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -843,6 +843,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       color: Colors.black,
                                     ),
                                   ),
+                                ),
                           ),
                         ),
                         const SizedBox(height: 24),
