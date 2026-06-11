@@ -6,6 +6,7 @@ import '../../models/user_model.dart';
 import '../../services/auth_service.dart';
 import '../../utils/validators.dart';
 import '../../utils/helpers.dart';
+import '../../utils/app_settings.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -27,27 +28,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscureConfirmPassword = true;
   bool _agreeToTerms = false;
   bool _isLoading = false;
+  final _appSettings = AppSettings.instance;
 
   final List<String> _roles = [
-    'Tenant (Mpangaji)',
     'Landlord (Mwenye Nyumba)',
     'Agent (Wakala wa Nyumba)',
   ];
 
   final Map<String, String> _roleDescriptions = {
-    'Tenant (Mpangaji)': 'Tenant: Looking for a long-term rental property',
     'Landlord (Mwenye Nyumba)': 'Landlord: Own properties to rent out',
     'Agent (Wakala wa Nyumba)': 'Agent: Manage properties on behalf of landlords',
   };
 
   String _mapRoleValue(String label) {
-    if (label.startsWith('Tenant')) return 'tenant';
     if (label.startsWith('Landlord')) return 'landlord';
     if (label.startsWith('Agent')) return 'agent';
     if (label.startsWith('Support')) return 'support';
     if (label.startsWith('Maintenance')) return 'maintenance';
     if (label.startsWith('Accountant')) return 'accountant';
-    return 'tenant';
+    return 'landlord';
   }
 
   final List<Map<String, String>> _termsOfServiceContent = [
