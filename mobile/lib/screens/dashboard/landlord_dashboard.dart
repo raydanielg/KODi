@@ -472,20 +472,14 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
 
   Widget _buildStatItem(String label, String value, IconData icon) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            const Color(0xff1a1a1a),
-            const Color(0xff2d2d2d),
-          ],
-        ),
+        color: const Color(0xff1e1e1e),
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white.withOpacity(0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.black.withOpacity(0.15),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -494,13 +488,13 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primary, size: 18),
+          Icon(icon, color: AppColors.primary, size: 20),
           const SizedBox(height: 8),
           Text(
             value,
             style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.w800,
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
               color: Colors.white,
             ),
           ),
@@ -508,8 +502,8 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
           Text(
             label,
             style: GoogleFonts.poppins(
-              fontSize: 11,
-              color: Colors.white60,
+              fontSize: 12,
+              color: Colors.white70,
             ),
           ),
         ],
@@ -959,20 +953,14 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            const Color(0xff1a1a1a),
-            const Color(0xff2d2d2d),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(16),
+        color: const Color(0xff1e1e1e),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white.withOpacity(0.08)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+            color: Colors.black.withOpacity(0.15),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
