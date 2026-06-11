@@ -813,7 +813,7 @@ Pata maelezo zaidi kwenye app ya Manna!
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFEF9C3),
+                          color: const Color(0xFFF59E0B).withOpacity(0.15),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: const Color(0xFFF59E0B).withValues(alpha: 0.3)),
                         ),
@@ -821,10 +821,10 @@ Pata maelezo zaidi kwenye app ya Manna!
                           const Icon(Icons.account_balance_rounded, color: Color(0xFFF59E0B), size: 18),
                           const SizedBox(width: 10),
                           const Text('Amana inayohitajika:',
-                              style: TextStyle(color: Color(0xFF64748B), fontSize: 13, fontWeight: FontWeight.w600)),
+                              style: TextStyle(color: Colors.white70, fontSize: 13, fontWeight: FontWeight.w600)),
                           const Spacer(),
                           Text('TZS ${p.deposit!.toStringAsFixed(0)}',
-                              style: const TextStyle(color: Color(0xFF92400E), fontWeight: FontWeight.w900, fontSize: 14)),
+                              style: const TextStyle(color: Color(0xFFF59E0B), fontWeight: FontWeight.w700, fontSize: 14)),
                         ]),
                       ),
 
@@ -834,7 +834,7 @@ Pata maelezo zaidi kwenye app ya Manna!
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFDCFCE7),
+                          color: const Color(0xFF10B981).withOpacity(0.15),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: const Color(0xFF10B981).withValues(alpha: 0.3)),
                         ),
@@ -843,9 +843,9 @@ Pata maelezo zaidi kwenye app ya Manna!
                           const SizedBox(width: 10),
                           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                             const Text('Mali Imeidhinishwa',
-                                style: TextStyle(color: Color(0xFF065F46), fontWeight: FontWeight.w800, fontSize: 13)),
+                                style: TextStyle(color: Color(0xFF10B981), fontWeight: FontWeight.w700, fontSize: 13)),
                             Text('Tarehe: ${p.approvedAt!.split('T').first}',
-                                style: const TextStyle(color: Color(0xFF065F46), fontSize: 11)),
+                                style: const TextStyle(color: Colors.white70, fontSize: 11)),
                           ])),
                         ]),
                       ),
@@ -863,18 +863,18 @@ Pata maelezo zaidi kwenye app ya Manna!
   Widget _detailSection(String title, List<Widget> rows) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 6)],
+        color: const Color(0xff2a2a2a), borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.white.withOpacity(0.08)),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.15), blurRadius: 6)],
       ),
       child: Column(children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
           child: Row(children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13, color: Color(0xFF0F172A))),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13, color: Colors.white)),
           ]),
         ),
-        const Divider(height: 1, color: Color(0xFFF1F5F9)),
+        Divider(height: 1, color: Colors.white.withOpacity(0.08)),
         ...rows,
       ]),
     );
@@ -884,11 +884,11 @@ Pata maelezo zaidi kwenye app ya Manna!
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
       child: Row(children: [
-        Icon(icon, size: 16, color: const Color(0xFF9CA3AF)),
+        Icon(icon, size: 16, color: Colors.white60),
         const SizedBox(width: 10),
-        Text(label, style: const TextStyle(color: Color(0xFF64748B), fontSize: 13, fontWeight: FontWeight.w600)),
+        Text(label, style: const TextStyle(color: Colors.white60, fontSize: 13, fontWeight: FontWeight.w600)),
         const Spacer(),
-        Text(value, style: const TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w700, fontSize: 13)),
+        Text(value, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 13)),
       ]),
     );
   }
