@@ -505,10 +505,10 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 14, 12, 14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: _cardBg,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)],
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: _cardBorder),
       ),
       child: Column(
         children: [
@@ -741,9 +741,18 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
   }
 
   Widget _buildSectionTitle(String title) {
+    final isDark = AppSettings.instance.isDark;
     return Text(title,
-        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: Color(0xFF0F172A)));
+        style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800,
+            color: isDark ? Colors.white : const Color(0xFF0F172A)));
   }
+
+  // Returns the surface card color based on theme
+  Color get _cardBg => AppSettings.instance.isDark ? const Color(0xFF1C1C1C) : Colors.white;
+  Color get _cardBorder => AppSettings.instance.isDark ? const Color(0xFF2A2A2A) : const Color(0xFFE2E8F0);
+  Color get _textPrimary => AppSettings.instance.isDark ? Colors.white : const Color(0xFF0F172A);
+  Color get _textSecondary => AppSettings.instance.isDark ? const Color(0xFF9CA3AF) : const Color(0xFF64748B);
+  Color get _dividerColor => AppSettings.instance.isDark ? const Color(0xFF2A2A2A) : const Color(0xFFF1F5F9);
 
   String _greeting() {
     final h = DateTime.now().hour;
