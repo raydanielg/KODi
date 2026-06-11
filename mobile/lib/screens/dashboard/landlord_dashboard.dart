@@ -77,11 +77,17 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
         setState(() {
           _isLoadingProperties = false;
         });
+        if (mounted) {
+          Helpers.showSnackBar(context, result['message'] ?? 'Failed to load properties');
+        }
       }
     } catch (e) {
       setState(() {
         _isLoadingProperties = false;
       });
+      if (mounted) {
+        Helpers.showSnackBar(context, 'Imeshindikana kupakia nyumba. Tafadhali jaribu tena.');
+      }
     }
   }
 
