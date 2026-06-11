@@ -17,69 +17,31 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
-  final AuthService _authService = AuthService();
-  late AnimationController _controller;
-  late Animation<double> _animation;
-  late PageController _pageController;
-  int _currentPage = 0;
-  bool _isCheckingAuth = true;
-
-  final List<Map<String, String>> _onboardingData = [
-    {
-      'title': 'FIND YOUR\nPERFECT HOME',
-      'subtitle': 'ACROSS AFRICA',
-      'description': 'Discover long-term rental properties that match your lifestyle and budget.',
-    },
-    {
-      'title': 'CONNECT WITH\nLANDLORDS',
-      'subtitle': 'DIRECTLY',
-      'description': 'Skip the middleman and connect directly with property owners.',
-    },
-    {
-      'title': 'SECURE YOUR\nDREAM SPACE',
-      'subtitle': 'TODAY',
-      'description': 'Easy booking, secure payments, and hassle-free rentals.',
-    },
-  ];
+class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    )..repeat(reverse: true);
-    _animation = Tween<double>(begin: 0, end: 10).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
-    _pageController = PageController();
-    _checkAuthAndNavigate();
-  }
-
-  Future<void> _checkAuthAndNavigate() async {
-    final loggedIn = await _authService.loadSavedAuth();
-
-    if (loggedIn && mounted) {
-      print('✅ Auto-login active. Redirecting to dashboard.');
-      Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
-      return;
-    }
-
-    if (mounted) {
-      setState(() => _isCheckingAuth = false);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      }
+    });
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    _pageController.dispose();
-    super.dispose();
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: CircularProgressIndicator(color: Color(0xFF6C63FF)),
+      ),
+    );
   }
-
-  Widget _buildMenuItem({
+}
     required IconData icon,
     required String title,
     required VoidCallback onTap,
