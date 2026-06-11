@@ -3,7 +3,10 @@ import 'package:flutter/services.dart';
 import '../../../constants/app_colors.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/landlord_service.dart';
+import '../../../services/notification_service.dart';
 import '../../../utils/helpers.dart';
+import '../../../utils/app_settings.dart';
+import '../../notifications/notifications_screen.dart';
 import '../profile/landlord_profile_page.dart';
 import '../subscription/landlord_subscription_page.dart';
 
@@ -17,14 +20,33 @@ class LandlordHomeTab extends StatefulWidget {
 class _LandlordHomeTabState extends State<LandlordHomeTab> {
   final AuthService _auth = AuthService();
   final LandlordService _service = LandlordService();
+  final NotificationService _notifService = NotificationService();
   Map<String, dynamic> _stats = {};
   bool _isLoading = true;
   String? _error;
+  int _unreadNotifications = 0;
 
   @override
   void initState() {
     super.initState();
+    AppSettings.instance.addListener(_onSettingsChanged);
     _load();
+    _loadNotifCount();
+  }
+
+  @override
+  void dispose() {
+    AppSettings.instance.removeListener(_onSettingsChanged);
+    super.dispose();
+  }
+
+  void _onSettingsChanged() { if (mounted) setState(() {}); }
+
+  Future<void> _loadNotifCount() async {
+    try {
+      final count = await _notifService.fetchUnreadCount();
+      if (mounted) setState(() => _unreadNotifications = count);
+    } catch (_) {}
   }
 
   Future<void> _load() async {
@@ -44,15 +66,16 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    final isDark = AppSettings.instance.isDark;
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
     ));
     final user = _auth.currentUser;
     final name = user?.name ?? 'Landlord';
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F5F9),
+      backgroundColor: isDark ? const Color(0xFF0F0F0F) : const Color(0xFFF1F5F9),
       body: RefreshIndicator(
         onRefresh: _load,
         color: AppColors.primary,
