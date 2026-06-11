@@ -85,11 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
       print('📢 Showing error message: $errorMessage');
       
       if (mounted) {
-        Helpers.showSnackBar(context, errorMessage, isError: true);
-      } else {
-        print('⚠️ Widget not mounted, cannot show snackbar');
+        Helpers.showSnackBar(context, errorMessage, isError: true, onRetry: _handleLogin);
       }
-      
       setState(() => _isLoading = false);
     }
   }

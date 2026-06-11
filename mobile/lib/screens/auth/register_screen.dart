@@ -380,7 +380,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     } catch (e) {
       if (mounted) {
-        Helpers.showSnackBar(context, e.toString(), isError: true);
+        Helpers.showSnackBar(context, e.toString(), isError: true, onRetry: _handleRegister);
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
