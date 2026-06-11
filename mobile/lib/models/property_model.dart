@@ -1,3 +1,10 @@
+bool _b(dynamic v, {bool def = false}) {
+  if (v == null) return def;
+  if (v is bool) return v;
+  if (v is int) return v != 0;
+  return def;
+}
+
 class PropertyModel {
   final int id;
   final int userId;
@@ -78,14 +85,14 @@ class PropertyModel {
       locationCity: json['location_city'] ?? '',
       locationRegion: json['location_region'] ?? '',
       locationAddress: json['location_address'] ?? '',
-      isFurnished: json['is_furnished'] ?? false,
-      hasInternet: json['has_internet'] ?? false,
-      hasWater: json['has_water'] ?? true,
-      hasElectricity: json['has_electricity'] ?? true,
-      hasParking: json['has_parking'] ?? false,
-      hasSecurity: json['has_security'] ?? false,
-      hasGenerator: json['has_generator'] ?? false,
-      isFeatured: json['is_featured'] ?? false,
+      isFurnished: _b(json['is_furnished']),
+      hasInternet: _b(json['has_internet']),
+      hasWater: _b(json['has_water'], def: true),
+      hasElectricity: _b(json['has_electricity'], def: true),
+      hasParking: _b(json['has_parking']),
+      hasSecurity: _b(json['has_security']),
+      hasGenerator: _b(json['has_generator']),
+      isFeatured: _b(json['is_featured']),
       viewsCount: json['views_count'] ?? 0,
       approvedAt: json['approved_at'], createdAt: json['created_at'],
       updatedAt: json['updated_at'],
