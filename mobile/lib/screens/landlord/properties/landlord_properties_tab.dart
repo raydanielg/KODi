@@ -897,21 +897,21 @@ Pata maelezo zaidi kwenye app ya Manna!
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       child: Row(children: [
-        Icon(icon, size: 15, color: val ? const Color(0xFF10B981) : const Color(0xFFD1D5DB)),
+        Icon(icon, size: 15, color: val ? const Color(0xFF10B981) : Colors.white38),
         const SizedBox(width: 10),
         Text(label, style: TextStyle(
-            color: val ? const Color(0xFF374151) : const Color(0xFFD1D5DB),
+            color: val ? Colors.white70 : Colors.white38,
             fontSize: 13, fontWeight: FontWeight.w600)),
         const Spacer(),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
-            color: val ? const Color(0xFFDCFCE7) : const Color(0xFFF1F5F9),
+            color: val ? const Color(0xFF10B981).withOpacity(0.2) : Colors.white.withOpacity(0.08),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(val ? 'Inayo' : 'Haina',
               style: TextStyle(
-                color: val ? const Color(0xFF10B981) : const Color(0xFF9CA3AF),
+                color: val ? const Color(0xFF10B981) : Colors.white60,
                 fontSize: 10, fontWeight: FontWeight.w700,
               )),
         ),
