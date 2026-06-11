@@ -752,7 +752,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
 
   Widget _buildStatsGrid(Map<String, dynamic> stats) {
     final cards = <DashboardCard>[];
-    final keys = ['total_properties', 'active_rentals', 'vacant_properties', 'total_revenue', 'pending_payments', 'maintenance_requests'];
+    final keys = ['my_properties', 'active_leases', 'pending_payments', 'maintenance_requests', 'collected_revenue', 'outstanding_revenue'];
     final colorPalette = [
       AppColors.primary,
       const Color(0xFF6366F1),
@@ -850,24 +850,32 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
 
   String _statLabel(String key) {
     switch (key) {
+      case 'my_properties': return 'Nyumba Zangu';
+      case 'active_leases': return 'Lease Zilizoisha';
+      case 'pending_payments': return 'Malipo Yanayosubiri';
+      case 'maintenance_requests': return 'Matengenezo';
+      case 'collected_revenue': return 'Mapato Yaliyokusanywa';
+      case 'outstanding_revenue': return 'Mapato Bado';
       case 'total_properties': return 'Nyumba Zangu';
       case 'active_rentals': return 'Zilizopangwa';
       case 'vacant_properties': return 'Zilizowazi';
       case 'total_revenue': return 'Mapato ya Mwezi';
-      case 'pending_payments': return 'Kodi Inayosubiri';
-      case 'maintenance_requests': return 'Maombi ya Mafundi';
       default: return key.replaceAll('_', ' ');
     }
   }
 
   IconData _statIcon(String key) {
     switch (key) {
+      case 'my_properties': return Icons.home_work_rounded;
+      case 'active_leases': return Icons.file_copy_rounded;
+      case 'pending_payments': return Icons.pending_outlined;
+      case 'maintenance_requests': return Icons.build;
+      case 'collected_revenue': return Icons.account_balance_wallet_rounded;
+      case 'outstanding_revenue': return Icons.money_off_rounded;
       case 'total_properties': return Icons.home_work_rounded;
       case 'active_rentals': return Icons.people_alt_rounded;
       case 'vacant_properties': return Icons.door_front_door_rounded;
       case 'total_revenue': return Icons.account_balance_wallet_rounded;
-      case 'pending_payments': return Icons.hourglass_top_rounded;
-      case 'maintenance_requests': return Icons.build;
       default: return Icons.info;
     }
   }
