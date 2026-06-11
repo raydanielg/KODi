@@ -353,31 +353,31 @@ class _HomeScreenState extends State<HomeScreen>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                        Container(
-                          padding: const EdgeInsets.all(12),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xff1e1e1e),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.08),
+                            width: 1,
+                          ),
+                        ),
+                        child: Image.asset(
+                          AppAssets.appIcon,
+                          width: 40,
+                        ),
+                      ),
+                      Builder(
+                        builder: (context) => Container(
                           decoration: BoxDecoration(
                             color: const Color(0xff1e1e1e),
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: Colors.white.withOpacity(0.08),
                               width: 1,
                             ),
                           ),
-                          child: Image.asset(
-                            AppAssets.appIcon,
-                            width: 40,
-                          ),
-                        ),
-                        Builder(
-                          builder: (context) => Container(
-                            decoration: BoxDecoration(
-                              color: const Color(0xff1e1e1e),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.white.withOpacity(0.08),
-                                width: 1,
-                              ),
-                            ),
                             child: IconButton(
                               onPressed: () {
                                 Scaffold.of(context).openDrawer();
@@ -592,6 +592,18 @@ class _HomeScreenState extends State<HomeScreen>
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
                       ],
                     ),
                   ),

@@ -174,10 +174,9 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
             onTap: () async {
               HapticFeedback.selectionClick();
               await settings.toggleLocale();
-              if (mounted) {
-                Helpers.showSnackBar(context,
-                    settings.isEnglish ? '🌐 Language: English' : '🌐 Lugha: Kiswahili');
-              }
+              if (!mounted) return;
+              Helpers.showSnackBar(context,
+                  settings.isEnglish ? '🌐 Language: English' : '🌐 Lugha: Kiswahili');
             },
           ),
           const SizedBox(width: 8),
