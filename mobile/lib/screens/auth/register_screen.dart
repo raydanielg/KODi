@@ -663,176 +663,180 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                         ),
                             const SizedBox(height: 20),
-                            // Confirm Password Field
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Confirm password',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey[700],
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xfff3f4f6),
-                                    borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(color: const Color(0xffd1d5db)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.05),
-                                        blurRadius: 4,
-                                        offset: const Offset(0, 1),
-                                      ),
-                                    ],
-                                  ),
-                                  child: TextFormField(
-                                    controller: _confirmPasswordController,
-                                    obscureText: _obscureConfirmPassword,
-                                    validator: (value) => Validators.validateConfirmPassword(value, _passwordController.text),
-                                    style: GoogleFonts.poppins(
-                                      color: const Color(0xff1f2937),
-                                      fontSize: 15,
-                                    ),
-                                    decoration: InputDecoration(
-                                      hintText: '••••••••',
-                                      prefixIcon: const Icon(Icons.check_circle_outline, size: 20, color: Colors.grey),
-                                      border: InputBorder.none,
-                                      contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 16,
-                                      ),
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          _obscureConfirmPassword
-                                              ? Icons.visibility_outlined
-                                              : Icons.visibility_off_outlined,
-                                          color: Colors.grey,
-                                        ),
-                                        onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 16),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Transform.scale(
-                                  scale: 1.2,
-                                  child: Checkbox(
-                                    value: _agreeToTerms,
-                                    onChanged: (value) => setState(() => _agreeToTerms = value!),
-                                    activeColor: AppColors.primary,
-                                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                    visualDensity: VisualDensity.compact,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Wrap(
-                                    children: [
-                                      Text(
-                                        'I agree to the ',
-                                        style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[700]),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          _showContentBottomSheet(
-                                            context: context,
-                                            title: 'Terms of Service',
-                                            lastUpdated: 'January 1, 2025',
-                                            effectiveDate: 'January 1, 2025',
-                                            sections: _termsOfServiceContent,
-                                          );
-                                        },
-                                        child: Text(
-                                          'Terms of Service',
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            color: AppColors.primary,
-                                            fontWeight: FontWeight.w600,
-                                            decoration: TextDecoration.underline,
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        ' and ',
-                                        style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey[700]),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          _showContentBottomSheet(
-                                            context: context,
-                                            title: 'Privacy Policy',
-                                            lastUpdated: 'January 1, 2025',
-                                            effectiveDate: 'January 1, 2025',
-                                            sections: _privacyPolicyContent,
-                                          );
-                                        },
-                                        child: Text(
-                                          'Privacy Policy',
-                                          style: GoogleFonts.poppins(
-                                            fontSize: 13,
-                                            color: AppColors.primary,
-                                            fontWeight: FontWeight.w600,
-                                            decoration: TextDecoration.underline,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 24),
-                            SizedBox(
-                              height: 56,
-                              child: ElevatedButton(
-                                onPressed: _isLoading ? null : _handleRegister,
-                                child: _isLoading
-                                    ? const SizedBox(
-                                        height: 24,
-                                        width: 24,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2.5,
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    : Text(
-                                        'Create account',
-                                        style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16,
-                                        ),
-                                      ),
+                        // Confirm Password Field
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppStrings.t(AppStrings.confirmPassword),
+                              style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: isDark ? Colors.white70 : Colors.grey[700],
                               ),
                             ),
-                            const SizedBox(height: 24),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  AppStrings.alreadyHaveAccount,
-                                  style: GoogleFonts.poppins(color: Colors.grey[600]),
+                            const SizedBox(height: 8),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: isDark ? Colors.white.withOpacity(0.1) : Colors.grey[100],
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: isDark ? Colors.white.withOpacity(0.2) : Colors.grey[300]!),
+                              ),
+                              child: TextFormField(
+                                controller: _confirmPasswordController,
+                                obscureText: _obscureConfirmPassword,
+                                validator: (value) => Validators.validateConfirmPassword(value, _passwordController.text),
+                                style: GoogleFonts.poppins(
+                                  color: isDark ? Colors.white : Colors.black,
+                                  fontSize: 15,
                                 ),
-                                TextButton(
-                                  onPressed: () => Navigator.pushNamed(context, '/login'),
-                                  child: Text(
-                                    AppStrings.signIn,
-                                    style: GoogleFonts.poppins(
-                                      color: AppColors.primary,
-                                      fontWeight: FontWeight.w600,
+                                decoration: InputDecoration(
+                                  hintText: '••••••••',
+                                  hintStyle: GoogleFonts.poppins(color: isDark ? Colors.white.withOpacity(0.4) : Colors.grey[400]),
+                                  prefixIcon: Icon(Icons.check_circle_outline, size: 20, color: AppColors.primary),
+                                  border: InputBorder.none,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 16,
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _obscureConfirmPassword
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: isDark ? Colors.white60 : Colors.grey,
                                     ),
+                                    onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Transform.scale(
+                              scale: 1.2,
+                              child: Checkbox(
+                                value: _agreeToTerms,
+                                onChanged: (value) => setState(() => _agreeToTerms = value!),
+                                activeColor: AppColors.primary,
+                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                visualDensity: VisualDensity.compact,
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Wrap(
+                                children: [
+                                  Text(
+                                    'I agree to the ',
+                                    style: GoogleFonts.poppins(fontSize: 13, color: isDark ? Colors.white70 : Colors.grey[700]),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _showContentBottomSheet(
+                                        context: context,
+                                        title: 'Terms of Service',
+                                        lastUpdated: 'January 1, 2025',
+                                        effectiveDate: 'January 1, 2025',
+                                        sections: _termsOfServiceContent,
+                                      );
+                                    },
+                                    child: Text(
+                                      'Terms of Service',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 13,
+                                        color: AppColors.primary,
+                                        fontWeight: FontWeight.w600,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    ' and ',
+                                    style: GoogleFonts.poppins(fontSize: 13, color: isDark ? Colors.white70 : Colors.grey[700]),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _showContentBottomSheet(
+                                        context: context,
+                                        title: 'Privacy Policy',
+                                        lastUpdated: 'January 1, 2025',
+                                        effectiveDate: 'January 1, 2025',
+                                        sections: _privacyPolicyContent,
+                                      );
+                                    },
+                                    child: Text(
+                                      'Privacy Policy',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 13,
+                                        color: AppColors.primary,
+                                        fontWeight: FontWeight.w600,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
+                        SizedBox(
+                          height: 56,
+                          child: ElevatedButton(
+                            onPressed: _isLoading ? null : _handleRegister,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: Colors.black,
+                              disabledBackgroundColor: AppColors.primary.withOpacity(0.6),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: _isLoading
+                                ? const SizedBox(
+                                    height: 24,
+                                    width: 24,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3,
+                                      color: Colors.black,
+                                    ),
+                                  )
+                                : Text(
+                                    AppStrings.t(AppStrings.createAccount),
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              AppStrings.t(AppStrings.alreadyHaveAccount),
+                              style: GoogleFonts.poppins(color: isDark ? Colors.white60 : Colors.grey[600]),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pushNamed(context, '/login'),
+                              style: TextButton.styleFrom(
+                                foregroundColor: AppColors.primary,
+                                textStyle: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              child: Text(AppStrings.t(AppStrings.signIn)),
+                            ),
+                          ],
+                        ),
                             const SizedBox(height: 32),
                           ],
                         ),
@@ -848,40 +852,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
-
-class PremiumAuthBackgroundPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    // 1. Draw a soft premium gradient background
-    final rect = Offset.zero & size;
-    final gradient = LinearGradient(
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-      colors: [
-        Colors.white,
-        const Color(0xfff0fdf4), // Extremely light emerald/teal
-        const Color(0xffecfdf5), // Slightly darker soft emerald/teal
-      ],
-      stops: const [0.0, 0.7, 1.0],
-    );
-    final bgPaint = Paint()..shader = gradient.createShader(rect);
-    canvas.drawRect(rect, bgPaint);
-
-    // 2. Draw beautiful faint abstract circular rings/waves
-    final wavePaint = Paint()
-      ..color = const Color(0xff10b981).withOpacity(0.04) // Faint AppColors.primary
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5;
-
-    // Top Right Ring
-    canvas.drawCircle(Offset(size.width * 0.9, size.height * 0.05), 120, wavePaint);
-    canvas.drawCircle(Offset(size.width * 0.9, size.height * 0.05), 180, wavePaint);
-    canvas.drawCircle(Offset(size.width * 0.9, size.height * 0.05), 240, wavePaint);
-
-    // Bottom Left Ring
-    canvas.drawCircle(Offset(size.width * 0.1, size.height * 0.85), 150, wavePaint);
-    canvas.drawCircle(Offset(size.width * 0.1, size.height * 0.85), 220, wavePaint);
-    canvas.drawCircle(Offset(size.width * 0.1, size.height * 0.85), 290, wavePaint);
 
     // 3. Draw very faint, elegant dots
     final dotPaint = Paint()
