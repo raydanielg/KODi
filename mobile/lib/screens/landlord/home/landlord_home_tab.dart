@@ -518,7 +518,7 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
           const SizedBox(height: 8),
           Text(value, style: TextStyle(color: color, fontWeight: FontWeight.w900, fontSize: 22)),
           const SizedBox(height: 3),
-          Text(label, style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 10, fontWeight: FontWeight.w500),
+          Text(label, style: TextStyle(color: _textSecondary, fontSize: 10, fontWeight: FontWeight.w500),
               textAlign: TextAlign.center),
         ],
       ),
@@ -536,10 +536,10 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: _cardBg,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 10)],
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: _cardBorder),
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
