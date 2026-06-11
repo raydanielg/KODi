@@ -15,7 +15,7 @@ class PropertyService {
     if (maxPrice != null) params['max_price'] = maxPrice.toString();
     if (bedrooms != null) params['bedrooms'] = bedrooms.toString();
 
-    final result = await _api.get('/properties', params: params);
+    final result = await _api.get('/properties', params: params, timeoutSeconds: 30);
 
     if (result['success'] == true && result['data'] != null) {
       final List<dynamic> data = result['data'] is List ? result['data'] : result['data']['data'] ?? [];

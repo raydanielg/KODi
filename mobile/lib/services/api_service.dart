@@ -32,7 +32,7 @@ class ApiService {
     return headers;
   }
 
-  Future<Map<String, dynamic>> get(String endpoint, {Map<String, String>? params}) async {
+  Future<Map<String, dynamic>> get(String endpoint, {Map<String, String>? params, int timeoutSeconds = 10}) async {
     final cleanEndpoint = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
     var uri = Uri.parse('$_baseUrl/$cleanEndpoint');
     if (params != null && params.isNotEmpty) {
@@ -44,7 +44,7 @@ class ApiService {
         uri,
         headers: _headers,
       ).timeout(
-        const Duration(seconds: 10),
+        Duration(seconds: timeoutSeconds),
         onTimeout: () {
           throw Exception('Request timed out. Please check your internet connection.');
         },
