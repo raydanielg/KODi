@@ -469,14 +469,17 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
 
   Widget _buildPortfolioHighlightCard(BuildContext context) {
     final stats = _stats?.stats ?? {};
-    final totalDeposits = (stats['total_deposits'] ?? 0).toDouble();
-    final paidDeposits = (stats['paid_deposits'] ?? 0).toDouble();
-    final pendingDeposits = (stats['pending_deposits'] ?? 0).toDouble();
-    final depositPaidCount = stats['deposit_paid_count'] ?? 0;
-    final depositPendingCount = stats['deposit_pending_count'] ?? 0;
+    final myProperties = (stats['my_properties'] ?? 0).toInt();
+    final activeLeases = (stats['active_leases'] ?? 0).toInt();
+    final pendingPayments = (stats['pending_payments'] ?? 0).toInt();
+    final maintenanceRequests = (stats['maintenance_requests'] ?? 0).toInt();
+    final occupancyRate = (stats['occupancy_rate'] ?? 0).toInt();
+    final collectedRevenue = (stats['collected_revenue'] ?? 0).toDouble();
+    final outstandingRevenue = (stats['outstanding_revenue'] ?? 0).toDouble();
+    final expectedRent = (stats['expected_rent'] ?? 0).toDouble();
     
-    final depositProgress = totalDeposits > 0 ? paidDeposits / totalDeposits : 0.0;
-    final depositPercentage = (depositProgress * 100).toInt();
+    final revenueProgress = expectedRent > 0 ? collectedRevenue / expectedRent : 0.0;
+    final revenuePercentage = (revenueProgress * 100).toInt();
 
     return Container(
       padding: const EdgeInsets.all(16),
