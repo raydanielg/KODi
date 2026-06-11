@@ -515,11 +515,11 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                       color: AppColors.primary.withOpacity(0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.account_balance_wallet_rounded, color: AppColors.primary, size: 20),
+                    child: const Icon(Icons.home_work_rounded, color: AppColors.primary, size: 20),
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    'Hali ya Malipo ya Dipoziti (Deposit Status)',
+                    'Muhtasari wa Mali Yako (Portfolio Overview)',
                     style: GoogleFonts.poppins(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -531,16 +531,43 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
             ],
           ),
           const SizedBox(height: 16),
-          // Progress Bar
+          // Stats Grid
+          Row(
+            children: [
+              Expanded(
+                child: _buildStatItem('Nyumba Zangu', myProperties.toString(), Icons.home_outlined),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildStatItem('Lease Zilizoisha', activeLeases.toString(), Icons.file_copy_outlined),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _buildStatItem('Malipo Yanayosubiri', pendingPayments.toString(), Icons.pending_outlined),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildStatItem('Matengenezo', maintenanceRequests.toString(), Icons.build_outlined),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 12),
+          // Revenue Progress
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Malipo ya Dipoziti',
+                'Kodi ya Mwezi Huu',
                 style: TextStyle(color: Colors.white60, fontSize: 12),
               ),
               Text(
-                '$depositPercentage% Imelipwa',
+                '$revenuePercentage% Imekusanywa',
                 style: GoogleFonts.poppins(
                   color: AppColors.primary,
                   fontWeight: FontWeight.w700,
@@ -553,15 +580,13 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
-              value: depositProgress,
+              value: revenueProgress,
               backgroundColor: Colors.white.withOpacity(0.1),
               valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
               minHeight: 8,
             ),
           ),
           const SizedBox(height: 16),
-          const Divider(),
-          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -569,12 +594,12 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Zilizolipwa ($depositPaidCount)',
+                    'Imekusanywa',
                     style: TextStyle(color: Colors.white60, fontSize: 11),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'TSh ${Helpers.formatMoney(paidDeposits)}',
+                    'TSh ${Helpers.formatMoney(collectedRevenue)}',
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
@@ -587,12 +612,12 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    'Bado ($depositPendingCount)',
+                    'Bado',
                     style: TextStyle(color: Colors.white60, fontSize: 11),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'TSh ${Helpers.formatMoney(pendingDeposits)}',
+                    'TSh ${Helpers.formatMoney(outstandingRevenue)}',
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
