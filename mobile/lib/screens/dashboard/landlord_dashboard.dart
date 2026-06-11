@@ -41,7 +41,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       _error = null;
     });
     try {
-      final stats = await _dashboardService.fetchDashboardStats();
+      final stats = await _dashboardService.fetchDashboardStats(role: 'landlord');
       setState(() {
         _stats = stats;
         _isLoading = false;

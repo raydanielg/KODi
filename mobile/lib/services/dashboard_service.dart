@@ -4,10 +4,11 @@ import 'api_service.dart';
 class DashboardService {
   final ApiService _api = ApiService();
 
-  Future<DashboardStatsModel> fetchDashboardStats() async {
-    print('📊 Fetching Dashboard Stats...');
+  Future<DashboardStatsModel> fetchDashboardStats({String role = 'tenant'}) async {
+    print('📊 Fetching Dashboard Stats for role: $role...');
     try {
-      final response = await _api.get('dashboard');
+      final endpoint = role == 'landlord' ? 'landlord/dashboard' : 'dashboard';
+      final response = await _api.get(endpoint);
       print('✅ Dashboard Response: $response');
       return DashboardStatsModel.fromJson(response['data']);
     } catch (e) {
