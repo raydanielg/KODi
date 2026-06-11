@@ -53,18 +53,27 @@ class PropertyModel {
   });
 
   factory PropertyModel.fromJson(Map<String, dynamic> json) {
+    // Helper to parse numbers from strings or numbers
+    double parseDouble(dynamic value) {
+      if (value == null) return 0.0;
+      if (value is double) return value;
+      if (value is int) return value.toDouble();
+      if (value is String) return double.tryParse(value) ?? 0.0;
+      return 0.0;
+    }
+
     return PropertyModel(
       id: json['id'], userId: json['user_id'], agentId: json['agent_id'],
       title: json['title'] ?? '', slug: json['slug'] ?? '',
       description: json['description'] ?? '',
       propertyType: json['property_type'] ?? 'house',
       status: json['status'] ?? 'available',
-      price: (json['price'] ?? 0).toDouble(),
+      price: parseDouble(json['price']),
       currency: json['currency'] ?? 'TZS',
-      deposit: json['deposit']?.toDouble(),
+      deposit: parseDouble(json['deposit']),
       bedrooms: json['bedrooms'] ?? 1,
       bathrooms: json['bathrooms'] ?? 1,
-      areaSqft: json['area_sqft']?.toDouble(),
+      areaSqft: parseDouble(json['area_sqft']),
       locationArea: json['location_area'] ?? '',
       locationCity: json['location_city'] ?? '',
       locationRegion: json['location_region'] ?? '',
