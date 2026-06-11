@@ -65,27 +65,51 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
     setState(() {
       _isLoadingProperties = true;
     });
+
+    // Prefer properties returned in the dashboard payload (faster + guaranteed filtered)
+    try {
+      if (_stats != null && _stats!.myProperties != null) {
+        final List<dynamic> props = _stats!.myProperties!;
+        final properties = props.map((json) => PropertyModel.fromJson(json as Map<String, dynamic>)).toList();
+        setState(() {
+          _properties = properties;
+          _isLoadingProperties = false;
+        });
+        return;
+      }
+    } catch (e) {
+      print('⚠️ Failed to parse myProperties from stats: $e');
+      // fallback to explicit fetch below
+    }
+
+    // Fallback: try fetching via landlord service (if available on backend)
     try {
       final result = await _landlordService.getProperties();
-      if (result['success'] == true && result['data'] != null) {
-        final data = result['data'];
-        final List<dynamic> propertiesData = data is Map && data.containsKey('data') 
+
+      // Some API responses return paginated data under ['data'] or ['data']['data']
+      if (result['success'] == true) {
+        final dynamic data = result['data'] ?? result['my_properties'] ?? result['properties'];
+
+        final List<dynamic> propertiesData = data is Map && data.containsKey('data')
             ? data['data'] as List<dynamic>
-            : data is List 
+            : data is List
                 ? data as List<dynamic>
                 : [];
+
         final properties = propertiesData.map((json) => PropertyModel.fromJson(json)).toList();
         setState(() {
           _properties = properties;
           _isLoadingProperties = false;
         });
-      } else {
-        setState(() {
-          _isLoadingProperties = false;
-        });
-        if (mounted) {
-          Helpers.showSnackBar(context, result['message'] ?? 'Failed to load properties');
-        }
+        return;
+      }
+
+      setState(() {
+        _isLoadingProperties = false;
+      });
+
+      if (mounted) {
+        Helpers.showSnackBar(context, result['message'] ?? 'Hakuna nyumba zilizopatikana');
       }
     } catch (e) {
       setState(() {
