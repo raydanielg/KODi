@@ -55,7 +55,7 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> post(String endpoint, {Map<String, dynamic>? body}) async {
+  Future<Map<String, dynamic>> post(String endpoint, {Map<String, dynamic>? body, int timeoutSeconds = 10}) async {
     final cleanEndpoint = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
     final url = '$_baseUrl/$cleanEndpoint';
     print('📡 POST Request: $url');
@@ -72,9 +72,9 @@ class ApiService {
         headers: _headers,
         body: body != null ? jsonEncode(body) : null,
       ).timeout(
-        const Duration(seconds: 10),
+        Duration(seconds: timeoutSeconds),
         onTimeout: () {
-          print('⏰ Request timed out after 10 seconds');
+          print('⏰ Request timed out after $timeoutSeconds seconds');
           throw Exception('Request timed out. Please check your internet connection.');
         },
       );
