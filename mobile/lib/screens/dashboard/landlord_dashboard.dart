@@ -516,16 +516,19 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
 
   Widget _buildPortfolioHighlightCard(BuildContext context) {
     final stats = _stats?.stats ?? {};
-    final myProperties = (stats['my_properties'] ?? 0).toInt();
-    final activeLeases = (stats['active_leases'] ?? 0).toInt();
-    final pendingPayments = (stats['pending_payments'] ?? 0).toInt();
-    final maintenanceRequests = (stats['maintenance_requests'] ?? 0).toInt();
-    final occupancyRate = (stats['occupancy_rate'] ?? 0).toInt();
-    final collectedRevenue = (stats['collected_revenue'] ?? 0).toDouble();
-    final outstandingRevenue = (stats['outstanding_revenue'] ?? 0).toDouble();
-    final expectedRent = (stats['expected_rent'] ?? 0).toDouble();
-    
-    final revenueProgress = expectedRent > 0 ? collectedRevenue / expectedRent : 0.0;
+    final myProperties = _toInt(stats['my_properties']);
+    final activeLeases = _toInt(stats['active_leases']);
+    final pendingPayments = _toInt(stats['pending_payments']);
+    final maintenanceRequests = _toInt(stats['maintenance_requests']);
+    final totalUnits = _toInt(stats['total_units']);
+    final occupiedUnits = _toInt(stats['occupied_units']);
+    final vacantUnits = _toInt(stats['vacant_units']);
+    final occupancyRate = _toInt(stats['occupancy_rate']);
+    final collectedRevenue = _toDouble(stats['collected_revenue']);
+    final outstandingRevenue = _toDouble(stats['outstanding_revenue']);
+    final expectedRent = _toDouble(stats['expected_rent']);
+
+    final revenueProgress = expectedRent > 0 ? (collectedRevenue / expectedRent).clamp(0.0, 1.0) : 0.0;
     final revenuePercentage = (revenueProgress * 100).toInt();
 
     return Container(
@@ -578,7 +581,6 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
             ],
           ),
           const SizedBox(height: 16),
-          // Stats Grid
           Row(
             children: [
               Expanded(
@@ -586,7 +588,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: _buildStatItem('Lease Zilizoisha', activeLeases.toString(), Icons.file_copy_outlined),
+                child: _buildStatItem('Jumla ya Units', totalUnits.toString(), Icons.apartment_outlined),
               ),
             ],
           ),
@@ -594,7 +596,19 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
           Row(
             children: [
               Expanded(
-                child: _buildStatItem('Malipo Yanayosubiri', pendingPayments.toString(), Icons.pending_outlined),
+                child: _buildStatItem('Zilizokodishwa', occupiedUnits.toString(), Icons.meeting_room_outlined),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildStatItem('Zilizowazi', vacantUnits.toString(), Icons.door_front_door_outlined),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: _buildStatItem('Lease Zilizoisha', activeLeases.toString(), Icons.file_copy_outlined),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -603,9 +617,8 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
             ],
           ),
           const SizedBox(height: 16),
-          const Divider(),
+          const Divider(color: Colors.white12),
           const SizedBox(height: 12),
-          // Revenue Progress
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -752,7 +765,18 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
 
   Widget _buildStatsGrid(Map<String, dynamic> stats) {
     final cards = <DashboardCard>[];
-    final keys = ['my_properties', 'active_leases', 'pending_payments', 'maintenance_requests', 'collected_revenue', 'outstanding_revenue'];
+    final keys = [
+      'my_properties',
+      'total_units',
+      'occupied_units',
+      'vacant_units',
+      'occupancy_rate',
+      'active_leases',
+      'pending_payments',
+      'maintenance_requests',
+      'collected_revenue',
+      'outstanding_revenue',
+    ];
     final colorPalette = [
       AppColors.primary,
       const Color(0xFF6366F1),
@@ -768,7 +792,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
         final color = colorPalette[index % colorPalette.length];
         cards.add(DashboardCard(
           title: _statLabel(key),
-          value: _formatStatValue(stats[key]),
+          value: _formatStatValue(key, stats[key]),
           icon: _statIcon(key),
           color: color,
         ));
@@ -851,6 +875,10 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
   String _statLabel(String key) {
     switch (key) {
       case 'my_properties': return 'Nyumba Zangu';
+      case 'total_units': return 'Jumla ya Units';
+      case 'occupied_units': return 'Zilizokodishwa';
+      case 'vacant_units': return 'Zilizowazi';
+      case 'occupancy_rate': return 'Kiwango cha Kukaa';
       case 'active_leases': return 'Lease Zilizoisha';
       case 'pending_payments': return 'Malipo Yanayosubiri';
       case 'maintenance_requests': return 'Matengenezo';
@@ -880,8 +908,14 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
     }
   }
 
-  String _formatStatValue(dynamic value) {
+  String _formatStatValue(String key, dynamic value) {
     if (value == null) return '0';
+    if (key == 'occupancy_rate') {
+      return '${_toInt(value)}%';
+    }
+    if (key == 'collected_revenue' || key == 'outstanding_revenue') {
+      return 'TSh ${Helpers.formatMoney(_toDouble(value))}';
+    }
     if (value is double) {
       if (value >= 1000000) {
         return 'TSh ${(value / 1000000).toStringAsFixed(1)}M';
@@ -891,6 +925,26 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       return value.toStringAsFixed(0);
     }
     return value.toString();
+  }
+
+  int _toInt(dynamic value) {
+    if (value == null) return 0;
+    if (value is int) return value;
+    if (value is double) return value.toInt();
+    if (value is String && value.isNotEmpty) {
+      return int.tryParse(value) ?? double.tryParse(value)?.toInt() ?? 0;
+    }
+    return 0;
+  }
+
+  double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is double) return value;
+    if (value is int) return value.toDouble();
+    if (value is String && value.isNotEmpty) {
+      return double.tryParse(value) ?? 0.0;
+    }
+    return 0.0;
   }
 
   Widget _buildPropertyCard(PropertyModel property) {
