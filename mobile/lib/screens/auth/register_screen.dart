@@ -852,26 +852,3 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
-
-    // 3. Draw very faint, elegant dots
-    final dotPaint = Paint()
-      ..color = const Color(0xff10b981).withOpacity(0.035)
-      ..style = PaintingStyle.fill;
-
-    const dotRadius = 1.5;
-    const spacing = 24.0;
-
-    for (double x = 12; x < size.width; x += spacing) {
-      for (double y = 12; y < size.height; y += spacing) {
-        // Skip dots near the middle-top where main text headers are to keep it clean
-        if (y > size.height * 0.15 && y < size.height * 0.45) {
-          continue;
-        }
-        canvas.drawCircle(Offset(x, y), dotRadius, dotPaint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
