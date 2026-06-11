@@ -22,14 +22,35 @@ import 'screens/common/messages_page.dart';
 import 'screens/common/settings_page.dart';
 import 'constants/app_theme.dart';
 import 'constants/app_routes.dart';
+import 'utils/app_settings.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppSettings.instance.init();
   runApp(const MannaApp());
 }
 
-class MannaApp extends StatelessWidget {
+class MannaApp extends StatefulWidget {
   const MannaApp({super.key});
+
+  @override
+  State<MannaApp> createState() => _MannaAppState();
+}
+
+class _MannaAppState extends State<MannaApp> {
+  @override
+  void initState() {
+    super.initState();
+    AppSettings.instance.addListener(_onSettingsChanged);
+  }
+
+  @override
+  void dispose() {
+    AppSettings.instance.removeListener(_onSettingsChanged);
+    super.dispose();
+  }
+
+  void _onSettingsChanged() => setState(() {});
 
   @override
   Widget build(BuildContext context) {
@@ -38,28 +59,29 @@ class MannaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
+      themeMode: AppSettings.instance.themeMode,
       initialRoute: AppRoutes.home,
       routes: {
-        AppRoutes.home: (context) => const HomeScreen(),
-        AppRoutes.login: (context) => const LoginScreen(),
-        AppRoutes.register: (context) => const RegisterScreen(),
-        AppRoutes.dashboard: (context) => const MainDashboardScreen(),
-        AppRoutes.properties: (context) => const PropertyListScreen(),
-        AppRoutes.propertyDetails: (context) => const PropertyDetailScreen(),
-        AppRoutes.payments: (context) => const PaymentScreen(),
-        AppRoutes.maintenance: (context) => const MaintenanceScreen(),
-        AppRoutes.messages: (context) => const MessageScreen(),
-        AppRoutes.profile: (context) => const ProfileScreen(),
-        AppRoutes.notifications: (context) => const NotificationsScreen(),
-        AppRoutes.navigation: (context) => const NavigationPage(),
-        AppRoutes.payRent: (context) => const PayRentPage(),
-        AppRoutes.tenantMaintenance: (context) => const MaintenancePage(),
-        AppRoutes.tenantProfile: (context) => const TenantProfilePage(),
-        AppRoutes.searchHomes: (context) => const SearchHomesPage(),
-        AppRoutes.myHome: (context) => const MyHomePage(),
-        AppRoutes.favorites: (context) => const FavoritesPage(),
-        AppRoutes.tenantPayments: (context) => const PaymentsPage(),
-        AppRoutes.settings: (context) => const SettingsPage(),
+        AppRoutes.home:             (_) => const HomeScreen(),
+        AppRoutes.login:            (_) => const LoginScreen(),
+        AppRoutes.register:         (_) => const RegisterScreen(),
+        AppRoutes.dashboard:        (_) => const MainDashboardScreen(),
+        AppRoutes.properties:       (_) => const PropertyListScreen(),
+        AppRoutes.propertyDetails:  (_) => const PropertyDetailScreen(),
+        AppRoutes.payments:         (_) => const PaymentScreen(),
+        AppRoutes.maintenance:      (_) => const MaintenanceScreen(),
+        AppRoutes.messages:         (_) => const MessageScreen(),
+        AppRoutes.profile:          (_) => const ProfileScreen(),
+        AppRoutes.notifications:    (_) => const NotificationsScreen(),
+        AppRoutes.navigation:       (_) => const NavigationPage(),
+        AppRoutes.payRent:          (_) => const PayRentPage(),
+        AppRoutes.tenantMaintenance:(_) => const MaintenancePage(),
+        AppRoutes.tenantProfile:    (_) => const TenantProfilePage(),
+        AppRoutes.searchHomes:      (_) => const SearchHomesPage(),
+        AppRoutes.myHome:           (_) => const MyHomePage(),
+        AppRoutes.favorites:        (_) => const FavoritesPage(),
+        AppRoutes.tenantPayments:   (_) => const PaymentsPage(),
+        AppRoutes.settings:         (_) => const SettingsPage(),
       },
     );
   }
