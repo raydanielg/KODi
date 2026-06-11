@@ -545,8 +545,9 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 9),
         decoration: BoxDecoration(
-          color: bg, borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: color.withValues(alpha: 0.3)),
+          color: color.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: color.withOpacity(0.3)),
         ),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Icon(icon, size: 14, color: color),
@@ -555,6 +556,24 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
         ]),
       ),
     );
+  }
+
+  void _shareViaSMS(BuildContext context, PropertyModel p) {
+    final message = '''
+🏠 ${p.title}
+📍 ${p.fullLocation}
+💰 ${p.formattedPrice}/mwezi
+🛏️ ${p.bedrooms} vyumba, ${p.bathrooms} bafu
+
+Pata maelezo zaidi kwenye app ya Manna!
+    '''.trim();
+
+    final uri = Uri.parse('sms:?body=${Uri.encodeComponent(message)}');
+    launchUrl(uri).then((launched) {
+      if (!launched) {
+        Helpers.showSnackBar(context, 'Imeshindikana kufungua SMS');
+      }
+    });
   }
 
   // ─── Property Detail Bottom Sheet ──────────────────────────────────────────
