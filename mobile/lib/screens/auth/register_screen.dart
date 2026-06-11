@@ -281,6 +281,71 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  Widget _buildRoleCard({
+    required String role,
+    required IconData icon,
+    required bool isDark,
+  }) {
+    final isSelected = _selectedRole == role;
+    return GestureDetector(
+      onTap: () => setState(() => _selectedRole = role),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isSelected 
+              ? AppColors.primary 
+              : (isDark ? Colors.white.withOpacity(0.05) : Colors.grey[100]),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isSelected 
+                ? AppColors.primary 
+                : (isDark ? Colors.white.withOpacity(0.1) : Colors.grey[300]!),
+            width: isSelected ? 2 : 1,
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.3),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
+              : null,
+        ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              size: 32,
+              color: isSelected ? Colors.black : (isDark ? Colors.white70 : Colors.grey[600]),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              role.split(' (')[0],
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: isSelected ? Colors.black : (isDark ? Colors.white : Colors.black87),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              role.contains('(') ? role.split('(')[1].replaceAll(')', '') : '',
+              style: GoogleFonts.poppins(
+                fontSize: 11,
+                fontWeight: FontWeight.w400,
+                color: isSelected ? Colors.black54 : (isDark ? Colors.white60 : Colors.grey[500]),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _handleRegister() async {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedRole.isEmpty) {
@@ -415,7 +480,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         const SizedBox(height: 32),
-                        // Role Dropdown Field
+                        // Role Selection Cards
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -427,65 +492,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: isDark ? Colors.white70 : Colors.grey[700],
                               ),
                             ),
-                            const SizedBox(height: 8),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: isDark ? Colors.white.withOpacity(0.1) : Colors.grey[100],
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: isDark ? Colors.white.withOpacity(0.2) : Colors.grey[300]!),
-                              ),
-                              child: DropdownButtonFormField<String>(
-                                value: _selectedRole.isEmpty ? null : _selectedRole,
-                                isExpanded: true,
-                                style: GoogleFonts.poppins(
-                                  color: isDark ? Colors.white : Colors.black,
-                                  fontSize: 14,
-                                ),
-                                dropdownColor: isDark ? const Color(0xff2d2d2d) : Colors.white,
-                                decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.person_outline, size: 20, color: AppColors.primary),
-                                  border: InputBorder.none,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 16,
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _buildRoleCard(
+                                    role: 'Landlord (Mwenye Nyumba)',
+                                    icon: Icons.home_work_outlined,
+                                    isDark: isDark,
                                   ),
                                 ),
-                                hint: Text(
-                                  AppStrings.t(AppStrings.selectYourRole),
-                                  style: GoogleFonts.poppins(color: isDark ? Colors.white.withOpacity(0.4) : Colors.grey[400]),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: _buildRoleCard(
+                                    role: 'Agent (Wakala wa Nyumba)',
+                                    icon: Icons.business_center_outlined,
+                                    isDark: isDark,
+                                  ),
                                 ),
-                                icon: Icon(Icons.keyboard_arrow_down, color: isDark ? Colors.white60 : Colors.grey, size: 20),
-                                items: _roles.map((String role) {
-                                  return DropdownMenuItem<String>(
-                                    value: role,
-                                    child: Text(
-                                      role,
-                                      style: GoogleFonts.poppins(
-                                        color: isDark ? Colors.white : Colors.black,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(() => _selectedRole = newValue!);
-                                },
-                              ),
+                              ],
                             ),
                           ],
                         ),
-                        if (_selectedRole.isNotEmpty && _roleDescriptions.containsKey(_selectedRole))
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8),
-                            child: Text(
-                              _roleDescriptions[_selectedRole]!,
-                              style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                color: isDark ? Colors.white60 : Colors.grey[600],
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                          ),
                         const SizedBox(height: 20),
                         // Name Field
                         Column(
