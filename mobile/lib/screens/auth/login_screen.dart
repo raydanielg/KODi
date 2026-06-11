@@ -7,6 +7,7 @@ import '../../services/auth_service.dart';
 import '../../services/api_service.dart';
 import '../../utils/validators.dart';
 import '../../utils/helpers.dart';
+import '../../utils/app_settings.dart';
 import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscurePassword = true;
   bool _rememberMe = false;
   bool _isLoading = false;
+  final _appSettings = AppSettings.instance;
 
   @override
   void dispose() {
@@ -110,14 +112,62 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_back, color: Colors.black),
-                            onPressed: () => Navigator.pop(context),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // Language Selector
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '🇹🇿',
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await _appSettings.toggleLocale();
+                                      setState(() {});
+                                    },
+                                    child: Text(
+                                      _appSettings.isEnglish ? 'EN' : 'SW',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // Theme Toggle
+                            GestureDetector(
+                              onTap: () async {
+                                await _appSettings.toggleTheme();
+                                setState(() {});
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Icon(
+                                  _appSettings.isDark ? Icons.light_mode : Icons.dark_mode,
+                                  color: Colors.black87,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 30),
                         Text(
                           AppStrings.welcomeBack,
                           style: GoogleFonts.poppins(
