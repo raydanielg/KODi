@@ -580,6 +580,11 @@ Pata maelezo zaidi kwenye app ya Manna!
 
   void _showPropertyDetails(BuildContext context, PropertyModel p) {
     final isVerified = p.approvedAt != null;
+    final allImages = [...p.images];
+    if (p.mainImage != null && p.mainImage!.isNotEmpty && !allImages.contains(p.mainImage)) {
+      allImages.insert(0, p.mainImage!);
+    }
+    
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -590,34 +595,106 @@ Pata maelezo zaidi kwenye app ya Manna!
         minChildSize: 0.5,
         builder: (ctx, controller) => Container(
           decoration: const BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xff1e1e1e),
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: Column(
             children: [
               Container(margin: const EdgeInsets.only(top: 12), width: 40, height: 4,
-                decoration: BoxDecoration(color: const Color(0xFFE5E7EB), borderRadius: BorderRadius.circular(2))),
+                decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(2))),
               Expanded(
                 child: ListView(
                   controller: controller,
                   padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
                   children: [
+                    // Image Gallery
+                    if (allImages.isNotEmpty) ...[
+                      SizedBox(
+                        height: 200,
+                        child: PageView.builder(
+                          itemCount: allImages.length,
+                          itemBuilder: (context, index) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.network(
+                                allImages[index],
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: const Color(0xff2a2a2a),
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(Icons.broken_image, color: Colors.white24, size: 48),
+                                          const SizedBox(height: 8),
+                                          const Text('Imeshindikana kupakia picha', style: TextStyle(color: Colors.white38, fontSize: 12)),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          allImages.length,
+                          (index) => Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 4),
+                            width: 8,
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.3),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ] else ...[
+                      Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff2a2a2a),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.image_not_supported, color: Colors.white24, size: 48),
+                              const SizedBox(height: 8),
+                              const Text('Hakuna Picha Zilizopakuliwa', style: TextStyle(color: Colors.white38, fontSize: 12)),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+
                     // Header
                     Row(children: [
                       Container(padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryDark]),
-                          borderRadius: BorderRadius.circular(12)),
-                        child: const Icon(Icons.apartment_rounded, color: Colors.white, size: 20)),
+                          color: AppColors.primary.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+                        ),
+                        child: const Icon(Icons.apartment_rounded, color: AppColors.primary, size: 20)),
                       const SizedBox(width: 12),
                       Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text(p.title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: Color(0xFF0F172A))),
-                        Text(p.fullLocation, style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 12)),
+                        Text(p.title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16, color: Colors.white)),
+                        Text(p.fullLocation, style: const TextStyle(color: Colors.white60, fontSize: 12)),
                       ])),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
-                          color: isVerified ? const Color(0xFFDCFCE7) : const Color(0xFFFEF9C3),
+                          color: isVerified ? const Color(0xFF10B981).withOpacity(0.2) : const Color(0xFFF59E0B).withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(color: isVerified ? const Color(0xFF10B981) : const Color(0xFFF59E0B), width: 1.5),
                         ),
@@ -628,7 +705,7 @@ Pata maelezo zaidi kwenye app ya Manna!
                           Text(isVerified ? 'Imeidhinishwa' : 'Inasubiri',
                               style: TextStyle(
                                 color: isVerified ? const Color(0xFF10B981) : const Color(0xFFF59E0B),
-                                fontSize: 11, fontWeight: FontWeight.w800,
+                                fontSize: 11, fontWeight: FontWeight.w700,
                               )),
                         ]),
                       ),
@@ -647,7 +724,7 @@ Pata maelezo zaidi kwenye app ya Manna!
                         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                           const Text('Kodi ya Mwezi', style: TextStyle(color: Colors.white60, fontSize: 11)),
                           const SizedBox(height: 4),
-                          Text(p.formattedPrice, style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900)),
+                          Text(p.formattedPrice, style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w700)),
                         ]),
                         const Spacer(),
                         Container(padding: const EdgeInsets.all(12),
@@ -663,14 +740,14 @@ Pata maelezo zaidi kwenye app ya Manna!
                       Container(
                         padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                          color: AppColors.primaryLight,
+                          color: AppColors.primary.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
                         ),
                         child: Row(children: [
                           Container(width: 42, height: 42,
                             decoration: BoxDecoration(
-                              gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryDark]),
+                              color: AppColors.primary.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(12)),
                             child: Center(child: Text(
                               p.landlordName!.isNotEmpty ? p.landlordName![0].toUpperCase() : 'L',
