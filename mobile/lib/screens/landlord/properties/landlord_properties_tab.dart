@@ -1198,7 +1198,7 @@ Widget _field(TextEditingController ctrl, String hint, {TextInputType? keyboard}
 
 Widget _dropdown({required String? value, required List<String> items, required ValueChanged<String?> onChanged}) {
   return DropdownButtonFormField<String>(
-    value: value,
+    initialValue: value,
     hint: const Text('Chagua aina', style: TextStyle(color: Color(0xFFD1D5DB), fontSize: 13)),
     items: items.map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(fontSize: 14, color: Color(0xFF111827))))).toList(),
     onChanged: onChanged,
