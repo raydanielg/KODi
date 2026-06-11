@@ -1,3 +1,6 @@
+double _d(dynamic v, [double def = 0.0]) =>
+    v == null ? def : double.tryParse(v.toString()) ?? def;
+
 class LeaseModel {
   final int id;
   final int propertyId;
@@ -39,8 +42,8 @@ class LeaseModel {
       landlordId: json['landlord_id'], leaseNumber: json['lease_number'] ?? '',
       status: json['status'] ?? 'active',
       startDate: json['start_date'] ?? '', endDate: json['end_date'] ?? '',
-      rentAmount: (json['rent_amount'] ?? 0).toDouble(),
-      depositAmount: (json['deposit_amount'] ?? 0).toDouble(),
+      rentAmount: _d(json['rent_amount']),
+      depositAmount: _d(json['deposit_amount']),
       currency: json['currency'], paymentFrequency: json['payment_frequency'],
       durationMonths: json['duration_months'],
       signedAt: json['signed_at'], terminatedAt: json['terminated_at'],
