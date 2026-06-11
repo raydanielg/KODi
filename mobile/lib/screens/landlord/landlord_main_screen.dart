@@ -87,11 +87,16 @@ class _LandlordMainScreenState extends State<LandlordMainScreen> {
     );
   }
 
-  Widget _navItem(int index, IconData activeIcon, IconData inactiveIcon, String label) {
+  Widget _navItem(int index, IconData activeIcon, IconData inactiveIcon, String label, bool isDark) {
     final isActive = _currentIndex == index;
+    final inactiveColor = isDark ? const Color(0xFF6B7280) : const Color(0xFF9CA3AF);
+    final activeBg = isDark ? AppColors.primary.withValues(alpha: 0.15) : AppColors.primaryLight;
     return Expanded(
       child: GestureDetector(
-        onTap: () => setState(() => _currentIndex = index),
+        onTap: () {
+          HapticFeedback.selectionClick();
+          setState(() => _currentIndex = index);
+        },
         behavior: HitTestBehavior.opaque,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -100,12 +105,12 @@ class _LandlordMainScreenState extends State<LandlordMainScreen> {
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
               decoration: BoxDecoration(
-                color: isActive ? AppColors.primaryLight : Colors.transparent,
+                color: isActive ? activeBg : Colors.transparent,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
                 isActive ? activeIcon : inactiveIcon,
-                color: isActive ? AppColors.primary : const Color(0xFF9CA3AF),
+                color: isActive ? AppColors.primary : inactiveColor,
                 size: 22,
               ),
             ),
@@ -115,7 +120,7 @@ class _LandlordMainScreenState extends State<LandlordMainScreen> {
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
-                color: isActive ? AppColors.primary : const Color(0xFF9CA3AF),
+                color: isActive ? AppColors.primary : inactiveColor,
               ),
             ),
           ],
