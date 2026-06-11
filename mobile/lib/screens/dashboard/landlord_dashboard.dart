@@ -158,6 +158,66 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
                           const SizedBox(height: 12),
                           ..._stats!.recentItems!.map((item) => _buildRecentItem(item)),
                         ],
+
+                        // My Properties Section
+                        const SizedBox(height: 24),
+                        const Text(
+                          'Nyumba Zangu (My Properties)',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        _isLoadingProperties
+                            ? const Center(
+                                child: CircularProgressIndicator(color: AppColors.primary),
+                              )
+                            : _properties.isEmpty
+                                ? Container(
+                                    padding: const EdgeInsets.all(32),
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          const Color(0xff1a1a1a),
+                                          const Color(0xff2d2d2d),
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Icon(
+                                          Icons.home_work_outlined,
+                                          color: Colors.white30,
+                                          size: 48,
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text(
+                                          'Hakuna Nyumba Bado',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white70,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'Anza kuweka nyumba zako sasa hivi',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white50,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : Column(
+                                    children: _properties.map((property) => _buildPropertyCard(property)).toList(),
+                                  ),
                       ],
                     ),
                   ),
