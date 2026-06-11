@@ -183,7 +183,7 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
   // ─── Portfolio Card ───────────────────────────────────────────────────────
 
   Widget _buildPortfolioCard() {
-    final props       = _stats['total_properties'] ?? 0;
+    final props       = _stats['my_properties'] ?? _stats['total_properties'] ?? 0;
     final collected   = (_stats['collected_revenue'] ?? 0.0).toDouble();
     final outstanding = (_stats['outstanding_revenue'] ?? 0.0).toDouble();
     final expected    = (_stats['expected_rent'] ?? 0.0).toDouble();
@@ -547,7 +547,7 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
     final pending     = _stats['pending_payments'] ?? 0;
     final maintenance = _stats['maintenance_requests'] ?? 0;
     final leases      = _stats['active_leases'] ?? 0;
-    final props       = _stats['total_properties'] ?? 0;
+    final props       = _stats['my_properties'] ?? _stats['total_properties'] ?? 0;
 
     final items = [
       if (pending > 0) _ActivityItem(
