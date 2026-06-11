@@ -24,6 +24,7 @@ import 'constants/app_theme.dart';
 import 'constants/app_routes.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MannaApp());
 }
 
