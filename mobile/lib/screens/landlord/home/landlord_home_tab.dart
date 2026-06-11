@@ -268,7 +268,7 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
         borderRadius: BorderRadius.circular(12),
         child: avatarUrl != null && avatarUrl.isNotEmpty
             ? Image.network(avatarUrl, fit: BoxFit.cover,
-                errorBuilder: (_, e, __) => Center(child: Text(initials,
+                errorBuilder: (_, __, ___) => Center(child: Text(initials,
                     style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w800, fontSize: 16))))
             : Center(child: Text(initials,
                 style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w800, fontSize: 16))),
