@@ -448,20 +448,20 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
     return Row(children: [
       Container(width: 18, height: 18,
         decoration: BoxDecoration(
-          color: AppColors.primary.withValues(alpha: 0.12),
+          color: AppColors.primary.withOpacity(0.15),
           shape: BoxShape.circle,
         ),
         child: Center(child: Text(name.isNotEmpty ? name[0].toUpperCase() : 'L',
             style: const TextStyle(color: AppColors.primary, fontSize: 9, fontWeight: FontWeight.w900)))),
       const SizedBox(width: 5),
       Flexible(child: Text(name,
-          style: const TextStyle(color: Color(0xFF374151), fontSize: 11, fontWeight: FontWeight.w700),
+          style: const TextStyle(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.w700),
           overflow: TextOverflow.ellipsis)),
       if (phone != null) ...[
         const SizedBox(width: 6),
-        const Icon(Icons.phone_rounded, size: 10, color: Color(0xFF9CA3AF)),
+        const Icon(Icons.phone_rounded, size: 10, color: Colors.white60),
         const SizedBox(width: 2),
-        Text(phone, style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 10)),
+        Text(phone, style: const TextStyle(color: Colors.white60, fontSize: 10)),
       ],
     ]);
   }
@@ -471,14 +471,14 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
       margin: const EdgeInsets.only(right: 6),
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xff3a3a3a),
         borderRadius: BorderRadius.circular(7),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: Colors.white.withOpacity(0.08)),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(icon, size: 10, color: const Color(0xFF9CA3AF)),
+        Icon(icon, size: 10, color: Colors.white60),
         const SizedBox(width: 3),
-        Text(label, style: const TextStyle(color: Color(0xFF64748B), fontSize: 10, fontWeight: FontWeight.w500)),
+        Text(label, style: const TextStyle(color: Colors.white70, fontSize: 10, fontWeight: FontWeight.w500)),
       ]),
     );
   }
