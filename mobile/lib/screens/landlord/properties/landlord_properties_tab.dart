@@ -141,17 +141,17 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
 
   Widget _buildStatsBar() {
     return Container(
-      color: Colors.white,
+      color: const Color(0xff0a0a0a),
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
       child: Row(
         children: [
-          _statChip('${_properties.length}', 'Zote', const Color(0xFF64748B), const Color(0xFFF1F5F9), Icons.grid_view_rounded),
+          _statChip('${_properties.length}', 'Zote', const Color(0xFF64748B), const Color(0xff1e1e1e), Icons.grid_view_rounded),
           const SizedBox(width: 8),
-          _statChip('$_verifiedCount', 'Zilizoidhinishwa', const Color(0xFF10B981), const Color(0xFFDCFCE7), Icons.verified_rounded),
+          _statChip('$_verifiedCount', 'Zilizoidhinishwa', const Color(0xFF10B981), const Color(0xff1e1e1e), Icons.verified_rounded),
           const SizedBox(width: 8),
-          _statChip('$_pendingCount', 'Zinasubiri', const Color(0xFFF59E0B), const Color(0xFFFEF9C3), Icons.pending_rounded),
+          _statChip('$_pendingCount', 'Zinasubiri', const Color(0xFFF59E0B), const Color(0xff1e1e1e), Icons.pending_rounded),
           const SizedBox(width: 8),
-          _statChip('$_rentedCount', 'Zimekodiwa', AppColors.primary, AppColors.primaryLight, Icons.key_rounded),
+          _statChip('$_rentedCount', 'Zimekodiwa', AppColors.primary, const Color(0xff1e1e1e), Icons.key_rounded),
         ],
       ),
     );
@@ -170,13 +170,13 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
           padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 8),
           decoration: BoxDecoration(
             color: bg, borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: color.withValues(alpha: 0.25)),
+            border: Border.all(color: Colors.white.withOpacity(0.08)),
           ),
           child: Column(children: [
             Icon(icon, color: color, size: 14),
             const SizedBox(height: 3),
-            Text(count, style: TextStyle(color: color, fontWeight: FontWeight.w900, fontSize: 16)),
-            Text(label, style: const TextStyle(color: Color(0xFF64748B), fontSize: 8, fontWeight: FontWeight.w500),
+            Text(count, style: TextStyle(color: color, fontWeight: FontWeight.w700, fontSize: 16)),
+            Text(label, style: const TextStyle(color: Colors.white60, fontSize: 8, fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
           ]),
         ),
@@ -196,7 +196,7 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
     ];
 
     return Container(
-      color: Colors.white,
+      color: const Color(0xff0a0a0a),
       height: 40,
       padding: const EdgeInsets.only(bottom: 6),
       child: ListView.builder(
@@ -212,13 +212,13 @@ class _LandlordPropertiesTabState extends State<LandlordPropertiesTab> {
               margin: const EdgeInsets.only(right: 8),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
               decoration: BoxDecoration(
-                color: sel ? AppColors.primary : const Color(0xFFF4F6F8),
+                color: sel ? AppColors.primary : const Color(0xff1e1e1e),
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: sel ? AppColors.primary : const Color(0xFFE5E7EB)),
+                border: Border.all(color: sel ? AppColors.primary : Colors.white.withOpacity(0.08)),
               ),
               child: Text(f['label']!,
                   style: TextStyle(
-                    color: sel ? Colors.white : const Color(0xFF6B7280),
+                    color: sel ? Colors.white : Colors.white60,
                     fontWeight: sel ? FontWeight.w700 : FontWeight.w500,
                     fontSize: 12,
                   )),
