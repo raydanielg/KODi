@@ -32,7 +32,9 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
     try {
       final res = await _service.getDashboard();
       if (res['success'] == true && res['data'] != null) {
-        setState(() => _stats = Map<String, dynamic>.from(res['data']));
+        final data = res['data'];
+        final stats = data['stats'] ?? data;
+        setState(() => _stats = Map<String, dynamic>.from(stats));
       }
     } catch (e) {
       setState(() => _error = e.toString());
