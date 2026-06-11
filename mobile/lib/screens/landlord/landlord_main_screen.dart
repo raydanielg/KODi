@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../constants/app_colors.dart';
+import '../../utils/app_settings.dart';
 import 'home/landlord_home_tab.dart';
 import 'tenants/landlord_tenants_tab.dart';
 import 'properties/landlord_properties_tab.dart';
@@ -16,6 +17,20 @@ class LandlordMainScreen extends StatefulWidget {
 
 class _LandlordMainScreenState extends State<LandlordMainScreen> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    AppSettings.instance.addListener(_onThemeChanged);
+  }
+
+  @override
+  void dispose() {
+    AppSettings.instance.removeListener(_onThemeChanged);
+    super.dispose();
+  }
+
+  void _onThemeChanged() { if (mounted) setState(() {}); }
 
   final List<Widget> _tabs = const [
     LandlordHomeTab(),
@@ -34,10 +49,11 @@ class _LandlordMainScreenState extends State<LandlordMainScreen> {
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
 
+    final isDark = AppSettings.instance.isDark;
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6F8),
+      backgroundColor: isDark ? const Color(0xFF0F0F0F) : const Color(0xFFF4F6F8),
       body: IndexedStack(index: _currentIndex, children: _tabs),
-      bottomNavigationBar: _buildBottomNav(),
+      bottomNavigationBar: _buildBottomNav(isDark),
     );
   }
 
