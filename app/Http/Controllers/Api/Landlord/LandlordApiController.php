@@ -53,17 +53,20 @@ class LandlordApiController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'total_properties' => $properties->count(),
-                'total_units' => $totalUnits,
-                'occupied_units' => $occupiedUnits,
-                'vacant_units' => $vacantUnits,
-                'occupancy_rate' => $occupancyRate,
-                'collected_revenue' => $collectedRevenue,
-                'outstanding_revenue' => $outstandingRevenue,
-                'expected_rent' => $expectedRent,
-                'active_leases' => $activeLeases->count(),
-                'pending_payments' => $pendingPayments,
-                'maintenance_requests' => $maintenanceRequests,
+                'stats' => [
+                    'my_properties' => $properties->count(),
+                    'total_units' => $totalUnits,
+                    'occupied_units' => $occupiedUnits,
+                    'vacant_units' => $vacantUnits,
+                    'occupancy_rate' => $occupancyRate,
+                    'collected_revenue' => $collectedRevenue,
+                    'outstanding_revenue' => $outstandingRevenue,
+                    'expected_rent' => $expectedRent,
+                    'active_leases' => $activeLeases->count(),
+                    'pending_payments' => $pendingPayments,
+                    'maintenance_requests' => $maintenanceRequests,
+                ],
+                'my_properties' => $properties,
             ]
         ]);
     }
