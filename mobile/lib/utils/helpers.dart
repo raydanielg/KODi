@@ -240,7 +240,7 @@ class _NetworkErrorSheetState extends State<_NetworkErrorSheet>
               children: [
                 _tip(Icons.wifi_rounded, 'Angalia WiFi au data ya simu'),
                 const SizedBox(height: 8),
-                _tip(Icons.airplane_mode_off_rounded, 'Zima na uwashe tena ndege mode'),
+                _tip(Icons.airplanemode_inactive_rounded, 'Zima na uwashe tena ndege mode'),
                 const SizedBox(height: 8),
                 _tip(Icons.signal_cellular_alt_rounded, 'Hakikisha una mtandao wa kutosha'),
               ],
