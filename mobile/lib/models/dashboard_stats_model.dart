@@ -22,8 +22,18 @@ class DashboardStatsModel {
   });
 
   factory DashboardStatsModel.fromJson(Map<String, dynamic> json) {
+    print('📊 Parsing DashboardStatsModel from: $json');
+    
+    // Handle both landlord and tenant response structures
+    // Landlord: {"stats": {...}, "my_properties": [...]}
+    // Tenant: {"stats": {...}, "active_lease": {...}, ...}
+    final statsData = json['stats'] is Map ? json['stats'] as Map<String, dynamic> : {};
+    
+    print('📊 Stats data: $statsData');
+    print('📊 My properties: ${json['my_properties']}');
+    
     return DashboardStatsModel(
-      stats: Map<String, dynamic>.from(json['stats'] ?? {}),
+      stats: Map<String, dynamic>.from(statsData),
       activeLease: json['active_lease'] as Map<String, dynamic>?,
       recentPayments: json['recent_payments'] as List<dynamic>?,
       maintenanceRequests: json['maintenance_requests'] as List<dynamic>?,
