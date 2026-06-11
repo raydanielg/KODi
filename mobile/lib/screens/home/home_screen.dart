@@ -151,18 +151,10 @@ class _HomeScreenState extends State<HomeScreen>
         child: SafeArea(
           child: Column(
             children: [
-              // Header with gradient
+              // Header
               Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      AppColors.primary,
-                      const Color(0xffd4a017),
-                      const Color(0xffb8860b),
-                    ],
-                ),
+                  color: const Color(0xff1e1e1e),
                 ),
                 padding: const EdgeInsets.all(24.0),
                 child: Row(
