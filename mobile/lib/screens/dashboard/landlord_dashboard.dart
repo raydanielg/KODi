@@ -66,11 +66,14 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
       _isLoadingProperties = true;
     });
     try {
+      final user = _authService.currentUser;
       final result = await _propertyService.getProperties();
       if (result['success'] == true) {
-        final properties = result['properties'] as List<PropertyModel>;
+        final allProperties = result['properties'] as List<PropertyModel>;
+        // Filter properties belonging to current landlord
+        final myProperties = allProperties.where((p) => p.userId == user.id).toList();
         setState(() {
-          _properties = properties;
+          _properties = myProperties;
           _isLoadingProperties = false;
         });
       } else {
