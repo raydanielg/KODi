@@ -96,10 +96,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = _appSettings.isDark;
+    
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xff1a1a1a) : Colors.white,
         ),
         child: SafeArea(
           child: Column(
@@ -119,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
-                                color: Colors.grey[200],
+                                color: isDark ? Colors.white.withOpacity(0.1) : Colors.grey[200],
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Row(
@@ -139,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: GoogleFonts.poppins(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w600,
-                                        color: Colors.black87,
+                                        color: isDark ? Colors.white : Colors.black87,
                                       ),
                                     ),
                                   ),
@@ -155,12 +157,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[200],
+                                  color: isDark ? Colors.white.withOpacity(0.1) : Colors.grey[200],
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Icon(
                                   _appSettings.isDark ? Icons.light_mode : Icons.dark_mode,
-                                  color: Colors.black87,
+                                  color: isDark ? Colors.white : Colors.black87,
                                   size: 20,
                                 ),
                               ),
@@ -173,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: GoogleFonts.poppins(
                             fontSize: 32,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black,
+                            color: isDark ? Colors.white : Colors.black,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -181,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Sign in to your account to continue your journey with us.',
                           style: GoogleFonts.poppins(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: isDark ? Colors.white60 : Colors.grey,
                           ),
                         ),
                         const SizedBox(height: 32),
@@ -194,28 +196,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.black87,
+                                    color: isDark ? Colors.white70 : Colors.black87,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[100],
+                                    color: isDark ? Colors.white.withOpacity(0.1) : Colors.grey[100],
                                     borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: Colors.grey[300]!),
+                                    border: Border.all(color: isDark ? Colors.white.withOpacity(0.2) : Colors.grey[300]!),
                                   ),
                                   child: TextFormField(
                                     controller: _emailController,
                                     keyboardType: TextInputType.emailAddress,
                                     validator: Validators.validateEmail,
                                     style: GoogleFonts.poppins(
-                                      color: Colors.black,
+                                      color: isDark ? Colors.white : Colors.black,
                                       fontSize: 15,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: 'name@company.com',
                                       hintStyle: GoogleFonts.poppins(
-                                        color: Colors.grey[400],
+                                        color: isDark ? Colors.white.withOpacity(0.4) : Colors.grey[400],
                                       ),
                                       prefixIcon: const Icon(
                                         Icons.email_outlined,
@@ -242,28 +244,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: GoogleFonts.poppins(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.black87,
+                                    color: isDark ? Colors.white70 : Colors.black87,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[100],
+                                    color: isDark ? Colors.white.withOpacity(0.1) : Colors.grey[100],
                                     borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: Colors.grey[300]!),
+                                    border: Border.all(color: isDark ? Colors.white.withOpacity(0.2) : Colors.grey[300]!),
                                   ),
                                   child: TextFormField(
                                     controller: _passwordController,
                                     obscureText: _obscurePassword,
                                     validator: Validators.validatePassword,
                                     style: GoogleFonts.poppins(
-                                      color: Colors.black,
+                                      color: isDark ? Colors.white : Colors.black,
                                       fontSize: 15,
                                     ),
                                     decoration: InputDecoration(
                                       hintText: '••••••••',
                                       hintStyle: GoogleFonts.poppins(
-                                        color: Colors.grey[400],
+                                        color: isDark ? Colors.white.withOpacity(0.4) : Colors.grey[400],
                                       ),
                                       prefixIcon: const Icon(
                                         Icons.lock_outlined,
@@ -275,7 +277,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           _obscurePassword
                                               ? Icons.visibility_outlined
                                               : Icons.visibility_off_outlined,
-                                          color: Colors.grey[600],
+                                          color: isDark ? Colors.white60 : Colors.grey[600],
                                           size: 20,
                                         ),
                                         onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
@@ -306,7 +308,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       'Remember me',
                                       style: GoogleFonts.poppins(
                                         fontSize: 14,
-                                        color: Colors.black87,
+                                        color: isDark ? Colors.white70 : Colors.black87,
                                       ),
                                     ),
                                   ],
@@ -368,7 +370,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Text(
                                   AppStrings.dontHaveAccount,
-                                  style: GoogleFonts.poppins(color: Colors.grey),
+                                  style: GoogleFonts.poppins(color: isDark ? Colors.white60 : Colors.grey),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pushNamed(context, '/register'),
