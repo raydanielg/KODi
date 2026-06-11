@@ -59,13 +59,15 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   Future<void> _checkAuthAndNavigate() async {
-    await _authService.loadSavedAuth();
-    final isLoggedIn = await _authService.isLoggedIn();
-    
-    if (isLoggedIn && mounted) {
-      setState(() => _isCheckingAuth = false);
+    final loggedIn = await _authService.loadSavedAuth();
+
+    if (loggedIn && mounted) {
+      print('✅ Auto-login active. Redirecting to dashboard.');
       Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
-    } else {
+      return;
+    }
+
+    if (mounted) {
       setState(() => _isCheckingAuth = false);
     }
   }
