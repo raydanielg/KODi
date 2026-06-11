@@ -89,15 +89,10 @@ class _HomeScreenState extends State<HomeScreen>
         width: 44,
         height: 44,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              AppColors.primary.withOpacity(0.2),
-              AppColors.primary.withOpacity(0.1),
-            ],
-          ),
+          color: AppColors.primary.withOpacity(0.15),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: AppColors.primary.withOpacity(0.3),
+            color: AppColors.primary.withOpacity(0.2),
             width: 1,
           ),
         ),
@@ -376,10 +371,10 @@ class _HomeScreenState extends State<HomeScreen>
                         Builder(
                           builder: (context) => Container(
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.1),
+                              color: const Color(0xff1e1e1e),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white.withOpacity(0.08),
                                 width: 1,
                               ),
                             ),
