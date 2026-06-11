@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../constants/app_colors.dart';
 import '../../../models/property_model.dart';
 import '../../../services/auth_service.dart';
