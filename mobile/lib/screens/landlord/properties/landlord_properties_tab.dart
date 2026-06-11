@@ -754,12 +754,12 @@ Pata maelezo zaidi kwenye app ya Manna!
                               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900, fontSize: 18)))),
                           const SizedBox(width: 12),
                           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                            const Text('Mwenye Mali', style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 10, fontWeight: FontWeight.w600)),
+                            const Text('Mwenye Mali', style: TextStyle(color: Colors.white60, fontSize: 10, fontWeight: FontWeight.w600)),
                             const SizedBox(height: 2),
-                            Text(p.landlordName!, style: const TextStyle(color: Color(0xFF0F172A), fontWeight: FontWeight.w800, fontSize: 14)),
+                            Text(p.landlordName!, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 14)),
                             if (p.landlordPhone != null) ...[
                               const SizedBox(height: 2),
-                              Text(p.landlordPhone!, style: const TextStyle(color: Color(0xFF64748B), fontSize: 12)),
+                              Text(p.landlordPhone!, style: const TextStyle(color: Colors.white60, fontSize: 12)),
                             ],
                           ])),
                           if (p.landlordPhone != null)
