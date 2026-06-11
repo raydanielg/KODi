@@ -185,18 +185,21 @@
 <div class="info-card animate-fade-in delay-1">
     <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
         <div>
-            <h2 class="property-title">Sunset Apartments</h2>
-            <p class="property-location"><i class="bi bi-geo-alt me-1"></i> Dar es Salaam, Tanzania - Unit 2A</p>
-            <div class="property-price">TZS 450,000/month</div>
-            <span class="status-badge bg-success bg-opacity-10 text-success">Occupied</span>
+            <h2 class="property-title">{{ $property->title }}</h2>
+            <p class="property-location"><i class="bi bi-geo-alt me-1"></i> {{ $property->location_area }}, {{ $property->location_city }}</p>
+            <div class="property-price">TZS {{ number_format($property->price) }}/month</div>
+            <span class="status-badge bg-{{ $property->status == 'available' ? 'success' : 'warning' }} bg-opacity-10 text-{{ $property->status == 'available' ? 'success' : 'warning' }}">{{ ucfirst($property->status) }}</span>
         </div>
         <div class="d-flex gap-2">
-            <button class="btn btn-primary" onclick="editProperty()">
+            <a href="{{ route('admin.properties.edit', $property->id) }}" class="btn btn-primary">
                 <i class="bi bi-pencil me-1"></i> Edit
-            </button>
-            <button class="btn btn-danger" onclick="deleteProperty()">
-                <i class="bi bi-trash me-1"></i> Delete
-            </button>
+            </a>
+            <form method="POST" action="{{ route('admin.properties.destroy', $property->id) }}" style="margin:0;">
+                @csrf @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this property permanently?')">
+                    <i class="bi bi-trash me-1"></i> Delete
+                </button>
+            </form>
         </div>
     </div>
 </div>
@@ -208,35 +211,31 @@
             <h3><i class="bi bi-info-circle me-2"></i>Property Details</h3>
             <div class="info-row">
                 <span class="info-label">Property Type</span>
-                <span class="info-value">Apartment</span>
+                <span class="info-value">{{ ucfirst(str_replace('_',' ',$property->property_type)) }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Bedrooms</span>
-                <span class="info-value">2</span>
+                <span class="info-value">{{ $property->bedrooms ?? '—' }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Bathrooms</span>
-                <span class="info-value">2</span>
+                <span class="info-value">{{ $property->bathrooms ?? '—' }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Size</span>
-                <span class="info-value">85 m²</span>
-            </div>
-            <div class="info-row">
-                <span class="info-label">Floor</span>
-                <span class="info-value">2nd Floor</span>
+                <span class="info-value">{{ $property->area_sqft ? number_format($property->area_sqft).' sqft' : '—' }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Furnished</span>
-                <span class="info-value">Yes</span>
+                <span class="info-value">{{ $property->is_furnished ? 'Yes' : 'No' }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Parking</span>
-                <span class="info-value">1 Space</span>
+                <span class="info-value">{{ $property->has_parking ? 'Yes' : 'No' }}</span>
             </div>
             <div class="info-row">
-                <span class="info-label">Available From</span>
-                <span class="info-value">January 15, 2026</span>
+                <span class="info-label">Created At</span>
+                <span class="info-value">{{ $property->created_at->format('M d, Y') }}</span>
             </div>
         </div>
     </div>
@@ -246,19 +245,23 @@
             <h3><i class="bi bi-activity me-2"></i>Quick Stats</h3>
             <div class="info-row">
                 <span class="info-label">Status</span>
-                <span class="status-badge bg-success bg-opacity-10 text-success">Occupied</span>
+                <span class="status-badge bg-{{ $property->status == 'available' ? 'success' : 'warning' }} bg-opacity-10 text-{{ $property->status == 'available' ? 'success' : 'warning' }}">{{ ucfirst($property->status) }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Listed On</span>
-                <span class="info-value">Jan 1, 2026</span>
+                <span class="info-value">{{ $property->created_at->format('M d, Y') }}</span>
             </div>
             <div class="info-row">
                 <span class="info-label">Views</span>
-                <span class="info-value">1,248</span>
+                <span class="info-value">{{ number_format($property->views_count) }}</span>
             </div>
             <div class="info-row">
-                <span class="info-label">Inquiries</span>
-                <span class="info-value">45</span>
+                <span class="info-label">Verified</span>
+                @if($property->approved_at)
+                    <span class="status-badge bg-success bg-opacity-10 text-success">Verified</span>
+                @else
+                    <span class="status-badge bg-warning bg-opacity-10 text-warning">Pending</span>
+                @endif
             </div>
         </div>
     </div>
