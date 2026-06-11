@@ -6,7 +6,7 @@ import '../../models/dashboard_stats_model.dart';
 import '../../models/property_model.dart';
 import '../../services/auth_service.dart';
 import '../../services/dashboard_service.dart';
-import '../../services/property_service.dart';
+import '../../services/landlord_service.dart';
 import '../../utils/helpers.dart';
 import '../../widgets/dashboard_card.dart';
 import '../../widgets/role_drawer.dart';
