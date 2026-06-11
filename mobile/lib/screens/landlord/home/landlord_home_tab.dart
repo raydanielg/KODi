@@ -292,9 +292,10 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: _cardBg,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 20, offset: const Offset(0, 4))],
+        border: Border.all(color: _cardBorder),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -664,20 +665,20 @@ class _LandlordHomeTabState extends State<LandlordHomeTab> {
       return Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: const Color(0xFFE2E8F0)),
+          color: _cardBg, borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: _cardBorder),
         ),
-        child: const Center(
+        child: Center(
           child: Text('Hakuna habari mpya kwa sasa.',
-              style: TextStyle(color: Color(0xFF9CA3AF), fontSize: 13)),
+              style: TextStyle(color: _textSecondary, fontSize: 13)),
         ),
       );
     }
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white, borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        color: _cardBg, borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: _cardBorder),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 8)],
       ),
       child: Column(
