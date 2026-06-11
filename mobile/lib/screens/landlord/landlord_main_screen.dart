@@ -57,14 +57,14 @@ class _LandlordMainScreenState extends State<LandlordMainScreen> {
     );
   }
 
-  Widget _buildBottomNav() {
+  Widget _buildBottomNav(bool isDark) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: const Border(top: BorderSide(color: Color(0xFFF3F4F6), width: 1)),
+        color: isDark ? const Color(0xFF141414) : Colors.white,
+        border: Border(top: BorderSide(color: isDark ? const Color(0xFF2A2A2A) : const Color(0xFFF3F4F6), width: 1)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
             blurRadius: 16,
             offset: const Offset(0, -4),
           ),
@@ -75,11 +75,11 @@ class _LandlordMainScreenState extends State<LandlordMainScreen> {
           height: 62,
           child: Row(
             children: [
-              _navItem(0, Icons.home_rounded, Icons.home_outlined, 'Home'),
-              _navItem(1, Icons.people_rounded, Icons.people_outline_rounded, 'Tenants'),
-              _navItem(2, Icons.apartment_rounded, Icons.apartment_outlined, 'Properties'),
-              _navItem(3, Icons.description_rounded, Icons.description_outlined, 'Leases'),
-              _navItem(4, Icons.bar_chart_rounded, Icons.bar_chart_outlined, 'Reports'),
+              _navItem(0, Icons.home_rounded, Icons.home_outlined, 'Home', isDark),
+              _navItem(1, Icons.people_rounded, Icons.people_outline_rounded, 'Tenants', isDark),
+              _navItem(2, Icons.apartment_rounded, Icons.apartment_outlined, 'Properties', isDark),
+              _navItem(3, Icons.description_rounded, Icons.description_outlined, 'Leases', isDark),
+              _navItem(4, Icons.bar_chart_rounded, Icons.bar_chart_outlined, 'Reports', isDark),
             ],
           ),
         ),
