@@ -58,6 +58,31 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
         );
       }
     }
+    _loadProperties();
+  }
+
+  Future<void> _loadProperties() async {
+    setState(() {
+      _isLoadingProperties = true;
+    });
+    try {
+      final result = await _propertyService.getProperties();
+      if (result['success'] == true) {
+        final properties = result['properties'] as List<PropertyModel>;
+        setState(() {
+          _properties = properties;
+          _isLoadingProperties = false;
+        });
+      } else {
+        setState(() {
+          _isLoadingProperties = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _isLoadingProperties = false;
+      });
+    }
   }
 
   String _getGreeting() {
