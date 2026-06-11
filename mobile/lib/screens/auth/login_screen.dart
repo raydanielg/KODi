@@ -124,24 +124,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             onPressed: () => Navigator.pop(context),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 8),
                         Text(
                           AppStrings.welcomeBack,
                           style: GoogleFonts.poppins(
-                            fontSize: 32,
+                            fontSize: 28,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 4),
                         Text(
-                          'Sign in to your account to continue your journey with us.',
+                          'Sign in to your account to continue',
                           style: GoogleFonts.poppins(
-                            fontSize: 14,
+                            fontSize: 13,
                             color: Colors.white60,
                           ),
                         ),
-                        const SizedBox(height: 32),
+                        const SizedBox(height: 16),
                         // Email Field
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
