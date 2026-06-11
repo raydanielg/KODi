@@ -18,7 +18,6 @@ import 'screens/tenant/search_homes_page.dart';
 import 'screens/tenant/my_home_page.dart';
 import 'screens/tenant/favorites_page.dart';
 import 'screens/tenant/payments_page.dart';
-import 'screens/common/messages_page.dart';
 import 'screens/common/settings_page.dart';
 import 'constants/app_theme.dart';
 import 'constants/app_routes.dart';
